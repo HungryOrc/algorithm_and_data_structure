@@ -1,1 +1,1 @@
-My implementation of some Algorithms, mainly in C#.
+My implementation of some Algorithms.
