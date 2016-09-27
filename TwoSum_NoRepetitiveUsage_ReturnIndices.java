@@ -58,12 +58,12 @@ public class TwoSum_NoRepetitiveUsage_ReturnIndices
 					break;
 				}
 			}
-
 			break;
 
 		    }
 		    else if (givenNumbers_Copy[indexLeft] + givenNumbers_Copy[indexRight] < targetSum)
 			indexLeft ++;
+			
 		    else
 			indexRight --;
 		}
@@ -76,7 +76,7 @@ public class TwoSum_NoRepetitiveUsage_ReturnIndices
 	//
 	// 对数组A进行线性扫描，索引为index，目标值为target，只需要判断 targetSum - A[index] 是否在数组中即可
 	// 对于判断某个数是否存在可以用 HashMap 来降低时间复杂度
-
+	//
 	public int[] twoSum_ByHashMap(int[] givenNumbers, int targetSum)
 	{
 		HashMap<Integer, Integer> myHashMap = new HashMap<Integer, Integer>();
