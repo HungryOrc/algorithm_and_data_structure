@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class TwoSum_NoRepetitiveUsage_ReturnIndexes
 {
 	// 方法：先排序数组，然后两边向中间调试
-  	// 时间复杂度：n*logn
+  	// Runtime：O(n*logn)
 	//
 	// indexLeft, indexRight 分别指向数组第一个元素和最后一个元素，判断两个元素的和 targetSum 的大小关系
 	// 如果 A[indexLeft] + A[indexRight] == targetSum，那么找到两个下标返回即可
