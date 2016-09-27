@@ -2,9 +2,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 
-// 要求：返回 indexes
+// 要求：返回 indices
 // 元素可能重复，一个元素只能最多用一次
-public class TwoSum_NoRepetitiveUsage_ReturnIndexes
+public class TwoSum_NoRepetitiveUsage_ReturnIndices
 {
 	// 方法：先排序数组，然后两边向中间调试
   	// Runtime：O(n*logn)
@@ -15,9 +15,9 @@ public class TwoSum_NoRepetitiveUsage_ReturnIndexes
 	// 否则两个数和太大，把 indexRight 左移
 	// 直到两个 index 交错
 	// 
-	public int[] twoSum_ByTwoIndexes(int[] givenNumbers, int targetSum)
+	public int[] twoSum_ByTwoIndices(int[] givenNumbers, int targetSum)
     	{
-		// put the indexes of the 2 chosen numbers into one array for final output
+		// put the indices of the 2 chosen numbers into one array for final output
 		int[] output = new int[2];
 
 		int indexLeft = 0;
