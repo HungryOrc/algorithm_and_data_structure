@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.HashMap;
 
 // 要求：返回 indexes
 // 元素可能重复，一个元素只能最多用一次
@@ -69,7 +70,32 @@ public class TwoSum_NoRepetitiveUsage_ReturnIndexes
     	}
 	
 	
+	// 方法：用 HashMap 找 targetSum - A[index]是否在数组中。不用先给数组排序了
+	// Runtime: O(n)
+	//
+	// 对数组A进行线性扫描，索引为index，目标值为target，只需要判断 targetSum - A[index] 是否在数组中即可
+	// 对于判断某个数是否存在可以用 HashMap 来降低时间复杂度
 
+	public int[] twoSum_ByHashMap(int[] givenNumbers, int targetSum)
+	{
+		HashMap<Integer, Integer> myHashMap = new HashMap<Integer, Integer>();
+		int[] output = new int[2];
+
+		for (int i = 0; i < givenNumbers.length; i++)
+			myHashMap.put(givenNumbers[i], i);
+
+		for (int i = 0; i < givenNumbers.length; i++)
+		{
+			if (myHashMap.containsKey(targetSum - givenNumbers[i]) &&
+			    myHashMap.get(targetSum - givenNumbers[i]) != i)
+			{
+				output[0] = i;
+				output[1] = myHashMap.get(targetSum - givenNumbers[i]);
+				break;
+			}
+		}
+		return output;
+	}
 
 
 	
