@@ -21,7 +21,7 @@ public class ThreeSum_ReturnAllCombinations_ByElementValues
         Arrays.sort(givenNumbers);
 
         int n = givenNumbers.length;
-        for (int i = 0; i <= n - 3; i++)
+        for (int i = 0; i < n - 2; i++)
         {
             int j = i + 1;
             int k = n - 1;
@@ -48,7 +48,7 @@ public class ThreeSum_ReturnAllCombinations_ByElementValues
                     {
                         k--;
                     }
-                    while (k > j && givenNumbers[k] == givenNumbers[k+1]);
+                    while (k > j && givenNumbers[k+1] == givenNumbers[k]);
 
                 }
 
@@ -61,7 +61,7 @@ public class ThreeSum_ReturnAllCombinations_ByElementValues
             }
 
             //skip duplicates of i
-            while (i + 1 <= n - 3 && givenNumbers[i] == givenNumbers[i+1])
+            while (i < n - 3 && givenNumbers[i+1] == givenNumbers[i])
                 i++;
         }
 
