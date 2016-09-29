@@ -17,7 +17,7 @@ public class ThreeSum_ReturnAllCombinations_ByElementValues
     //
     public List<List<Integer>> threeSum(int[] givenNumbers)
     {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<List<Integer>> output = new ArrayList<List<Integer>>();
         Arrays.sort(givenNumbers);
 
         int n = givenNumbers.length;
@@ -34,7 +34,7 @@ public class ThreeSum_ReturnAllCombinations_ByElementValues
                     tmpArrayList.add(givenNumbers[i]);
                     tmpArrayList.add(givenNumbers[j]);
                     tmpArrayList.add(givenNumbers[k]);
-                    result.add(tmpArrayList);
+                    output.add(tmpArrayList);
 
                     //skip duplicates of j
                     do
@@ -65,6 +65,6 @@ public class ThreeSum_ReturnAllCombinations_ByElementValues
                 i++;
         }
 
-        return result;
+        return output;
     }
 }
