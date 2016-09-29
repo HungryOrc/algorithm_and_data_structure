@@ -64,7 +64,7 @@ public class ThreeSum_ReturnAllCombinations_ByElementValues
     
     
     // 方法：先排序数组，然后将 3Sum 问题转化为 2Sum 问题。这里用 HashMap 的做法
-    // Runtime：O(n^2)
+    // Runtime：O(n^2)。这个问题用 HashMap 可能比直接两边逼近中间的方法还慢，特别是数组元素不多的情况下
     //
     List<List<Integer>> output = new ArrayList<List<Integer>>();
         Arrays.sort(givenNumbers);
