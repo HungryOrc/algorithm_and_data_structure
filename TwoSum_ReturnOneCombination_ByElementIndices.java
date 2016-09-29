@@ -7,8 +7,8 @@ import java.util.HashMap;
 // 元素可能重复，一个元素只能最多用一次
 public class TwoSum_ReturnOneCombination_ByElementIndices
 {
-	// 方法：先排序数组，然后两边向中间调试
-  	// Runtime：O(n*logn)
+	// 方法：先排序数组，然后两边向中间逼近
+  	// Runtime：O(n*logn)，其中排序用 O(n*logn)，两边向中间逼近用 O(n^2)
 	//
 	// indexLeft, indexRight 分别指向数组第一个元素和最后一个元素，判断两个元素的和 targetSum 的大小关系
 	// 如果 A[indexLeft] + A[indexRight] == targetSum，那么找到两个下标返回即可
