@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 // 要求：返回一个符合要求的组合，里的各个元素的indices
 // 元素可能重复，一个元素只能最多用一次
-public class TwoSum_ReturnOneCombination_ByIndices
+public class TwoSum_ReturnOneCombination_ByElementIndices
 {
 	// 方法：先排序数组，然后两边向中间调试
   	// Runtime：O(n*logn)
