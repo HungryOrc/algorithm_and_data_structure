@@ -2,6 +2,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 
+// 给一个数组，及一个目标和，要在数组里找到2个元素，其和等于目标和
 // 要求：返回一个符合要求的组合，里的各个元素的indices
 // 元素可能重复，一个元素只能最多用一次
 public class TwoSum_ReturnOneCombination_ByElementIndices
