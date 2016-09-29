@@ -42,24 +42,18 @@ public class ThreeSum_ReturnAllCombinations_ByElementValues
                         j++;
                     }
                     while (j < k && givenNumbers[j-1] == givenNumbers[j]);
-
                     //skip duplicates of k
                     do
                     {
                         k--;
                     }
                     while (k > j && givenNumbers[k+1] == givenNumbers[k]);
-
                 }
-
                 else if (givenNumbers[i] + givenNumbers[j] + givenNumbers[k] < 0)
                     j++;
-
                 else
                     k--;
-
             }
-
             //skip duplicates of i
             while (i < n - 3 && givenNumbers[i+1] == givenNumbers[i])
                 i++;
@@ -67,4 +61,47 @@ public class ThreeSum_ReturnAllCombinations_ByElementValues
 
         return output;
     }
+    
+    
+    // 方法：先排序数组，然后将 3Sum 问题转化为 2Sum 问题。这里用 HashMap 的做法
+    // Runtime：O(n^2)
+    //
+    List<List<Integer>> output = new ArrayList<List<Integer>>();
+        Arrays.sort(givenNumbers);
+        int n = givenNumbers.length;
+        
+        HashMap<Integer, Integer> myHashMap = new HashMap<Integer, Integer>();
+		for (int i = 2; i < n; i++) // 从2开始是因为前面还有2个数 i 和 j
+			myHashMap.put(givenNumbers[i], i);
+        
+        for (int i = 0; i < n - 2; i++)
+        {
+        	int targetTwoSum = 0 - givenNumbers[i];
+
+    		for (int j = i + 1; j < n-1; j++)
+    		{
+    			if (myHashMap.containsKey(targetTwoSum - givenNumbers[j]) &&
+    			    myHashMap.get(targetTwoSum - givenNumbers[j]) != j &&
+    			    targetTwoSum - givenNumbers[j] >= givenNumbers[j])
+    				// 第三个判断条件是为了避免 HashMap 在找到了 -1, 0, 1 以后，
+    				// 在找 -1, 1 的第三个搭档的时候，又会去找到 0，从而形成 -1, 1, 0
+    			{
+    				List<Integer> tmpArrayList = new ArrayList<Integer>();
+                    tmpArrayList.add(givenNumbers[i]);
+                    tmpArrayList.add(givenNumbers[j]);
+                    tmpArrayList.add(targetTwoSum - givenNumbers[j]);
+                    output.add(tmpArrayList);
+                    
+                    // skip duplicates of j
+        			while (j < n-2 && givenNumbers[j+1] == givenNumbers[j])
+        				j ++;
+    			}
+    		}
+    		//skip duplicates of i
+            while (i < n-3 && givenNumbers[i+1] == givenNumbers[i])
+                i++;
+        }
+        return output;
+    
+    
 }
