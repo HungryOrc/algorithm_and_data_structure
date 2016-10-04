@@ -99,6 +99,27 @@ public class TwoSum_ReturnOneCombination_ByElementIndices
 		return output;
 	}
 
+	
+	// 方法：上面一个 HashMap 方法的微改进，不先构造整个 HashMap，而是逐元素看是否满足求和，
+	// 如果满足 targetSum，则 return 答案；不满足再添到 HashMap 里
+	// Runtime: O(n)
+	//
+	public int[] twoSum_ByHashMap_2(int[] givenNumbers, int targetSum)
+	{
+    		int[] output = new int[2];
+   		Map<Integer, Integer> myHashMap = new HashMap<Integer, Integer>();
+    		for (int i = 0; i < givenNumbers.length; i++)
+		{
+        		if (myHashMap.containsKey(targetSum - givenNumbers[i]))
+			{
+            			output[0] = i;
+            			output[1] = myHashMap.get(targetSum - givenNumbers[i]);
+            			return output;
+        		}
+        		myHashMap.put(givenNumbers[i], i);
+    		}
+    		return output;
+	}
 
 	
 }
