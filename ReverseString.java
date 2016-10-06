@@ -7,7 +7,8 @@ public class ReverseString {
     // 然后 sway the first and last Chars in the Array, in place
     // 这个方法的速度相当快
     //
-    public String reverseString_SwapFirstAndLastChars(String givenString) {
+    public String reverseString_SwapFirstAndLastChars(String givenString)
+    {
         // 注意 String.toCharArray() 方法！
         char[] myCharArray = givenString.toCharArray();
         
@@ -25,6 +26,36 @@ public class ReverseString {
         // 注意 String的这种构造函数！ new String(charArray);
         String outputString = new String(myCharArray);
         return outputString;
+    }
+    
+    
+    // 方法：位运算 ---- 以后再细看
+    // Reference: https://discuss.leetcode.com/topic/43296/many-acceptable-answers
+    public String reverseString_SwapWithByte(String s) {
+        byte[] bytes = s.getBytes();
+        int i = 0;
+        int j = s.length() - 1;
+        while (i < j) {
+            byte temp = bytes[i];
+            bytes[i] = bytes[j];
+            bytes[j] = temp;
+            i++;
+            j--;
+        }
+        return new String(bytes);
+    }
+    public String reverseString_SwapWithByteWithoutTemp(String s) {
+        byte[] bytes = s.getBytes();
+        int i = 0;
+        int j = s.length() - 1;
+        while (i < j) {
+            bytes[i] = (byte)(bytes[i] ^ bytes[j]);
+            bytes[j] = (byte)(bytes[i] ^ bytes[j]);
+            bytes[i] = (byte)(bytes[i] ^ bytes[j]);
+            i++;
+            j--;
+        }
+        return new String(bytes);
     }
     
     
