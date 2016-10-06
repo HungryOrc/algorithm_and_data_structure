@@ -29,6 +29,25 @@ public class ReverseString {
     }
     
     
+    // 方法：递归 Recursion，分别对左右两个子字符串进行反转操作，然后“右放左、左放右”
+    // 此法构思巧妙，代码精炼。但运算速度颇慢，估计是 Recursion 的原因
+    //
+    public String reverseString(String givenString) {
+        int stringLength = givenString.length();
+        
+        if (stringLength <= 1) 
+            return givenString;
+        
+        // String.substring(lb, ub) 方法：lowerBound inclusive, upperBound exclusive
+        // int division "/": round DOWN
+        String leftHalfStr = givenString.substring(0, length / 2);
+        String rightHalfStr = givenString.substring(length / 2, length);
+        
+        // 注意！这里“右放左、左放右”！
+        return reverseString(rightHalfStr) + reverseString(leftHalfStr);
+    }
+    
+    
     // 方法：位运算 ---- 以后再细看
     // Reference: https://discuss.leetcode.com/topic/43296/many-acceptable-answers
     public String reverseString_SwapWithByte(String s) {
