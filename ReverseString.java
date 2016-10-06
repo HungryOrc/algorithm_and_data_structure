@@ -1,17 +1,23 @@
+/* Takes a string as input and returns the string reversed.
+Example: Given s = "hello", return "olleh"   */
 
-
-public class Solution {
-    public String reverseString(String s) {
+public class ReverseString {
+    
+    // 方法：用 StringBuilder 来做，比用 String += char 的运行速度快很多
+    // Runtime: O(n)
+    //
+    public String reverseString(String givenString) {
         
-        StringBuilder sb = new StringBuilder();
+        StringBuilder myStringBuilder = new StringBuilder();
         
-        for (int i = s.length()-1; i >= 0; i--)
+        for (int i = givenString.length()-1; i >= 0; i--)
         {
-            sb.append(s.charAt(i));
-            
-            
+            myStringBuilder.append(givenString.charAt(i));
+            /* 如果用：
+            String reversedString = "";
+            reversedString += givenString.charAt(i);
+            的话，会慢很多   */
         }
-        return sb.toString();
- 
+        return myStringBuilder.toString();
     }
 }
