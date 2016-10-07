@@ -20,6 +20,38 @@ public class CountingBits
         return outputIntArray;
     }
 
+    
+    // 方法：位运算：(自己 - 1) 按位并 (自己)，经由几次把自己变为 0，则自己含有几个 1
+    // 比如，11010100，减1等于11010011，按位并自己等于11010000，相当于去掉了一个1。每次这么搞一次就去掉一个1
+    // Runtime: 应该是 O(n*logn)，应该比上面的 “位运算 + 递归” 的方法更快。但实际表现较慢，可能是位操作速度不快？
+    // 
+    public int[] countBits(int num)
+    {
+        int[] outputIntArray = new int[num + 1];
+        
+        for (int curNum = 0; curNum <= num; curNum++)
+        {
+            int curNum_Leftover = curNum;
+            
+            if (curNum == 0)
+                outputIntArray[curNum] = 0;
+                
+            else
+            {    
+                while (curNum_Leftover != 0)
+                {
+                    // 经由几次把自己变为 0，则自己含有几个 1
+                    outputIntArray[curNum] ++;
+                    
+                    // (自己 - 1) 按位并 (自己)
+                    curNum_Leftover = (curNum_Leftover - 1) & curNum_Leftover;
+                }
+            }
+        }
+        
+        return outputIntArray;
+    }
+    
 
     // 方法：除以2，再减去2^m ---- 这两步交替进行，直到本数成为0
     // Runtime：O(n*logn)，很慢，不符合题意 O(n) 的要求
