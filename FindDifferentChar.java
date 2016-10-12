@@ -10,18 +10,32 @@ Find the letter that was added in t.
 
 public class FindDifferentChar {
     
-    
-    
-    
-    
-    
+    // 方法：用char 'a'到'z'的ASCII序号来做。搞一个26个slot的int数组，然后加加减减
+    //
+    public char findTheDifference_ByCharASCII(String s, String t) {
+        
+        int[] alpha = new int[26];
+        
+        for (char c : s.toCharArray())
+            // 这里很巧妙，用 c - 'a' 来通过char c的ASCII序号而得到c在int数组中应该对应的位置（0 - 25）
+            alpha[ c - 'a' ]++;
+
+        for (char c : t.toCharArray()) {
+           
+            // 简略表达法，--在前 表示先减了再说
+            if (--alpha[c - 'a'] < 0)
+                return c;
+        }
+
+        return 0;
+    }
     
     
     
     
     // 最没有华彩的方法：用 HashMap
     //
-    public char findTheDifference(String s, String t) {
+    public char findTheDifference_ByHashMap(String s, String t) {
         
         HashMap<Character, Integer> hashMap_S = new HashMap<Character, Integer>();
         
