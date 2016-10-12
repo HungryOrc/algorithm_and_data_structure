@@ -10,7 +10,7 @@ Find the letter that was added in t.
 
 public class FindDifferentChar {
     
-    // 方法：用char 'a'到'z'的ASCII序号来做。搞一个26个slot的int数组，然后加加减减
+    // 较巧妙、较快的方法：用char 'a'到'z'的ASCII序号来做。搞一个26个slot的int数组，然后加加减减
     //
     public char findTheDifference_ByCharASCII(String s, String t) {
         
@@ -29,6 +29,16 @@ public class FindDifferentChar {
 
         return 0;
     }
+    
+    
+    // 很巧妙、很快的方法：
+    
+    
+    
+    
+    
+    
+    
     
     
     
