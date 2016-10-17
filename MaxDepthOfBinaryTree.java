@@ -14,7 +14,8 @@ The maximum depth is the number of nodes along the longest path from the root no
  
 public class MaxDepthOfBinaryTree {
 
-    // 方法：Recursion。思路巧妙，代码简洁，但速度不快
+    // 方法：Recursion。思路巧妙，代码简洁
+    // 速度：按理说Recursion类方法的速度会偏慢，但实测相当快，leetcode的测试用例是1ms跑完
     //
     public int maxDepth_ByRecursion(TreeNode root)
     {
@@ -32,7 +33,7 @@ public class MaxDepthOfBinaryTree {
     // 速度：很快
     // Reference: https://discuss.leetcode.com/topic/33826/two-java-iterative-solution-dfs-and-bfs/2
     //
-    public int maxDepth(TreeNode root)
+    public int maxDepth_ByDFS(TreeNode root)
     {
         if(root == null)
             return 0;
@@ -67,5 +68,9 @@ public class MaxDepthOfBinaryTree {
         return maxDepth;
     }
     
+ 
+ 
+ 
+ 
     
 }
