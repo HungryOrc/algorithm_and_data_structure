@@ -70,7 +70,7 @@ public class Solution {
     public int countBattleships_ByMostTopLeftX(char[][] board) {
     
         int rowCount = board.length;
-        if (m==0) 
+        if (rowCount == 0) 
            return 0;
            
         int colCount = board[0].length;
