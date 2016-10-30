@@ -36,13 +36,18 @@ public class Solution {
     }
     
     
-    // 用 ArrayList.indexOf(String) 的方法：
+    // 用 ArrayList.indexOf(Object) 的方法：
     // Reference: https://discuss.leetcode.com/topic/27232/4-lines-in-java
-    //
-    public List<String> generatePossibleNextMoves(String s) {
+    /* 附：The java.util.ArrayList.indexOf(Object) method 
+     returns the index of the first occurrence of the specified element in this list, 
+     or -1 if this list does not contain the element.
+    */
+    public List<String> generatePossibleNextMoves_ByIndexOf(String s) {
         List list = new ArrayList();
+      
         for (int i=-1; (i = s.indexOf("++", i+1)) >= 0; )
             list.add(s.substring(0, i) + "--" + s.substring(i+2));
+      
         return list;
     }
     
