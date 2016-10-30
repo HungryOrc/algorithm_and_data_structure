@@ -13,14 +13,12 @@ public class Solution {
     public boolean canPermutePalindrome(String s) {
         
         char[] charArray = s.toCharArray();
-        int sLength = charArray.length;
         
-        // ！注意！尖括号里都要用 Wrapper Class！！
+        // ！注意！HashMap 尖括号里都要用 Wrapper Class！！
         HashMap<Character, Integer> charCounts_HashMap = new HashMap<Character, Integer>();
         
-        for (int i = 0; i < sLength; i++)
+        for (char curChar : charArray)
         {
-            char curChar = charArray[i];
             if (charCounts_HashMap.containsKey(curChar))
                 charCounts_HashMap.put(curChar, charCounts_HashMap.get(curChar)+1);
             else
@@ -39,21 +37,25 @@ public class Solution {
                 new Integer[charCounts_HashMap.values().size()]);
                 // ！注意这里的特殊语法！要在 toArray 后面的括号里先 new 一个足够长的新Array！！
         
-        int numOfEvenOccurChars = 0, numOfOddOccurChars = 0;
+        int numOfOddOccurChars = 0;
         for (int occurTimes : charCount_Array)
         {
-            if (occurTimes % 2 == 0)
-                numOfEvenOccurChars ++;
-            else
+            if (occurTimes % 2 == 1)
                 numOfOddOccurChars ++;
         }
         
         // 最终进行判断
-        if (numOfOddOccurChars == 0)
-            return true;
-        else if (numOfOddOccurChars == 1 && sLength % 2 == 1)
+        // 如果只有一个odd occurance char，也true；因为此时总的字符串的长度也一定是odd
+        if (numOfOddOccurChars == 0 || numOfOddOccurChars == 1)
             return true;
         else
             return false;
     }
+    
+    
+    // 更巧的办法：用 HashSet 来记录出现奇数次的char，不计具体次数，也不计出现偶数次的char
+    // Reference: https://discuss.leetcode.com/topic/22057/java-solution-w-set-one-pass-without-counters
+    // 
+    
+    
 }
