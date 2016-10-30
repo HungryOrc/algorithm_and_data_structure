@@ -55,7 +55,33 @@ public class Solution {
     
     // 更巧的办法：用 HashSet 来记录出现奇数次的char，不计具体次数，也不计出现偶数次的char
     // Reference: https://discuss.leetcode.com/topic/22057/java-solution-w-set-one-pass-without-counters
-    // 
-    
+    /* The idea is to iterate over string, adding current character to set if set doesn't contain that character, 
+     or removing current character from set if set contains it.
+     When the iteration is finished, just return set.size()==0 || set.size()==1.
+     set.size()==0 corresponds to the situation when there are even number of any character in the string, and
+     set.size()==1 corresponsds to the fact that there are even number of any character except one.
+    */
+    public boolean canPermutePalindrome(String s) {
+        
+        char[] charArray = s.toCharArray();
+        
+        // ！注意！HashSet 尖括号里都要用 Wrapper Class！！
+        HashSet<Character> charCounts_HashSet = new HashSet<Character>();
+        
+        for (char curChar : charArray)
+        {
+            if (!charCounts_HashSet.contains(curChar))
+                charCounts_HashSet.add(curChar);
+            else
+                charCounts_HashSet.remove(curChar);
+        }
+        
+        // 最终进行判断
+        // 如果只有一个odd occurance char，也true；因为此时总的字符串的长度也一定是odd
+        if (charCounts_HashSet.size() == 0 || charCounts_HashSet.size() == 1)
+            return true;
+        else
+            return false;
+    }
     
 }
