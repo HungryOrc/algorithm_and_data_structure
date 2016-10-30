@@ -42,6 +42,7 @@ public class Solution {
      returns the index of the first occurrence of the specified element in this list, 
      or -1 if this list does not contain the element.
     */
+    // 但是运行速度似乎与上面那个最普通的方法差不多
     public List<String> generatePossibleNextMoves_ByIndexOf(String s) {
         List list = new ArrayList();
       
