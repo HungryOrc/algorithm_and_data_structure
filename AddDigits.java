@@ -13,7 +13,7 @@ Follow up: Could you do it without any loop/recursion in O(1) runtime?
 
 public class Solution {
     
-    public int addDigits(int num) {
+    public int addDigits_ByMod9(int num) {
         
         if (num == 0)
             return 0;
@@ -24,6 +24,24 @@ public class Solution {
     }
     
     
-    // 傻大黑粗的暴力直接解法
+    // 傻大黑粗的暴力直接解法，并运用了 Recursion
+    public int addDigits(int num) {
+        
+        if (num == 0)
+            return 0;
+        int sum = 0, numLeft = num;
+        
+        while(numLeft != 0)
+        {
+            int y = numLeft % 10;
+            numLeft = numLeft / 10;
+            sum += y;
+        }
+    
+        if (sum > 9)
+            sum = addDigits(sum);
+        
+        return sum;
+    }
     
 }
