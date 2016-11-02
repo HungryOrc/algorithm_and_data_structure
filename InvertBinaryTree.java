@@ -24,7 +24,7 @@ public class TreeNode {
 public class Solution {
      
      // Recursive DFS
-     /* Time: O(n), Space: O(n)。理论上Recursive的方法应该较慢，但实测这个并不比后面的Iterative的方法慢
+     /* Time: O(n), Space: O(n)。理论上Recursive的方法应该较慢，但实测这个其实比后面的2种Iterative的方法更快
      This solution is bound to the application stack, which means it's no so much scalable, 
      you can find the problem size that will OVERFLOW the STACK and crash your application. 
      So more robust solution would be to use Stack data structure, as we show later.
@@ -41,6 +41,7 @@ public class Solution {
      }
      
      
+     // Iterative DFS
      public TreeNode invertTree_IterativeDFS (TreeNode root)
      {
           if (root == null)
@@ -62,7 +63,26 @@ public class Solution {
           return root;
      }
 
+     
+     // Iterative BFS
+     public TreeNode invertTree_IterativeBFS (TreeNode root)
+     {
+          if (root == null)
+               return null;
+          Queue<TreeNode> nodeQueue = new LinkedList<TreeNode>();
+          nodeQueue.offer(root);
+          while (!nodeQueue.isEmpty())
+          {
+               TreeNode curNode = nodeQueue.poll();
+               TreeNode formerLeft = curNode.left();
+               curNode.left = curNode.right;
+               curNode.right = formerLeft;
+               
+               if (curNode.left != null)
+                    nodeQueue.offer(curNode.left);
+               if (curNode.right != null)
+                    nodeQueue.offer(curNode.right);
+          }
+     }
+      
 }
-
-
-
