@@ -83,6 +83,7 @@ public class Solution {
                if (curNode.right != null)
                     nodeQueue.offer(curNode.right);
           }
+          return root;
      }
       
 }
