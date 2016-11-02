@@ -41,7 +41,26 @@ public class Solution {
      }
      
      
-     
+     public TreeNode invertTree_IterativeDFS (TreeNode root)
+     {
+          if (root == null)
+               return null;
+          Stack<TreeNode> nodeStack = new Stack<TreeNode>();
+          nodeStack.push(root);
+          while (!nodeStack.isEmpty())
+          {
+               TreeNode curNode = nodeStack.pop();
+               TreeNode formerLeft = curNode.left;
+               curNode.left = curNode.right;
+               curNode.right = formerLeft;
+               
+               if (curNode.left != null)
+                    nodeStack.push(curNode.left);
+               if (curNode.right != null)
+                    nodeStack.push(curNode.right);
+          }
+          return root;
+     }
 
 }
 
