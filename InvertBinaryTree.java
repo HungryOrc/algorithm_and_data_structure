@@ -74,7 +74,7 @@ public class Solution {
           while (!nodeQueue.isEmpty())
           {
                TreeNode curNode = nodeQueue.poll();
-               TreeNode formerLeft = curNode.left();
+               TreeNode formerLeft = curNode.left;
                curNode.left = curNode.right;
                curNode.right = formerLeft;
                
