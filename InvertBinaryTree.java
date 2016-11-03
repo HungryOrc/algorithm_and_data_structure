@@ -10,6 +10,7 @@ to:
   7     2
  / \   / \
 9   6 3   1
+And return the reference of the root node
 
 Definition for a binary tree node.
 public class TreeNode {
@@ -35,8 +36,8 @@ public class Solution {
                return null;
           TreeNode formerLeft = root.left;
           TreeNode formerRight = root.right;
-          root.left = invertTree(formerRight);
-          root.right = invertTree(formerLeft);
+          root.left = invertTree_RecursiveDFS(formerRight);
+          root.right = invertTree_RecursiveDFS(formerLeft);
           return root;
      }
      
