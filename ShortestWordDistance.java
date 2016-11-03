@@ -8,6 +8,7 @@ Note: You may assume that word1 does not equal to word2, and word1 and word2 are
 public class Solution {
 
     // 把2个字分别挑出来形成两个ArrayList，带上各自的位置作为int值存在两个ArrayList里，再进行两两比较
+    // Time: O(n^2), Space: O(1)
     public int shortestDistance(String[] words, String word1, String word2) {
         
         ArrayList<Integer> occuranceWord1 = new ArrayList<>();
