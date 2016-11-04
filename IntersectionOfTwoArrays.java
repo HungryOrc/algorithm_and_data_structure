@@ -67,8 +67,50 @@ public class Solution {
     }
     
     
+    // Binary Search
+    // Ref: https://discuss.leetcode.com/topic/45685/three-java-solutions
+    // Time: O(n*log(n)). 后面处理重复数的过程只用O(1)，但前面排序数组用了O(n*log(n))
+    public int[] intersection(int[] nums1, int[] nums2) {
+        
+        HashSet<Integer> interNums = new HashSet<>();
+        Arrays.sort(nums2);
+        for (Integer num : nums1)
+        {
+            if (binarySearch(nums2, num))
+                interNums.add(num);
+        }
+        int i = 0;
+        int[] output = new int[interNums.size()];
+        for (Integer num : interNums)
+        {
+            output[i] = num;
+            i++;
+        }
+        return output;
+    }
     
-    
+    public boolean binarySearch(int[] nums, int target)
+    {
+        int low = 0;
+        int high = nums.length - 1;
+        while (low <= high)
+        {
+            /* 注意 mid ！！！
+             如果包含low和high在内共有奇数个数，则mid是正中间那个
+             如果共有偶数个数，则mid是中间偏小那个
+             如果共有2个数，则mid = low
+            */
+            int mid = low + (high - low) / 2;
+            
+            if (nums[mid] == target)
+                return true;
+            else if (nums[mid] > target)
+                high = mid - 1;
+            else if (nums[mid] < target)
+                low = mid + 1;
+        }
+        return false;
+    }
     
     
 }
