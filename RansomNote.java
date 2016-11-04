@@ -6,7 +6,7 @@ Note: You may assume that both strings contain only lowercase letters.
 canConstruct("a", "b") -> false
 canConstruct("aa", "ab") -> false
 canConstruct("aa", "aab") -> true
-/*
+*/
 
 public class Solution {
     
@@ -32,4 +32,26 @@ public class Solution {
         }
         return true;
     }
+    
+    
+    // 用一个长度为26的int array来做记录。在magazine里出现一次则相关的元素的值+1，在ransomNote里出现一次则-1
+    // Ref: https://discuss.leetcode.com/topic/53864/java-o-n-solution-easy-to-understand/3
+    public boolean canConstruct(String ransomNote, String magazine) 
+    {
+        int[] letterCounts = new int[26];
+        
+        for (char c : magazine.toCharArray())
+        {
+            letterCounts[c - 'a']++;
+        }
+        for (char c : ransomNote.toCharArray())
+        {
+            letterCounts[c - 'a']--;
+            if (letterCounts[c - 'a'] < 0)
+                return false;
+        }
+        return true;
+    }
+    
+    
 }
