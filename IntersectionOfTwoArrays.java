@@ -42,8 +42,8 @@ public class Solution {
     public int[] intersection(int[] num1, int[] num2)
     {
         HashSet<Integer> interNums = new HashSet<>();
-        Array.sort(nums1);
-        Array.sort(nums2);
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
         int i = 0, j = 0;
         while (i < nums1.length && j < nums2.length)
         {
@@ -59,10 +59,10 @@ public class Solution {
             }
         }
         int[] output = new int[interNums.size()];
-        int i = 0;
+        int k = 0;
         // 注意！HashSet 也可以用这种 Enhanced For Loop ！！
         for (Integer num : interNums)
-            output[i ++] = num;
+            output[k ++] = num;
         return output;
     }
     
