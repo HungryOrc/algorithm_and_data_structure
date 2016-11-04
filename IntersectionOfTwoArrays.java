@@ -8,6 +8,7 @@ Note:
 public class Solution {
     
     // 用 HashSet
+    // Time: O(1)
     public int[] intersection(int[] nums1, int[] nums2) {
         
         HashSet<Integer> numsInArrayOne = new HashSet<>();
@@ -33,5 +34,41 @@ public class Solution {
     
         return output_Array;
     }
+    
+    
+    // Sort both Arrays, use 2 pointers from head and tail respectively
+    // Ref: https://discuss.leetcode.com/topic/45685/three-java-solutions
+    // Time: O(n*log(n)). 后面处理重复数的过程只用O(1)，但前面排序数组用了O(n*log(n))
+    public int[] intersection(int[] num1, int[] num2)
+    {
+        HashSet<Integer> interNums = new HashSet<>();
+        Array.sort(nums1);
+        Array.sort(nums2);
+        int i = 0, j = 0;
+        while (i < nums1.length && j < nums2.length)
+        {
+            if (nums1[i] < nums2[j])
+                i++;
+            else if (nums2[j] < nums1[i])
+                j++;
+            else // nums1[i] == nums2[j]
+            {
+                interNums.add(nums1[i]);
+                i ++;
+                j ++;
+            }
+        }
+        int[] output = new int[interNums.size()];
+        int i = 0;
+        // 注意！HashSet 也可以用这种 Enhanced For Loop ！！
+        for (Integer num : interNums)
+            output[i ++] = num;
+        return output;
+    }
+    
+    
+    
+    
+    
     
 }
