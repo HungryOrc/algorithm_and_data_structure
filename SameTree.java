@@ -12,7 +12,7 @@
  
 public class Solution {
     
-    // Recursion
+    // Recursion。自己做的
     public boolean isSameTree(TreeNode p, TreeNode q) {
 
         if (p == null && q == null)
@@ -26,7 +26,41 @@ public class Solution {
     }
     
     
+    // Iteration, DFS。自己做的
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        
+        Stack<TreeNode> nodeStack_P = new Stack<>();
+        Stack<TreeNode> nodeStack_Q = new Stack<>();
+        nodeStack_P.push(p);
+        nodeStack_Q.push(q);
+        
+        while (!nodeStack_P.isEmpty() && !nodeStack_Q.isEmpty())
+        {
+            TreeNode curNodeInP = nodeStack_P.pop();
+            TreeNode curNodeInQ = nodeStack_Q.pop();
+            
+            if (curNodeInP == null && curNodeInQ == null)
+                continue;
+            else if ((curNodeInP == null && curNodeInQ != null) || (curNodeInP != null) && (curNodeInQ == null))
+                return false;
+            else if (curNodeInP.val != curNodeInQ.val)
+                return false;
+            else
+            {
+                nodeStack_P.push(curNodeInP.left);
+                nodeStack_Q.push(curNodeInQ.left);
+                nodeStack_P.push(curNodeInP.right);
+                nodeStack_Q.push(curNodeInQ.right);
+            }
+        }
+        
+        if (nodeStack_P.isEmpty() && nodeStack_Q.isEmpty())
+            return true;
+        else 
+            return false;
+    }
     
-    
-    
+ 
+ 
+ 
 }
