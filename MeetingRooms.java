@@ -29,7 +29,13 @@ For example, Given [[0, 30],[5, 10],[15, 20]], return false.
          }
          return true;
      }
- 
+     private boolean overlap (Interval i1, Interval i2)
+     {
+          // 比较巧妙的判断方法
+          return (Math.min(i1.end, i2.end) > Math.max(i1.start, i2.start));
+          // 比较质朴的判断方法
+          // return ((i1.start >= i2.start && i1.start < i2.end) || (i2.start >= i1.start && i2.start < i1.end));
+     }
  
  
  
