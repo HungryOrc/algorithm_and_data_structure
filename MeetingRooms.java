@@ -14,6 +14,7 @@ For example, Given [[0, 30],[5, 10],[15, 20]], return false.
  public class Solution {
  
      // 直接两两比较每一对 intervals
+     // Ref: https://leetcode.com/articles/meeting-rooms/
      // The straight-forward solution is to compare every two meetings in the array, and see if they conflict with each other 
      // (i.e. if they overlap). Two meetings overlap if one of them starts while the other is still taking place.
      // Time: O(n^2), Space: O(1)
