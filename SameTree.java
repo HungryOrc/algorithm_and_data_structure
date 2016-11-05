@@ -26,7 +26,7 @@ public class Solution {
     }
     
     
-    // Iteration DFS by Stack。自己做的
+    // Iteration DFS by 2 Stacks。自己做的
     public boolean isSameTree(TreeNode p, TreeNode q) {
         
         Stack<TreeNode> nodeStack_P = new Stack<>();
@@ -61,7 +61,7 @@ public class Solution {
     }
     
  
-    // Iteration BFS by Queue。自己做的
+    // Iteration BFS by 2 Queues。自己做的
     public boolean isSameTree(TreeNode p, TreeNode q) {
         
         Queue<TreeNode> nodeQueue_P = new LinkedList<>();
