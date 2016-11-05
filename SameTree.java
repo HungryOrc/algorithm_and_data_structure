@@ -26,7 +26,7 @@ public class Solution {
     }
     
     
-    // Iteration, DFS。自己做的
+    // Iteration DFS by Stack。自己做的
     public boolean isSameTree(TreeNode p, TreeNode q) {
         
         Stack<TreeNode> nodeStack_P = new Stack<>();
@@ -61,6 +61,38 @@ public class Solution {
     }
     
  
- 
+    // Iteration BFS by Queue。自己做的
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        
+        Queue<TreeNode> nodeQueue_P = new LinkedList<>();
+        Queue<TreeNode> nodeQueue_Q = new LinkedList<>();
+        nodeQueue_P.offer(p);
+        nodeQueue_Q.offer(q);
+        
+        while (!nodeQueue_P.isEmpty() && !nodeQueue_Q.isEmpty())
+        {
+            TreeNode curNodeInP = nodeQueue_P.poll();
+            TreeNode curNodeInQ = nodeQueue_Q.poll();
+            
+            if (curNodeInP == null && curNodeInQ == null)
+                continue;
+            else if ((curNodeInP == null && curNodeInQ != null) || (curNodeInP != null) && (curNodeInQ == null))
+                return false;
+            else if (curNodeInP.val != curNodeInQ.val)
+                return false;
+            else
+            {
+                nodeQueue_P.offer(curNodeInP.left);
+                nodeQueue_Q.offer(curNodeInQ.left);
+                nodeQueue_P.offer(curNodeInP.right);
+                nodeQueue_Q.offer(curNodeInQ.right);
+            }
+        }
+        
+        if (nodeQueue_P.isEmpty() && nodeQueue_Q.isEmpty())
+            return true;
+        else 
+            return false;
+    } 
  
 }
