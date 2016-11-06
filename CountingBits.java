@@ -4,8 +4,7 @@ Example: For num = 5 you should return [0,1,1,2,1,2], which includes 6 elements.
 Try to make the Runtime ~ O(n) and Space cost ~ O(n).   */
 
 public class CountingBits
-{
-    
+{   
     // 方法：位运算 + 递归。看最右边的一位是否是零（i & 1），然后右移一位（i >> 1）
     // Runtime: 应该是 O(n*logn)，但实际表现非常快
     // Reference: https://discuss.leetcode.com/topic/40162/three-line-java-solution/2
@@ -47,8 +46,7 @@ public class CountingBits
                     curNum_Leftover = (curNum_Leftover - 1) & curNum_Leftover;
                 }
             }
-        }
-        
+        }       
         return outputIntArray;
     }
     
@@ -77,12 +75,8 @@ public class CountingBits
             }
             
             outputIntArray[curNum] = curCountOfOnes;
-        }
-        
+        }   
         return outputIntArray;
     }
-
-
-
 
 }
