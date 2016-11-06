@@ -4,6 +4,7 @@ You may assume that the array is non-empty and the majority element always exist
 
 public class Solution {
     
+    // 最普通的 HashMap 方法
     public int majorityElement(int[] nums) {
         
         int halfLength = nums.length / 2;
@@ -16,5 +17,12 @@ public class Solution {
                 return num;
         }
         return -11111111;
+    }
+    
+    // 比较巧妙的先 sort 再取中间那个数即majority的方法
+    public int majoriryElement(int[] nums)
+    {
+        Arrays.sort(nums);
+        return nums[nums.length / 2];
     }
 }
