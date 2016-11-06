@@ -26,7 +26,8 @@ public class Solution {
         return nums[nums.length / 2];
     }
     
-    // 极为巧妙的方法。数学证明见：http://www.cs.utexas.edu/~moore/best-ideas/mjrty/
+    // 极为巧妙的方法：Moore voting algorithm
+    // 数学证明见：http://www.cs.utexas.edu/~moore/best-ideas/mjrty/
     public int majorityElement(int[] nums) {
 
         int major = nums[0], count = 1;
