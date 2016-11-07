@@ -53,7 +53,31 @@ public class Solution {
     
     // 将两个array排序。然后用两个光标来比对
     // Time: O(n*log(n))
-    
+    public int[] intersect(int[] nums1, int[] nums2) 
+    {
+       ArrayList<Integer> result = new ArrayList<>();
+       Arrays.sort(nums1);
+       Arrays.sort(nums2);
+       int index1 = 0, index2 = 0;
+       
+       while ((index1 < nums1.length) && (index2 < nums2.length))
+       {
+          if (nums1[index1] < nums2[inde2])
+             index1 ++;
+          else if (nums1[index1] > nums2[index2])
+             index2 ++;
+          else // nums1[index1] == nums2[index2]
+          {
+             result.add(nums1[index1]);
+             index1++;
+             index2++;
+          }
+       }
+       int[] result_arr = new int[result.size()];
+       for (int i = 0; i < result.size(); i++)
+          result_arr[i] = result.get(i);
+       return result_arr;
+    }
     
     
 }
