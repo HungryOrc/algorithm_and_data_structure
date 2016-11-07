@@ -8,7 +8,7 @@ Note:
 public class Solution {
     
     // 用 HashSet
-    // Time: O(1)
+    // Time: O(n)
     public int[] intersection(int[] nums1, int[] nums2) {
         
         HashSet<Integer> numsInArrayOne = new HashSet<>();
