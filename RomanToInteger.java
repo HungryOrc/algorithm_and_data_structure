@@ -59,6 +59,83 @@ public class Solution
    }
    
    
+   // 从后往前处理，即最先个位，然后十位，然后百位... 每处理一位就加和
+   // 当和大于等于5而再往上一位又出现 I 的话，那么这个 I 要减去。以此类推。很巧妙！
+   // Ref: https://discuss.leetcode.com/topic/821/my-solution-for-this-question-but-i-don-t-know-is-there-any-easier-way
+   public int romanToInt (String s)
+   {
+      int sum = 0;
+      for (int i = s.length()-1; i >= 0; i--)
+      {
+         char c = s.charAt(i);
+         switch (c)
+         {
+            case 'I':
+               sum += (sum>=5 ? -1 : 1);
+               break;
+            case 'V':
+               sum += 5;
+               break;
+            case 'X':
+               sum += 10 * (sum>=50 ? -1 : 1);
+               break;
+            case 'L':
+               sum += 50;
+               break;
+            case 'C':
+               sum += 100 * (sum>=500 ? -1 : 1);
+               break;
+            case 'D':
+               sum += 500;
+               break;
+            case 'M':
+               sum += 1000;
+               break;
+         }
+      }
+      return sum;
+   }
+   
+   
+   // 从左到右逐个位数加和。最后将所有可能出现的该减去的情况减去，注意每一种该减去的情况最多只会出现一次！！要么出现，要么不出现
+   // Ref: https://discuss.leetcode.com/topic/821/my-solution-for-this-question-but-i-don-t-know-is-there-any-easier-way
+   public int romanToInt (String s)
+   {
+      int sum = 0;
+      char[] charArray = s.toCharArray();
+      for (char c : charArray)
+      {
+         if (c == 'M')
+            sum += 1000;
+         else if (c == 'D')
+            sum += 500;
+         else if (c == 'C')
+            sum += 100;
+         else if (c == 'L')
+            sum += 50;
+         else if (c == 'X')
+            sum += 10;
+         else if (c == 'V')
+            sum += 5;
+         else if (c == 'I')
+            sum += 1;
+      }
+      
+      if (s.indexOf("IV") != 1)
+         sum -= 2;
+      if (s.indexOf("IX") != 1)
+         sum -= 2;
+      if (s.indexOf("XL") != 1)
+         sum -= 20;
+      if (s.indexOf("XC") != 1)
+         sum -= 20;
+      if (s.indexOf("CD") != 1)
+         sum -= 200;
+      if (s.indexOf("CM") != 1)
+         sum -= 200;
+      
+      return sum;   
+   }
    
    
 }
