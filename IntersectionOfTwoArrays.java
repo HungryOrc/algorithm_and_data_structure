@@ -38,7 +38,7 @@ public class Solution {
     
     // Sort both Arrays, use 2 pointers from head and tail respectively
     // Ref: https://discuss.leetcode.com/topic/45685/three-java-solutions
-    // Time: O(n*log(n)). 后面处理重复数的过程只用O(1)，但前面排序数组用了O(n*log(n))
+    // Time: O(n*log(n)). 后面处理重复数的过程只用O(n)，但前面排序数组用了O(n*log(n))
     public int[] intersection(int[] num1, int[] num2)
     {
         HashSet<Integer> interNums = new HashSet<>();
@@ -69,7 +69,7 @@ public class Solution {
     
     // Binary Search
     // Ref: https://discuss.leetcode.com/topic/45685/three-java-solutions
-    // Time: O(n*log(n)). 后面处理重复数的过程只用O(1)，但前面排序数组用了O(n*log(n))
+    // Time: O(n*log(n)). 后面处理重复数的过程只用O(log(n))，但前面排序数组用了O(n*log(n))
     public int[] intersection(int[] nums1, int[] nums2) {
         
         HashSet<Integer> interNums = new HashSet<>();
