@@ -19,7 +19,7 @@ Follow up questions:
 public class Solution {
     
     // HashMap，在nums1出现一次+1，在nums2出现一次-1并记入结果，减到0则删除之
-    // Time: O(n).
+    // Time: O(n). 但实际运行结果反而比后面的 two index 的方法慢
     public int[] intersect(int[] nums1, int[] nums2) {
         
         ArrayList<Integer> interNums_List = new ArrayList<>();
@@ -62,7 +62,7 @@ public class Solution {
        
        while ((index1 < nums1.length) && (index2 < nums2.length))
        {
-          if (nums1[index1] < nums2[inde2])
+          if (nums1[index1] < nums2[index2])
              index1 ++;
           else if (nums1[index1] > nums2[index2])
              index2 ++;
