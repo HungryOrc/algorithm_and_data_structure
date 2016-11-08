@@ -10,7 +10,7 @@
  
 public class Solution {
 
-    // Iteration。根本不用 ArrayList　之类的东西来暂存！直接 in place 搞就行了！！
+    // Iteration。根本不用 ArrayList 之类的东西来暂存！直接 in place 搞就行了！！
     public ListNode reverseList(ListNode head) {
         
         // 这两种特殊输入，别忘了
