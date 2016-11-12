@@ -96,7 +96,7 @@ public class Solution {
         // 那么如果没有下面这句put(0, 1)，HashMap里那就取不到1，只能取到0，但其实是有了一个的，取0就错了
         existingPrefixSums.put(0, 1);
           
-        return backtrack(root, 0, sum, map); 
+        return backtrack(root, 0, sum, existingPrefixSums); 
     }
       
     // BackTrack - One Pass
@@ -104,13 +104,13 @@ public class Solution {
         if(curNode == null)
             return 0;
           
-        curPrefixSum += root.val;
+        curPrefixSum += curNode.val;
         int result = existingPrefixSums.getOrDefault(curPrefixSum - targetSum, 0);
         existingPrefixSums.put(curPrefixSum, existingPrefixSums.getOrDefault(curPrefixSum, 0)+1);
         
-        res += 
-              backtrack(root.left, curPrefixSum, targetSum, existingPrefixSums) + 
-              backtrack(root.right, curPrefixSum, targetSum, existingPrefixSums);
+        result += 
+              backtrack(curNode.left, curPrefixSum, targetSum, existingPrefixSums) + 
+              backtrack(curNode.right, curPrefixSum, targetSum, existingPrefixSums);
           
         // 这个语句是另外一个特别重要的点！
         // 因为每个path是不一样的，记录一个path上的逐个prefixSum的HashMap不应该和另一个path的HashMap有互相污染
@@ -119,7 +119,7 @@ public class Solution {
         // 就靠下面这句了。在完成了左右分叉的计算以后，把当前node带来的prefixSum从HashMap里去掉，即消除了当前node曾经存在过的证据
         existingPrefixSums.put(curPrefixSum, existingPrefixSums.get(curPrefixSum)-1);
           
-        return res;
+        return result;
     }
 
     
