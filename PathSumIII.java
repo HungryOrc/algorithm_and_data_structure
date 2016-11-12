@@ -77,25 +77,48 @@ public class Solution {
     }
 
 
-    // Prefix Sum, with HashMap
+    // 非常巧妙的方法：Prefix Sum。比较难于理解
     // Ref: https://discuss.leetcode.com/topic/64388/simple-ac-java-solution-dfs/2
-    // It use a hash map to store all the prefix sum and each time check if the any subarray sum to the target
+    // 从整个树的root开始，沿着每条path上的逐个node，一个一个加下去，加成prefixSum（注意从root到每个node的path是唯一的）
+    // 比如一个path从root开始是 1(root),2,-1,-1,2，那么逐个的prefixSum依次是：1, 3, 2, 1, 3。把这些数都记录到 HashMap 里去
+    // 如果加到某个node时，含有它在内的prefixSum减去targetSum的差，在之前的HashMap里出现过，
+    // 即当前的prefixSum比targetSum多出来的部分，可以表示为本path上之前的某个node一直往上连加到root的和
+    // 这意味着如果从那个node之后加到当前node，其和就正好是targetSum
+    // 所以HashMap里有几个 prefixSum - targetSum，就往result里加几，即有几种加和方法可以等于targetSum
     // Time: O(n), it's a One-Pass method !!! 
     public int pathSum(TreeNode root, int sum) {
-        Map<Integer, Integer> map = new HashMap<>();
-        map.put(0, 1);  //Default sum = 0 has one count
+          
+        Map<Integer, Integer> existingPrefixSums = new HashMap<>();
+        // prefixSum为0的path必然至少有一个，即root node之前的prefixSum
+        // 虽然看起来不应该算，但是到后面，出现了正好加和为targetSum的支路的时候，即 curPrefixSum == targetSum 的时候，
+        // 下面的 backtrack 函数里就得处理到：
+        // result = existingPrefixSums.getPrDefault(curPrefixSum - targetSum, targetSum) = existingPrefixSums.getPrDefault(0, targetSum)
+        // 那么如果没有下面这句put(0, 1)，HashMap里那就取不到1，只能取到0，但其实是有了一个的，取0就错了
+        existingPrefixSums.put(0, 1);
+          
         return backtrack(root, 0, sum, map); 
     }
-    //BackTrack - one pass
-    public int backtrack(TreeNode root, int sum, int target, Map<Integer, Integer> map){
-        if(root == null)
+      
+    // BackTrack - One Pass
+    public int backtrack(TreeNode curNode, int curPrefixSum, int targetSum, Map<Integer, Integer> existingPrefixSums) {
+        if(curNode == null)
             return 0;
-        sum += root.val;
-        int res = map.getOrDefault(sum - target, 0);    //See if there is a subarray sum equals to target
-        map.put(sum, map.getOrDefault(sum, 0)+1);
-        //Extend to left and right child
-        res += backtrack(root.left, sum, target, map) + backtrack(root.right, sum, target, map);
-        map.put(sum, map.get(sum)-1);   //Remove the current node so it wont affect other path
+          
+        curPrefixSum += root.val;
+        int result = existingPrefixSums.getOrDefault(curPrefixSum - targetSum, 0);
+        existingPrefixSums.put(curPrefixSum, existingPrefixSums.getOrDefault(curPrefixSum, 0)+1);
+        
+        res += 
+              backtrack(root.left, curPrefixSum, targetSum, existingPrefixSums) + 
+              backtrack(root.right, curPrefixSum, targetSum, existingPrefixSums);
+          
+        // 这个语句是另外一个特别重要的点！
+        // 因为每个path是不一样的，记录一个path上的逐个prefixSum的HashMap不应该和另一个path的HashMap有互相污染
+        // 但是只要两个path之间有重叠部分，他们的HashMap就有相应重叠的部分，至少所有path都会经过root node
+        // 那么如何消除不重叠的部分？比如走了右子path的子孙nodes，如何消除左子node的val？
+        // 就靠下面这句了。在完成了左右分叉的计算以后，把当前node带来的prefixSum从HashMap里去掉，即消除了当前node曾经存在过的证据
+        existingPrefixSums.put(curPrefixSum, existingPrefixSums.get(curPrefixSum)-1);
+          
         return res;
     }
 
