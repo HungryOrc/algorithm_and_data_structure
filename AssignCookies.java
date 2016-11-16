@@ -25,10 +25,35 @@ You need to output 2.
 // 无法满足的崽子，就不用给任何cookie了，因为最后只要求满足的个数
 public class Solution {
     
+    // Greedy Algorithm
+    // Ref: https://discuss.leetcode.com/topic/67676/simple-greedy-java-solution
+    // 从最小胃的孩子开始，尝试用最小的cookie去满足最小胃的孩子。所以这是一个贪心算法，其局部最优解我们“认为”等于全局最优解……
+    // Time: O(n*log(n))，这是排序的时间。处理的时间只有 O(n)
+    public int findContentChildren(int[] g, int[] s) {
+    
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int contentNum = 0;
+        
+        // 以饼干的个数为纲
+        for (int i = 0, j = 0; i < s.length && j < g.length; i++)
+        {
+            if (s[i] >= g[j])
+            {
+                contentNum ++;
+                
+                // 注意！关键在此！！
+                // 饼干的序号是每次循环都一定要 +1 的，而人的序号只有在找到match时才 +1 ！！
+                j++;
+            }
+        }
+        return contentNum;
+    }
+    
+    
     // 一般的思路：
-    // 从最greedy的孩子开始，尝试用最小的cookie去满足最greedy的孩子
+    // 从最大胃的孩子开始，尝试用最小的cookie去满足最大胃的孩子
     // Time: O(n^2)
-    //
     public int findContentChildren(int[] g, int[] s) {
     
         Arrays.sort(g);
