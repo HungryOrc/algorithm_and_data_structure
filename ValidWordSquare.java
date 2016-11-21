@@ -43,9 +43,9 @@ Therefore, it is a valid word square.
 // Ref: https://discuss.leetcode.com/topic/63387/java-ac-solution-easy-to-understand/4
 public class Solution {
     
-	public static boolean validWordSquare(List<String> words) {
-	    
-	    if(words == null || words.size() == 0)
+    public static boolean validWordSquare(List<String> words)
+    {
+        if(words == null || words.size() == 0)
             return true;
         
         // 如果第一行与第一“列”的长度就不同，那就直接判为挂了
@@ -69,5 +69,5 @@ public class Solution {
             }
         }
         return true;
-	  }
+    }
 }
