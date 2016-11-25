@@ -37,7 +37,7 @@ public class Solution {
             result.add(curString);
         else
         {
-            curString += "->";
+            curString += "->"; // 注意这个加箭头的位置，不可早不可晚
             
             if (curRoot.left != null)
                 recordPath(curRoot.left, curString, result);
