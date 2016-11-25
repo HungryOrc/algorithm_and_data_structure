@@ -46,6 +46,7 @@ public class Solution {
         }
     }
     
+   
     // 另一种很巧妙的 Recursion 方法，很好地展现了整个问题的答案的构成机制：自上而下
     // Ref: https://discuss.leetcode.com/topic/23047/clean-java-solution-accepted-without-any-helper-recursive-function
     public List<String> binaryTreePaths(TreeNode root) {
@@ -69,5 +70,81 @@ public class Solution {
     }
     
     
-    
+    // DFS
+    // 2个Stack，一个装Nodes，一个装Strings！！
+    // Ref: https://discuss.leetcode.com/topic/33781/my-java-solution-in-dfs-bfs-recursion
+    public List<String> binaryTreePaths(TreeNode root)
+    {   
+        List<String> list=new ArrayList<String>();
+        Stack<TreeNode> sNode=new Stack<TreeNode>();
+        Stack<String> sStr=new Stack<String>();
+        
+        if(root==null)
+           return list;
+       
+        sNode.push(root);
+        sStr.push("");
+       
+        while(!sNode.isEmpty())
+        {
+            TreeNode curNode=sNode.pop();
+            String curStr=sStr.pop();
+            
+            if(curNode.left==null && curNode.right==null) 
+                list.add(curStr+curNode.val);
+            else
+            {
+               if(curNode.left!=null)
+               {
+                   sNode.push(curNode.left);
+                   sStr.push(curStr+curNode.val+"->");
+               }
+               if(curNode.right!=null)
+               {
+                   sNode.push(curNode.right);
+                   sStr.push(curStr+curNode.val+"->");
+               }
+            }
+        }
+        return list;
+    }
+   
+   
+    // BFS
+    // 2个Queue，一个装Nodes，一个装Strings！！
+    // Ref: https://discuss.leetcode.com/topic/33781/my-java-solution-in-dfs-bfs-recursion   
+    public List<String> binaryTreePaths(TreeNode root)
+    {
+       List<String> list = new ArrayList<String>();
+       Queue<TreeNode> qNode = new LinkedList<TreeNode>();
+       Queue<String> qStr = new LinkedList<String>();
+
+       if (root==null)
+          return list;
+       
+       qNode.add(root);
+       qStr.add("");
+       
+       while(!qNode.isEmpty())
+       {
+           TreeNode curNode=qNode.remove();
+           String curStr=qStr.remove();
+
+           if (curNode.left==null && curNode.right==null) 
+               list.add(curStr+curNode.val);
+           else
+           {
+              if (curNode.left!=null) {
+                  qNode.add(curNode.left);
+                  qStr.add(curStr+curNode.val+"->");
+              }
+              if (curNode.right!=null) {
+                  qNode.add(curNode.right);
+                  qStr.add(curStr+curNode.val+"->");
+              }
+           }
+       }
+       return list;
+   }
+   
 }
