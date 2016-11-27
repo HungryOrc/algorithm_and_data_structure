@@ -41,6 +41,39 @@ public class Solution extends GuessGame {
         return -1; // 如果一定能找到的话，即pickedNum一定在1-n之间的话，则永远不会到这一步来
     }
  
+    
+    // Ternary Search，三分法
+    // Ref: https://leetcode.com/articles/guess-number-higher-or-lower/
+    // 三分法在一些情况下会比二分法更快，但关键是它的worst case 会比二分法的worst case 更慢！！
+    public int guessNumber(int n)
+    {
+        int low = 1;
+        int high = n;
+        while (low <= high)
+        {
+            // 三分法的关键在这里！！
+            int mid1 = low + (high - low) / 3;
+            int mid2 = high - (high - low) / 3;
+ 
+            int res1 = guess(mid1);
+            int res2 = guess(mid2);
+            
+            if (res1 == 0)
+                return mid1;
+            else if (res2 == 0)
+                return mid2;
+            else if (res1 < 0)
+                high = mid1 - 1;
+            else if (res2 > 0)
+                low = mid2 + 1;
+            else {
+                low = mid1 + 1;
+                high = mid2 - 1;
+            }
+        }
+        return -1;
+    }
+ 
  
     // Recursion 方法
     public int guessNumber(int n) {
