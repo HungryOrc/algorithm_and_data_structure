@@ -3,8 +3,8 @@ I pick a number from 1 to n. You have to guess which number I picked.
 Every time you guess wrong, I'll tell you whether the number is higher or lower.
 
 You call a pre-defined API guess(int num) which returns 3 possible results (-1, 1, or 0):
--1 : My number is lower
- 1 : My number is higher
+-1 : The picked number is lower than num
+ 1 : The picked number is higher than num
  0 : Congrats! You got it!
  
 Example:
@@ -19,17 +19,45 @@ Return 6, which means to find the number that I picked. */
 */
 public class Solution extends GuessGame {
     
+     // Iteration, Binary Search
+     public int guessNumber(int n) {
+        
+        int lowerBound = 1;
+        int upperBound = n;
+        
+        // while 往往能化 Recursion 为 Iteration ！！！！
+        while(lowerBound <= upperBound) 
+        {
+            int mid = (lowerBound+upperBound)/2; // 这样能减少运算次数！
+            int guessResult = guess(mid); // 这样能减少运算次数！
+            
+            if (guessResult == 0)
+                return mid;
+            else if (guessResult == -1)
+                upperBound = mid - 1;
+            else // guessResult == 1
+                lowerBound = mid + 1;
+        }
+        return -1; // 如果一定能找到的话，即pickedNum一定在1-n之间的话，则永远不会到这一步来
+    }
+ 
+ 
     // Recursion 方法
     public int guessNumber(int n) {
         return find(1, n);
     }
     private int find(int lowerBound, int upperBound)
     {
-        if (guess((lowerBound+upperBound)/2) == 0)
-            return (lowerBound+upperBound)/2;
-        else if (guess((lowerBound+upperBound)/2) == 1)
-            return find(lowerBound, (lowerBound+upperBound)/2-1);
-        else // guess((lowerBound+upperBound)/2) == -1
-            return find((lowerBound+upperBound)/2+1, upperBound);
+        int mid = (lowerBound+upperBound)/2; // 这样能减少运算次数！！
+        int guessResult = guess(mid); // 这样能减少运算次数！
+     
+        if (guessResult == 0)
+            return mid;
+        else if (guessResult == -1)
+            return find(lowerBound, mid-1);
+        else // guessResult == 1
+            return find(mid+1, upperBound);
     }
+ 
+ 
 }
