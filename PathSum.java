@@ -1,4 +1,5 @@
 /* Given a binary tree and a sum, 
+注意！这里只是一般的Binary Tree！左右子节点和父节点之间没有任何大小的关系！
 determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
 For example:
 Given the below binary tree and sum = 22,
@@ -38,8 +39,39 @@ public class Solution {
     }
     
     
-    // Iteration
-    
+    // Iteration, by Stack, DFS. 如果用Queue做BFS，也是大同小异
+        public boolean hasPathSum(TreeNode root, int sum) {
+        
+        if (root == null)
+            return false;
+        
+        Stack<TreeNode> nodeStack = new Stack<>();
+        nodeStack.push(root);
+        Stack<Integer> sumStack = new Stack<>();
+        sumStack.push(0);
+        
+        while(!nodeStack.isEmpty())
+        {
+            TreeNode curNode = nodeStack.pop();
+            int curSum = sumStack.pop();
+            curSum += curNode.val;
+            
+            if (curSum == sum && curNode.left == null && curNode.right == null)
+                return true;
+            
+            if (curNode.left != null)
+            {
+                nodeStack.push(curNode.left);
+                sumStack.push(curSum);
+            }
+            if (curNode.right != null)
+            {
+                nodeStack.push(curNode.right);
+                sumStack.push(curSum);
+            }
+        }
+        return false;
+    }
     
     
 }
