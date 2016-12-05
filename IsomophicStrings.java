@@ -37,6 +37,9 @@ public class Solution {
             if (lastShowUpIndexOfTnisChar_InS[s.charAt(i)] != lastShowUpIndexOfTnisChar_InT[t.charAt(i)])
                 return false;
                 
+            // 精华三！！！
+            // +1 的作用：凡是0，都是没出现过。凡是 >= 1，都是出现过，且数字表示上一次出现的位置（-1得到数组里的index值）
+            // 如果不+1，一个至少的问题就是，出现在index 0 的char，和没出现过的char，就会被误认为是同一个char
             lastShowUpIndexOfTnisChar_InS[s.charAt(i)] = i+1;
             lastShowUpIndexOfTnisChar_InT[t.charAt(i)] = i+1;
         }
