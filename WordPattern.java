@@ -93,6 +93,7 @@ public class Solution
                 else
                 {
                     // 双方上一次出现的位置必须相同
+                    // 注意！！！两个 Integer 类型之间的 “值相等” 比较，必须用 equals！！！不能用 == ！！！
                     if (!patternMap.get(curChar).equals(strMap.get(curString))) 
                         return false; // 不同，则return false
                     else // 相同，才可以继续一起玩耍
