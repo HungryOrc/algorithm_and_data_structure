@@ -21,8 +21,8 @@ public class Solution {
         // 用一个char所对应的int，作为一个index，以此在一个整形数组里记录这个char上次在string里出现的位置
         //
         // 标准ASCII码有128个，拓展后的ASCII码有256个，但后128个都比较生僻，所以一般前128位就够用
-        int[] lastShowUpSlotInS = new int[128];
-        int[] lastShowUpSlotInT = new int[128];
+        int[] lastShowUpIndexOfTnisChar_InS = new int[128];
+        int[] lastShowUpIndexOfTnisChar_InT = new int[128];
         
         for (int i = 0; i < s.length(); i++) 
         {
@@ -34,11 +34,11 @@ public class Solution {
             // 我们要的是判断前一个的位置二者之间是否相等，不是当前的位置
             // 而且，可见，后面的两个赋值语句是不需要对最后的位置的char做操作的，因为如果2个string里分别在最后位置的2个char，
             // 它们分别在各自的string里上一次出现的位置相同，然后当前的位置当然也相同（都在array末尾），所以就已经done了
-            if (lastShowUpSlotInS[s.charAt(i)] != lastShowUpSlotInT[t.charAt(i)])
+            if (lastShowUpIndexOfTnisChar_InS[s.charAt(i)] != lastShowUpIndexOfTnisChar_InT[t.charAt(i)])
                 return false;
                 
-            lastShowUpSlotInS[s.charAt(i)] = i+1;
-            lastShowUpSlotInT[t.charAt(i)] = i+1;
+            lastShowUpIndexOfTnisChar_InS[s.charAt(i)] = i+1;
+            lastShowUpIndexOfTnisChar_InT[t.charAt(i)] = i+1;
         }
         return true;
     }
