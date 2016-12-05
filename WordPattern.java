@@ -66,4 +66,57 @@ public class Solution
         }
         return true;
     }
+    
+    
+    // 上一个方法的略为改进版：只记录和比较当前的char上一次出现的位置，以及当前的String上一次出现的次数
+    // 这其实和存储每个char，每个String每一次出现的次数为2个ArrayList是完全等效的。而这样的改进能节约时间和空间
+        public boolean wordPattern(String pattern, String str)
+    {
+        String[] strSplitted = str.split(" ");
+        if (strSplitted.length != pattern.length()) // 如果二者长度不等
+            return false;
+            
+        HashMap<Character, Integer> patternMap = new HashMap<>();
+        HashMap<String, Integer> strMap = new HashMap<>();
+        
+        for (int i = 0; i < pattern.length(); i++)
+        {
+            char curChar = pattern.charAt(i);
+            String curString = strSplitted[i];
+            
+            // 如果当前的char以前也出现过
+            if (patternMap.containsKey(curChar)) 
+            {
+                // 则对应位置上的String也必须出现过
+                if (!strMap.containsKey(curString)) 
+                    return false;
+                else
+                {
+                    // 双方上一次出现的位置必须相同
+                    if (!patternMap.get(curChar).equals(strMap.get(curString))) 
+                        return false; // 不同，则return false
+                    else // 相同，才可以继续一起玩耍
+                    {
+                        patternMap.put(curChar, i);
+                        strMap.put(curString, i);
+                    }
+                }
+            }
+            // 如果当前的char在以前没出现过
+            else
+            {
+                // 则对应位置上的String也必须没出现过
+                if (strMap.containsKey(curString))
+                    return false;
+                else
+                {
+                    patternMap.put(curChar, i);
+                    strMap.put(curString, i);
+                }
+            }
+       }
+        return true;
+    }
+    
+    
 }
