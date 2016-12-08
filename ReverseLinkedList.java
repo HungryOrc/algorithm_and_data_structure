@@ -13,12 +13,12 @@ public class Solution {
     // Iteration。根本不用 ArrayList 之类的东西来暂存！直接 in place 搞就行了！！
     public ListNode reverseList(ListNode head) {
         
-        // 这两种特殊输入，别忘了
         if (head == null)
             return null;
         if (head.next == null)
             return head;
         
+        // 注意！！以下几步都是精华！！
         ListNode prevNode = null;
         while (head != null)
         {
@@ -33,8 +33,7 @@ public class Solution {
 
     // Recursion
     public ListNode reverseList(ListNode head) {
-        
-        // 这两种特殊输入，别忘了
+
         if (head == null)
             return null;
         else if (head.next == null)
@@ -42,17 +41,15 @@ public class Solution {
         
         return reverse(head, null);
     }
-    
     public ListNode reverse (ListNode curHead, ListNode prevNode)
     {
-        // 结束条件，别忘了
         if (curHead == null)
             return prevNode;
             
-        ListNode nextToCurHead = curHead.next;
+        ListNode next = curHead.next;
         curHead.next = prevNode;
         
-        return reverse(nextToCurHead, curHead);
+        return reverse(next, curHead);
     }
 
 }
