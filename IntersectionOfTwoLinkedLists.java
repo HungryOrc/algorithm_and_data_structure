@@ -51,7 +51,50 @@ public class Solution {
     
     // 用两个指针。很巧妙的方法！！！我没想到
     // Ref: https://leetcode.com/articles/intersection-two-linked-lists/
-    
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB)
+    {
+        if (headA == null || headB == null)
+            return null;
+        
+        ListNode originalHeadA = headA;
+        ListNode originalHeadB = headB;
+        boolean headAShifted = false;
+        boolean headBShifted = false;
+        
+        while (headA != headB)
+        {
+            headA = headA.next;
+            headB = headB.next;
+            
+            // 两个pointer可能同时到达尾端，也可能不同时。但这不要紧
+            if (headA == null)
+            {
+                if (headAShifted == false)
+                {
+                    headA = originalHeadB;
+                    headAShifted = true;
+                }
+                // if headA had been shifted once, then headA become null again means
+                // there is no intersection between the 2 lists
+                else
+                    return null;
+            }
+            if (headB == null)
+            {
+                if (headBShifted == false)
+                {
+                    headB = originalHeadA;
+                    headBShifted = true;
+                }
+                // if headB had been shifted once, then headA become null again means 
+                // there is no intersection between the 2 lists
+                else
+                    return null;
+            }
+        }
+        // 结束了这个while loop，又没有触发 return null的话，意味着找到了交点
+        return headA;
+    }
     
     
 }
