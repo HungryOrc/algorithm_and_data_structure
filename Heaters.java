@@ -45,9 +45,9 @@ public class Solution
                 j++;
                 continue;
             }
-            radius = Math.max(radius, Math.abs(heaters[j] - houses[i])); 
+            radius = Math.max(minRadius, Math.abs(heaters[j] - houses[i])); 
             i++;
         }
-        return radius;
+        return minRadius;
     }
 }
