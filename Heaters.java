@@ -40,11 +40,9 @@ public class Solution
         
         while(i < houses.length)
         {
-            if(j+1 < heaters.length && Math.abs(heaters[j] - houses[i]) >= Math.abs(heaters[j+1] - houses[i]))
-            {
+            while (j+1 < heaters.length && (Math.abs(heaters[j+1] - houses[i]) <= Math.abs(heaters[j] - houses[i]) ))
                 j++;
-                continue;
-            }
+            
             radius = Math.max(minRadius, Math.abs(heaters[j] - houses[i])); 
             i++;
         }
