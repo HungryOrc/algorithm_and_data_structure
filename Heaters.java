@@ -15,15 +15,12 @@ Input: [1,2,3],[2]. Output: 1
 The only heater was placed in the position 2, and if we use the radius 1 standard, then all the houses can be warmed.
 Example 2:
 Input: [1,2,3,4],[1,4]. Output: 1
-The two heater was placed in the position 1 and 4. We need to use radius 1 standard, then all the houses can be warmed.
+The two heater was placed in the position 1 and 4. We need to use radius 1 standard, then all the houses can be warmed. */
 
 // Ref: https://discuss.leetcode.com/topic/71429/java-easy-solution/3
-/* Initially it is necessary to sort both houses and heaters by their coordinates. 
-Then assign two pointers, one for houses and another for heaters. Then start traversing the houses. 
-If the ith house is located between j-1th heater and jth heater, 
-then take distance to the closest one and check whether it is the maximum radius found so far. 
-The corner cases are when a house is located before the 1st heater, and when a house is located after the last heater. 
-At the corner case position, there are only distance to consider. That's it. I think code will clarify the idea more. */
+// Runtime: O(m+n)
+// 注意！！这其实是一个线性过程！！不是 m*n 的问题！！
+// 如果第 i 个房子的最近暖气是第 j 个暖气，那么，第 i+1 个房子的最近暖气只可能是 j 或者 j+1, j+2...，不可能是 j 以前的暖气！！！
 public class Solution
 {
     public int findRadius(int[] houses, int[] heaters) {
