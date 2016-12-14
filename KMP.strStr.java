@@ -8,7 +8,8 @@ i		00	01	02	03	04	05	06	07	08	09	10	11	12	13	14	15	16	17	18	19	20	21	22	23
 W[i]	P	A	R	T	I	C	I	P	A	T	E		I	N		P	A	R	A	C	H	U	T	E
 T[i]	-1	0	0	0	0	0	0	0	1	2	0	0	0	0	0	0	1	2	3	0	0	0	0	0
 
- */
+*/
+
 public class KMP_Algorithm {
 
 	// source: the string in which we look for the substring
@@ -94,8 +95,8 @@ public class KMP_Algorithm {
 	        // second case: it can not continue, but we can fall back
 	        else if (cnd > 0) // and w[pos-1] != w[cnd]
 	        {
-	        	// 全算法的最精华在这一句！！！
-	        	// 对比的index(即cnd)，被对比的index的rollback量(即T[cnd])所代替！！！
+	            // 全算法的最精华在这一句！！！
+	       	    // 对比的index(即cnd)，被对比的index的rollback量(即T[cnd])所代替！！！
 	            cnd = T[cnd];
 	            
 	            T[pos] = 0;
@@ -108,7 +109,7 @@ public class KMP_Algorithm {
 	        	T[pos] = 0;
 	        	pos++;
 	        }
-		}
+	    }
 	}
 	
 	
