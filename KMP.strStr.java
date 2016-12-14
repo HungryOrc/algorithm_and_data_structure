@@ -18,11 +18,11 @@ public class KMP_Algorithm {
 	// returning -1 means no occurrence of the word in the source
 	public static int KMP(String source, String word)
 	{
-      // leave this trivial case just for leetcode test cases...
-      // if (needle.equals(""))
-          // return 0;
+            // leave this trivial case just for leetcode test cases...
+            // if (needle.equals(""))
+            // return 0;
             
-		  int m = 0; // the beginning of the current match in source
+            int m = 0; // the beginning of the current match in source
 	    int i = 0; // the position of the current character in the word
 	    int[] T = new int[word.length()]; // the "rollback array" of the word
 	    findRollbackArray(word, T); // pupulate the array T
