@@ -8,7 +8,7 @@ Have you consider that the string might be empty? This is a good question to ask
 For the purpose of this problem, we define empty string as valid palindrome. */
 
 // 注意下面例子中的2个函数！！！
-// Character.isLetterOrDigits(char)
+// Character.isLetterOrDigit(char)
 // Character.toLowerCase(char)
 //
 public class Solution 
