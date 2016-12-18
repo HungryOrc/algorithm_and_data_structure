@@ -27,7 +27,34 @@ public class Solution
     }   
     
     
+    // 方法二：Sort 之后，邻近的2个swap。可保无虞！
+    // Ref: https://leetcode.com/articles/wiggle-sort/
+    public void wiggleSort(int[] nums)
+    {
+        Arrays.sort(nums);
+        // 注意！从第二个元素开始swap！即第一个swap是在 i=1 和 i=2 之间！
+        for (int i = 1; i < nums.length - 1; i += 2)
+            swap(nums, i, i + 1);
+    }
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
     
     
+    // 方法三：其实可以一次过。奇数位上的数如果大于后一个，则swap；偶数位上的数如果小于后一个，则swap
+    // 关键的迷雾是：
+    // 如果偶数位上的数因为小于后一个而swap，并不会影响这个偶数位之前的数要比此偶数位上的数小的要求！！！
+    // Ref: https://leetcode.com/articles/wiggle-sort/
+    public void wiggleSort(int[] nums) 
+    {
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (((i % 2 == 0) && nums[i] > nums[i + 1])
+                    || ((i % 2 == 1) && nums[i] < nums[i + 1])) {
+                swap(nums, i, i + 1);
+            }
+        }
+    }
     
 }
