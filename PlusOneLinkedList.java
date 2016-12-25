@@ -14,6 +14,51 @@ public class ListNode {
 
 public class Solution 
 {
+    // 一个很朴实但也很透彻的方法。我没想到。如果认真地把问题分解透彻了，是可以想出这个解法的
+    // Ref: https://leetcode.com/problems/plus-one-linked-list/
+    // Iterative Two-Pointers with dummy node Java O(n) time, O(1) space
+    // i stands for the most significant digit that is going to be incremented if there exists a carry
+    // dummy node can handle cases such as "9->9>-9" automatically
+    public ListNode plusOne(ListNode head) 
+    {
+        ListNode dummy = new ListNode(0);
+        // dummy，i，j 三个node一开始都是在head前面的
+        dummy.next = head;
+        ListNode i = dummy;
+        ListNode j = dummy;
+        
+        // j最终将指向最后一个node，即最低级的一个数位
+        // i最终将指向最低级的不为9的数位。如果最后一位不为9，则i就会是最后一位
+        // 如果倒数n位都是9，则i将会是倒数第n+1位
+        while (j.next != null) {
+            j = j.next; 
+            if (j.val != 9) {
+                i = j;
+            }
+        }
+        
+        // 如果最后一位即j不为9，则把j+1，然后就完事了
+        if (j.val != 9) {
+            j.val++;
+        // 如果最后一位j是9，则i一定得+1了，然后i到j之间的所有数（也必然都是9）都要变成0
+        } else {
+            i.val++;
+            i = i.next;
+            // 把i和j之间的所有位都变为0
+            while (i != null) {
+                i.val = 0;
+                i = i.next;
+            }
+        }
+        
+        // dummy是head之前的那一位
+        if (dummy.val == 0) {
+            return dummy.next;
+        }
+        return dummy;
+    }
+    
+    
     // 很巧妙的方法！！Recursion
     // Ref: https://leetcode.com/problems/plus-one-linked-list/
     public ListNode plusOne(ListNode head) 
@@ -50,8 +95,5 @@ public class Solution
         head.val = newVal % 10;
         return newVal / 10;
     }
-    
-    
-    
-    
+
 }
