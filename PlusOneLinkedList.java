@@ -47,7 +47,11 @@ public class Solution
         // 继续上面的。如果本node要接受的carry不是0，那么只能是1
         // 所以本node上的val就要+1，且本node向再前一个node的进位即carry为 (val+1)/10
         int newVal = head.val + 1;
-        head.val = val%10;
-        return val/10;
+        head.val = newVal % 10;
+        return newVal / 10;
     }
+    
+    
+    
+    
 }
