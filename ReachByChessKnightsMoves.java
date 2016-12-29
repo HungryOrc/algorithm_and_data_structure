@@ -52,6 +52,7 @@ public class Answer
         HashSet<Integer> visitedSlots = new HashSet<Integer>();
         Queue<Integer> manageSlots = new LinkedList<Integer>();
         
+        visitedSlots.add(src);
         manageSlots.addAll(findNextStep(src));
         int curStep = 1;
         while(!manageSlots.isEmpty())
