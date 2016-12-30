@@ -38,20 +38,25 @@ public class Solution
             diff ^= num;
         }
         // Get its last set bit
+        // 注意这种方法！能取到diff这个数里最右边的一个1，然后其它位全部变成0
+        // remember，一个数的负数是这个数 取反 再 加一
         diff &= -diff;
+        // diff的这一位为1，表明我们要找的2个数里，一个在这一位为1，一个在这一位为0
+        // 因为diff是这两个数的XOR
         
         // Pass 2 :
         int[] rets = {0, 0}; // this array stores the two numbers we will return
         for (int num : nums)
         {
             if ((num & diff) == 0) // the bit is not set
-            {
+                // 所有的在diff的为1的那一位为0的数，连续地进行XOR
+                // 最终将得到我们要的两个数中的一个，这一个在那一位是0
                 rets[0] ^= num;
-            }
+
             else // the bit is set
-            {
+                // 所有的在diff的为1的那一位也为1的数，连续地进行XOR
+                // 最终将得到我们要的两个数中的另一个，这一个在那一位是1
                 rets[1] ^= num;
-            }
         }
         return rets;
     }
