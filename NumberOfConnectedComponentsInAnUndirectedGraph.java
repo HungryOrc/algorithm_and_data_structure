@@ -26,33 +26,69 @@ and thus will not appear together in edges. */
 
 public class Solution 
 {
+     // 很巧妙的方法！！！我没想到
+     // Ref: https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/
+     /* This is 1D version of Number of Islands II. For more explanations, check out this 2D Solution.
+     1. n points = n islands = n trees = n roots.
+     2. With each edge added, check which island is e[0] or e[1] belonging to.
+     3. If e[0] and e[1] are in same islands, do nothing.
+     4. Otherwise, union two islands, and reduce islands count by 1.
+     5. Bonus: path compression can reduce time by 50%. */
+     public int countComponents(int n, int[][] edges)
+     {
+        int[] clusters = new int[n];
+        for(int i = 0; i < n; i++) 
+            clusters[i] = i; 
 
-
-
-
-    // 我的朴素方法。很慢
-    // 逐个检视每个edge，看它的两个端点在哪些components即分块里出现过。把包含同一个edge的任何一个端点的所有components都记录下来
-    // 然后把它们合并成一个component，这里用一个HashSet来表示一个comoponent，再用一个ArrayList来存储所有的HashSets
-    // 合并以后，再把被合并掉的components即HashSets从ArrayList里删掉
-    // 最后看ArrayList里还剩下几个HashSet，以及还有多少个1-n之间的整数没有被任何edge即任何HashSet包含过，它们
-    // 就是单独的独立的点，它们中的每一个也要算作一个component
-    public int countComponents(int n, int[][] edges) 
-    {
-        if (edges == null || edges.length==0)
-            return n;
-        
-        ArrayList<HashSet<Integer>> allComponents = new ArrayList<>();
-        int[] firstEdge = edges[0];
-        HashSet<Integer> firstComponent = new HashSet<>();
-        firstComponent.add(firstEdge[0]);
-        firstComponent.add(firstEdge[1]);
-        allComponents.add(firstComponent);
-        
-        for (int i = 1; i < edges.length; i++)
+        int numOfClusters = n;
+        for(int[] e : edges) 
         {
+            int cluster1 = find(clusters, e[0]);
+            int cluster2 = find(clusters, e[1]);
+            if(cluster1 != cluster2) 
+            {      
+                clusters[cluster2] = cluster1;  // union
+                numOfClusters--;
+            }
+        }
+        return numOfClusters;
+     }
+     private int find(int[] clusters, int id) 
+     {
+        while(clusters[id] != id) 
+        {
+            // optional: path compression 这一步可以没有，但有的话能大幅提速
+            clusters[id] = clusters[clusters[id]];  
+
+            id = clusters[id];
+        }
+        return clusters[id];
+     }
+     
+     
+     // 我的朴素方法。很慢
+     // 逐个检视每个edge，看它的两个端点在哪些components即分块里出现过。把包含同一个edge的任何一个端点的所有components都记录下来
+     // 然后把它们合并成一个component，这里用一个HashSet来表示一个comoponent，再用一个ArrayList来存储所有的HashSets
+     // 合并以后，再把被合并掉的components即HashSets从ArrayList里删掉
+     // 最后看ArrayList里还剩下几个HashSet，以及还有多少个1-n之间的整数没有被任何edge即任何HashSet包含过，它们
+     // 就是单独的独立的点，它们中的每一个也要算作一个component
+     public int countComponents(int n, int[][] edges) 
+     {
+          if (edges == null || edges.length==0)
+            return n;
+
+          ArrayList<HashSet<Integer>> allComponents = new ArrayList<>();
+          int[] firstEdge = edges[0];
+          HashSet<Integer> firstComponent = new HashSet<>();
+          firstComponent.add(firstEdge[0]);
+          firstComponent.add(firstEdge[1]);
+          allComponents.add(firstComponent);
+
+          for (int i = 1; i < edges.length; i++)
+          {
             int[] curEdge = edges[i];
             HashSet<Integer> containingComponents = new HashSet<>();
-            
+
             for (int j = 0; j < 2; j ++)
             {
                 int curInt = curEdge[j];
@@ -62,7 +98,7 @@ public class Solution
                         containingComponents.add(k);
                 }
             }
-            
+
             if (containingComponents.size() > 0)
             {
                 ArrayList<Integer> containingComponents_AL = new ArrayList(containingComponents);
@@ -85,14 +121,14 @@ public class Solution
                 newComponent.add(curEdge[1]);
                 allComponents.add(newComponent);
             }
-        }
-        
-        // 如果一共有4个数，但所有已经出现的edge里只包含1,2,3，
-        // 则认为4作为一个单独的节点未被列出在任何edge里
-        int numOfOccurredNumbers = 0;
-        for (int i = 0; i < allComponents.size(); i++)
+          }
+
+          // 如果一共有4个数，但所有已经出现的edge里只包含1,2,3，
+          // 则认为4作为一个单独的节点未被列出在任何edge里
+          int numOfOccurredNumbers = 0;
+          for (int i = 0; i < allComponents.size(); i++)
             numOfOccurredNumbers += allComponents.get(i).size();
-            
-        return allComponents.size() + (n - numOfOccurredNumbers);
-    }
+
+          return allComponents.size() + (n - numOfOccurredNumbers);
+     }
 }
