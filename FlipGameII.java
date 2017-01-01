@@ -9,8 +9,10 @@ Follow up: Derive your algorithm's runtime complexity. */
 
 public class Solution 
 {
-    /* The idea is try to replace every "++" in the current string s to "--" and see if the opponent can win or not, 
-    if the opponent cannot win, great, we win!
+    /* We can basically try every possible move for the first player (Let's call him 1P from now on), 
+    and recursively check if the second player 2P has any chance to win. 
+    If 2P is guaranteed to lose, then we know the current move 1P takes must be the winning move.
+    
     另一方面：For the time complexity, here is what I thought, let's say the length of the input string s is n, 
     there are at most n - 1 ways to replace "++" to "--" (imagine s is all "+++..."), 
     once we replace one "++", there are at most (n - 2) - 1 ways to do the replacement, 
