@@ -37,4 +37,16 @@ public class Solution
         }
         return false;
     }
+    
+    
+    // Dynamic Programming 的解法（高阶。不需要面试掌握。还没看。将来有空看？？？）
+    // Ref: https://discuss.leetcode.com/topic/27282/theory-matters-from-backtracking-128ms-to-dp-0ms/2
+    
+    /* I'll show the time complexity can be reduced to O(N^2) using Dynamic Programming, 
+    but the improved method requires some non-trivial understanding of the game theory, 
+    and therefore is not expected in a real interview.
+    
+    ... */
+
+    
 }
