@@ -40,5 +40,49 @@ public class Solution
     }
     
     
+    // 改进的方法。用于follow up question里面对巨量的s的情况
+    // Ref: https://leetcode.com/problems/is-subsequence/
+    // 先把t扫一遍，找到所有字母在t里曾经出现过的index，把每个字母曾经出现过的index各自串成一个ArrayList
+    // 然后把这些List合成一个size为26的Array
+    // 然后看s里的逐个char，从左到右。比如s的第一个字母是a，第二个是k，那么我们在上述a的ArrayList里找到
+    // a出现的第一个index，然后在k的ArrayList里找k出现过的index只要其中有一个大于a的index，就ok
+    // 这个过程不断继续，如果在达到s的最后一个字母前，这个搜索过程无法持续了，就表明不是subsequence
+    public boolean isSubsequence(String s, String t) 
+    {
+        if (s == null || s.length()==0)
+            return true;
+        
+        // accommodate the occurrence indice of char 'a' to 'z' in an Array of ArrayLists
+        ArrayList<Integer>[] occurrIndice = new ArrayList[26];
+        for (int i = 0; i < 26; i++)
+            occurrIndice[i] = new ArrayList<Integer>();
+        
+        for (int i = 0; i < t.length(); i++)
+        {
+            char curChar = t.charAt(i);
+            occurrIndice[curChar - 'a'].add(i);
+        }
+        
+        int lastIndex = -1;
+        for (int j = 0; j < s.length(); j++)
+        {
+            char curChar = s.charAt(j);
+            ArrayList<Integer> curAL = occurrIndice[curChar - 'a'];
+            int k = 0;
+            for (; k < curAL.size(); k++)
+            {
+                if (curAL.get(k) > lastIndex)
+                {
+                    lastIndex = curAL.get(k);
+                    break;
+                }
+            }
+            if (k == curAL.size())
+                return false;
+        }
+        return true;
+    }
+    
+    
     
 }
