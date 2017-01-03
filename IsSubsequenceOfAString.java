@@ -84,5 +84,63 @@ public class Solution
     }
     
     
+    // 对上面方法的一点改进：在最后，用二分法来查找一个ArrayList里所存储的哪一个index是我们要的
+    public boolean isSubsequence(String s, String t) 
+    {
+        if (s == null || s.length()==0)
+            return true;
+        
+        // accommodate the occurrence indice of char 'a' to 'z' in an Array of ArrayLists
+        ArrayList<Integer>[] occurrIndice = new ArrayList[26];
+        for (int i = 0; i < 26; i++)
+            occurrIndice[i] = new ArrayList<Integer>();
+        
+        for (int i = 0; i < t.length(); i++)
+        {
+            char curChar = t.charAt(i);
+            occurrIndice[curChar - 'a'].add(i);
+        }
+        
+        int lastIndex = -1;
+        boolean[] theFirstRecordInTheArrayListIsUsed = new boolean[26];
+        for (int j = 0; j < s.length(); j++)
+        {
+            char curChar = s.charAt(j);
+            ArrayList<Integer> curAL = occurrIndice[curChar - 'a'];
+            
+            if (curAL.size() == 0)
+                return false;
+            else if (curAL.get(0) > lastIndex && 
+                     theFirstRecordInTheArrayListIsUsed[curChar - 'a'] == false)
+            {
+                lastIndex = curAL.get(0);
+                theFirstRecordInTheArrayListIsUsed[curChar - 'a'] = true;
+                continue;
+            }
+            else 
+            {
+                lastIndex = binarySearchNextMatchIndex(curAL, lastIndex, 1, curAL.size()-1);
+                if (lastIndex == -1)
+                    return false;
+            }
+        }
+        return true;
+    }
+    private int binarySearchNextMatchIndex(ArrayList<Integer> al, int targetIndex, int start, int end)
+    {
+        if (start > end)
+            return -1;
+            
+        int mid = (start + end) / 2;
+
+        if (al.get(mid) > targetIndex && al.get(mid-1) <= targetIndex)
+            return al.get(mid);
+        else if (start == end)
+            return -1;
+        else if (al.get(mid) <= targetIndex)
+            return binarySearchNextMatchIndex(al, targetIndex, mid+1, end);
+        else // al.get(mid) > targetIndex
+            return binarySearchNextMatchIndex(al, targetIndex, start, mid-1);
+    }
     
 }
