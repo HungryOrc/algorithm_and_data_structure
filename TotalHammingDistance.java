@@ -13,6 +13,30 @@ Length of the array will not exceed 10^4. */
 
 public class Solution 
 {
+    // 很巧妙的方法。O(n) time, O(1) Space
+    // Ref: https://leetcode.com/problems/total-hamming-distance/
+    /* For each bit position 1-32 in a 32-bit integer, we count the number of integers in the array which have that bit set. 
+    Then, if there are n integers in the array and k of them have a particular bit set and (n-k) do not, 
+    then that bit contributes k*(n-k) hamming distance to the total. */
+    public int totalHammingDistance(int[] nums) 
+    {
+        int sum = 0;
+        int n = nums.length;
+        
+        for (int j=0; j<32; j++) 
+        {
+            int bitCount = 0;
+            for (int i=0; i<n; i++) 
+            {
+                bitCount += nums[i] & 1;
+                nums[i] = nums[i] >>> 1;
+            }
+            sum += bitCount * (n - bitCount);
+        }
+        return sum;
+    }
+
+    
     // 笨办法。速度太慢
     public int totalHammingDistance(int[] nums) 
     {
