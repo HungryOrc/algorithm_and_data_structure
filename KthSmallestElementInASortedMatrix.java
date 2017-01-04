@@ -28,19 +28,37 @@ Note: You may assume k is always valid, 1 ≤ k ≤ n2.
 
 // 用Binary Search做。我没有想到。很厉害
 // Ref: https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/
-public class Solution {
-    public int kthSmallest(int[][] matrix, int k) {
-        int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
-        while(lo < hi) {
-            int mid = lo + (hi - lo) / 2;
-            int count = 0,  j = matrix[0].length - 1;
-            for(int i = 0; i < matrix.length; i++) {
-                while(j >= 0 && matrix[i][j] > mid) j--;
+public class Solution 
+{
+    public int kthSmallest(int[][] matrix, int k) 
+    {
+        int matrixDimen = matrix.length;
+        int lowValue = matrix[0][0]; 
+        int highValue = matrix[matrixDimen-1][matrixDimen-1] + 1; // [lowValue, highValue)
+        
+        while(lowValue < highValue) 
+        {
+            int mid = lowValue + (highValue - lowValue) / 2;
+            // number of elements in the matrix that are smaller than mid
+            int count = 0; 
+            int j = matrixDimen-1;
+            
+            // 从上到下，逐行
+            for(int i = 0; i < matrixDimen; i++) 
+            {
+                // 从左到右，逐列
+                while(j >= 0 && matrix[i][j] > mid) 
+                    j--;
                 count += (j + 1);
             }
-            if(count < k) lo = mid + 1;
-            else hi = mid;
+            
+            if(count < k) 
+                lowValue = mid + 1;
+            else 
+                highValue = mid;
         }
-        return lo;
+        // 最后return highValue或者lowValue都是一样的
+        // 因为按照此处二分法的实施方式，它们两最后一定相等，不会交叉
+        return highValue;
     }
 }
