@@ -75,4 +75,39 @@ public class Solution
         return sb.toString();
     }
     
+    
+    // 上面的答主的实现，速度比我的实现快很多。此法记录并直接部署Count，而非最后再数有几个1
+    public List<String> generateAbbreviations(String word)
+    {
+        ArrayList<String> result = new ArrayList<>();
+        
+        permutation(word, 0, 0, "", result);
+        return result;
+    }
+    private static void permutation(
+        String word, int curPos, int curCount, String curStr, ArrayList<String> result)
+    {
+        if (curPos == word.length())
+        {
+            if (curCount > 0)
+                curStr += curCount;
+            
+            result.add(curStr);
+        }
+        else // 注意！！！两个分支的 curStr 要分社设为两个新的互不干涉的 String 才行！！！
+        {
+            // the char at index "curPos" in "word" is not abbreviated
+            String curStr1 = curStr;
+            if (curCount > 0)  
+                curStr1 += curCount;
+            curStr1 += word.charAt(curPos);
+            // 注意，到了这里，curCount要归零
+            permutation(word, curPos+1, 0, curStr1, result);
+            
+            // the char at index "curPos" in "word" is abbreviated
+            String curStr2 = curStr;
+            permutation(word, curPos+1, curCount+1, curStr2, result);
+        }
+    }
+    
 }
