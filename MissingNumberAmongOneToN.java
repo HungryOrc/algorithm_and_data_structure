@@ -24,6 +24,32 @@ public class Solution
     }
     
     
+    // Sum 方法。我竟然没想到。。。。。。
+    // Ref: https://leetcode.com/problems/missing-number/
+    public int missingNumber(int[] nums) {
+        int len = nums.length;
+        int sum = (0+len)*(len+1)/2;
+        for(int i=0; i<len; i++)
+            sum-=nums[i];
+        return sum;
+    }
+    
+    
+    // 将数组排序。然后缺失的数，必然是第一个index比element小一的数，它前面的所有数都
+    // 一定是index==element的值。最后我们用二分法来找这个index
+    // Ref: https://leetcode.com/problems/missing-number/
+    public int missingNumber(int[] nums) {
+        Arrays.sort(nums);
+        int left = 0, right = nums.length, mid= (left + right)/2;
+        while(left<right){
+            mid = (left + right)/2;
+            if(nums[mid]>mid) right = mid;
+            else left = mid+1;
+        }
+        return left;
+    }
+    
+    
     // 我的一个方法。逻辑不是很简明。速度较慢
     public int missingNumber(int[] nums) 
     {
