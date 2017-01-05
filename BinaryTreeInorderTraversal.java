@@ -43,7 +43,7 @@ public class Solution
                 // 把中间的也就是自己放进stack
                 nodeStack.push(curNode);
                 
-                // 最后把右边的放进stack，即下一步要先处理左子树
+                // 最后把左边的放进stack，即下一步要先处理左子树
                 if (curNode.left != null)
                     nodeStack.push(curNode.left);
                 
