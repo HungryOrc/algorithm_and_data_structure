@@ -43,5 +43,28 @@ public class Solution
         }
         return result;
     }
+   
+    // 我的 Recursion 方法
+    public List<Integer> preorderTraversal(TreeNode root) 
+    {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null)
+            return result;
+            
+        preorder(root, result);
+        return result;
+    }
+    private static void preorder(TreeNode curNode, ArrayList<Integer> result)
+    {
+        if (curNode == null)
+            return;
+        else
+        {
+            result.add(curNode.val);
+            preorder(curNode.left, result);
+            preorder(curNode.right, result);
+        }
+    }
+   
 }
 
