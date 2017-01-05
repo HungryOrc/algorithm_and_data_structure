@@ -3,7 +3,7 @@
 Roman Numerals Chart:
 
 I      1   |	X      10  |	C      100  |	M          1000
-II     2   |	XX     20  |	CC     200  |	MM         2000
+II     2   |	XX     20  |	CC     200  |	M M        2000
 III    3   |	XXX    30  |	CCC    300  |	M M M      3000
 IV     4   |	XL     40  |	CD     400  |	M M M M    4000
 V      5   |	L      50  |	D      500  |	M M M M M  5000
