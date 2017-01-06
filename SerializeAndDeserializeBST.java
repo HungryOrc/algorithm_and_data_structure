@@ -76,6 +76,7 @@ public class Codec {
         //smallerQueue : 3,2   storing elements smaller than 5 (root)
         root.left = getNode(samllerQueue);
         //q: 6,7   storing elements bigger than 5 (root)
+        // 目前q里只剩下比root大的元素了
         root.right = getNode(q);
         return root;
     }
