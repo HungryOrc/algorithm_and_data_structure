@@ -77,4 +77,40 @@ public class Solution
         }
         return newRoot;
     } 
+    
+    
+    /* Ref: https://discuss.leetcode.com/topic/40924/java-recursive-o-logn-space-and-iterative-solutions-o-1-space-with-explanation-and-figure
+    In-place Iteration，很巧妙，速度快一些，代码简洁很多。但要理解透彻需要想比较久
+    
+            (parent) null                            (parent) 1                            (parent) 2
+                     / \                                     / \                                   / \
+              (cur) 1   null (rightSibling)           (cur) 2   3 (rightSibling)                  3   1
+                   / \                                     / \                       
+      (leftChild) 2   3                       (leftChild) 4   5                     (cur) 4   5 (rightSibling)
+                 / \
+                4   5
+    */
+    public TreeNode upsideDownBinaryTree(TreeNode root) 
+    {
+        TreeNode parent = null;
+        TreeNode rightSibling = null;
+        TreeNode cur = root;
+        TreeNode leftChild = null;
+        
+        while (cur != null)
+        {
+            // save left child of cur, since we'll reset cur's left child soon
+            leftChild = cur.left; 
+            cur.left = rightSibling;
+            
+            // save right child or cur, since we'll reset cur's right child soon
+            rightSibling = cur.right;
+            cur.right = parent;
+            
+            parent = cur;
+            cur = leftChild;
+        }
+        return parent;
+    }
+    
 }
