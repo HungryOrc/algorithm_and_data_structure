@@ -10,9 +10,10 @@ public class FirstElementBiggerThanK {
 		
 		while (left < right)
 		{
-			int mid = left + (right-left)/2;
+			// 不用 (left + right) / 2，是为了避免超出 int 的范围			
+ 			int mid = left + (right - left) / 2;
 			if (nums[mid] <= k)
-				left = mid+1;
+				left = mid + 1;
 			else // nums[mid] > k
 				right = mid;
 		}
