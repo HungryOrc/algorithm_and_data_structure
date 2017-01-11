@@ -43,7 +43,55 @@ public class Solution
     }
     
     
+    // DFS In-Order Recursion
+    private static int remainingCount = 0;
+    private static int value = 0;
+    public int kthSmallest(TreeNode root, int k) 
+    {
+        remainingCount = k;
+        inOrderCount(root);
+        return value;
+    }
+    // 先数左边，再数中间，最后数右边，才能吻合从最小到最大
+    private static void inOrderCount(TreeNode curNode)
+    {
+        if (curNode.left != null)
+            inOrderCount(curNode.left);
+        
+        remainingCount --;
+        if (remainingCount == 0)
+        {
+            value = curNode.val;
+            return;
+        }
+        
+        if (curNode.right != null)
+            inOrderCount(curNode.right);
+    }
     
     
+      // DFS In-Order Iteration
+      // 这个解法稍微绕一点
+      public int kthSmallest(TreeNode root, int k) {
+        Stack<TreeNode> st = new Stack<>();
+
+        while (root != null) {
+            st.push(root);
+            root = root.left;
+        }
+
+        while (k != 0) {
+            TreeNode n = st.pop();
+            k--;
+            if (k == 0) return n.val;
+            TreeNode right = n.right;
+            while (right != null) {
+                st.push(right);
+                right = right.left;
+            }
+        }
+
+        return -1; // never hit if k is valid
+    }
     
 }
