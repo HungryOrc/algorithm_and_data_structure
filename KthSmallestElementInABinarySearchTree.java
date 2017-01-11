@@ -17,8 +17,12 @@ Hint:
  *     TreeNode(int x) { val = x; }
  * } */
 
+// 以下的几个方法都很不错，受教了
+// Ref: https://discuss.leetcode.com/topic/17810/3-ways-implemented-in-java-binary-search-in-order-iterative-recursive
+
 public class Solution 
 {
+    // DFS Binary Search Recursion
     public int kthSmallest(TreeNode root, int k) 
     {
         int numOfNodesInLeftSubtree = countNodes(root.left);
@@ -37,4 +41,9 @@ public class Solution
             return 0;
         return 1 + countNodes(curNode.left) + countNodes(curNode.right);
     }
+    
+    
+    
+    
+    
 }
