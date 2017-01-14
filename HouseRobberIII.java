@@ -33,6 +33,9 @@ Maximum amount of money the thief can rob = 4 + 5 = 9.
 
 public class Solution
 {
+    // 认真思考就能发现，其实最终答案要么是第0（即root）+ 2 + 4 + 6 + 8... 层之和
+    // 要么是第 1 + 3 + 5 + 7... 层之和。这二者中的一个
+     // 以下这个 recursion 方法，直观，代码简明，但速度很慢
     public int rob(TreeNode root) 
     {
         if (root == null) return 0;
