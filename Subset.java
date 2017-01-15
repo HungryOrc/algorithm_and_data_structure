@@ -88,4 +88,38 @@ class Solution {
         // 这道题里并没有特意的出口处理
     }
     
+    
+    // ----------------------------------------------------------------------------------
+  
+    // 用排列来穷举的方法。不如上面的快
+    class Solution {
+
+        public ArrayList<ArrayList<Integer>> subsets(int[] nums) {
+
+            Arrays.sort(nums);
+            ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+
+            pickSubsets(nums, 0, new ArrayList<Integer>(), result);
+
+            return result;
+        }
+        private static void pickSubsets(int[] nums, int curPos,
+            ArrayList<Integer> curList, ArrayList<ArrayList<Integer>> result)
+        {
+            if (curPos == nums.length) // 意味着上一个循环已经搞到了length-1
+            {
+                result.add(curList);
+                return;
+            }
+
+            // situation 1: not adding the number at curPos to curList
+            pickSubsets(nums, curPos+1,  curList, result);
+
+            // situation 2: adding the number at curPos to curList
+            ArrayList<Integer> addCurList = new ArrayList<>(curList);
+            addCurList.add(nums[curPos]);
+            pickSubsets(nums, curPos+1, addCurList, result);
+        }
+    }
+  
 }
