@@ -68,6 +68,7 @@ class Solution {
         for (int i = startIndex; i < nums.length; i++) {
             
             subset.add(nums[i]);
+            // 注意！！！这里是 i+1 ！！不是 curPos+1 ！！
             dfs(nums, i + 1, subset, results);
     
             // 递归搜索的精华所在：在下一步操作之前，把之前的影响清空！！
