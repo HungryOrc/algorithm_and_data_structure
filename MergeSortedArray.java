@@ -5,6 +5,41 @@ The number of elements initialized in nums1 and nums2 are m and n respectively. 
 
 public class Solution {
     
+    // Ref: https://discuss.leetcode.com/topic/10257/3-line-java-solution
+    // 非常利落干净！
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        
+        int i = m - 1;
+        int j = n - 1;
+        int k = m + n - 1;
+        
+        while (i >= 0 && j >= 0)
+        {
+            if (nums1[i] >= nums2[j])
+            {
+                nums1[k] = nums1[i];
+                i --;
+            }
+            else
+            {
+                nums1[k] = nums2[j];
+                j --;
+            }
+            k --;
+        }
+        
+        while (j >= 0) // && i < 0
+        {
+            nums1[k] = nums2[j];
+            j --;
+            k --;
+        }
+        
+        // while (i >= 0 && j < 0), do nothing
+    }
+    
+    
+    // 我自己的二比一点的办法
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         
         // 把所有的nums1里的元素往后依次挪n位，给之后的merge腾位置
