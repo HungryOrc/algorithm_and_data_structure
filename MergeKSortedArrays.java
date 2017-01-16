@@ -21,7 +21,13 @@ Insert the data of this element into result list.
 4. The extracted node will also contain the array number to which it belongs, and its position in that array.
 Insert the next element from that specific array into the Priority Queue. 
 But if we have reached the end of that array, then do NOTHING.
-5. Keep repeating these, until the Priority Queue is empty. */
+5. Keep repeating these, until the Priority Queue is empty. 
+
+时间复杂度：n*k * log(k)
+k是array的个数，n是array的大约平均长度。所以n*k是大约的总数据量。
+log(k)是把一个元素放到Priority Queue里所需的时间，
+也是从Priority Queue里poll了minimum element以后重新validate这个queue的时间。
+*/
 
 // 注意！！最后的 implements Comparable<QueueNode>
 class QueueNode implements Comparable<QueueNode> {
