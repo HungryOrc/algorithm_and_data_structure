@@ -12,8 +12,6 @@ For nums = [1,2,3], the permutations are:
   [3,2,1]
 ] */
 
-// Ref: http://www.jiuzhang.com/solutions/permutations/
-
 class Solution {
     /**
      * @param nums: A list of integers.
@@ -21,6 +19,7 @@ class Solution {
      */
      
     // Recursion 方法
+    // Ref: http://www.jiuzhang.com/solutions/permutations/
     public List<List<Integer>> permute(int[] nums) {
         
         ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
@@ -61,4 +60,12 @@ class Solution {
             }
         }                       
     }
+  
+  
+    // Non-Recursion 方法
+  
+  
+  
+  
+  
 }
