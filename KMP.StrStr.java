@@ -1,5 +1,5 @@
 /* KMP 算法讲解
-用 O(n) 时间完成在一个 String 里寻找一个 Sub String 的算法
+用 O(n + m) 时间完成在一个 String (长度n) 里寻找一个 Sub String (长度m) 的算法
 https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm
 
 Rollback Array T 举例：
