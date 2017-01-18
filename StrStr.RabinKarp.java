@@ -37,7 +37,7 @@ class Solution {
         int m = target.length();
         int n = source.length();
         
-        // 算出 31^m
+        // 算出 31^m，每次去掉最左边的字母的时候要用
         int topPower = 1;
         for (int i = 0; i < m; i++) {
             topPower = (topPower * HASH_MAGIC_NUMBER) % BASE;
@@ -45,9 +45,9 @@ class Solution {
         }
     
         // 计算 target 的 Hash Code
-        int targetCode = 0;
+        int targetHashCode = 0;
         for (int i = 0; i < m; i++) {
-            targetCode = (targetCode * HASH_MAGIC_NUMBER + target.charAt(i)) % BASE;
+            targetHashCode = (targetHashCode * HASH_MAGIC_NUMBER + target.charAt(i)) % BASE;
         }
         
         // 逐个检查source里每一段substring的 Hash Code
@@ -75,7 +75,7 @@ class Solution {
             // Step 3
             // double check, in case there was a HashCode Conflict,
             // meaning that different Strings had the same HashCode
-            if (hashCode == targetCode) {
+            if (hashCode == targetHashCode) {
                 // substring的右端是不包含的，所以得 +1
                 if (source.substring(i - m + 1, i + 1).equals(target)) {
                     return i - m + 1; // the starting index
