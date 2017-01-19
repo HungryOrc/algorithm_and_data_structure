@@ -27,6 +27,7 @@ public int findPosition(int[] nums, int target) {
         }
     }
     
+    // 事到如今，start + 1 == end
     if (nums[start] == target) {
         return start;
     } else if (nums[end] == target) {
@@ -56,7 +57,8 @@ public int findPosition(int[] nums, int target) {
         }
     }
     
-    if (nums[start] == target) { // 此时应有 start == end 了
+    // 事到如今，start == end
+    if (nums[start] == target) { 
         return start;
     }
     return -1;
