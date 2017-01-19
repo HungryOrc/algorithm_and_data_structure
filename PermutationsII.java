@@ -6,7 +6,11 @@ For numbers [1,2,2] the unique permutations are:
   [1,2,2],
   [2,1,2],
   [2,2,1]
-] */
+] 
+
+Follow up:
+Can you do it without recursion? That would be great!!
+还没找到java的非recursion解法！！ */
 
 public class Solution {
     
