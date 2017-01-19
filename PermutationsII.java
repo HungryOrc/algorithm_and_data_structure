@@ -66,7 +66,7 @@ public class Solution {
     }
     
     
-    // Recursion: 九章的方法，速度快一些
+    // Recursion: 九章的方法，速度明显比上面的方法快
     // Ref: http://www.jiuzhang.com/solutions/permutations-ii/
     public List<List<Integer>> permuteUnique(int[] nums) {
     
