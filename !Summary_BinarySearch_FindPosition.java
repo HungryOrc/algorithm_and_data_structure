@@ -16,7 +16,7 @@ public int findPosition(int[] nums, int target) {
     int start = 0, end = nums.length - 1;
     // 注意！！while 条件的选择
     while (start + 1 < end) {
-        // 不用 (start + end) / 2，是为了避免数据超出int的范围
+        // 不用 "(start + end) / 2 "，是为了避免数据超出int的范围
         int mid = start + (end - start) / 2;
         if (nums[mid] == target) {
             return mid;
