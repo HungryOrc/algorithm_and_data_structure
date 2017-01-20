@@ -1,12 +1,11 @@
 /* Reverse a singly linked list.
 
- * Definition for singly-linked list:
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
+* Definition for singly-linked list:
+* public class ListNode {
+*     int val;
+*     ListNode next;
+*     ListNode(int x) { val = x; }
+* } */
  
 public class Solution {
 
@@ -20,8 +19,7 @@ public class Solution {
         
         // 注意！！以下几步都是精华！！
         ListNode prevNode = null;
-        while (head != null)
-        {
+        while (head != null) {
             ListNode nextNode = head.next;
             head.next = prevNode;
             prevNode = head;
@@ -31,7 +29,7 @@ public class Solution {
     }    
 
 
-    // Recursion
+    // Recursion。和上面的思路是一致的
     public ListNode reverseList(ListNode head) {
 
         if (head == null)
@@ -41,8 +39,7 @@ public class Solution {
         
         return reverse(head, null);
     }
-    public ListNode reverse (ListNode curHead, ListNode prevNode)
-    {
+    public ListNode reverse(ListNode curHead, ListNode prevNode) {
         if (curHead == null)
             return prevNode;
             
