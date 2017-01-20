@@ -22,8 +22,39 @@ public class Solution {
      * @param target: An integer
      * @return : An integer which is the index of the target number
      */
-     
-    // 我的土法。速度很慢，虽然也是二分
+    
+    // 九章的二分法。代码比较简明，比我后面的土法二分稍微快一点
+    public int searchBigSortedArray(ArrayReader reader, int target) {
+        // 1. get the index that ArrayReader.get(index) >= target in O(logk)
+        int index = 1;
+        while (reader.get(index - 1) < target) {
+            index *= 2;
+        }
+        
+        // 2. Binary search the target between 0 and index
+        int start = 0, end = index - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            // 注意！这里不可以用 <= target！
+            // 那样可能导致之后错失第一个出现的target！结果成为第二,三...个出现的target
+            if (reader.get(mid) < target) {
+                start = mid;
+            } else {
+                end = mid;
+            }
+        }
+        
+        if (reader.get(start) == target) {
+            return start;
+        }
+        else if (reader.get(end) == target) {
+            return end;
+        }
+        return -1;
+    }
+    
+    
+    // 我的土法二分
     public int searchBigSortedArray(ArrayReader reader, int target) {
         
         int OVERFLOW = 2147483647;
