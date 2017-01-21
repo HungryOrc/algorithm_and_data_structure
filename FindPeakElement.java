@@ -1,7 +1,12 @@
 /* There is an integer array which has the following features:
 The numbers in adjacent positions are different.
 And we have:
-A[0] < A[1] && A[A.length - 2] > A[A.length - 1].上面这个条件
+A[0] < A[1] && A[A.length - 2] > A[A.length - 1].
+
+上面这个条件意义很大！
+首先：peak不会出现在数组的第一个或最后一个元素
+然后：
+
 We define a position P is a peek if:
 A[P] > A[P-1] && A[P] > A[P+1]
 Find any peak element in this array. Return the index of the peak. 
