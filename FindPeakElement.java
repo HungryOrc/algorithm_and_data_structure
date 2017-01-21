@@ -10,7 +10,7 @@ A[0] < A[1] && A[A.length - 2] > A[A.length - 1].
 
 如果我们发现某个元素a比它左边相邻的元素小，那么在a与数组的开头之间，一定存在至少一个peak！！
 如果我们发现某个元素b比它右边相邻的元素小，那么在b与数组的结尾之间，一定存在至少一个peak！！
-如果某个元素比它左右的元素都大，那么它自己就是一个peak了，就它了，game over
+如果某个元素比它左右的元素都大，那么它自己就是一个peak了，就它了，game over，耶！
 
 We define a position P is a peek if:
 A[P] > A[P-1] && A[P] > A[P+1]
