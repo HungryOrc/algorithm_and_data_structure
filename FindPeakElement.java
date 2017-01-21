@@ -4,8 +4,13 @@ And we have:
 A[0] < A[1] && A[A.length - 2] > A[A.length - 1].
 
 上面这个条件意义很大！
-首先：peak不会出现在数组的第一个或最后一个元素
-然后：
+首先：peak不会出现在数组的第一个或最后一个元素。
+即数组不会从第一个元素开始就不断往下走，也不会从最后一个元素开始往回走时不断往下走。
+那么这就带来一个很大的便利，即：
+
+如果我们发现某个元素a比它左边相邻的元素小，那么在a与数组的开头之间，一定存在至少一个peak！！
+如果我们发现某个元素b比它右边相邻的元素小，那么在b与数组的结尾之间，一定存在至少一个peak！！
+如果某个元素比它左右的元素都大，那么它自己就是一个peak了，就它了，game over
 
 We define a position P is a peek if:
 A[P] > A[P-1] && A[P] > A[P+1]
@@ -30,6 +35,7 @@ class Solution {
         while(start + 1 < end) {
             int mid = start + (end - start) / 2;
             
+            // 注意，题意说了，相邻元素之间不存在相等的情况
             if(A[mid] < A[mid - 1]) {
                 end = mid;
             } 
