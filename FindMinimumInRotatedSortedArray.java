@@ -4,6 +4,7 @@ Find the minimum element.
 
 Notice: 
 You may assume the array is not null and its length is bigger than zero.
+数组中可以有重复的元素。下面的算法可以处理有重复的情况。
 
 Example:
 Given [4, 5, 6, 7, 0, 1, 2] return 0. */
