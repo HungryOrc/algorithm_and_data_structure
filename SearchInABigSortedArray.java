@@ -35,6 +35,7 @@ public class Solution {
         int start = 0, end = index - 1;
         while (start + 1 < end) {
             int mid = start + (end - start) / 2;
+            
             // 注意！这里不可以用 <= target！
             // 那样可能导致之后错失第一个出现的target！结果成为第二,三...个出现的target
             if (reader.get(mid) < target) {
@@ -44,6 +45,7 @@ public class Solution {
             }
         }
         
+        // 因为是要找第一个，所以先判断start，再判断end！！
         if (reader.get(start) == target) {
             return start;
         }
