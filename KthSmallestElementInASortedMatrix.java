@@ -11,7 +11,7 @@ matrix = [
 k = 8,
 return 13.
 
-Note: You may assume k is always valid, 1 ≤ k ≤ n2.
+Note: You may assume k is always valid, 1 ≤ k ≤ n^2.
 
 注意：
 
@@ -39,19 +39,22 @@ public class Solution
         while(lowValue < highValue) 
         {
             int mid = lowValue + (highValue - lowValue) / 2;
+           
             // number of elements in the matrix that are smaller than mid
+            // 对每一个mid值，算一下，在matrix里，有多少个数小于或者等于这个mid值
             int count = 0; 
-            int j = matrixDimen-1;
-            
+           
+            int j = matrixDimen - 1;
             // 从上到下，逐行
             for(int i = 0; i < matrixDimen; i++) 
             {
-                // 从左到右，逐列
+                // 从右到左，逐列
                 while(j >= 0 && matrix[i][j] > mid) 
                     j--;
                 count += (j + 1);
             }
             
+            // 对于当前的mid值来说，count算出来了。现在把count和k做对比
             if(count < k) 
                 lowValue = mid + 1;
             else 
