@@ -22,8 +22,42 @@ public class Solution {
      * @return: An integer indicate the occurrence of target in the given matrix
      */
      
-     
-    // 用二分法，也没多快
+    // Ref: http://www.jiuzhang.com/solutions/search-a-2d-matrix-ii/
+    /* 直接从左下角到右上角，行数不断--，列数不断++ */
+    public int searchMatrix(int[][] matrix, int target) {
+        
+        if (matrix == null || matrix.length == 0) {
+            return 0;
+        } else if (matrix[0] == null || matrix[0].length == 0) {
+            return 0;
+        }
+        
+        int count = 0;
+        
+        // from bottom left to top right
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int curRow = n - 1;
+        int curCol = 0;
+        
+        while (curRow >= 0 && curCol < m) {
+            int curValue = matrix[curRow][curCol];
+            if (curValue > target) {
+                curRow --;
+            } else if (curValue < target) {
+                curCol ++;
+            } else { // curValue == target
+                count ++;
+                
+                curRow --;
+                curCol ++;
+            }
+        }
+        return count;
+    }
+  
+  
+    // 用二分法，也没有更快。虽然理论上来说应该是比上面的方法更快的
     public int searchMatrix(int[][] matrix, int target) {
         
         if (matrix == null || matrix.length == 0) {
