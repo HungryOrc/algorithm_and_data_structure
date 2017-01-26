@@ -72,8 +72,48 @@ public class Solution {
     
     
     // 一次二分的做法
-    
-    
-    
+    // Ref: http://www.jiuzhang.com/solutions/search-in-rotated-sorted-array/
+    public int search(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+
+        int start = 0;
+        int end = nums.length - 1;
+        int mid;
+        
+        while (start + 1 < end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            
+            // 注意！！！关键所在！这里不再像常规一样比较mid和target！而是比较start和mid！然后分出两种情况，
+            // 然后才是比较他们和target之间的大小关系！
+            if (nums[start] < nums[mid]) {
+                // situation 1
+                if (nums[start] <= target && target <= nums[mid]) { // 注意比较的内容！！
+                    end = mid;
+                } else {
+                    start = mid;
+                }
+            } else { // nums[start] > nums[mid]，等于是不可能的！因为所有元素都不相等！
+                // situation 2
+                if (nums[mid] <= target && target <= nums[end]) { // 注意比较的内容！！
+                    start = mid;
+                } else {
+                    end = mid;
+                }
+            }
+        }
+        
+        if (nums[start] == target) {
+            return start;
+        }
+        if (nums[end] == target) {
+            return end;
+        }
+        return -1;
+    }
     
 }
