@@ -20,28 +20,30 @@ return [1,2,3].
 
 public class Solution 
 {
-    // 我的 Iteraion 方法
+    // 方法1: Non - Recursion (Recommended)
     public List<Integer> preorderTraversal(TreeNode root) 
     {
-        ArrayList<Integer> result = new ArrayList<>();
-        if (root == null)
-            return result;
-            
         Stack<TreeNode> nodeStack = new Stack<>();
-        nodeStack.push(root);
+        ArrayList<Integer> preorder = new ArrayList<>();
         
-        while (!nodeStack.isEmpty())
-        {
-            TreeNode curNode = nodeStack.pop();
-            result.add(curNode.val);
-            
-            // 因为之后要先处理左子树，所以先把右child放到stack里去，再放左child
-            if (curNode.right != null)
-                nodeStack.push(curNode.right);
-            if (curNode.left != null)
-                nodeStack.push(curNode.left);
+        if (root == null) {
+            return preorder;
         }
-        return result;
+        
+        nodeStack.push(root);
+        while (!nodeStack.isEmpty()) {
+            TreeNode curNode = nodeStack.pop();
+            preorder.add(curNode.val);
+            
+            // 注意！因为遍历的时候要先放左子，所以入栈的时候要先入右子！！！
+            if (curNode.right != null) {
+                nodeStack.push(curNode.right);
+            }
+            if (curNode.left != null) {
+                nodeStack.push(curNode.left);
+            }
+        }
+        return preorder;
     }
    
     // 我的 Recursion 方法
