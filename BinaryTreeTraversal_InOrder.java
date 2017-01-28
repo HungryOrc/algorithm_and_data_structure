@@ -18,8 +18,8 @@ return [1,3,2].
  * } */
 
 public class Solution 
-{
-    // 我的朴素 Iteration 方法
+{ 
+    // 方法1: Non Recursion (Recommended)，我的独创方式
     public List<Integer> inorderTraversal(TreeNode root) 
     {
         ArrayList<Integer> result = new ArrayList<>();
@@ -32,6 +32,8 @@ public class Solution
         while (!nodeStack.isEmpty())
         {
             TreeNode curNode = nodeStack.pop();
+           
+            // if this is a leaf
             if (curNode.left==null && curNode.right==null)
                 result.add(curNode.val);
             else
@@ -56,28 +58,39 @@ public class Solution
     }
  
     
-    // 我的朴素 Recursion 方法。运算速度比 Iteration 快
-    public List<Integer> inorderTraversal(TreeNode root) 
-    {
+    // 方法2: Recursion - Traverse
+    public ArrayList<Integer> inorderTraversal(TreeNode root) {
         ArrayList<Integer> result = new ArrayList<>();
-        
-        if (root == null)
-            return result;
-        else
-            inorder(root, result);
-            
+        inorder(root, result);
         return result;
     }
-    private static void inorder(TreeNode curNode, ArrayList<Integer> al)
-    {
-        if (curNode == null)
+    private void inorder(TreeNode root, ArrayList<Integer> result) {
+        if (root == null) {
             return;
-        else
-        {
-            inorder(curNode.left, al);
-            al.add(curNode.val);
-            inorder(curNode.right, al);
         }
-    }    
+       
+        inorder(root.left, result);
+        result.add(root.val);
+        inorder(root.right, result);
+    }
+   
+    
+    // 方法3: Divide & Conquer
+    public ArrayList<Integer> inorderTraversal(TreeNode root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+       
+        // Divide 
+        ArrayList<Integer> leftVals = inorderTraversal(root.left);
+        ArrayList<Integer> rightVals = inorderTraversal(root.right);
+       
+        // Conquer
+        result.addAll(leftVals);
+        result.add(root.val);
+        result.addAll(rightVals);
+        return result;
+    }
  
 }
