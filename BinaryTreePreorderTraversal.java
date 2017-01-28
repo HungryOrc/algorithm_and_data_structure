@@ -18,10 +18,11 @@ return [1,2,3].
  *     TreeNode(int x) { val = x; }
  * } */
 
+// Ref: http://www.jiuzhang.com/solutions/binary-tree-preorder-traversal/
 public class Solution 
 {
-    // 方法1: Non - Recursion (Recommended)
-    public List<Integer> preorderTraversal(TreeNode root) 
+    // 方法1: Non Recursion (Recommended)
+    public ArrayList<Integer> preorderTraversal(TreeNode root) 
     {
         Stack<TreeNode> nodeStack = new Stack<>();
         ArrayList<Integer> preorder = new ArrayList<>();
@@ -47,17 +48,39 @@ public class Solution
     }
    
    
-    // 方法2: 
-    
+    // 方法2: Recursion - Traverse
+    public ArrayList<Integer> preorderTraversal(TreeNode root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        preorder(root, result);
+        return result;
+    }
+    private void preorder(TreeNode root, ArrayList<Integer> result) {
+        if (root == null) {
+            return;
+        }
+       
+        result.add(root.val);
+        preorder(root.left, result);
+        preorder(root.right, result);
+    }
    
    
-   
-   
-   
-   
-   
-   
-   
-   
-}
+    // 方法3: Divide & Conquer
+    public ArrayList<Integer> preorderTraversal(TreeNode root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+       
+        // Divide 
+        ArrayList<Integer> leftVals = preorderTraversal(root.left);
+        ArrayList<Integer> rightVals = preorderTraversal(root.right);
+       
+        // Conquer
+        result.add(root.val);
+        result.addAll(leftVals);
+        result.addAll(rightVals);
+        return result;
+    }
 
+}
