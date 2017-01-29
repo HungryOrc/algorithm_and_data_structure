@@ -32,7 +32,6 @@ public class MaxDepthOfBinaryTree {
     // 这样Node Stack里存的就是当前处理到的各个战线的最前锋的位置，他们的逐级父辈全都被扔掉了
     // 速度：很快
     // Reference: https://discuss.leetcode.com/topic/33826/two-java-iterative-solution-dfs-and-bfs/2
-    //
     public int maxDepth_ByDFS(TreeNode root)
     {
         if(root == null)
@@ -74,7 +73,6 @@ public class MaxDepthOfBinaryTree {
     // 取出的Node就再也不存入了。处理完一层即一个Depth再处理下一层
     // 速度：很快
     // Reference: https://discuss.leetcode.com/topic/33826/two-java-iterative-solution-dfs-and-bfs/2
-    //
     public int maxDepth_ByBFS(TreeNode root)
     {
         if(root == null)
@@ -108,7 +106,5 @@ public class MaxDepthOfBinaryTree {
         
         return curDepth;
     }
- 
- 
-    
+
 }
