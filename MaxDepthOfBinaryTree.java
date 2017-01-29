@@ -1,22 +1,18 @@
 /* Given a binary tree, find its maximum depth.
 The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node. */
 
-/**
- * Definition for a binary tree node.
+/* Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
  *     TreeNode right;
  *     TreeNode(int x) { val = x; }
- * }
- */
-
+ * } */
  
 public class MaxDepthOfBinaryTree {
 
-    // 方法：Recursion。思路巧妙，代码简洁
+    // 方法1：Recursion - Divide and Conquer 分治法
     // 速度：按理说Recursion类方法的速度会偏慢，但实测相当快，leetcode的测试用例是1ms跑完
-    //
     public int maxDepth_ByRecursion(TreeNode root)
     {
         if(root == null)
@@ -26,7 +22,7 @@ public class MaxDepthOfBinaryTree {
     }
     
     
-    // 方法：Depth First Search (DFS)。使用了2个Stack，一个存Node，一个存正对应于当前Node的Depth
+    // 方法2：Depth First Search (DFS)。使用了2个Stack，一个存Node，一个存正对应于当前Node的Depth
     // Node的Stack：每次先pop出父Node，再push进它的子Node(s)。
     // 后存入的Node先取出，取出以后就再也不存入了，如此实现了被处理过的Node不再被重复处理
     // 这样Node Stack里存的就是当前处理到的各个战线的最前锋的位置，他们的逐级父辈全都被扔掉了
@@ -68,7 +64,7 @@ public class MaxDepthOfBinaryTree {
     }
     
  
-    // 方法：Breadth First Search (BFS)。使用了1个Queue，放"当前Depth"层所含有的所有Nodes
+    // 方法3：Breadth First Search (BFS)。使用了1个Queue，放"当前Depth"层所含有的所有Nodes
     // 每次取出一个第m层的Node，就把它的子Node(s)(在第m+1层)放到Queue尾去。注意Queue是后进后出
     // 取出的Node就再也不存入了。处理完一层即一个Depth再处理下一层
     // 速度：很快
