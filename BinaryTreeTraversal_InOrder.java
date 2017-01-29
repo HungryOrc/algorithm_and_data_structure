@@ -33,7 +33,8 @@ public class Solution
         {
             TreeNode curNode = nodeStack.pop();
            
-            // if this is a leaf
+            // 要么，这个node是leaf
+            // 要么，这个node的左右子都已被纳入stack了
             if (curNode.left==null && curNode.right==null)
                 result.add(curNode.val);
             else
