@@ -17,7 +17,7 @@ All root-to-leaf paths are: ["1->2->5", "1->3"]
 
 public class Solution {
     
-    // Recursion方法，自己写的
+    // 方法1: Recursion - Traversal，自己写的
     public List<String> binaryTreePaths(TreeNode root) {
         
         ArrayList<String> result = new ArrayList<>();
@@ -47,26 +47,26 @@ public class Solution {
     }
     
    
-    // 另一种很巧妙的 Recursion 方法，很好地展现了整个问题的答案的构成机制：自上而下
+    // 方法2: Recursion - Divide and Conquer
     // Ref: https://discuss.leetcode.com/topic/23047/clean-java-solution-accepted-without-any-helper-recursive-function
     public List<String> binaryTreePaths(TreeNode root) {
-        
         List<String> paths = new LinkedList<>();
-
-        if(root == null) return paths;
-        
+        if(root == null) 
+            return paths;
         if(root.left == null && root.right == null){
             paths.add(root.val+"");
             return paths;
         }
-
-         for (String path : binaryTreePaths(root.left)) {
-             paths.add(root.val + "->" + path);
-         }
-         for (String path : binaryTreePaths(root.right)) {
-             paths.add(root.val + "->" + path);
-         }
-         return paths;
+       
+        List<String> leftPaths = binaryTreePaths(root.left);
+        List<String> rightPaths = binaryTreePaths(root.right);
+        for (String path : leftPaths) {
+            paths.add(root.val + "->" + path);
+        }
+        for (String path : rightPaths) {
+            paths.add(root.val + "->" + path);
+        }
+        return paths;
     }
     
     
