@@ -12,19 +12,21 @@ The minimum depth is the number of nodes along the shortest path from the root n
 
 public class Solution 
 {
-    // Recursion
-    // 比较巧妙的Recursion方式：不用 helper method！不用传递 depth 的中间结果！
+    // Recursion - Divide and Conquer 分治法
     public int minDepth(TreeNode root) 
     {
         if (root == null)
             return 0;
 
+        // 特别注意！cur node的一个child为null时，不能说min depth到cur node就结束了
+        // 如果cur node的另一个child不为null，则本path沿着另一个child继续下去了
+        // 所以求 max depth of binary tree 的那种做法在求 min depth 的时候是不行的
         if (root.left == null)
             return minDepth(root.right) + 1;
-        if (root.right == null)
+        else if (root.right == null)
             return minDepth(root.left) + 1;
-        
-        return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
+        else // 左右child都不是null
+            return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
     }
     
     
@@ -41,6 +43,7 @@ public class Solution
         
         while (!nodeQueue.isEmpty())
         {
+            // 当前level内的node的个数
             int numOfNodesInCurLevel = nodeQueue.size();
             curDepth ++;
             
@@ -48,6 +51,7 @@ public class Solution
             {
                 TreeNode curNode = nodeQueue.poll();
                 
+                // 找到一个leaf，那么此时找 min depth 的工作就可以结束了
                 if (curNode.left == null && curNode.right == null)
                     return curDepth;
                 
