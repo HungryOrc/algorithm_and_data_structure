@@ -22,7 +22,28 @@ public class MaxDepthOfBinaryTree {
     }
     
     
-    // 方法2：Depth First Search (DFS)。使用了2个Stack，一个存Node，一个存正对应于当前Node的Depth
+    // 方法2: Recursion - Traversal
+    public int depth;
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        findDepth(root, 1);
+        return depth;
+    }
+    private void findDepth(TreeNode curNode, int curDepth) {
+        if (curNode == null) {
+            return;
+        }
+        if (curDepth > depth) {
+            depth = curDepth;
+        }
+        findDepth(curNode.left, curDepth + 1);
+        findDepth(curNode.right, curDepth + 1);
+    }
+ 
+ 
+    // 方法3：Depth First Search (DFS)。使用了2个Stack，一个存Node，一个存正对应于当前Node的Depth
     // Node的Stack：每次先pop出父Node，再push进它的子Node(s)。
     // 后存入的Node先取出，取出以后就再也不存入了，如此实现了被处理过的Node不再被重复处理
     // 这样Node Stack里存的就是当前处理到的各个战线的最前锋的位置，他们的逐级父辈全都被扔掉了
@@ -64,7 +85,7 @@ public class MaxDepthOfBinaryTree {
     }
     
  
-    // 方法3：Breadth First Search (BFS)。使用了1个Queue，放"当前Depth"层所含有的所有Nodes
+    // 方法4：Breadth First Search (BFS)。使用了1个Queue，放"当前Depth"层所含有的所有Nodes
     // 每次取出一个第m层的Node，就把它的子Node(s)(在第m+1层)放到Queue尾去。注意Queue是后进后出
     // 取出的Node就再也不存入了。处理完一层即一个Depth再处理下一层
     // 速度：很快
