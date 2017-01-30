@@ -31,8 +31,29 @@ public class Solution
     
     
     // 方法2: Recursion - Traversal
-    
-    
+    int depth;
+    public int minDepth(TreeNode root) {
+        depth = Integer.MAX_VALUE;
+        if (root == null) {
+            return 0;
+        }
+        findMinDepth(root, 1);
+        return depth;
+    }
+    private void findMinDepth(TreeNode curNode, int curDepth) {
+        if (curNode == null) {
+            return;
+        }
+        // if the current node is a leaf,
+        // then the search for the min depth ends here! we got it now!
+        else if (curNode.left == null && curNode.right == null) {
+            depth = Math.min(depth, curDepth);
+        }
+        else {
+            findMinDepth(curNode.left, curDepth + 1);
+            findMinDepth(curNode.right, curDepth + 1);
+        }
+    }
     
     
     // 方法3: Iteration. BFS by Queue.
