@@ -12,7 +12,7 @@ The minimum depth is the number of nodes along the shortest path from the root n
 
 public class Solution 
 {
-    // Recursion - Divide and Conquer 分治法
+    // 方法1: Recursion - Divide and Conquer 分治法
     public int minDepth(TreeNode root) 
     {
         if (root == null)
@@ -30,7 +30,12 @@ public class Solution
     }
     
     
-    // Iteration. BFS by Queue.
+    // 方法2: Recursion - Traversal
+    
+    
+    
+    
+    // 方法3: Iteration. BFS by Queue.
     // DFS by Stack就不写了，应该比BFS慢，因为必须DFS所有的paths才能得到最浅的结论
     public int minDepth(TreeNode root)
     {
