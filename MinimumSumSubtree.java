@@ -46,4 +46,11 @@ public class Solution {
         }
         return curSubtreeSum;
     }
+    
+     
+    // 方法2: 只用 Divide & Conquer 做，怎么做？？？？？
+    
+    
+    
+     
 }
