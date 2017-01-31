@@ -13,7 +13,7 @@ the depth of the two subtrees of every node never differ by more than 1.
 // Ref: https://discuss.leetcode.com/topic/7798/the-bottom-up-o-n-solution-would-be-better
 public class Solution {
     
-    // Top Down Approach
+    // 方法1: Top Down Approach
     /* checks whether the tree is balanced strictly according to the definition of balanced binary tree: 
      the difference between the heights of the two sub trees are not bigger than 1, 
      and both the left sub tree and right sub tree are also balanced.
@@ -22,7 +22,6 @@ public class Solution {
      so the overall complexity of isBalanced will be O(N^2).
     */
     public boolean isBalanced(TreeNode root) {
-        
         if (root == null)
             return true;
         
@@ -31,16 +30,15 @@ public class Solution {
         
         return (Math.abs(leftDepth - rightDepth) <= 1 && isBalanced(root.left) && isBalanced(root.right));
     }
-    private int depth (TreeNode root)
-    {
+    private int depth (TreeNode root) {
         if (root == null)
             return 0;
         return Math.max(depth(root.left), depth(root.right)) + 1;
     }   
     
     
-    // Bottom Up Approach
-        /* This method is based on DFS Recursion. 
+    // 方法2: Bottom Up Approach
+    /* This method is based on DFS Recursion. 
      Instead of calling depth() explicitly for EACH child node, we return the height of the current node in DFS recursion. 
      When the sub tree of the current node (inclusive) is balanced, the function dfsHeight() returns a non-negative value as the height.
      Otherwise -1 is returned. 
@@ -74,4 +72,41 @@ public class Solution {
         return Math.max(leftHeight, rightHeight) + 1;
     }    
     
+ 
+    // 方法3: 自定义新的 return data type
+    // Ref: http://www.jiuzhang.com/solutions/balanced-binary-tree/
+    class BalanceAndDepth {
+        public boolean isBalanced;
+        public int maxDepth;
+        public BalanceAndDepth (boolean isBalanced, int maxDepth) {
+            this.isBalanced = isBalanced;
+            this.maxDepth = maxDepth;
+        }
+    }
+    
+    public boolean isBalanced(TreeNode root) {
+        return checkBalanceAndDepth(root).isBalanced;
+    }
+    private BalanceAndDepth checkBalanceAndDepth(TreeNode curNode) {
+        if (curNode == null) {
+            return new BalanceAndDepth(true, 0);
+        }
+        
+        BalanceAndDepth leftSubtreeStatus = checkBalanceAndDepth(curNode.left);
+        BalanceAndDepth rightSubtreeStatus = checkBalanceAndDepth(curNode.right);
+        
+        // if either subtree is not balanced
+        if (!leftSubtreeStatus.isBalanced || !rightSubtreeStatus.isBalanced) {
+            return new BalanceAndDepth(false, -1); // the actual depth does not matter now
+        }
+        
+        // if the current node itself is not balanced
+        if (Math.abs(leftSubtreeStatus.maxDepth - rightSubtreeStatus.maxDepth) > 1) {
+            return new BalanceAndDepth(false, -1); // the actual depth does not matter now
+        }
+        
+        return new BalanceAndDepth(true, 
+            Math.max(leftSubtreeStatus.maxDepth, rightSubtreeStatus.maxDepth) + 1);
+    }
+ 
 }
