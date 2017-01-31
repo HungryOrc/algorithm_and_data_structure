@@ -13,7 +13,7 @@ the depth of the two subtrees of every node never differ by more than 1.
 // Ref: https://discuss.leetcode.com/topic/7798/the-bottom-up-o-n-solution-would-be-better
 public class Solution {
     
-    // 方法1: Top Down Approach
+    // 方法1: Top Down Approach 自上而下
     /* checks whether the tree is balanced strictly according to the definition of balanced binary tree: 
      the difference between the heights of the two sub trees are not bigger than 1, 
      and both the left sub tree and right sub tree are also balanced.
@@ -42,7 +42,7 @@ public class Solution {
     }   
     
     
-    // 方法2: Bottom Up Approach
+    // 方法2: Bottom Up Approach 自下而上
     /* This method is based on DFS Recursion. 
      Instead of calling depth() explicitly for EACH child node, we return the height of the current node in DFS recursion. 
      When the sub tree of the current node (inclusive) is balanced, the function dfsHeight() returns a non-negative value as the height.
@@ -54,26 +54,19 @@ public class Solution {
      Since any -1 in any level of the tree will result in ALL the ABOVE levels in that path to be -1 ! ! ! ! !
      Thus the time complexity is O(N), much better than the Top Down Solution.
     */
-    public boolean isBalanced(TreeNode root)
-    {
+    public boolean isBalanced(TreeNode root) {
         return dfsHeight(root) != -1;
     }
-    private int dfsHeight(TreeNode root)
-    {
+    private int dfsHeight(TreeNode root) {
         if (root == null)
             return 0;
         
         int leftHeight = dfsHeight(root.left);
-        if (leftHeight == -1)
-            return -1;
-        
         int rightHeight = dfsHeight(root.right);
-        if (rightHeight == -1)
+     
+        if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1)
             return -1;
-        
-        if (Math.abs(leftHeight - rightHeight) > 1)
-            return -1;
-        
+     
         return Math.max(leftHeight, rightHeight) + 1;
     }    
     
