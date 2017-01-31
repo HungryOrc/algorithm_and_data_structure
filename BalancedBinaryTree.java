@@ -21,19 +21,24 @@ public class Solution {
      thus the complexity is O(N). We do this for each node in the tree, 
      so the overall complexity of isBalanced will be O(N^2).
     */
+    // 这个函数 recursively call 自己
     public boolean isBalanced(TreeNode root) {
         if (root == null)
             return true;
         
-        int leftDepth = depth(root.left);
-        int rightDepth = depth(root.right);
+        int leftDepth = getDepth(root.left);
+        int rightDepth = getDepth(root.right);
         
-        return (Math.abs(leftDepth - rightDepth) <= 1 && isBalanced(root.left) && isBalanced(root.right));
+        if (Math.abs(leftDepth - rightDepth) <= 1 && isBalanced(root.left) && isBalanced(root.right))
+            return true;
+        else
+            return false;
     }
-    private int depth (TreeNode root) {
+    // 这个helper 函数也 recursively call 自己！！
+    private int getDepth (TreeNode root) {
         if (root == null)
             return 0;
-        return Math.max(depth(root.left), depth(root.right)) + 1;
+        return Math.max(getDepth(root.left), getDepth(root.right)) + 1;
     }   
     
     
