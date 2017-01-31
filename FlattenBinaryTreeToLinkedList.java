@@ -59,4 +59,12 @@ public class Solution {
             prevNode = curNode;
         }
     }
+  
+    
+    // 方法2: In-Place
+  
+  
+  
+  
+  
 }
