@@ -61,10 +61,31 @@ public class Solution {
     }
   
     
-    // 方法2: In-Place
-  
-  
-  
-  
-  
+    // 方法2: In-Place，我的方法
+    public void flatten(TreeNode root) {
+        // 每一轮recursion的结束条件
+        if (root == null) {
+            return;
+        }
+        
+        TreeNode curNode = root;
+
+        // 把右半边切下来，风干备用
+        TreeNode initialRight = curNode.right;
+        
+        // 左调到右，左置为空
+        curNode.right = curNode.left;
+        curNode.left = null;
+        
+        // 现在的右是之前的左。一路向右下方走，到达现在的右的最右下端
+        while (curNode.right != null) {
+            curNode = curNode.right;
+        }
+        // 在现在的右的最右下端，接上之前切下来的右半边
+        curNode.right = initialRight;
+        
+        // 对于当前root的右子节点，recurse上述过程
+        flatten(root.right);
+    }
+
 }
