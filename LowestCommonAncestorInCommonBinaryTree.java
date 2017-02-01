@@ -1,7 +1,6 @@
 /* Given the root and two nodes in a Binary Tree. Find the lowest common ancestor(LCA) of the two nodes.
 The lowest common ancestor is the node with largest depth which is the ancestor of both nodes.
-Notice:
-Assume two nodes are exist in tree.
+Notice: Assume these 2 nodes do exist in this tree.
 
 Example:
 For the following binary tree:
@@ -60,13 +59,12 @@ public class Solution {
         // Conquer
         if (left != null && right != null) {
             return root;
-        } 
-        if (left != null) {
+        } else if (left != null && right == null) {
             return left;
-        }
-        if (right != null) {
+        } else if (right != null && left == null) {
             return right;
+        } else { // left == null && right == null
+            return null;
         }
-        return null;
     }
 }
