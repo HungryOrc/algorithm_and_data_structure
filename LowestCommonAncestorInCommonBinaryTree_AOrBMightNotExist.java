@@ -51,14 +51,17 @@ public class Solution {
             return null;
         }
     }
+    // Divide and Conquer !!
     private ResultType checkLCA(TreeNode root, TreeNode A, TreeNode B) {
         if (root == null) {
             return new ResultType(false, false, null);
         }
         
+        // Divide，考察左右子树的情况
         ResultType leftResult = checkLCA(root.left, A, B);
         ResultType rightResult = checkLCA(root.right, A, B);
         
+        // 综合得到当前root以下的整个树的情况
         boolean aExist = leftResult.aExist || rightResult.aExist || root == A;
         boolean bExist = leftResult.bExist || rightResult.bExist || root == B;
         
