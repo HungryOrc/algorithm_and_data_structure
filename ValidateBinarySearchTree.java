@@ -70,7 +70,82 @@ public class Solution {
     }
     
     
+    // 方法2: Recursion。延续上面的原则，BST被in-order traversal的话应该形成一个不断上升的序列
+    private int prevVal = Integer.MIN_VALUE;
+    private boolean isTheFirstNode = true;
+    
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        
+        // 先左，
+        // 看左边是否非BST，如果左边非，则整个也非
+        // 然后在左子树里不断更新即不断增大 value of prev node 的值
+        if (root.left != null && !isValidBST(root.left)) {
+            return false;
+        }
+        
+        // 再中
+        if (!isTheFirstNode && root.val <= prevVal) {
+            return false;
+        }
+        prevVal = root.val;
+        isTheFirstNode = false;
+        
+        
+        // 最后右
+        if (root.right != null && !isValidBST(root.right)) {
+            return false;
+        }
+        
+        // 如果一路都没问题，则最后证明是true BST
+        return true;
+    }
     
     
-    
+    // 方法3: Divide and Conquer
+    // http://www.jiuzhang.com/solutions/validate-binary-search-tree/
+    class ResultType {
+        boolean is_bst;
+        int maxValue, minValue;
+
+        ResultType(boolean is_bst, int maxValue, int minValue) {
+            this.is_bst = is_bst;
+            this.maxValue = maxValue;
+            this.minValue = minValue;
+        }
+    }
+
+    public class Solution {
+
+        public boolean isValidBST(TreeNode root) {
+            ResultType r = validateHelper(root);
+            return r.is_bst;
+        }
+        private ResultType validateHelper(TreeNode root) {
+            if (root == null) {
+                return new ResultType(true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            }
+
+            ResultType left = validateHelper(root.left);
+            ResultType right = validateHelper(root.right);
+
+            if (!left.is_bst || !right.is_bst) {
+                // if is_bst is false then minValue and maxValue are useless
+                return new ResultType(false, 0, 0);
+            }
+
+            if (root.left != null && left.maxValue >= root.val || 
+                  root.right != null && right.minValue <= root.val) {
+                return new ResultType(false, 0, 0);
+            }
+
+            return new ResultType(true,
+                                  Math.max(root.val, right.maxValue),
+                                  Math.min(root.val, left.minValue));
+        }
+    }
+  
+  
 }
