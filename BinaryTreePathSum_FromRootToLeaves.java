@@ -28,7 +28,46 @@ public class Solution {
      * @param target an integer
      * @return all valid paths */
     
-    // 方法1: Iteration。速度挺慢的
+    // 方法1: Recursion - Traversal
+    public List<List<Integer>> binaryTreePathSum(TreeNode root, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        
+        ArrayList<Integer> curPath = new ArrayList<>();
+        curPath.add(root.val);
+        findPaths(root, curPath, root.val, target, result);
+        return result;
+    }
+    private void findPaths(TreeNode curNode, 
+                           ArrayList<Integer> curPath, 
+                           int curSum,
+                           int target,
+                           List<List<Integer>> result) {
+        // if this is a leaf
+        if (curNode.left == null && curNode.right == null) {
+            if (curSum == target) {
+                // 特别注意！这里要 new 一个 ArrayList！！
+                result.add(new ArrayList<>(curPath));
+            }
+            return;
+        }          
+        
+        if (curNode.left != null) {
+            curPath.add(curNode.left.val);
+            findPaths(curNode.left, curPath, curSum + curNode.left.val, target, result);
+            curPath.remove(curPath.size() - 1);
+        }
+        if (curNode.right != null) {
+            curPath.add(curNode.right.val);
+            findPaths(curNode.right, curPath, curSum + curNode.right.val, target, result);
+            curPath.remove(curPath.size() - 1);
+        }
+    }
+    
+    
+    // 方法2: Iteration，用了3个Stack。速度挺慢的
     public List<List<Integer>> binaryTreePathSum(TreeNode root, int target) {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) {
