@@ -22,7 +22,7 @@ return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
  
 public class Solution {
     
-    // Recursion
+    // 方法1: Recursion
     public boolean hasPathSum(TreeNode root, int sum) {
         
         if (root == null)
@@ -39,8 +39,9 @@ public class Solution {
     }
     
     
-    // Iteration, by Stack, DFS. 如果用Queue做BFS，也是大同小异
-        public boolean hasPathSum(TreeNode root, int sum) {
+    // 方法2: Iteration, by Stack, DFS
+    // 如果用Queue做BFS，也是大同小异
+    public boolean hasPathSum(TreeNode root, int sum) {
         
         if (root == null)
             return false;
