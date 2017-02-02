@@ -36,6 +36,7 @@ public class Solution {
     /* @param root the root of binary tree
      * @return the length of the longest consecutive sequence path */
     
+    // 方法1: Traversal + Divide&Conquer
     private int longestConsecutiveLength;
     
     public int longestConsecutive(TreeNode root) {
@@ -73,4 +74,69 @@ public class Solution {
         return curSubtreeLCL;
     }
     
+   
+    // 方法2: Another Traverse + Divide Conquer 
+    public int longestConsecutive(TreeNode root) {
+        return helper(root, null, 0);
+    }
+
+    private int helper(TreeNode root, TreeNode parent, int lengthWithoutRoot) {
+        if (root == null) {
+            return 0;
+        }
+
+        int length = (parent != null && parent.val + 1 == root.val)
+            ? lengthWithoutRoot + 1
+            : 1;
+        int left = helper(root.left, root, length);
+        int right = helper(root.right, root, length);
+        return Math.max(length, Math.max(left, right));
+    }
+   
+
+    // 方法3: Divide Conquer + 自定义结果类
+    private class ResultType {
+        int maxInSubtree;
+        int maxFromRoot;
+        public ResultType(int maxInSubtree, int maxFromRoot) {
+            this.maxInSubtree = maxInSubtree;
+            this.maxFromRoot = maxFromRoot;
+        }
+    }
+
+    public int longestConsecutive(TreeNode root) {
+        return helper(root).maxInSubtree;
+    }
+    private ResultType helper(TreeNode root) {
+        if (root == null) {
+            return new ResultType(0, 0);
+        }
+        
+        ResultType left = helper(root.left);
+        ResultType right = helper(root.right);
+        
+        // 1 stands for the root itself.
+        ResultType result = new ResultType(0, 1);
+        
+        if (root.left != null && root.val + 1 == root.left.val) {
+            result.maxFromRoot = Math.max(
+                result.maxFromRoot,
+                left.maxFromRoot + 1
+            );
+        }
+        
+        if (root.right != null && root.val + 1 == root.right.val) {
+            result.maxFromRoot = Math.max(
+                result.maxFromRoot,
+                right.maxFromRoot + 1
+            );
+        }
+        
+        result.maxInSubtree = Math.max(
+            result.maxFromRoot,
+            Math.max(left.maxInSubtree, right.maxInSubtree)
+        );
+        
+        return result;
+    }
 } 
