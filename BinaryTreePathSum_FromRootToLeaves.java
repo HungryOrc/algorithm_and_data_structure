@@ -28,7 +28,7 @@ public class Solution {
      * @param target an integer
      * @return all valid paths */
     
-    // 方法1: Recursion - Traversal
+    // 方法1: Recursion - Traversal，速度挺快的
     public List<List<Integer>> binaryTreePathSum(TreeNode root, int target) {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) {
