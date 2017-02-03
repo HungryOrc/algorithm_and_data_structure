@@ -74,9 +74,8 @@ public class Solution {
         if (curRoot == null)
             return;
         
-        // 最精妙在下面的这一句了！！！
-        if (curLevel >= result.size())
-        {
+        // 最精妙在下面的这一句了！！！result 是 List of Lists，所以result的当前size就是当前我们搞到第几个level了
+        if (curLevel >= result.size()) {
             ArrayList<Integer> valuesInCurLevel = new ArrayList<>();
             valuesInCurLevel.add(curRoot.val);
             result.add(valuesInCurLevel); // 此时valuesInCurLevel这个ArrayList还不完整，但不要紧，后面会补齐
@@ -84,8 +83,8 @@ public class Solution {
         else
             result.get(curLevel).add(curRoot.val); // ！！
         
-        recursionDFS(curRoot.left, curLevel+1, result);
-        recursionDFS(curRoot.right, curLevel+1, result);
+        recursionDFS(curRoot.left, curLevel + 1, result);
+        recursionDFS(curRoot.right, curLevel + 1, result);
     }
     
 }
