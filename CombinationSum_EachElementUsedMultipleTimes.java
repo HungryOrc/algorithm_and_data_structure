@@ -44,10 +44,9 @@ public class Solution
             return 1;
         
         int result = 0;
-        for (int n : nums)
-        {
+        for (int n : nums) {
             if (n <= target)
-                result += combinationSum4(nums, target-n);
+                result += combinationSum4(nums, target - n);
         }
         return result;
     }
