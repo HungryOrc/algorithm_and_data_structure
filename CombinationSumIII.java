@@ -27,8 +27,8 @@ I know it is hard to understand it, let me give you an example.
 
 When k=3, n=9 (找3个不重复的数，和要为9), my answer works like this:
 [1]->[1,2]->[1,2,3]. Since now sum is not 9, no more backtracking, so after list.remove(list.size() - 1), it is [1,2]. 
-Then next follows [1,2,4], sum is not 9, repeat process above untill [1,2,6]. When go to next backtracking, 
-the list will be added to result, and for this list, no more backtracking.
+Then next follows [1,2,4], sum is not 9, repeat process above untill [1,2,6]. 
+When go to next backtracking, the list will be added to result, and for this list, no more backtracking.
 Now we can go back to a previous backtracking, which is [1,3]->[1,3,4], fail. [1,4,]->[1,4,5], fail. And so one.
 So the point of list.remove(list.size() - 1) is, after each "fail" or "success", 
 since we don't need to do further attempts given such a condition, we delete the last element, 
@@ -44,17 +44,15 @@ public class Solution {
     private void combination(List<List<Integer>> result, List<Integer> curAL,
         int curStart, int remainComponents, int remainSum)
     {
-        if (remainComponents==0 && remainSum==0)
-        {
+        if (remainComponents == 0 && remainSum == 0) {
             List<Integer> validAL = new ArrayList<Integer>(curAL);
             result.add(validAL);
             return;
         }
-        for (int i = curStart; i <= 9; i++)
-        {
+        for (int i = curStart; i <= 9; i++) {
             curAL.add(i);
-            combination(result, curAL, i+1, remainComponents-1, remainSum-i);
-            curAL.remove(curAL.size()-1);
+            combination(result, curAL, i + 1, remainComponents - 1, remainSum - i);
+            curAL.remove(curAL.size() - 1);
         }
     }
 }
