@@ -66,25 +66,25 @@ public class Solution {
         if (root == null)
             return result;
         
-        recursionDFS(root, 0, result);
+        levelOrderByDFS(root, 0, result);
         return result;
     }
-    private void recursionDFS(TreeNode curRoot, int curLevel, ArrayList<List<Integer>> result)
+    private void levelOrderByDFS(TreeNode curNode, int curLevel, ArrayList<List<Integer>> result)
     {
-        if (curRoot == null)
+        if (curNode == null)
             return;
         
         // 最精妙在下面的这一句了！！！result 是 List of Lists，所以result的当前size就是当前我们搞到第几个level了
         if (curLevel >= result.size()) {
             ArrayList<Integer> valuesInCurLevel = new ArrayList<>();
-            valuesInCurLevel.add(curRoot.val);
+            valuesInCurLevel.add(curNode.val);
             result.add(valuesInCurLevel); // 此时valuesInCurLevel这个ArrayList还不完整，但不要紧，后面会补齐
         }
         else
-            result.get(curLevel).add(curRoot.val); // ！！
+            result.get(curLevel).add(curNode.val); // ！！
         
-        recursionDFS(curRoot.left, curLevel + 1, result);
-        recursionDFS(curRoot.right, curLevel + 1, result);
+        levelOrderByDFS(curNode.left, curLevel + 1, result);
+        levelOrderByDFS(curNode.right, curLevel + 1, result);
     }
     
 }
