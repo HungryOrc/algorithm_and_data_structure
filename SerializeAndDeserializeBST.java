@@ -9,7 +9,8 @@ Note: Do not use class member/global/static variables to store states. Your seri
 
 
 // 方法1，九章解法
-// Ref: http://www.jiuzhang.com/solutions/binary-tree-serialization/
+// 效果描述：http://www.lintcode.com/en/help/binary-tree-representation/
+// 答案代码：http://www.jiuzhang.com/solutions/binary-tree-serialization/
 
 
 
