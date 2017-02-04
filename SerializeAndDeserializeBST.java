@@ -7,7 +7,20 @@ serialized to a string and this string can be deserialized to the original tree 
 The encoded string should be as compact as possible.
 Note: Do not use class member/global/static variables to store states. Your serialize and deserialize algorithms should be stateless. */
 
-/* 这题挺难的。别人的解法：Java PreOrder + Queue solution
+
+// 方法1，九章解法
+// Ref: http://www.jiuzhang.com/solutions/binary-tree-serialization/
+
+
+
+
+
+
+
+
+// ---------------------------------------------------------------------------------------------------------
+
+/* 方法2，别人的另外一种解法：Java PreOrder + Queue solution
 Ref: https://leetcode.com/problems/serialize-and-deserialize-bst/
 
 my solution is pretty straightforward and easy to understand, not that efficient though. And the serialized tree is compact.
@@ -16,10 +29,8 @@ root left1 left2 leftX right1 rightX
 
 Pre order traversal is BST's serialized string. 
 To deserialized it, use a queue to recursively get root node, left subtree and right subtree.
+I think time complexity is O(NlogN), worst case complexity should be O(N^2), when the tree is really unbalanced.
 
-I think time complexity is O(NlogN), worst case complexity should be O(N^2), when the tree is really unbalanced. */
-
-/*
 // Your Codec object will be instantiated and called as such:
     Codec codec = new Codec();
     codec.deserialize(codec.serialize(root));
