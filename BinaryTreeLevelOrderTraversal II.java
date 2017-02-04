@@ -37,13 +37,11 @@ public class Solution {
         if (root == null)
             return topToBottom;
         
-        while (!nodeQueue.isEmpty())
-        {
+        while (!nodeQueue.isEmpty()) {
             int numOfRemainingNodesInThisLevel = nodeQueue.size();
             ArrayList<Integer> nodeValuesInCurLevel = new ArrayList<>();
             
-            while (numOfRemainingNodesInThisLevel > 0)
-            {
+            while (numOfRemainingNodesInThisLevel > 0) {
                 TreeNode curNode = nodeQueue.poll();
                 nodeValuesInCurLevel.add(curNode.val);
                 
@@ -60,5 +58,9 @@ public class Solution {
         for (int i = topToBottom.size()-1; i >= 0; i--)
             bottomToTop.add(topToBottom.get(i));
         return bottomToTop;
+        
+        /* 更销魂的做法：
+        Collections.reverse(result); // 记住这个命令！直接反转自身！
+        return result; */
     }
 }
