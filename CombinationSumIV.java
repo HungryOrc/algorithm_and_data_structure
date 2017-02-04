@@ -34,7 +34,7 @@ we know that this is the only combination in this case, so we return 1.  */
 
 public class Solution 
 {
-    // Recursion
+    // 方法1: Recursion
     public int combinationSum4(int[] nums, int target) 
     {
         // 数组里全是正数，所以target不可能一开始就是0
@@ -59,7 +59,7 @@ public class Solution
     We can fill the array with -1 to indicate that the result hasn't been calculated yet. 
     0 is not a good choice because it means there is no combination sum for the target. */
     
-    // Bottom-Up DP 
+    // 方法2: Bottom-Up DP 
     public int combinationSum4(int[] nums, int target) 
     {
         int[] comb = new int[target + 1]; // 序号从0到target
@@ -76,7 +76,8 @@ public class Solution
         return comb[target];
     }
     
-    // Top-Down DP
+    
+    // 方法3: Top-Down DP
     private int[] dp;
     public int combinationSum4(int[] nums, int target) 
     {
