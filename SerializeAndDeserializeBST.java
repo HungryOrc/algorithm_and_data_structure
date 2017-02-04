@@ -11,12 +11,82 @@ Note: Do not use class member/global/static variables to store states. Your seri
 // 方法1，九章解法
 // 效果描述：http://www.lintcode.com/en/help/binary-tree-representation/
 // 答案代码：http://www.jiuzhang.com/solutions/binary-tree-serialization/
+class Solution {
 
+    // 自定义的 “序列化”
+    public String serialize(TreeNode root) {
+        if (root == null) {
+            return "{}";
+        }
 
+        ArrayList<TreeNode> queue = new ArrayList<TreeNode>();
+        queue.add(root);
 
+        // 把所有的左右children全部加上，不管这里面有没有null node
+        // 注意！这里的queue size是不断增加的！！
+        // 这里用while似乎更符合直觉，但其实更繁琐，还不如用for，习惯以后更好
+        for (int i = 0; i < queue.size(); i++) {
+            TreeNode node = queue.get(i);
+            if (node == null) {
+                continue;
+            }
+            queue.add(node.left);
+            queue.add(node.right);
+        }
 
+        // 把queue的结尾的那些null都去掉，一直到结尾不是null
+        while (queue.get(queue.size() - 1) == null) {
+            queue.remove(queue.size() - 1);
+        }
 
-
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append(queue.get(0).val);
+        for (int i = 1; i < queue.size(); i++) {
+            if (queue.get(i) == null) {
+                sb.append(",#");
+            } else {
+                sb.append(",");
+                sb.append(queue.get(i).val);
+            }
+        }
+        sb.append("}");
+        return sb.toString();
+    }
+    
+    // 自定义的 “反序列化”
+    public TreeNode deserialize(String data) {
+        if (data.equals("{}")) {
+            return null;
+        }
+        
+        String[] vals = data.substring(1, data.length() - 1).split(",");
+        ArrayList<TreeNode> queue = new ArrayList<TreeNode>();
+        
+        TreeNode root = new TreeNode(Integer.parseInt(vals[0]));
+        queue.add(root);
+        
+        int index = 0;
+        boolean isLeftChild = true;
+        for (int i = 1; i < vals.length; i++) {
+            if (!vals[i].equals("#")) {
+                TreeNode node = new TreeNode(Integer.parseInt(vals[i]));
+                if (isLeftChild) {
+                    queue.get(index).left = node;
+                } else {
+                    queue.get(index).right = node;
+                }
+                queue.add(node);
+            }
+            // 这个node的左右子节点都搞定了，可以处理下一个node了
+            if (!isLeftChild) {
+                index++;
+            }
+            isLeftChild = !isLeftChild;
+        }
+        return root;
+    }
+}
 
 
 // ---------------------------------------------------------------------------------------------------------
