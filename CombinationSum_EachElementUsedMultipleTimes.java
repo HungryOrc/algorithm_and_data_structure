@@ -13,7 +13,8 @@ The possible combination ways are:
 (2, 2)
 (3, 1)
 Note that different sequences are counted as different combinations.
-Therefore the output is 7
+注意！！！不同的顺序算是不同的组合！！比如 (1, 1, 2) 和 (1, 2, 1) 算是两种组合！！
+Therefore the output is 7.
 
 Follow up:
 What if negative numbers are allowed in the given array?
