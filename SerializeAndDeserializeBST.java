@@ -13,7 +13,7 @@ Note: Do not use class member/global/static variables to store states. Your seri
 // 答案代码：http://www.jiuzhang.com/solutions/binary-tree-serialization/
 class Solution {
 
-    // 自定义的 “序列化”
+    // Serialize
     public String serialize(TreeNode root) {
         if (root == null) {
             return "{}";
@@ -54,21 +54,28 @@ class Solution {
         return sb.toString();
     }
     
-    // 自定义的 “反序列化”
+    // Deserialize
     public TreeNode deserialize(String data) {
         if (data.equals("{}")) {
             return null;
         }
         
+        // substring 函数的第一个参数是 inclusive 的，第二个参数是 exclusive 的
+        // 所以下面这样写，就是把 String data 里的第一个和最后一个字符都去掉了，即花括号
         String[] vals = data.substring(1, data.length() - 1).split(",");
         ArrayList<TreeNode> queue = new ArrayList<TreeNode>();
         
         TreeNode root = new TreeNode(Integer.parseInt(vals[0]));
         queue.add(root);
         
-        int index = 0;
+        int index = 0; // 这个参数指示：当前正在处理String数组里的第几个String
         boolean isLeftChild = true;
+        
+        // 注意！！index 和 i 不是一回事！！！
+        // index表示当前的 parent node 是哪个，i 表示当前在查看第几个node的值
         for (int i = 1; i < vals.length; i++) {
+            
+            // 如果第i个String不表示null node，就做以下的事。如果是null node，就什么也不做
             if (!vals[i].equals("#")) {
                 TreeNode node = new TreeNode(Integer.parseInt(vals[i]));
                 if (isLeftChild) {
@@ -78,7 +85,8 @@ class Solution {
                 }
                 queue.add(node);
             }
-            // 这个node的左右子节点都搞定了，可以处理下一个node了
+            
+            // 当这个node的左右子节点都搞定了，就可以处理下一个node了
             if (!isLeftChild) {
                 index++;
             }
