@@ -35,6 +35,7 @@ we know that this is the only combination in this case, so we return 1.  */
 public class Solution 
 {
     // 方法1: Recursion
+    // 思想：每当要加入一个新的数的时候，都是把数组 nums 里的每一个数都拿出来试一下，每一个数都有平等的再在这一位出场的权力
     public int combinationSum4(int[] nums, int target) 
     {
         // 数组里全是正数，所以target不可能一开始就是0
@@ -45,8 +46,9 @@ public class Solution
         
         int result = 0;
         for (int n : nums) {
-            if (n <= target)
+            if (n <= target) {
                 result += combinationSum4(nums, target - n);
+            }
         }
         return result;
     }
@@ -64,10 +66,8 @@ public class Solution
         int[] comb = new int[target + 1]; // 序号从0到target
         comb[0] = 1;
         
-        for (int i = 1; i < comb.length; i++) 
-        {
-            for (int j = 0; j < nums.length; j++) 
-            {
+        for (int i = 1; i < comb.length; i++) { // i 模拟从 1 到 target 的各种sum
+            for (int j = 0; j < nums.length; j++) { // j 指代数组 nums 里的各个数
                 if (i - nums[j] >= 0)
                     comb[i] += comb[i - nums[j]];
             }
@@ -78,15 +78,13 @@ public class Solution
     
     // 方法3: Top-Down DP
     private int[] dp;
-    public int combinationSum4(int[] nums, int target) 
-    {
+    public int combinationSum4(int[] nums, int target) {
         dp = new int[target + 1];
         Arrays.fill(dp, -1);
         dp[0] = 1;
         return helper(nums, target);
     }
-    private int helper(int[] nums, int target) 
-    {
+    private int helper(int[] nums, int target) {
         if (dp[target] != -1) {
             return dp[target];
         }
