@@ -5,8 +5,7 @@ Find any topological order for the given graph.
 Notice: You can assume that there is at least one topological order in the graph.
 
 Example
-For graph as follow:
-<此处有配图> 
+For graph as follow: <此处有配图>
 本题链接：http://www.lintcode.com/en/problem/topological-sorting/#
 The topological order can be:
 [0, 1, 2, 3, 4, 5]
@@ -23,6 +22,7 @@ class DirectedGraphNode {
 本node就是有向边的起始点，每一个neighbor都各是一个终止点。
 如果点A有一个neighbor为点B，则点B并没有neighbor是点A，除非它们构成循环。
 上例中，B的 in-degree 就多了1，而A的 in-degree 没受影响。 */
+
 public class Solution {
     /* @param graph: A list of Directed graph node
      * @return: Any topological order for the given graph. */   
