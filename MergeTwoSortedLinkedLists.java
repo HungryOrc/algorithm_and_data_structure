@@ -14,13 +14,10 @@ public class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2)
     {
         ListNode head = null;
-        if (l1.val <= l2.val)
-        {
+        if (l1.val <= l2.val) {
             head = l1;
             l1.next = mergeTwoLists(l1.next, l2);
-        }
-        else // l1.val > l2.val
-        {
+        } else { // l1.val > l2.val
             head = l2;
             l2.next = mergeTwoLists(l2.next, l1);
         }
