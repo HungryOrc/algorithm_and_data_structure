@@ -31,7 +31,7 @@ public class Solution {
         dummyHead.next = head;
         
         ListNode curNode = dummyHead;
-        // 把curNode移动到node m的前一位
+        // 把curNode移动到 node m 的前一位
         for (int i = 1; i < m; i++) {
             if (curNode.next == null) {
                 return null;
@@ -40,6 +40,7 @@ public class Solution {
         }
         
         // 标记node m之前的最后一个node，为之后备用
+        // 注意！这么做也可以兼顾 m = 1 的情况！！
         ListNode preMNode = curNode;
         // 标记 node m
         ListNode mNode = curNode.next;
