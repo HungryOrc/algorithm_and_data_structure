@@ -56,42 +56,50 @@ public class Solution {
     // 然后 old node 的 next 的 random = old node 的 random 的 next ！！！
     // 最后拆分节点, 一边扫描一边拆成两个链表，这里用到两个dummy node。第一个链表变回  1->2->3 , 然后第二变成 1`->2`->3`
     // 这个方法比前一个的好处在于，其额外空间是 O(1) 量级的
-    private void copyNext(RandomListNode head) {
-        while (head != null) {
-            RandomListNode newNode = new RandomListNode(head.label);
-            newNode.random = head.random;
-            newNode.next = head.next;
-            head.next = newNode;
-            head = head.next.next;
-        }
-    }
-    private void copyRandom(RandomListNode head) {
-        while (head != null) {
-            if (head.next.random != null) {
-                head.next.random = head.random.next;
-            }
-            head = head.next.next;
-        }
-    }
-    private RandomListNode splitList(RandomListNode head) {
-        RandomListNode newHead = head.next;
-        while (head != null) {
-            RandomListNode temp = head.next;
-            head.next = temp.next;
-            head = head.next;
-            if (temp.next != null) {
-                temp.next = temp.next.next;
-            }
-        }
-        return newHead;
-    }
     public RandomListNode copyRandomList(RandomListNode head) {
         if (head == null) {
             return null;
         }
-        copyNext(head);
+        duplicateAndConcatenate(head);
         copyRandom(head);
         return splitList(head);
+    }
+    // 把 1->2->3->4->... 变成 1->1`->2->2`->3->3`->4->4`->...
+    private void duplicateAndConcatenate(RandomListNode head) {
+        while (head != null) {
+            RandomListNode newNode = new RandomListNode(head.label);
+            // 注意！！！这里新node的random还是指向了老node的random！即指向的也是一个老node！！！
+            newNode.random = head.random;
+            newNode.next = head.next; // 1'->2
+            
+            head.next = newNode; // 1->1'
+            head = head.next.next; // 1->1'->2
+        }
+    }
+    private void copyRandom(RandomListNode head) {
+        while (head != null) {
+            // 注意！某些node的random可能是null！
+            if (head.next.random != null) {
+                // 注意！！！这样，就把new node的random从另一个new node变成其对应的old node了！！！
+                head.next.random = head.random.next;
+            }
+            // 这时，新旧nodes组成的联合list还没有断开
+            head = head.next.next;
+        }
+    }
+    // 把 1->1`->2->2`->3->3`->4->4`->... 变成 1->2->3->4->...
+    private RandomListNode splitList(RandomListNode head) {
+        RandomListNode copiedHead = head.next;
+        while (head != null) {
+            RandomListNode temp = head.next;
+            head.next = temp.next;
+            head = head.next;
+            
+            if (temp.next != null) {
+                temp.next = temp.next.next;
+            }
+        }
+        return copiedHead;
     }
     
 }
