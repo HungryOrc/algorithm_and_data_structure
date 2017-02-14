@@ -55,6 +55,7 @@ public class Solution {
     // 方法2: 非常巧妙！！先复制一遍，新旧的逐对串在一起: 1->1`->2->2`->3->3`->4->4`->...
     // 然后 old node 的 next 的 random = old node 的 random 的 next ！！！
     // 最后拆分节点, 一边扫描一边拆成两个链表，这里用到两个dummy node。第一个链表变回  1->2->3 , 然后第二变成 1`->2`->3`
+    // 这个方法比前一个的好处在于，其额外空间是 O(1) 量级的
     private void copyNext(RandomListNode head) {
         while (head != null) {
             RandomListNode newNode = new RandomListNode(head.label);
