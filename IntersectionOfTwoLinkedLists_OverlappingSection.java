@@ -1,5 +1,6 @@
 /* Write a program to find the node at which the intersection of two singly linked lists begins.
 注意！！这两个list，在后面有一段重合的段！从交点开始，一直到结尾，都是在一起的！！
+而且也不可能相交之后重新分开！因为一个点（那个交点）不可能有两个next node！！
 
 For example, the following two linked lists:
 A:          a1 → a2
@@ -97,4 +98,46 @@ public class Solution {
         return headA; // return headB 也一样
     }
     
+     
+    // 方法3: 九章的方法。其数学上的有效性我自己还没证明
+    // 先找到一个list的终点（其实也就是两个list共同的终点了），然后接到另一个list的起点去，这样构成一个部分self loop的list
+    // 然后用快慢两个pointer，差速走一次，再同速走一次，就找到了交汇点
+    // http://www.jiuzhang.com/solutions/intersection-of-two-linked-lists/
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+        
+        // get the tail of list A.
+        ListNode node = headA;
+        while (node.next != null) {
+            node = node.next;
+        }
+        node.next = headB;
+        ListNode result = listCycleII(headA);
+        node.next = null;
+        return result;
+    }
+    private ListNode listCycleII(ListNode head) {
+        ListNode slow = head, fast = head.next;
+        
+        while (slow != fast) {
+            if (fast == null || fast.next == null) {
+                return null;
+            }
+            
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        slow = head;
+        fast = fast.next;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        
+        return slow;
+    }
+  
 }
