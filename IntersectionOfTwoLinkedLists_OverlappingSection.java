@@ -1,4 +1,5 @@
 /* Write a program to find the node at which the intersection of two singly linked lists begins.
+注意！！这两个list，在后面有一段重合的段！从交点开始，一直到结尾，都是在一起的！！
 
 For example, the following two linked lists:
 A:          a1 → a2
@@ -91,6 +92,8 @@ public class Solution {
       
         // 结束了这个while loop，没有触发 return null，此时有 headA == headB，
         // 其实就是 Pointer A == Pointer B，意味着找到了交点
+        // 注意！！因为两个list的后半段重合在一起，所以两个pointer交汇的点一定也就是两个list的交点！！
+        // 这个东西不是总必然的！！如果两个list的后半段并不重合，比如在交点处再分开，两个pointer的交汇点就未必是两个list的交点了！
         return headA; // return headB 也一样
     }
     
