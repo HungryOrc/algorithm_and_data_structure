@@ -64,7 +64,7 @@ public class Solution {
             headB = headB.next;
             
             // 两个pointer可能同时到达尾端，也可能不同时。但这不要紧：
-            // 情况一：如果 pointer A 到了 listA 的尾端
+            // 当 pointer A 到了 listA 的尾端
             if (headA == null) {
                 // 如果pointer A 还没有被转到listB的头部过，就把它转到listB的头部
                 if (headAShifted == false) {
@@ -76,7 +76,7 @@ public class Solution {
                 else
                     return null;
             }
-            // 情况二：如果 Pointer B 到了 listB 的尾端
+            // 当 Pointer B 到了 listB 的尾端
             if (headB == null) {
                 if (headBShifted == false) {
                     headB = originalHeadA;
@@ -93,6 +93,5 @@ public class Solution {
         // 其实就是 Pointer A == Pointer B，意味着找到了交点
         return headA; // return headB 也一样
     }
-    
     
 }
