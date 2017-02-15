@@ -91,7 +91,54 @@ public class Solution {
     }
     
     
-    
+    // 方法2: Merge Sort for LinkedList
+    // Recursion
+    public ListNode sortList(ListNode head) {  
+        if (head == null || head.next == null) {
+            return head;
+        }
+        
+        ListNode mid = findMedian(head);
+        
+        ListNode rightHead = sortList(mid.next); // 改为mid行么？？？？？？下面改为了mid=null
+        mid.next = null; // 截断！！！别忘了！！！
+        ListNode leftHead = sortList(head);
+        
+        return merge(leftHead, rightHead);
+    }
+    private ListNode findMedian(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+    private ListNode merge(ListNode head1, ListNode head2) {
+        ListNode dummyHead = new ListNode(-1);
+        ListNode curNode = dummyHead;
+        
+        while (head1 != null && head2 != null) {
+            if (head1.val > head2.val) {
+                curNode.next = head2;
+                head2 = head2.next;
+                curNode = curNode.next;
+            } else { // 1 <= 2
+                curNode.next = head1;
+                head1 = head1.next;
+                curNode = curNode.next;
+            }
+        }
+        // 到尾部了
+        if (head1 == null) {
+            curNode.next = head2;
+        } else { // head2 == null
+            curNode.next = head1;
+        }
+        
+        return dummyHead.next;
+    }
     
 }
 
