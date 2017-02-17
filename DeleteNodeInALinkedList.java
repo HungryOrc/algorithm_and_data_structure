@@ -6,16 +6,14 @@ Since we do not have access to the node before the one we want to delete,
 we cannot modify the next pointer of that node in any way. 
 Instead, we have to replace the value of the node we want to delete with the value in the node after it, 
 and then delete the node after it.   
-Because we know that the node we want to delete is not the tail of the list, we can guarantee that this approach is possible. */
+Because we know that the node we want to delete is not the tail of the list, we can guarantee that this approach is possible.
 
-/**
- * Definition for singly-linked list.
+ Definition for singly-linked list.
  * public class ListNode {
  *     int val;
  *     ListNode next;
  *     ListNode(int x) { val = x; }
- * }
- */
+ * } */
 public class Solution {
     public void deleteNode(ListNode nodeToDel) {
         // 注意！如果 nodeToBeDeleted.next 为空，即 nodeToBeDeleted 是最后一个node，
