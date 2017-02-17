@@ -22,85 +22,35 @@ int param_3 = obj.top();
 int param_4 = obj.getMin(); */
 
 
-// Ref: https://leetcode.com/problems/min-stack/
-// 很巧妙的方法！当最新push来的数x小于等于当前的min的时候，
-// 就先把当前min push一次，相当于垫在下面，然后再push x。
-// 然后pop的时候，如果当前要pop的数等于当前的min，就pop当前数以后，再pop一个，即曾经存在后面垫底的次低min
-// 这样只用一个stack和一个int min就行。速度快了很多
-class MinStack 
-{
-    int min = Integer.MAX_VALUE;
-    Stack<Integer> stack = new Stack<Integer>();
-    
-    public void push(int x) {
-        // only push the old minimum value when the current 
-        // minimum value changes after pushing the new value x
-        if(x <= min){          
-            stack.push(min);
-            min=x;
-        }
-        stack.push(x);
-    }
-
-    public void pop() {
-        // if pop operation could result in the changing of the current minimum value, 
-        // pop twice and change the current minimum value to the last minimum value.
-        if(stack.pop() == min) min=stack.pop();
-    }
-
-    public int top() {
-        return stack.peek();
-    }
-
-    public int getMin() {
-        return min;
-    }
-}
-
-
-// 我的方法。用一个stack加一个arrayList。但是速度太慢
 public class MinStack {
-
-    /** initialize your data structure here. */
+    int minValue;
     Stack<Integer> intStack;
-    ArrayList<Integer> minNums;
     
     public MinStack() {
-        this.intStack = new Stack<Integer>();
-        this.minNums = new ArrayList<Integer>();
+        this.minValue = Integer.MAX_VALUE;
+        this.intStack = new Stack<>();
     }
-    
-    public void push(int x) {
-        this.intStack.push(x);
+
+    public void push(int number) {
+        // 关键点！！每一个push要push两个东西！
+        // 先push进来本number到来之前这个Stack里的min值！
+        this.intStack.push(this.minValue); 
+        // 然后才是push我们要push的number
+        this.intStack.push(number);
         
-        if (minNums.size()==0 || x > minNums.get(minNums.size()-1))
-            minNums.add(x);
-        else
-        {
-            for (int i = 0; i < minNums.size(); i++)
-            {
-                if (x <= minNums.get(i))
-                    minNums.add(i, x);
-            }
-        }
+        // 最后再更新min值
+        this.minValue = Math.min(minValue, number);
     }
-    
-    public void pop() {
-        int popped = this.intStack.pop();
-        
-        for (int i = 0; i < minNums.size(); i++)
-        {
-            if (popped == minNums.get(i))
-                minNums.remove(i);
-        }
+
+    public int pop() {
+        int poppedValue = this.intStack.pop();
+        int prevMin = this.intStack.pop();
+        this.minValue = prevMin;
+        return poppedValue;
     }
-    
-    public int top() {
-        return this.intStack.peek();    
-    }
-    
-    public int getMin() {
-        return this.minNums.get(0);
+
+    public int min() {
+        return this.minValue;
     }
 }
 
