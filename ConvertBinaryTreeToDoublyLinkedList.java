@@ -27,7 +27,6 @@ return 1<->2<->3<->4<->5
  *         this.next = this.prev = null;
  *     }
  * } */
-
 public class Solution {
     /* @param root: The root of tree
      * @return: the head of doubly list node */
@@ -38,23 +37,24 @@ public class Solution {
             return null;
         }
         
-        Stack<TreeNode> nodeStack = new Stack<>();
-        nodeStack.push(root);
+        Stack<TreeNode> treeNodeStack = new Stack<>();
+        treeNodeStack.push(root);
         ArrayList<DoublyListNode> allNodes_InOrder = new ArrayList<>();
-        DoublyListNode rootDoublyNode = null;
+        DoublyListNode headDoublyNode = null;
         
-        while (!nodeStack.isEmpty()) {
-            TreeNode curNode = nodeStack.pop();
+        while (!treeNodeStack.isEmpty()) {
+            TreeNode curTreeNode = treeNodeStack.pop();
             
             // 当前node是leaf；
             // 或者当前node的左右children都被放入stack了，即当前node之前已被处理过了。
             // 那么当前node就可以被放入list了
-            if (curNode.left == null && curNode.right == null) {
-                DoublyListNode curDoublyNode = new DoublyListNode(curNode.val);
+            if (curTreeNode.left == null && curTreeNode.right == null) {
+                DoublyListNode curDoublyNode = new DoublyListNode(curTreeNode.val);
                 
                 if (allNodes_InOrder.size() == 0) { // 当前是第一个node
-                    rootDoublyNode = curDoublyNode;
-                } else { // allNodes_InOrder.size() > 0
+                    headDoublyNode = curDoublyNode;
+                } else {
+                    // 取list里的前一个list node
                     DoublyListNode prevDoublyNode = allNodes_InOrder.get(allNodes_InOrder.size() - 1);
                     curDoublyNode.prev = prevDoublyNode;
                     prevDoublyNode.next = curDoublyNode;
@@ -64,18 +64,18 @@ public class Solution {
                 continue;
             }
             
-            if (curNode.right != null) {
-                nodeStack.push(curNode.right);
+            if (curTreeNode.right != null) {
+                treeNodeStack.push(curTreeNode.right);
             }
-            nodeStack.push(curNode);
-            if (curNode.left != null) {
-                nodeStack.push(curNode.left);
+            treeNodeStack.push(curTreeNode);
+            if (curTreeNode.left != null) {
+                treeNodeStack.push(curTreeNode.left);
             }
             
-            curNode.left = null;
-            curNode.right = null;
+            curTreeNode.left = null;
+            curTreeNode.right = null;
         }
         
-        return rootDoublyNode;
+        return headDoublyNode;
     }
 }
