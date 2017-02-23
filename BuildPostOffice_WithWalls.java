@@ -50,8 +50,7 @@ public class Solution {
                 if (grid[i][j] == HOUSE) {
                     numOfHouses ++;
                 } else if (grid[i][j] == EMPTY) {
-                    Coord curCoord = new Coord(i, j);
-                    emptyCoords.add(curCoord);
+                    emptyCoords.add(new Coord(i, j));
                 }
             }
         }
@@ -59,10 +58,14 @@ public class Solution {
             return -1;
         }
         
-        int minSumOfDists = Integer.MAX_VALUE; // final result
+        // final result
+        int minSumOfDists = Integer.MAX_VALUE; 
 
-        // for each empty cell in the grid
+        // for each empty cell in the grid, we set it as the post office, in turn
         for (int i = 0; i < emptyCoords.size(); i++) {
+            // the starting cell for this loop, namely, the chosen cell of post office for this loop
+            Coord curPostOffice = emptyCoords.get(i);
+            
             int curMinSumOfDists = 0;
             int curStep = 0;
             
@@ -70,9 +73,6 @@ public class Solution {
             boolean[][] visited = new boolean[rows][cols]; // default: false
             
             Queue<Coord> unvisitedCoords = new LinkedList<>();
-            // the starting cell for this loop,
-            // namely, the chosen cell of post office for this loop
-            Coord curPostOffice = emptyCoords.get(i);
             unvisitedCoords.offer(curPostOffice);
             
             while (!unvisitedCoords.isEmpty()) {
@@ -105,7 +105,7 @@ public class Solution {
                             }
                         }
                         
-                        // the cell we stepped into should be marked as visited
+                        // the cell we stepped into, either a house or an empty cell, should be marked as visited
                         visited[curCoord.x][curCoord.y] = true;
                     }  
                 }
@@ -117,8 +117,7 @@ public class Solution {
             }
         }
         
-        // if we cannot reach every house, no matter which empty cell 
-        // we choose to place the post office
+        // if we cannot reach every house, no matter which empty cell we choose to place the post office
         if (minSumOfDists == Integer.MAX_VALUE) {
             return -1;
         } else {
