@@ -99,3 +99,65 @@ public class Solution {
         return false;
     }
 }
+
+
+// 方法2：BFS
+class Coord {
+    public int x, y;
+    public Coord (int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+public class Solution {
+    int[] deltaX = {1, -1, 0, 0};
+    int[] deltaY = {0, 0, 1, -1};
+    int minX, maxX;
+    int minY, maxY;
+    
+    /* @param image a binary matrix with '0' and '1'
+     * @param x, y the location of one of the black pixels
+     * @return an integer */
+    public int minArea(char[][] image, int x, int y) {
+        if (image == null || image.length == 0 || image[0].length == 0) {
+            return 0;
+        }
+        
+        int rows = image.length;
+        int cols = image[0].length;
+        minX = rows - 1;
+        maxX = 0;
+        minY = cols - 1;
+        maxY = 0;
+        
+        boolean[][] visited = new boolean[rows][cols]; // default false
+        Queue<Coord> coordQueue = new LinkedList<>();
+        coordQueue.offer(new Coord(x, y));
+        
+        while (!coordQueue.isEmpty()) {
+            Coord curCoord = coordQueue.poll();
+            visited[curCoord.x][curCoord.y] = true;
+            
+            minX = Math.min(minX, curCoord.x);
+            maxX = Math.max(maxX, curCoord.x);
+            minY = Math.min(minY, curCoord.y);
+            maxY = Math.max(maxY, curCoord.y);
+            
+            for (int i = 0; i < 4; i++) {
+                int nextX = curCoord.x + deltaX[i];
+                int nextY = curCoord.y + deltaY[i];
+                Coord nextCoord = new Coord(nextX, nextY);
+                if (inBound(nextCoord, rows, cols) && !visited[nextX][nextY] && image[nextX][nextY] == '1') {
+                    coordQueue.offer(nextCoord);
+                    visited[nextX][nextY] = true;
+                }
+            }
+        }
+        return (maxX - minX + 1) * (maxY - minY + 1);
+    }
+    
+    private boolean inBound(Coord coord, int rows, int cols) {
+        return (coord.x >= 0 && coord.x < rows && coord.y >= 0 && coord.y < cols);
+    }
+}
