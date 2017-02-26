@@ -16,6 +16,10 @@ public class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         
         int[] numOfPreCourses = new int[numCourses];
+        // Array of ArrayLists
+        // 注意格式！！在此，ArrayList后面不要加 <> 或者 <Integer> ！！
+        // 所以在此声明的每一个数组元素，即每一个ArrayList里面的东西都是 Object
+        // 在后面的使用中，要把这些Object显性转换为int类型
         ArrayList[] subCourses = new ArrayList[numCourses];
         
         for (int i = 0; i < numCourses; i++) {
@@ -47,6 +51,8 @@ public class Solution {
             for (int j = 0; j < subCourses[course].size(); j++) {
                 int subCourse = (int)subCourses[course].get(j);
                 
+                // 注意！精华在这里！！！
+                // 当一门课的所有pre courses都已被放入结果数组时，这门课也可以被放入了！！！
                 numOfPreCourses[subCourse] --;
                 if (numOfPreCourses[subCourse] == 0) {
                     manageCourses.offer(subCourse);
