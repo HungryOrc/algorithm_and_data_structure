@@ -78,8 +78,58 @@ public class Solution {
     }
     
     
-    
-    
-    
+    // 方法2：先把数组去重
+    // Ref: http://www.jiuzhang.com/solutions/combination-sum/
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (candidates == null || candidates.length == 0) {
+            return results;
+        }
+        
+        int[] nums = removeDuplicates(candidates);
+        
+        dfs(nums, 0, new ArrayList<Integer>(), target, results);
+        
+        return results;
+    }
+    // 注意这个去重函数的写法！空间上是 in place 的！
+    private int[] removeDuplicates(int[] candidates) {
+        Arrays.sort(candidates);
+        
+        int index = 0;
+        for (int i = 0; i < candidates.length; i++) {
+            // 关键在这个if里面！！
+            if (candidates[i] != candidates[index]) {
+                index ++;
+                candidates[index] = candidates[i];
+            }
+        }
+        
+        int[] nums = new int[index + 1];
+        for (int i = 0; i < index + 1; i++) {
+            nums[i] = candidates[i];
+        }
+        
+        return nums;
+    }
+    private void dfs(int[] nums,
+                     int startIndex,
+                     List<Integer> combination,
+                     int remainTarget,
+                     List<List<Integer>> results) {
+        if (remainTarget == 0) {
+            results.add(new ArrayList<Integer>(combination));
+            return;
+        }
+        
+        for (int i = startIndex; i < nums.length; i++) {
+            if (remainTarget < nums[i]) {
+                break;
+            }
+            combination.add(nums[i]);
+            dfs(nums, i, combination, remainTarget - nums[i], results);
+            combination.remove(combination.size() - 1);
+        }
+    }
     
 }
