@@ -34,19 +34,19 @@ public class Solution {
     }
     private void dfs(int[] candidates,
                 int startIndex,
-                int curTarget,
+                int remainTarget,
                 ArrayList<Integer> combination,
                 List<List<Integer>> result) {
         
-        if (curTarget == 0) {
+        if (remainTarget == 0) {
             result.add(new ArrayList<Integer>(combination)); // 注意！要new一个！
             return;
         }
         
         for (int i = startIndex; i < candidates.length; i++) {
             
-            if (candidates[i] > curTarget) {
-                break;
+            if (candidates[i] > remainTarget) {
+                return;
             }
             
             // 精华所在！！！下面这个if语句是为了保证进入最终result的每个组合都是互不相同的！！！
@@ -72,7 +72,7 @@ public class Solution {
             combination.add(candidates[i]);
             // 重要！一个元素要无限次复用，
             // 下一次 recursion 的 start index 就必须与这一次的相同！不变！！！
-            dfs(candidates, i, curTarget - candidates[i], combination, result);
+            dfs(candidates, i, remainTarget - candidates[i], combination, result);
             combination.remove(combination.size() - 1);
         }
     }
@@ -124,7 +124,7 @@ public class Solution {
         
         for (int i = startIndex; i < nums.length; i++) {
             if (remainTarget < nums[i]) {
-                break;
+                return;
             }
             combination.add(nums[i]);
             dfs(nums, i, combination, remainTarget - nums[i], results);
