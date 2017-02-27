@@ -1,6 +1,6 @@
 // 数组里的元素不重复
 // 在一个组合里，每个元素都可以出现任意次
-// 在一个组合里，元素的个数不限
+// 在一个组合里，总的元素个数不限
 // 在一个组合里，每个元素的出现顺序如果改变，就视为新的组合
 
 /* Given an integer array with all positive numbers and no duplicates, 
