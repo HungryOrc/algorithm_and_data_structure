@@ -1,3 +1,8 @@
+// 数组里的元素不重复，元素固定为1到9
+// 在一个组合里，每个元素最多只能出现一次
+// 在一个组合里，总的元素个数限定为 k 个
+// 在一个组合里，每个元素的出现顺序如果改变，也还算是同一个组合
+
 /* Find all possible combinations of k numbers that add up to a number n, 
 given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
 即一个组合里不可出现重复的数字
