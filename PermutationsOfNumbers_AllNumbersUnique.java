@@ -101,7 +101,7 @@ class Solution {
                 
                 // for each possible position that we can insert the current value into
                 for (int j = 0; j <= curListLen; j++) {
-                    List<Integer> tmpList = new ArrayList<>(curList);
+                    List<Integer> tmpList = new ArrayList<>(curList); // 每一次都要new一个！
                     tmpList.add(j, curValue);
                     tmpResults.add(tmpList);
                 }
