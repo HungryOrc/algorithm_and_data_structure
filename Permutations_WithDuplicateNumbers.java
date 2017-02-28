@@ -20,6 +20,10 @@ Can you do it without recursion? That would be great!!
 public class Solution {
     
     // 方法1：九章式 DFS Recursion
+    // 与数组里元素不重复的permutation相比，解法上多了两点：
+    // 1. 记录每个元素的使用情况的数组 visited
+    // 2. 在dfs的for循环里，要加上 i > 0 && nums[i] == nums[i - 1] && visited[i-1] == 0 
+    //    这个判断语句，来避免重复的元素生成出重复的排列
     // Ref: http://www.jiuzhang.com/solutions/permutations-ii/
     public List<List<Integer>> permuteUnique(int[] nums) {
     
@@ -33,7 +37,6 @@ public class Solution {
 
         Arrays.sort(nums); // 别忘了！
 
-        // 与数组里元素不重复的permutation相比，解法上就是多了这个记录每个元素的使用情况的数组
         int[] visited = new int[nums.length]; 
      
         dfs(results, new ArrayList<Integer>(), visited, nums);    
@@ -69,4 +72,9 @@ public class Solution {
     }
     
     
+    // 方法2：Non-Recursion 方法。暂时还没有查到？？？？？？？
+    
+  
+  
+  
 }
