@@ -12,11 +12,11 @@ Return:
     ["hit","hot","lot","log","cog"]
   ] */
 
+
 // 方法1：我的方法。用BFS找所有路径，不断更新最短路径，比最短路径长的路径都不继续考察了
 public class Solution {
 
     private int minPathLength;
-    
     // 这个能加速程序的运行速度
     HashMap<String, HashSet<String>> neighborsOfTheStringsInTheDict;
 
@@ -72,11 +72,9 @@ public class Solution {
             
             for (String neighbor : allNeighbors) {
 
-                if (!path.contains(neighbor)) {
+                if (!path.contains(neighbor)) { // ArrayList 也有 contains 方法！在此可以替代 HashSet 的作用！！！
                     path.add(neighbor);
-
                     findAllPaths(neighbor, end, dict, path, shortestPaths);
-
                     path.remove(path.size() - 1); // 复位
                 }
             }
@@ -182,7 +180,6 @@ public class Solution {
                 }
             }
         }
-
         return expansion;
     }
 }
