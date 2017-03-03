@@ -13,7 +13,94 @@ Return:
   ] */
 
 
-// 方法1：我的方法。用BFS找所有路径，不断更新最短路径，比最短路径长的路径都不继续考察了
+// 方法1：我的方法。BFS - Iteration with 2 Queues
+// 用BFS找所有路径，如果到了某一层，出现了有效的path，则不再深入到下一层去了。速度较慢。
+public class Solution {
+
+    HashMap<String, HashSet<String>> neighborsOfStringsInTheDict;
+
+    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
+
+        List<List<String>> shortestPaths = new ArrayList<>();
+        if (start == null || end == null || start.length() != end.length()) {
+            return shortestPaths;
+        }
+        
+        neighborsOfStringsInTheDict = new HashMap<>();
+        
+        dict.add(start);
+        dict.add(end);
+        
+        Queue<String> managedStrings = new LinkedList<>();
+        managedStrings.offer(start);
+        
+        Queue<ArrayList<String>> managedPaths = new LinkedList<>();
+        ArrayList<String> path = new ArrayList<>();
+        path.add(start);
+        managedPaths.offer(path);
+        
+        // shortestPaths.size() == 0 表示我们还没有得到任何有效的path
+        while(!managedStrings.isEmpty() && shortestPaths.size() == 0) {
+            int sizeOfCurLayer = managedStrings.size();
+            for (int i = 0; i < sizeOfCurLayer; i++) {
+                
+                String curString = managedStrings.poll();
+                ArrayList<String> curPath = managedPaths.poll();
+                
+                if (curString.equals(end)) {
+                    shortestPaths.add(curPath);
+                    continue;
+                }
+                
+                if (shortestPaths.size() == 0) {
+                    HashSet<String> curNeighbors = new HashSet<>();
+                    if (!neighborsOfStringsInTheDict.containsKey(curString)) {
+                        curNeighbors = findAllNeighbors(curString, dict);
+                        neighborsOfStringsInTheDict.put(curString, curNeighbors);
+                    }
+                    curNeighbors = neighborsOfStringsInTheDict.get(curString);
+                    
+                    for (String neighbor : curNeighbors) {
+                        
+                        if (!curPath.contains(neighbor)) {
+                            ArrayList<String> nextPath = new ArrayList<>(curPath);
+                            nextPath.add(neighbor);
+                            managedPaths.offer(nextPath);
+                            
+                            managedStrings.offer(neighbor);
+                        }
+                    }
+                }
+            }
+        }
+        return shortestPaths;
+    }
+
+    private HashSet<String> findAllNeighbors(String string, Set<String> dict) {
+
+        HashSet<String> neighbors = new HashSet<>();
+
+        for (int i = 0; i < string.length(); i++) {
+            for (char c = 'a'; c <= 'z'; c++) {
+
+                char[] cArray = string.toCharArray();
+                if (cArray[i] != c) {
+                    cArray[i] = c;
+                    String neighbor = new String(cArray);
+
+                    if (dict.contains(neighbor)) {
+                        neighbors.add(neighbor);
+                    }
+                }
+            }
+        }
+        return neighbors;
+    }
+}
+
+
+// 方法2：我的方法。BFS - Recursion
+// 用BFS找所有路径，不断更新最短路径，比最短路径长的路径都不继续考察了。速度较慢。
 public class Solution {
 
     private int minPathLength;
