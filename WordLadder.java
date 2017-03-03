@@ -73,15 +73,16 @@ public class Solution {
             for (char c = 'a'; c <= 'z'; c++) {
                 
                 char[] charArray = curString.toCharArray();
-                if (charArray[i] != c) {
+                if (charArray[i] != c) { // 这是为了不要把和自己完全一样的String也放进去了
                     charArray[i] = c;
-                }         
-                String neighbor = new String(charArray);
+                    
+                    String neighbor = new String(charArray);
                 
-                // check if this neighbor String exists in the Dictionary
-                if (dict.contains(neighbor)) {
-                    neighbors.add(neighbor);
-                }
+                    // check if this neighbor String exists in the Dictionary
+                    if (dict.contains(neighbor)) {
+                        neighbors.add(neighbor);
+                    }
+                }         
             }
         }
         return neighbors;
