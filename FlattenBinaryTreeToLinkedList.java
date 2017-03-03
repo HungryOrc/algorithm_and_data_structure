@@ -29,8 +29,6 @@ Example:
 * } */
 
 public class Solution {
-    /* @param root: a TreeNode, the root of the binary tree
-     * @return: nothing */
     
     // 方法1: 普通做法，用 stack。只是要注意一下，要设置一个 prevNode 来处理整个流程
     public void flatten(TreeNode root) {
@@ -45,6 +43,7 @@ public class Solution {
         while (!nodeStack.isEmpty()) {
             TreeNode curNode = nodeStack.pop();
             
+            // 先放右后放左，以确保拿出来的时候是左边的先拿出来
             if (curNode.right != null) {
                 nodeStack.push(curNode.right);
             }
