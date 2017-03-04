@@ -12,7 +12,7 @@ pop()     // return 2
 Challenge 
 implement it by two stacks, do not use any other data structure and push, pop and top should be O(1) by AVERAGE. */
 
-// 思路：
+// 方法1：类里常驻2个Stack
 // 用 stack1 存push进来的东西，用 stack2 存将要（按queue的规则）pop出去的东西
 // 两个stack之间没有重复存的东西
 // 这样做，push、pop、top的时间复杂度都是 O(1) 
@@ -48,5 +48,42 @@ public class MyQueue {
             pushEverythingFromStack1ToStack2();
         }
         return stack2.peek();
+    }
+    
+    public boolean empty() {
+        return(stack2.isEmpty() && stack1.isEmpty());
+    }
+}
+
+
+// 方法2：类里常驻1个Stack
+// 另外用到的时候声明第二个Stack
+class MyQueue {
+    
+    Stack<Integer> myStack = new Stack<>();
+    
+    // Push element x to the back of queue.
+    public void push(int x) {
+        Stack<Integer> reverseStack = new Stack<>();
+        while (!myStack.isEmpty())
+            reverseStack.push(myStack.pop());
+        myStack.push(x);
+        while (!reverseStack.isEmpty())
+            myStack.push(reverseStack.pop());
+    }
+
+    // Removes the element from in front of queue.
+    public void pop() {
+        myStack.pop();
+    }
+
+    // Get the front element.
+    public int peek() {
+        return(myStack.peek());
+    }
+
+    // Return whether the queue is empty.
+    public boolean empty() {
+        return(myStack.isEmpty());
     }
 }
