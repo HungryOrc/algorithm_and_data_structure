@@ -7,15 +7,15 @@ Example
 s = abc3[a] return abcaaa
 s = 3[abc] return abcabcabc
 s = 4[ac]dy, return acacacacdy
-s = 3[2[ad]3[pf]]xyz, return adadpfpfpfadadpfpfpfadadpfpfpfxyz
+s = 3[2[ad]3[pf]]xyz, return adadpfpfpfadadpfpfpfadadpfpfpfxyz */
 
 public class Solution {
     
-    /* @param s  an expression includes numbers, letters and brackets
-     * @return a string */
-     
     // 方法1：Recursion
     // Ref: http://www.jiuzhang.com/solutions/expression-expand/
+    
+    /* @param s  an expression includes numbers, letters and brackets
+     * @return a string */
     public String expressionExpand(String s) {
         
         StringBuilder resultSB = new StringBuilder();
