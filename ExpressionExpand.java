@@ -94,6 +94,7 @@ public class Solution {
             
             else if (c == ']') {
                 String substring = popSubstringInOriginalOrder(stackOfEverything);
+                // 找到规律！！一个以']'结尾的子字符串的前面，一定有且只有一个数字！！！
                 multiplicationOfSubstring = (int)stackOfEverything.pop();
                 
                 for (int i = 1; i <= multiplicationOfSubstring; i++) {
