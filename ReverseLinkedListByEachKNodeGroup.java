@@ -73,6 +73,7 @@ public class Solution {
         return finalHead;
     }
     
+    // these K nodes includes the curHead
     private boolean stillHasKNodesToGo(ListNode curHead, int k) {
         if (curHead == null) {
             return false;
