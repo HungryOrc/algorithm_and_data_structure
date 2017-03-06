@@ -11,20 +11,17 @@ public class Solution
     {
         HashMap<Integer,Integer> numCountsMap = new HashMap<>();
         for (int n : nums)
-            numCountsMap.put(n, numCountsMap.getOrDefault(n,0)+1);
+            numCountsMap.put(n, numCountsMap.getOrDefault(n, 0) + 1);
         
         ArrayList<Map.Entry<Integer,Integer>> numCountsAL = new ArrayList<>();
         for (Map.Entry<Integer,Integer> curEntry : numCountsMap.entrySet())
             numCountsAL.add(curEntry);
         
-        // sort the ArrayList of HashMap Entries by the descending order of the Value
-        // in each Entry
-        Collections.sort(numCountsAL, new Comparator<Map.Entry<Integer,Integer>>()
-        {
+        // sort the ArrayList of HashMap Entries by the descending order of the Value in each Entry
+        // 注意构造 new Comparator 的语法！！！
+        Collections.sort(numCountsAL, new Comparator<Map.Entry<Integer,Integer>>() {
             @Override
-            public int compare(Map.Entry<Integer,Integer> entry1, 
-                               Map.Entry<Integer,Integer> entry2)
-            {
+            public int compare(Map.Entry<Integer,Integer> entry1, Map.Entry<Integer,Integer> entry2) {
                 int value1 = entry1.getValue();
                 int value2 = entry2.getValue();
                 if (value1 > value2)
@@ -46,13 +43,13 @@ public class Solution
     // 我的改进方法。比朴素的方法速度又快了一些
     // 做一个长度为n+1的数组。如果一个数x出现的次数为m，就在这个数组的第m个index上存下x
     // 但还有可能另一个数y也出现了m次，也需要记在index = m的位置
-    // 所以前述的数组，必须是其中每个元素都是一个ArrayList
+    // 所以这个数组，其中的每个元素都得是一个ArrayList
     // 记录完以后，从这个数组的尾部开始往前捋。捋满了k个数，即完成了题目所要求的
     public List<Integer> topKFrequent(int[] nums, int k) 
     {
         HashMap<Integer,Integer> numCountsMap = new HashMap<>();
         for (int n : nums)
-            numCountsMap.put(n, numCountsMap.getOrDefault(n,0)+1);
+            numCountsMap.put(n, numCountsMap.getOrDefault(n, 0) + 1);
         
         int n = nums.length;
         ArrayList<Integer>[] indexIsCount = new ArrayList[n+1];
