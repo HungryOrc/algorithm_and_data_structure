@@ -67,5 +67,57 @@ class Solution {
         nums[i] = nums[j];
         nums[j] = temp;
     }
+}
+
+
+// 方法2：one pass
+// Ref: http://www.jiuzhang.com/solutions/sort-colors/
+/* 很巧妙！三个pointer。诀窍在于：
+   left左边，不含left，保证一定是0
+   right右边，不含right，保证一定是2
+   index左边，不含index，保证一定是0或1 */
+   
+class Solution {
     
+    int RED = 0;
+    int WHITE = 1;
+    int BLUE = 2;
+    
+    public void sortColors(int[] nums) {
+        
+        if (nums == null || nums.length <= 1) {
+            return;
+        }
+        
+        int left = 0, right = nums.length - 1;
+        
+        int index = 0;
+        
+        // 要一直做到 = ！不能停止于 < ！
+        while (index <= right) {
+            
+            if (nums[index] == RED) {
+                swap(nums, index, left);
+                // 这里index要++，因为index的左边(不含index)一定要么是0要么是1！！！
+                index ++;
+                left ++;
+            }
+            
+            else if (nums[index] == WHITE) {
+                index ++;
+            }
+            
+            else { // == BLUE
+                swap(nums, index, right);
+                right --;
+                // 这里不要 index ++ 了！！！下一回合还要看从right调换过来的是什么！！！
+            }
+        }
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }   
 }
