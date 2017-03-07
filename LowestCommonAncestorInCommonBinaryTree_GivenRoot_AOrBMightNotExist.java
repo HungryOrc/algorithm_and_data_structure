@@ -14,15 +14,15 @@ LCA(3, 5) = 4
 LCA(5, 6) = 7
 LCA(6, 7) = 7
 
-/* Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * } */
+* Definition of TreeNode:
+* public class TreeNode {
+*     public int val;
+*     public TreeNode left, right;
+*     public TreeNode(int val) {
+*         this.val = val;
+*         this.left = this.right = null;
+*     }
+* } */
 
 // 比较难，我没想到
 // 基于 Common Binary Tree 的 LCA 问题的基本形式，即 A 和 B 一定存在的情况。
@@ -39,10 +39,8 @@ class ResultType {
 }
     
 public class Solution {
-    /* @param root The root of the binary tree.
-     * @param A and B two nodes
-     * @return: Return the LCA of the two nodes.    */
-    
+  
+    // Divide and Conquer - Recursion
     public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode A, TreeNode B) {
         ResultType result = checkLCA(root, A, B);
         if (result.aExist && result.bExist) {
@@ -51,7 +49,7 @@ public class Solution {
             return null;
         }
     }
-    // Divide and Conquer !!
+    
     private ResultType checkLCA(TreeNode root, TreeNode A, TreeNode B) {
         if (root == null) {
             return new ResultType(false, false, null);
@@ -61,7 +59,7 @@ public class Solution {
         ResultType leftResult = checkLCA(root.left, A, B);
         ResultType rightResult = checkLCA(root.right, A, B);
         
-        // 综合得到当前root以下的整个树的情况
+        // 综合得到当前root以下(包含root本身)的整个树的情况
         boolean aExist = leftResult.aExist || rightResult.aExist || root == A;
         boolean bExist = leftResult.bExist || rightResult.bExist || root == B;
         
@@ -79,5 +77,4 @@ public class Solution {
             return new ResultType(aExist, bExist, null);
         }    
     }
-
 }
