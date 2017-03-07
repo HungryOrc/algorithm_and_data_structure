@@ -19,6 +19,7 @@ Another example is LCA of nodes 2 and 4 is 2.
  *     TreeNode(int x) { val = x; }
  * } */
 
+// Recursion 方法
 public class Solution {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
