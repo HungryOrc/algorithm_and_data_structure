@@ -36,14 +36,13 @@ public class Solution
         Stack<Character> allChars = new Stack<>();
         Stack<Character> popped = new Stack<>();
         
-        // 实现了最右边的char放在栈顶，最左边的char放在栈底
+        // 实现了最右边的(结尾的)char放在栈顶，最左边的(开头的)char放在栈底
         for (char c : expression.toCharArray())
             allChars.add(c);
         
-        while (!allChars.isEmpty())
-        {
+        while (!allChars.isEmpty()) {
             char curChar = allChars.pop();
-            if (curChar != ':' && curChar != '?')
+            if (curChar != ':' && curChar != '?') // T, F, or 0-9. 只把这些char放到另一个stack里去
                 popped.add(curChar);
             else if (curChar == '?')
             {
@@ -51,12 +50,14 @@ public class Solution
                 char thirdChar = popped.pop();
                 
                 char firstChar = allChars.pop();
+              
                 if (firstChar == 'T')
                     popped.add(secondChar);
                 else // firstChar == 'F'
                     popped.add(thirdChar);
             }
         }
+      
         char finalResult = popped.pop();
         return Character.toString(finalResult);
     }
