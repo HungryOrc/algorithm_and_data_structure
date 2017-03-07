@@ -38,12 +38,12 @@ public class Solution
         
         // 实现了最右边的(结尾的)char放在栈顶，最左边的(开头的)char放在栈底
         for (char c : expression.toCharArray())
-            allChars.add(c);
+            allChars.push(c);
         
         while (!allChars.isEmpty()) {
             char curChar = allChars.pop();
             if (curChar != ':' && curChar != '?') // T, F, or 0-9. 只把这些char放到另一个stack里去
-                popped.add(curChar);
+                popped.push(curChar);
             else if (curChar == '?')
             {
                 char secondChar = popped.pop();
@@ -52,9 +52,9 @@ public class Solution
                 char firstChar = allChars.pop();
               
                 if (firstChar == 'T')
-                    popped.add(secondChar);
+                    popped.push(secondChar);
                 else // firstChar == 'F'
-                    popped.add(thirdChar);
+                    popped.push(thirdChar);
             }
         }
       
