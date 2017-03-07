@@ -28,36 +28,39 @@ class Solution {
         
         int left = 0, right = nums.length - 1;
         
-        while (left < right) {
-            while (nums[left] != BLUE) {
+        // 按照九章的 quick sort 的模板套路来办理 ！！！
+        while (left <= right) {
+            while (left <= right && nums[left] != BLUE) {
                 left ++;
             }
-            while (nums[right] == BLUE) {
+            while (left <= right && nums[right] == BLUE) {
                 right --;
             }
-            
-            // 注意！这里再判断一次是否 left < right ！！！
-            // 否则到了最后，left和right都已经交叉了，还再swap一次，就错了！
-            if (left < right) {
+
+            if (left <= right) {
                 swap(nums, left, right);
+                left ++;
+                right --;
             }
         } 
         // 最终效果一定是 left 和 right 交叉！！！确切地说是 left = right + 1
-        // 因为 left 最终会指向 最左边的一个是BLUE的位置！！！
+        // left 最终会指向 最左边的一个是BLUE的位置！！！
         // right 最终会指向 最右边的一个不是BLUE的位置！！！
         
         left = 0;
-        // right 不变！！！因为right此时已经指向最右边的一个不是BLUE的位置！！！
-        while (left < right) {
-            while (nums[left] != WHITE) {
+        // right 不变！
+        while (left <= right) {
+            while (left <= right && nums[left] != WHITE) {
                 left ++;
             }
-            while (nums[right] == WHITE) {
+            while (left <= right && nums[right] == WHITE) {
                 right --;
             }
             
-            if (left < right) {
+            if (left <= right) {
                 swap(nums, left, right);
+                left ++;
+                right --;
             }
         }
     }
