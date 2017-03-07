@@ -65,6 +65,7 @@ public class Solution {
               
                 treeNodeStack.push(newNode);
             }
+            
             i += 2;
         }
       
