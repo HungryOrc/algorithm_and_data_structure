@@ -48,9 +48,7 @@ class Solution {
         }
         // 到此，二者交叉了，即rightIndex在leftIndex的左边一位
         
-        if (originalLeftIndex < rightIndex)
         partition(colors, originalLeftIndex, rightIndex);
-        if (leftIndex < originalRightIndex)
         partition(colors, leftIndex, originalRightIndex);
     }
     
