@@ -27,9 +27,52 @@ O(h), where h is the height of the BST.
  *     TreeNode(int x) { val = x; }
  * } */
 
-
-
-
+// 方法1：九章
+// Ref: http://www.jiuzhang.com/solutions/inorder-successor-in-binary-search-tree/
+public class Solution {
+    
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        
+        if (root == null || p == null) {
+            return null;
+        }
+        
+        TreeNode successor = null;
+        
+        // 从root往下捋，耗时 log(h)
+        while (root != null && root != p) {
+            if (root.val > p.val) {
+                successor = root;
+                root = root.left;
+            }
+            else { // root.val <= p.val
+                root = root.right;
+            }
+        }
+        
+        // 到了这里，root不是等于p，就是等于null
+        // root如果等于null，不意味着p不存在于本tree中！！！
+        // 而是意味着本tree中没有比p更大的node了！！！
+        // 比如本树是从root开始一路向右下去的，然后到p就到底了！！！
+        if (root == null) {
+            return null;
+        }
+        
+        // root == p
+        else {
+            if (root.right == null) {
+                return successor;
+            }
+            else { // root.right != null
+                root = root.right;
+                while (root.left != null) {
+                    root = root.left;
+                }
+                return root;
+            }
+        }
+    }
+}
 
 
 // 方法2：我的笨办法
