@@ -39,64 +39,58 @@ public class LogParser {
             allLines.add(line);
         }
         input.close();
-
-		return parseLines(allLines.toArray(new String[allLines.size()]));
-
+        return parseLines(allLines.toArray(new String[allLines.size()]));
     }
 
     static String parseLines(String[] lines) throws ParseException{
         				
-		long startTime = 0;
-		long shutdownTime = 0;
-		long connectTime = 0;
-		long disconnectTime = 0;
-		long connectingTime = 0;
-		
-		SimpleDateFormat format = new SimpleDateFormat("(MM/dd/yyyy-HH:mm:ss)");
-		boolean connecting = false;
+	long startTime = 0;
+	long shutdownTime = 0;
+	long connectTime = 0;
+	long disconnectTime = 0;
+	long connectingTime = 0;
 
-		try {
-			for (int i = 0; i < lines.length; i++) {
-				String[] curLine = lines[i].split(" ");
-				String date = curLine[0];
-				String action = curLine[2];
-				
-				System.out.println(action);
-				
-				if (action.equals("START")) {
-					startTime = format.parse(date).getTime();
-				}
-				
-				else if (action.equals("CONNECTED")) {
-					connectTime = format.parse(date).getTime();
-					connecting = true;
-				}
-				
-				else if (action.equals("DISCONNECTED")) {
-					disconnectTime = format.parse(date).getTime();
-					connectingTime = connectingTime + disconnectTime - connectTime;
-					connecting = false;
-				}
-				
-				else if (action.equals("SHUTDOWN")) {
-					shutdownTime = format.parse(date).getTime();
-					if (connecting == true) {
-						connectingTime = connectingTime + shutdownTime - connectTime;
-					}
-					connecting = false;
-				}
+	SimpleDateFormat format = new SimpleDateFormat("(MM/dd/yyyy-HH:mm:ss)");
+	boolean connecting = false;
+
+	try {
+		for (int i = 0; i < lines.length; i++) {
+			String[] curLine = lines[i].split(" ");
+			String date = curLine[0];
+			String action = curLine[2];
+
+			if (action.equals("START")) {
+				startTime = format.parse(date).getTime();
 			}
-		} catch (ParseException e) {
-			throw new ParseException("Parse error!", e.getErrorOffset());
+
+			else if (action.equals("CONNECTED")) {
+				connectTime = format.parse(date).getTime();
+				connecting = true;
+			}
+
+			else if (action.equals("DISCONNECTED")) {
+				disconnectTime = format.parse(date).getTime();
+				connectingTime = connectingTime + disconnectTime - connectTime;
+				connecting = false;
+			}
+
+			else if (action.equals("SHUTDOWN")) {
+				shutdownTime = format.parse(date).getTime();
+				if (connecting == true) {
+					connectingTime = connectingTime + shutdownTime - connectTime;
+				}
+				connecting = false;
+			}
 		}
-		
-		long wholeTime = shutdownTime - startTime;
-		System.out.println(wholeTime);
-		System.out.println(connectingTime);
-		
-		double ratio = (double)connectingTime / (double)wholeTime * (double)100;
-		int ratioInt = (int)ratio;
-		String result = ratioInt + "%";
+	} catch (ParseException e) {
+		throw new ParseException("Parse error!", e.getErrorOffset());
+	}
+
+	long wholeTime = shutdownTime - startTime;
+
+	double ratio = (double)connectingTime / (double)wholeTime * (double)100;
+	int ratioInt = (int)ratio;
+	String result = ratioInt + "%";
 		
         return result;
     }
