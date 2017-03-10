@@ -2,12 +2,11 @@
 Example: Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2].
 Note:
 1. Each element in the result must be unique.
-2. The result can be in any order.
-*/
+2. The result can be in any order. */
 
 public class Solution {
     
-    // 用 HashSet
+    // 方法1：用 HashSet
     // Time: O(n)
     public int[] intersection(int[] nums1, int[] nums2) {
         
@@ -36,7 +35,7 @@ public class Solution {
     }
     
     
-    // Sort both Arrays, use 2 pointers from head and tail respectively
+    // 方法2：Sort both Arrays, use 2 pointers from head and tail respectively
     // Ref: https://discuss.leetcode.com/topic/45685/three-java-solutions
     // Time: O(n*log(n)). 后面处理重复数的过程只用O(n)，但前面排序数组用了O(n*log(n))
     public int[] intersection(int[] num1, int[] num2)
@@ -67,7 +66,7 @@ public class Solution {
     }
     
     
-    // Binary Search
+    // 方法3：Binary Search
     // Ref: https://discuss.leetcode.com/topic/45685/three-java-solutions
     // Time: O(n*log(n)). 后面处理重复数的过程只用O(log(n))，但前面排序数组用了O(n*log(n))
     public int[] intersection(int[] nums1, int[] nums2) {
