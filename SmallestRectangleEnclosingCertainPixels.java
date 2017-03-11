@@ -13,7 +13,7 @@ For example, given the following image:
 and x = 0, y = 2,
 Return 6. */
 
-// 方法1：二分法
+// 方法1：二分法。时间 m * log(n)
 // Ref: http://www.jiuzhang.com/solutions/smallest-rectangle-enclosing-black-pixels/
 public class Solution {
     
@@ -21,7 +21,7 @@ public class Solution {
      * @param x, y the location of one of the black pixels
      * @return an integer */
     public int minArea(char[][] image, int x, int y) {
-        // Write your code here
+        
         int m = image.length;
         if (m == 0)
             return 0;
@@ -101,7 +101,7 @@ public class Solution {
 }
 
 
-// 方法2：BFS
+// 方法2：BFS。在这一题里，BFS是慢的，时间 n平方
 class Coord {
     public int x, y;
     public Coord (int x, int y) {
