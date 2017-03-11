@@ -59,10 +59,7 @@ public String concatenationProcess(String[] init) {
                 curPair = "";
                 firstNumInThePair = true;
             } 
-            
-            
         }
-        
     }
     return result;
 }
