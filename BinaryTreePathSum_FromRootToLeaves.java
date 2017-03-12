@@ -80,6 +80,7 @@ public class Solution {
         
         nodeStack.push(root);
         sumStack.push(root.val);
+         
         ArrayList<Integer> newList = new ArrayList<>();
         newList.add(root.val);
         pathStack.push(newList);
@@ -96,6 +97,7 @@ public class Solution {
             if (curNode.left != null) {
                 nodeStack.push(curNode.left);
                 sumStack.push(curSum + curNode.left.val);
+                 
                 ArrayList<Integer> newLeftList = new ArrayList<>(curList);
                 newLeftList.add(curNode.left.val);
                 pathStack.push(newLeftList);
@@ -103,6 +105,7 @@ public class Solution {
             if (curNode.right != null) {
                 nodeStack.push(curNode.right);
                 sumStack.push(curSum + curNode.right.val);
+                 
                 ArrayList<Integer> newRightList = new ArrayList<>(curList);
                 newRightList.add(curNode.right.val);
                 pathStack.push(newRightList);
