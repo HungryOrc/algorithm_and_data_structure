@@ -68,9 +68,7 @@ public class Solution {
         if (curNode == null)
             return 0;
         else if (curNode.val == sum) // 注意！这里就是上文提到的，吻合，计数加一，然后还得继续往下探！！
-            return 1 + 
-                countPaths(curNode.left, 0) + 
-                countPaths(curNode.right, 0);
+            return 1 + countPaths(curNode.left, 0) + countPaths(curNode.right, 0);
         else
             return countPaths(curNode.left, sum-curNode.val) + 
                    countPaths(curNode.right, sum-curNode.val);
