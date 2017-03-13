@@ -48,10 +48,10 @@ Example:
         Random rand = new Random();
         // nextInt(max) method returns a pseudorandom, uniformly distributed int value 
         // between 0 (inclusive) and the specified max value (exclusive)
-        int nextTimes = rand.nextInt(listLength);
+        int chosenIndex = rand.nextInt(listLength);
 
         ListNode targetNode = head;
-        for (int i = 0; i < nextTimes; i++)
+        for (int i = 0; i < chosenIndex; i++)
             targetNode = targetNode.next;
         return targetNode.val;
     }
@@ -61,9 +61,7 @@ Example:
 Ref: https://leetcode.com/problems/linked-list-random-node/
 
 Brief explanation for Reservoir Sampling
-
-Problem:
-Choose k entries from n numbers. Make sure each number is selected with the probability of k/n
+Problem: Choose k entries from n numbers. Make sure each number is selected with the probability of k/n
 
 Basic idea:
 Choose 1, 2, 3, ..., k first and put them into the reservoir.
@@ -92,5 +90,4 @@ The same case with 222 and 333
 Now all the numbers have the probability of 3/4 to be picked
 
 This Problem <Linked List Random Node>
-is the sp case where k=1
-*/
+is the sp case where k=1 */
