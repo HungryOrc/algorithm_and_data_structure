@@ -71,7 +71,7 @@ public class Solution {
     }
     
     
-    // 一次二分的做法
+    // 一次二分的做法。很巧妙！！！
     // Ref: http://www.jiuzhang.com/solutions/search-in-rotated-sorted-array/
     public int search(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
@@ -84,22 +84,34 @@ public class Solution {
         
         while (start + 1 < end) {
             mid = start + (end - start) / 2;
+            
             if (nums[mid] == target) {
                 return mid;
             }
             
-            // 注意！！！关键所在！这里不再像常规一样比较mid和target！而是比较start和mid！然后分出两种情况，
-            // 然后才是比较他们和target之间的大小关系！
+            // 注意！！！精华所在！！！
+            // 接下来就不直接比较mid和target的值了！！！
+            // 而是先要比较start和mid的值，以先确认start与mid所在的分段的情况！！！
+            // 然后才是比较start，mid，end与target的值！！！
+            
+            // 第一种情况，start和mid在同一段上，这里又包含2种子情况：
+            // 它们都在左半分段上，或者它们都在右半分段上
+            // 但这2种子情况都可以用下述的方式统一处理：
             if (nums[start] < nums[mid]) {
-                // situation 1
-                if (nums[start] <= target && target <= nums[mid]) { // 注意比较的内容！！
+                // 如果target处于start与mid之间
+                if (nums[start] <= target && target <= nums[mid]) {
                     end = mid;
                 } else {
                     start = mid;
                 }
-            } else { // nums[start] > nums[mid]，等于是不可能的！因为所有元素都不相等！
-                // situation 2
-                if (nums[mid] <= target && target <= nums[end]) { // 注意比较的内容！！
+            
+            // 第二种情况，start和mid不在同一段上；确切地说：
+            // start在左半分段上，mid在右半分段上
+            // 此时，可知 mid与end一定在同一个分段上！！！
+            // 这一点是我们继续做下去的支柱所在！！！
+            } else {
+                // 如果target处于mid与end之间
+                if (nums[mid] <= target && target <= nums[end]) {
                     start = mid;
                 } else {
                     end = mid;
@@ -115,5 +127,5 @@ public class Solution {
         }
         return -1;
     }
-    
+        
 }
