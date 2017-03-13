@@ -54,18 +54,27 @@ public int chipMoving(int[][] grid) {
     }
     
     for (int col = 2; col < cols; col++) {
-        costToReachCurCell_FromLeft[1][col] = Math.min(costToReachCurCell_FromLeft[1][col - 1], costToReachCurCell_FromAbove[1][col - 1] + directChangeCost) + grid[1][col];
+        costToReachCurCell_FromLeft[1][col] = grid[row][1] + 
+                Math.min(costToReachCurCell_FromLeft[1][col - 1], 
+                         costToReachCurCell_FromAbove[1][col - 1] + directChangeCost);
     }
     for (int row = 2; row < rows; row++) {
-        costToReachCurCell_FromAbove[row][1] = Math.min(costToReachCurCell_FromAbove[row - 1][1], costToReachCurCell_FromLeft[row - 1][1] + directChangeCost) + grid[row][1];
+        costToReachCurCell_FromAbove[row][1] = grid[row][1] + 
+                Math.min(costToReachCurCell_FromAbove[row - 1][1], 
+                         costToReachCurCell_FromLeft[row - 1][1] + directChangeCost);
     }
     
     for (int row = 2; row < rows; row++) {
         for (int col = 2; col < cols; col++) {
-            costToReachCurCell_FromAbove[row][col] = Math.min(costToReachCurCell_FromAbove[row - 1][col], costToReachCurCell_FromLeft[row - 1][col] + directChangeCost) + grid[row][col];
-            costToReachCurCell_FromLeft[row][col] = Math.min(costToReachCurCell_FromLeft[row][col - 1], costToReachCurCell_FromAbove[row][col - 1] + directChangeCost) + grid[row][col];
+            costToReachCurCell_FromAbove[row][col] = grid[row][col] + 
+                    Math.min(costToReachCurCell_FromAbove[row - 1][col], 
+                             costToReachCurCell_FromLeft[row - 1][col] + directChangeCost);
+            costToReachCurCell_FromLeft[row][col] = grid[row][col] + 
+                    Math.min(costToReachCurCell_FromLeft[row][col - 1], 
+                             costToReachCurCell_FromAbove[row][col - 1] + directChangeCost);
         }
     }
 
-    return Math.min(costToReachCurCell_FromAbove[rows - 1][cols - 1], costToReachCurCell_FromLeft[rows - 1][cols - 1]);   
+    return Math.min(costToReachCurCell_FromAbove[rows - 1][cols - 1], 
+                    costToReachCurCell_FromLeft[rows - 1][cols - 1]);   
 }
