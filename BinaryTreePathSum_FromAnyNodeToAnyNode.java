@@ -29,7 +29,7 @@ Return 3. The paths that sum to 8 are:
  */
 public class Solution {
     
-    // 自然思路：取一个node A 作为起始点，用Stack进行DFS，找它下面的所有支路。
+    // 方法1（我的朴素想法）：取一个node A 作为起始点，用Stack进行DFS，找它下面的所有支路。
     // 注意！找到吻合sum时，计数加一，但还要继续往下找 ！！允许吻合之后继续偏离然后再次吻合 ！！这算两条吻合支路 ！！
     // 然后，再对node A 的 leftChild 和 rightChild 分别作如上的操作
     /* Time Complexity:
@@ -38,44 +38,76 @@ public class Solution {
     Thus, the time complexity for a balanced tree is O (n * log n).
     However, in the worst-case scenario where the binary tree has the same structure as a linked list, 
     the time complexity is indeed O (n ^ 2). */
-    public int pathSum(TreeNode root, int sum) {
+    public List<List<Integer>> binaryTreePathSum2(TreeNode root, int sum) {
         
+        List<List<Integer>> result = new ArrayList<>();
         if (root == null)
-            return 0;
-        
-        int numOfPaths = 0;
+            return result;
         
         // 这里以下用 Queue 做 BFS 也是一样的，用 Stack 还是用 Queue 是处理nodes的顺序的问题
-        // 后面的 countPaths 函数才是如何处理每个node的问题
         Stack<TreeNode> nodeStack = new Stack<>();
         nodeStack.push(root);
+        Stack<ArrayList<Integer>> pathStack = new Stack<>();
+        ArrayList<Integer> path = new ArrayList<>();
+        path.add(root.val);
+        pathStack.push(path);
         
-        while (!nodeStack.isEmpty())
-        {
+        while (!nodeStack.isEmpty()) {
             TreeNode curNode = nodeStack.pop();
-            numOfPaths += countPaths(curNode, sum);
+            ArrayList<Integer> curPath = pathStack.pop();
             
-            if (curNode.left != null)
+            findPaths(curNode, sum, curPath, result);
+            
+            if (curNode.left != null) {
                 nodeStack.push(curNode.left);
-            if (curNode.right != null)
+                
+                ArrayList<Integer> newPath = new ArrayList<>();
+                newPath.add(curNode.left.val);
+                pathStack.push(newPath);
+            }
+            if (curNode.right != null) {
                 nodeStack.push(curNode.right);
+                
+                ArrayList<Integer> newPath = new ArrayList<>();
+                newPath.add(curNode.right.val);
+                pathStack.push(newPath);
+            }
         }
-        return numOfPaths;
+        return result;
     }
     
-    private int countPaths(TreeNode curNode, int sum)
-    {
-        if (curNode == null)
-            return 0;
-        else if (curNode.val == sum) // 注意！这里就是上文提到的，吻合，计数加一，然后还得继续往下探！！
-            return 1 + countPaths(curNode.left, 0) + countPaths(curNode.right, 0);
-        else
-            return countPaths(curNode.left, sum-curNode.val) + 
-                   countPaths(curNode.right, sum-curNode.val);
+    private void findPaths(TreeNode curNode, int remainSum,
+                           ArrayList<Integer> path,
+                           List<List<Integer>> result) {
+
+        if (curNode == null) {
+            return;
+        }
+
+        if (curNode.val == remainSum) {
+            // 特别注意！！！
+            // 如果到了某一个点，满足了sum，也还要继续算下去！！！
+            // 因为下面的点如果加起来等于0，加上它们，也算是新的符合要求的子树！！！
+            result.add(new ArrayList<>(path)); 
+            // 所以这里不能写 return;
+            // 因为后面还要继续呢！！！
+        }
+        
+        if (curNode.left != null) {
+            path.add(curNode.left.val);
+            findPaths(curNode.left, remainSum - curNode.val, path, result); 
+            path.remove(path.size() - 1);
+        }
+        
+        if (curNode.right != null) {
+            path.add(curNode.right.val);
+            findPaths(curNode.right, remainSum - curNode.val, path, result);
+            path.remove(path.size() - 1);
+        }
     }
 
 
-    // 非常巧妙的方法：Prefix Sum。比较难于理解
+    // 方法2：非常巧妙！！！Prefix Sum。较难理解
     // Ref: https://discuss.leetcode.com/topic/64388/simple-ac-java-solution-dfs/2
     // 从整个树的root开始，沿着每条path上的逐个node，一个一个加下去，加成prefixSum（注意从root到每个node的path是唯一的）
     // 比如一个path从root开始是 1(root),2,-1,-1,2，那么逐个的prefixSum依次是：1, 3, 2, 1, 3。把这些数都记录到 HashMap 里去
