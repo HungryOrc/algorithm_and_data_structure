@@ -9,12 +9,8 @@ For [4, 5, 1, 2, 3] and target=1, return 2.
 For [4, 5, 1, 2, 3] and target=0, return -1. */
 
 public class Solution {
-    /** 
-     *@param nums: an integer rotated sorted array
-     *@param target :  an integer to be searched
-     *return : an integer */
     
-    // 两次二分的做法
+    // 方法1：两次二分的做法
     public int search(int[] nums, int target) {
         
         if (nums == null || nums.length == 0) {
@@ -71,7 +67,7 @@ public class Solution {
     }
     
     
-    // 一次二分的做法。很巧妙！！！
+    // 方法2：一次二分的做法。很巧妙！！！
     // Ref: http://www.jiuzhang.com/solutions/search-in-rotated-sorted-array/
     public int search(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
