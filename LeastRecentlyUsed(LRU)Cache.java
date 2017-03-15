@@ -7,7 +7,7 @@ It should support the following operations: get and put:
 Could you do both operations in O(1) time complexity?
 
 Example:
-LRUCache cache = new LRUCache( 2 /* capacity */ );
+LRUCache cache = new LRUCache(2); // capacity = 2
 cache.put(1, 1);
 cache.put(2, 2);
 cache.get(1);       // returns 1
