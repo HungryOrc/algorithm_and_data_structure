@@ -25,8 +25,8 @@ Return 3. The paths that sum to 8 are:
  *     TreeNode left;
  *     TreeNode right;
  *     TreeNode(int x) { val = x; }
- * }
- */
+ * } */
+
 public class Solution {
     
     // 方法1（我的朴素想法）：取一个node A 作为起始点，用Stack进行DFS，找它下面的所有支路。
