@@ -37,14 +37,17 @@ public class Solution {
         
         ArrayList<Integer> curPath = new ArrayList<>();
         curPath.add(root.val);
+         
         findPaths(root, curPath, root.val, target, result);
         return result;
     }
+    
     private void findPaths(TreeNode curNode, 
                            ArrayList<Integer> curPath, 
                            int curSum,
                            int target,
                            List<List<Integer>> result) {
+         
         // if this is a leaf
         if (curNode.left == null && curNode.right == null) {
             if (curSum == target) {
