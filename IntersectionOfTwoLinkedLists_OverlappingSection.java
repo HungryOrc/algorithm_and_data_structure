@@ -28,7 +28,7 @@ Your code should preferably run in O(n) time and use only O(1) memory.
  
 public class Solution {
     
-    // 方法1: 用HashSet做，时间 O(n)，空间 O(n)。空间方面不满足 O(1) 的要求
+    // 方法1: 用HashSet做，时间 O(n)，空间 O(n)
     // 注意！！！HashSet 是可以存 Reference 变量并比较 Reference 变量的！！！不是只能存 值变量！！！
     public ListNode getIntersectionNode(ListNode headA, ListNode headB)
     {
@@ -50,6 +50,7 @@ public class Solution {
     
     
     // 方法2: 两个指针，到尾之后再折回来！很巧妙！
+    // 时间O(n)，空间O(1)，后者是重点！！
     // Ref: https://leetcode.com/articles/intersection-two-linked-lists/
     public ListNode getIntersectionNode(ListNode headA, ListNode headB)
     {
@@ -66,6 +67,7 @@ public class Solution {
             headB = headB.next;
             
             // 两个pointer可能同时到达尾端，也可能不同时。但这不要紧：
+          
             // 当 pointer A 到了 listA 的尾端
             if (headA == null) {
                 // 如果pointer A 还没有被转到listB的头部过，就把它转到listB的头部
@@ -78,6 +80,7 @@ public class Solution {
                 else
                     return null;
             }
+          
             // 当 Pointer B 到了 listB 的尾端
             if (headB == null) {
                 if (headBShifted == false) {
