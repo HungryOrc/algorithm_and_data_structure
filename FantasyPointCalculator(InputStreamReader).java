@@ -55,14 +55,13 @@ public class Solution {
             }
             
             System.out.println("Leaders");
-            if (idsAndPoints.size() > 0) {
-                for (int i = 1; i <= idsAndPoints.size(); i++) {
-                    System.out.print(i + ",");
-                    System.out.print(idsAndPoints.get(i-1)[0] + ",");
-                    System.out.print(idsAndPoints.get(i-1)[1]);
-                    System.out.println();
-                }
+            for (int i = 1; i <= idsAndPoints.size(); i++) {
+                System.out.print(i + ",");
+                System.out.print(idsAndPoints.get(i-1)[0] + ",");
+                System.out.print(idsAndPoints.get(i-1)[1]);
+                System.out.println();
             }
+
             s = br.readLine();
         }
        
