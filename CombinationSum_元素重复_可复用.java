@@ -65,7 +65,7 @@ public class Solution {
             //
             // 如果当前的 start index 在第二个2 那里，则在本次的 for 循环里，
             // 第二个2会入选；第一个9会入选，第二三个9不会入选
-            if (i > startIndex && candidates[i] == candidates[i - 1]) {
+            if (i > 0 && candidates[i] == candidates[i - 1]) {
                 continue;
             }
         
