@@ -25,7 +25,6 @@ public class Solution {
     
     // 答案看着虽然长，其实思路挺简单，只是切分成了多个函数
     public void nextPermutation(int[] nums) {
-        
         if (nums == null || nums.length <= 1) {
             return;
         }
@@ -63,7 +62,6 @@ public class Solution {
                 return i;
             }
         }
-        
         return -1; // 其实我们无论任何情况下都不会到这里
     }
     
