@@ -38,8 +38,8 @@ class Node {
     Node next;
     
     public Node(int key, int value) {
-    	this.key = key;
-    	this.value = value;
+    	  this.key = key;
+    	  this.value = value;
     }
 }
 
@@ -51,16 +51,16 @@ public class LRUCache {
     
     public LRUCache(int capacity) {
         this.capicity = capacity;
+        count = 0;
+        
         map = new HashMap<>();
       
         dummyHead = new Node(0, 0);
     	  dummyTail = new Node(0, 0);
     	  dummyHead.next = dummyTail;
+        dummyHead.pre = null;
     	  dummyTail.pre = dummyHead;
-    	  dummyHead.pre = null;
     	  dummyTail.next = null;
-      
-    	  count = 0;
     }
     
     // delete a node in any place of the doubly-linked-list, in O(1) time
@@ -73,7 +73,7 @@ public class LRUCache {
     // 最近被访问的node，都要先从list里删除，然后加到list的头部来
     // 其实是加到dummyHead的后面
     public void addToHead(Node node) {
-    	  node.next = dummyHead.next;
+    	  node.next = dummyHead.next; // dummyHead.next 是原来的真实头部节点
     	  node.next.pre = node;
       
     	  node.pre = dummyHead;
@@ -81,7 +81,6 @@ public class LRUCache {
     }
     
     public int get(int key) {
-      
     	  if (map.get(key) != null) {
       		  Node node = map.get(key);
       	  	int result = node.value;
@@ -90,13 +89,13 @@ public class LRUCache {
     	    	addToHead(node); // 然后再把此node加到list的头部去
     	    	
             return result;
+        
       	} else {
       	    return -1;
         }
     }
     
     public void put(int key, int value) {
-      
       	if (map.get(key) != null) {
       		  Node node = map.get(key);
       		  node.value = value; // node的value要变，但key不变
@@ -118,7 +117,6 @@ public class LRUCache {
     	  		    addToHead(node);
     	  	  }
     	  }
-      
-   }
+    }
   
 }
