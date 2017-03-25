@@ -23,12 +23,12 @@ return 10. */
 里任何一个横向坐标上的高度。
 但是这个高度一定要 > height[x+1]！因为如果 <= height[x+1]，则最大长方形的结束点一定不会是在[x]，
 而是可以至少延长到坐标[x+1]。
-所以最大长方形里  每  一  点  的高度，包括  最  左  端  点  的高度，也一定要 > height[x+1]。
+所以最大长方形里  每  一  点  的高度，包括 最左端点 和 最右端点 的高度，都要 > height[x+1]。
 所以我们就要在高度 > height[x+1] 这个条件下寻找左端点。
 
 至此可知：stack里每push进来一个元素(curHeight)之前，stack中所有比它大的元素都会被清除
 换句话说，stack顶部的元素一直都会是整个stack里最大的元素，之前的所有元素都一定小于等于他
-这就叫  “递  增  栈”  */
+这就叫  “递增栈” 或者 “单调栈” */
 
 public class Solution {
     
@@ -40,11 +40,13 @@ public class Solution {
         }
         
         Stack<Integer> indexStack = new Stack<>();
+        indexStack.push(0); // 左边第一个竖柱
+        
         int maxArea = 0;
         
         // 第一步：取每一个可能作为最大长方形的右端的坐标
         // 下面的系数 i，标定的就是上文所述的 [x+1] 坐标
-        for (int i = 0; i <= height.length; i++) {
+        for (int i = 1; i <= height.length; i++) {
             // i == height.length 意味着 [x] == height.length - 1，即我们已经考察到了数组heights的最右边的一个
             // -1 的作用是保证到最后一列的右边时（已经出界了），一定小于所有的非负整数
             int curHeight = (i == height.length) ? -1 : height[i];
@@ -73,6 +75,3 @@ public class Solution {
         return maxArea;
     }
 }
-
-
-
