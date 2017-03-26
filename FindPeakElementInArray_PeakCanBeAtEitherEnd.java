@@ -8,15 +8,14 @@ For example, in array [1, 2, 3, 1], 3 is a peak element and your function should
 // 二分法
 public class Solution {
     
-    public int findPeakElement(int[] nums) {
-        
+    public int findPeakElement(int[] nums) {      
         // 处理nums长度太短的情况
         if (nums.length == 1) {
             return 0;
         } else if (nums.length == 2) {
             return nums[0] > nums[1] ? 0 : 1;
         } 
-        // 处理第一个或者最后一个元素是peak的情况
+        // 数组长度大于2，然后数组里的第一个或者最后一个元素是peak的情况
         else {
             if (nums[0] > nums[1]) {
                 return 0;
@@ -27,6 +26,7 @@ public class Solution {
         
         // 处理其他的普通情况
         int start = 1, end = nums.length - 1;
+        // 九章模板
         while(start + 1 < end) {
             int mid = start + (end - start) / 2;
             if(nums[mid] < nums[mid - 1]) {
