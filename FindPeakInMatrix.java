@@ -26,6 +26,14 @@ Given a matrix:
 ]
 return index of 41 (which is [1,1]) or index of 24 (which is [2,2]) */
 
+// 方法1：不断地缩小row的范围
+// Ref: http://www.jiuzhang.com/solutions/find-peak-element-ii/
+// 对行进行binary search。在矩阵的正中间那一行，找到这一行的max cell即max列，
+// 在这一列上，如果本cell比上一行的cell小，则查找peak的范围缩小到end row = 上一行，
+// 如果本cell比下一行小，则查找peak的范围缩小到 start row = 下一行，
+// 如果本cell同时比上一行及下一行都小，则上面两种操作任择其一都可，
+// 如果本cell同时比上一行及下一行都大，则本cell就是一个peak了，返回本cell即可
+// O(n*logn)
 class Solution {
 
     public List<Integer> findPeakII(int[][] A) {
@@ -46,7 +54,7 @@ class Solution {
                 startRow = midRow + 1;
             } else if (A[midRow][maxCol] < A[midRow - 1][maxCol]) {
                 endRow = midRow - 1;
-            } else { // ==
+            } else { // >下一行 且 >上一行
                 peakCoord.add(midRow);
                 peakCoord.add(maxCol);
                 return peakCoord;
@@ -65,5 +73,50 @@ class Solution {
             }
         }
         return maxColIndex;
+    }
+}
+
+
+// 方法2：交替地：缩小row，缩小col，缩小row，缩小col……
+// 很巧妙！！！
+// O(m + n)
+// Ref: http://www.jiuzhang.com/solutions/find-peak-element-ii/
+class Solution {
+
+    public List<Integer> findPeakII(int[][] A) {
+        // write your code here
+        int n = A.length;
+        int m = A[0].length;
+        return find(1, n - 2, 1, m - 2, A, true);
+    }
+  
+    private List<Integer> find(int x1, int x2, int y1, int y2, int[][] A, boolean flag) {        
+        if (flag) {
+            int mid = x1 + (x2 - x1) / 2;
+            int index = y1;
+            for (int i = y1; i <= y2; ++i)
+                if (A[mid][i] > A[mid][index])
+                    index = i;
+                    
+            if (A[mid - 1][index] > A[mid][index])
+                return find(x1, mid - 1, y1, y2, A, !flag);
+            else if (A[mid + 1][index] > A[mid][index])
+                return find(mid + 1, x2, y1, y2, A, !flag);
+            else
+                return new ArrayList<Integer>(Arrays.asList(mid, index));
+        } else {
+            int mid = y1 + (y2 - y1) / 2;
+            int index = x1;
+            for (int i = x1; i <= x2; ++i)
+                if (A[i][mid] > A[index][mid])
+                    index = i;
+                    
+            if (A[index][mid - 1] > A[index][mid])
+                return find(x1, x2, y1, mid - 1, A, !flag);
+            else if (A[index][mid + 1] > A[index][mid])
+                return find(x1, x2, mid + 1, y2, A, !flag);
+            else
+                return new ArrayList<Integer>(Arrays.asList(index, mid));
+        }
     }
 }
