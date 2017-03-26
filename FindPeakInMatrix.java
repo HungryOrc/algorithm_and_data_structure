@@ -84,13 +84,13 @@ class Solution {
 class Solution {
 
     public List<Integer> findPeakII(int[][] A) {
-        // write your code here
         int n = A.length;
         int m = A[0].length;
         return find(1, n - 2, 1, m - 2, A, true);
     }
   
-    private List<Integer> find(int x1, int x2, int y1, int y2, int[][] A, boolean flag) {        
+    private List<Integer> find(int x1, int x2, int y1, int y2, int[][] A, boolean flag) {
+      
         if (flag) {
             int mid = x1 + (x2 - x1) / 2;
             int index = y1;
@@ -99,11 +99,12 @@ class Solution {
                     index = i;
                     
             if (A[mid - 1][index] > A[mid][index])
-                return find(x1, mid - 1, y1, y2, A, !flag);
+                return find(x1, mid - 1, y1, y2, A, !flag); // 逆置flag
             else if (A[mid + 1][index] > A[mid][index])
-                return find(mid + 1, x2, y1, y2, A, !flag);
+                return find(mid + 1, x2, y1, y2, A, !flag); // 逆置flag
             else
                 return new ArrayList<Integer>(Arrays.asList(mid, index));
+          
         } else {
             int mid = y1 + (y2 - y1) / 2;
             int index = x1;
@@ -112,9 +113,9 @@ class Solution {
                     index = i;
                     
             if (A[index][mid - 1] > A[index][mid])
-                return find(x1, x2, y1, mid - 1, A, !flag);
+                return find(x1, x2, y1, mid - 1, A, !flag); // 逆置flag
             else if (A[index][mid + 1] > A[index][mid])
-                return find(x1, x2, mid + 1, y2, A, !flag);
+                return find(x1, x2, mid + 1, y2, A, !flag); // 逆置flag
             else
                 return new ArrayList<Integer>(Arrays.asList(index, mid));
         }
