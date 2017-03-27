@@ -17,20 +17,17 @@ Given target = 3, return true. */
 // Ref: http://www.jiuzhang.com/solutions/search-a-2d-matrix/
 // 九章
 
-// Binary Search Twice
+// 方法1：Binary Search Twice
 public class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0) {
-            return false;
-        }
-        if (matrix[0] == null || matrix[0].length == 0) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return false;
         }
         
         int row = matrix.length;
         int column = matrix[0].length;
         
-        // find the row index, the last number <= target 
+        // 找到最后一个（最靠下的一个）符合 “本行的第一个元素 <= taget” 这个条件的行 
         int start = 0, end = row - 1;
         while (start + 1 < end) {
             int mid = start + (end - start) / 2;
@@ -72,22 +69,23 @@ public class Solution {
     }
 }
 
-// Binary Search Once
+
+// 方法2：Binary Search Once
 public class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0) {
-            return false;
-        }
-        if (matrix[0] == null || matrix[0].length == 0) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return false;
         }
         
         int row = matrix.length, column = matrix[0].length;
+        
         int start = 0, end = row * column - 1;
         
         while (start + 1 < end) {
             int mid = start + (end - start) / 2;
-            int number = matrix[mid / column][mid % column];
+            
+            int number = matrix[mid / column][mid % column]; // 关键！！
+            
             if (number == target) {
                 return true;
             } else if (number < target) {
@@ -102,7 +100,6 @@ public class Solution {
         } else if (matrix[end / column][end % column] == target) {
             return true;
         }
-        
         return false;
     }
 }
