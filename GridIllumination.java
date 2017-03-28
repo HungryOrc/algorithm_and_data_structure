@@ -22,13 +22,36 @@ Ref: http://www.1point3acres.com/bbs/thread-201983-1-1.html
 Map里的 keys 和 values 都没有被真正的复制！！！ 
 所以我们在这里还是老老实实一个一个灯地开，然后原路返回一个一个灯地关，不试图复制关于灯的 4个Map 了 */
 
+
 import java.util.*;
 
 class Cell {
     long x, y;
+    
     public Cell(long x, long y) {
         this.x = x;
         this.y = y;
+    }
+    
+    // 特别注意 ！！！！！
+    // ================================================================================================
+    // 要在 set 或者 map 里比较两个自定义的 class 的 objects 的话，必须在自定义的class里设置以下2个方法：
+    // public boolean equals(Object o)
+    // public int hashCode()
+    // ================================================================================================
+    
+    public boolean equals(Object o) { // 这里的输入变量必须是 Object ！！！不能直接写 Cell ！否则会出错
+    	Cell cell = (Cell)o; // 这里再把输入的变量 显示转化为 Cell 类型！！！
+    	
+    	if(this.x == cell.x && this.y == cell.y) {
+    		return true;
+    	}
+    	return false; 
+    }
+
+    // hashCode 方法的返回值必须是 int ！！！不可以是 long 之类
+    public int hashCode() { 
+    	return (int)(this.x % 100000 * 31 + this.y % 100000);
     }
 }
 
@@ -38,15 +61,15 @@ public class GridIllumination {
         ArrayList<String> result = new ArrayList<>();
         
         // <x coordinate, lamp count>
-        HashMap<long, int> lampCountsInRows = new HashMap<>();
+        HashMap<Long, Integer> lampCountsInRows = new HashMap<>();
         // <y coordinate, lamp count>
-        HashMap<long, int> lampCountsInCols = new HashMap<>();
+        HashMap<Long, Integer> lampCountsInCols = new HashMap<>();
         // <diagonal x + y, lamp count> 
         // 对角线是左上到右下，因为本题原点在左下角，所以对角线的表示是 x + y = 一定值
-        HashMap<long, int> lampCountsInDiags = new HashMap<>();
+        HashMap<Long, Integer> lampCountsInDiags = new HashMap<>();
         // <anti-diagonal x - y, lamp count> 
         // 反对角线是右上到左下，因为本题原点在左下角，所以反对角线的表示是 x - y = 一定值
-        HashMap<long, int> lampCountsInAntidiags = new HashMap<>();
+        HashMap<Long, Integer> lampCountsInAntidiags = new HashMap<>();
       
         HashSet<Cell> allLamps = new HashSet<>();
         for (Cell lamp : lamps) {
@@ -54,12 +77,12 @@ public class GridIllumination {
             allLamps.add(lamp);
           
             // 把所有灯的照明区域加到4个map里去
-            lampCountsInRows.put(lamp.x, getOrDefault(lamp.x, 0) + 1);
-            lampCountsInCols.put(lamp.y, getOrDefault(lamp.y, 0) + 1);
-            lampCountsInDiags.put(lamp.x + lamp.y, getOrDefault(lamp.x + lamp.y, 0) + 1);
-            lampCountsInAntidiags.put(lamp.x - lamp.y, getOrDefault(lamp.x - lamp.y, 0) + 1);
+            lampCountsInRows.put(lamp.x, lampCountsInRows.getOrDefault(lamp.x, 0) + 1);
+            lampCountsInCols.put(lamp.y, lampCountsInCols.getOrDefault(lamp.y, 0) + 1);
+            lampCountsInDiags.put(lamp.x + lamp.y, lampCountsInDiags.getOrDefault(lamp.x + lamp.y, 0) + 1);
+            lampCountsInAntidiags.put(lamp.x - lamp.y, lampCountsInAntidiags.getOrDefault(lamp.x - lamp.y, 0) + 1);
         }
-      
+
         // for each check point in the check list
         for (Cell checkPoint : queries) {
             long curX = checkPoint.x;
@@ -77,12 +100,12 @@ public class GridIllumination {
                     lampCountsInAntidiags.put(cell.x - cell.y, lampCountsInAntidiags.get(cell.x - cell.y) - 1);
                 }
             }
-        
+
             // 注意！！灯的照明范围的maps里面很可能不含有check point的坐标！所以要先看是否存在，再看是否为0
             if ((!lampCountsInRows.containsKey(curX) || lampCountsInRows.get(curX) == 0) && 
-                (!lampCountsInRows.containsKey(curY) || lampCountsInCols.get(curY) == 0) &&
-                (!lampCountsInRows.containsKey(curX + curY) || lampCountsInDiags.get(curX + curY) == 0) &&
-                (!lampCountsInRows.containsKey(curX - curY) || lampCountsInAntidiags.get(curX - curY) == 0)) {
+                (!lampCountsInCols.containsKey(curY) || lampCountsInCols.get(curY) == 0) &&
+                (!lampCountsInDiags.containsKey(curX + curY) || lampCountsInDiags.get(curX + curY) == 0) &&
+                (!lampCountsInAntidiags.containsKey(curX - curY) || lampCountsInAntidiags.get(curX - curY) == 0)) {
                 result.add("DARK");
             } else {
                 result.add("LIGHT");
@@ -98,6 +121,7 @@ public class GridIllumination {
                 }
             }
         }
+        return result;
     }
     
     private ArrayList<Cell> getRelevantCells(Cell cell, long N) {
@@ -139,7 +163,7 @@ public class GridIllumination {
         ArrayList<Cell> queries = new ArrayList<>(); 
         queries.add(new Cell(4, 4)); 
         queries.add(new Cell(6, 6)); 
-        queries.add(new Cell(8, 1)); 
+        queries.add(new Cell(8, 1));
         queries.add(new Cell(3, 2)); 
         queries.add(new Cell(2, 3)); 
         
