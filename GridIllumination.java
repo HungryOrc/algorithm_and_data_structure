@@ -15,7 +15,12 @@ Ref: http://www.1point3acres.com/bbs/thread-201983-1-1.html
 用4个hashmap存每一个row、col、及2条对角线上所有灯的个数。
 这4个map的key分别存：x，y，x+y，x-y；value即相关条件下的灯的个数。
 用一个hashset存所有灯的位置。
-对每一个query遍历9个格子，更新hashmap的记录，最后看看query所在的row col 两对角线在hashmap里的count是否大于0。 */
+对每一个query遍历9个格子，更新hashmap的记录，最后看看query所在的row col 两对角线在hashmap里的count是否大于0。 
+
+注意！！！关于 HashMap 的复制！！！
+无论用 new HashMap<>(oldHashMap) 的方法，还是 oldHashMap.clone() 的方法，得到的都是 shallow copy ！！！
+Map里的 keys 和 values 都没有被真正的复制！！！ 
+所以我们在这里还是老老实实一个一个灯地开，然后原路返回一个一个灯地关，不试图复制关于灯的 4个Map 了 */
 
 import java.util.*;
 
