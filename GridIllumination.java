@@ -61,31 +61,41 @@ public class GridIllumination {
         }
       
         // for each check point in the check list
-        for (Cell checkPoint : queries) {             
-            ArrayList<Cell> relevantCells = getRelevantCells(checkPoint, N);
-          
-            HashMap<long, int> copyMapRows = new HashMap<>(lampCountsInRows);
-            HashMap<long, int> copyMapCols = new HashMap<>(lampCountsInRows);
-            HashMap<long, int> copyMapDiags = new HashMap<>(lampCountsInDiags);
-            HashMap<long, int> copyMapAntidiags = new HashMap<>(lampCountsInAntidiags);
+        for (Cell checkPoint : queries) {
+            long curX = checkPoint.x;
+            long curY = checkPoint.y;
             
+            ArrayList<Cell> relevantCells = getRelevantCells(checkPoint, N);
+            
+            // if any relevant cell has a lamp in it
+            // remove its illumination areas (atcually illumination counts) from the grid
             for (Cell cell : relevantCells) {
-                // if any relevant cell has a lamp in it
-                // remove its illumination areas (atcually illumination counts) from the grid
                 if (allLamps.contains(cell)) {
-                    copyMapRows.put(cell.x, copyMapRows.get(cell.x) - 1);
-                    copyMapCols.put(cell.y, copyMapCols.get(cell.y) - 1);
-                    copyMapDiags.put(cell.x + cell.y, copyMapDiags.get(cell.x + cell.y) - 1);
-                    copyMapAntidiags.put(cell.x - cell.y, copyMapAntidiags.get(cell.x - cell.y) - 1);
+                    lampCountsInRows.put(cell.x, lampCountsInRows.get(cell.x) - 1);
+                    lampCountsInCols.put(cell.y, lampCountsInCols.get(cell.y) - 1);
+                    lampCountsInDiags.put(cell.x + cell.y, lampCountsInDiags.get(cell.x + cell.y) - 1);
+                    lampCountsInAntidiags.put(cell.x - cell.y, lampCountsInAntidiags.get(cell.x - cell.y) - 1);
                 }
             }
         
-            if (copyMapRows.get(checkPoint.x) == 0 && copyMapCols.get(checkPoint.y) &&
-                copyMapDiags.get(checkPoint.x + checkPoint.y) == 0 &&
-                copyMapAntidiags.get(checkPoint.x - checkPoint.y) == 0) {
+            // 注意！！灯的照明范围的maps里面很可能不含有check point的坐标！所以要先看是否存在，再看是否为0
+            if ((!lampCountsInRows.containsKey(curX) || lampCountsInRows.get(curX) == 0) && 
+                (!lampCountsInRows.containsKey(curY) || lampCountsInCols.get(curY) == 0) &&
+                (!lampCountsInRows.containsKey(curX + curY) || lampCountsInDiags.get(curX + curY) == 0) &&
+                (!lampCountsInRows.containsKey(curX - curY) || lampCountsInAntidiags.get(curX - curY) == 0)) {
                 result.add("DARK");
             } else {
                 result.add("LIGHT");
+            }
+            
+            // re-light the turned off lamps
+            for (Cell cell : relevantCells) {
+                if (allLamps.contains(cell)) {
+                    lampCountsInRows.put(cell.x, lampCountsInRows.get(cell.x) + 1);
+                    lampCountsInCols.put(cell.y, lampCountsInCols.get(cell.y) + 1);
+                    lampCountsInDiags.put(cell.x + cell.y, lampCountsInDiags.get(cell.x + cell.y) + 1);
+                    lampCountsInAntidiags.put(cell.x - cell.y, lampCountsInAntidiags.get(cell.x - cell.y) + 1);
+                }
             }
         }
     }
@@ -112,5 +122,31 @@ public class GridIllumination {
             return true;
         }
     }
-  
+    
+    // main
+    public static void main(String[] args) {
+        
+        GridIllumination gridIll = new GridIllumination(); 
+        
+        long N = 8;
+        
+        ArrayList<Cell> lamps = new ArrayList<>(); 
+        lamps.add(new Cell(1, 6)); 
+        lamps.add(new Cell(5, 6)); 
+        lamps.add(new Cell(7, 3)); 
+        lamps.add(new Cell(3, 2)); 
+        
+        ArrayList<Cell> queries = new ArrayList<>(); 
+        queries.add(new Cell(4, 4)); 
+        queries.add(new Cell(6, 6)); 
+        queries.add(new Cell(8, 1)); 
+        queries.add(new Cell(3, 2)); 
+        queries.add(new Cell(2, 3)); 
+        
+        ArrayList<String> result = gridIll.checkIllumination(N, lamps, queries);
+        
+        for(int i = 0; i < result.size(); i++) {
+            System.out.println(result.get(i));
+        }
+    }
 }
