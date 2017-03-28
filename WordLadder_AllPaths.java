@@ -191,82 +191,110 @@ public class Solution {
 }
 
 
-// 方法2：九章的方法。BFS + DFS。还没看？？？？？？？？？？？？
+// 方法3：九章的方法。BFS + DFS。极为适合装逼的高大上方法 ！！速度比上面的快很多 ！！
+// 先从start开始，用 BFS 标定dict里的每个word距start的（最短）距离。包括end距离start的最短距离。那么这样我们就
+// 已经知道我们要求的paths的最短长度是多少了
+// 然后从end开始，用DFS，找它的邻点里比它距start的距离少1的点，再找邻点的邻点里距start又近了1的点……直到到达start，
+// 这样的path可能有不止一个。都记录下来就成了最后的答案
 // Ref: http://www.jiuzhang.com/solutions/word-ladder-ii/
 public class Solution {
-    public List<List<String>> findLadders(String start, String end,
-            Set<String> dict) {
-        List<List<String>> ladders = new ArrayList<List<String>>();
-        Map<String, List<String>> map = new HashMap<String, List<String>>();
-        Map<String, Integer> distance = new HashMap<String, Integer>();
 
+    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
+        List<List<String>> shortestPaths = new ArrayList<>();
+        
         dict.add(start);
         dict.add(end);
- 
-        bfs(map, distance, start, end, dict);
         
-        List<String> path = new ArrayList<String>();
+        HashMap<String, HashSet<String>> wordsAndNeighbors = new HashMap<>();
         
-        dfs(ladders, path, end, start, distance, map);
+        HashMap<String, Integer> wordsAndDistsFromStart = new HashMap<>();
+        wordsAndDistsFromStart.put(start, 0);
 
-        return ladders;
+        bfs_GetDists_FromStart(start, wordsAndNeighbors, wordsAndDistsFromStart, dict);
+        
+        ArrayList<String> path = new ArrayList<>();
+        path.add(end);
+        dfs_GetPaths_FromEndToStart(end, start, path, wordsAndNeighbors, wordsAndDistsFromStart, shortestPaths);
+     
+        return shortestPaths; 
     }
-
-    void dfs(List<List<String>> ladders, List<String> path, String crt,
-            String start, Map<String, Integer> distance,
-            Map<String, List<String>> map) {
-        path.add(crt);
-        if (crt.equals(start)) {
-            Collections.reverse(path);
-            ladders.add(new ArrayList<String>(path));
-            Collections.reverse(path);
-        } else {
-            for (String next : map.get(crt)) {
-                if (distance.containsKey(next) && distance.get(crt) == distance.get(next) + 1) { 
-                    dfs(ladders, path, next, start, distance, map);
-                }
-            }           
-        }
-        path.remove(path.size() - 1);
-    }
-
-    void bfs(Map<String, List<String>> map, Map<String, Integer> distance,
-            String start, String end, Set<String> dict) {
-        Queue<String> q = new LinkedList<String>();
-        q.offer(start);
-        distance.put(start, 0);
-        for (String s : dict) {
-            map.put(s, new ArrayList<String>());
-        }
+    
+    // use a Queue to do the BFS Iteratively
+    private void bfs_GetDists_FromStart(String start, 
+        HashMap<String, HashSet<String>> wordsAndNeighbors,
+        HashMap<String, Integer> wordsAndDistsFromStart,
+        Set<String> dict) {
         
-        while (!q.isEmpty()) {
-            String crt = q.poll();
-
-            List<String> nextList = expand(crt, dict);
-            for (String next : nextList) {
-                map.get(next).add(crt);
-                if (!distance.containsKey(next)) {
-                    distance.put(next, distance.get(crt) + 1);
-                    q.offer(next);
+        Queue<String> managedWords = new LinkedList<>();
+        managedWords.offer(start);
+        
+        while (!managedWords.isEmpty()) {
+            String curWord = managedWords.poll();
+            int curDistFromStart = wordsAndDistsFromStart.get(curWord);
+            
+            if (!wordsAndNeighbors.containsKey(curWord)) {
+                wordsAndNeighbors.put(curWord, getNeighbors(curWord, dict));
+            }
+            
+            HashSet<String> curNeighbors = wordsAndNeighbors.get(curWord);
+            for (String neighbor : curNeighbors) {
+                if (!wordsAndDistsFromStart.containsKey(neighbor)) {
+                    wordsAndDistsFromStart.put(neighbor, curDistFromStart + 1);
+                    managedWords.offer(neighbor);
                 }
             }
         }
     }
+    
+    // Recursively do the DFS to find all shortest paths from end to start
+    private void dfs_GetPaths_FromEndToStart(String curString, String start,
+        ArrayList<String> path, HashMap<String, HashSet<String>> wordsAndNeighbors,
+        HashMap<String, Integer> wordsAndDistsFromStart,
+        List<List<String>> shortestPaths) {
+        
+        if (curString.equals(start)) {
+            ArrayList<String> copyPath = new ArrayList<String>(path);
+            // 注意！反转 AL 的操作！！
+            Collections.reverse(copyPath);
+            shortestPaths.add(copyPath);
+            return;
+        }
+        
+        int curDist = wordsAndDistsFromStart.get(curString);
+        HashSet<String> neighbors = wordsAndNeighbors.get(curString);
+        
+        // 如果某个neighbor比当前String离start更近了1单位距离，
+        // 那么就把这个neighbor放到path里去
+        for (String neighbor : neighbors) {
+            // 注意！！！
+            // 一个String在dict里的合法neighbor，未必出现在连接start与end的图中！！！
+            // 所以要先判断一下 wordsAndDistsFromStart.containsKey(neighbor)
+            if (wordsAndDistsFromStart.containsKey(neighbor) &&
+                wordsAndDistsFromStart.get(neighbor) == curDist - 1) {
+                path.add(neighbor);
+                dfs_GetPaths_FromEndToStart(neighbor, start, path,
+                    wordsAndNeighbors, wordsAndDistsFromStart, shortestPaths);
+                path.remove(path.size() - 1);
+            }
+        }
+    }
 
-    List<String> expand(String crt, Set<String> dict) {
-        List<String> expansion = new ArrayList<String>();
-
-        for (int i = 0; i < crt.length(); i++) {
-            for (char ch = 'a'; ch <= 'z'; ch++) {
-                if (ch != crt.charAt(i)) {
-                    String expanded = crt.substring(0, i) + ch
-                            + crt.substring(i + 1);
-                    if (dict.contains(expanded)) {
-                        expansion.add(expanded);
+    private HashSet<String> getNeighbors(String word, Set<String> dict) {
+        HashSet<String> neighbors = new HashSet<>();
+        
+        for (int i = 0; i < word.length(); i++) {
+            for (char c = 'a'; c <= 'z'; c++) {
+                if (word.charAt(i) != c) {
+                    char[] cArray = word.toCharArray();
+                    cArray[i] = c;
+                    String neighbor = new String(cArray);
+                    
+                    if (dict.contains(neighbor)) {
+                        neighbors.add(neighbor);
                     }
-                }
+                }    
             }
         }
-        return expansion;
-    }
+        return neighbors;
+    }   
 }
