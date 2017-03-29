@@ -25,82 +25,50 @@ Follow up:
 What if the number of hits per second could be very large? Does your design scale?
 
 Your HitCounter object will be instantiated and called as such:
-HitCounter obj = new HitCounter();
-obj.hit(timestamp);
-int param_2 = obj.getHits(timestamp); */
+    HitCounter obj = new HitCounter();
+    obj.hit(timestamp);
+    int param_2 = obj.getHits(timestamp); */
+ 
+// 方法1：用2个数组，一个记录hit时间，一个记录各秒钟的hit次数。都是循环数组
+// Ref: https://discuss.leetcode.com/topic/48758/super-easy-design-o-1-hit-o-s-gethits-no-fancy-data-structure-is-needed
+public class HitCounter {
 
-// 我的朴素想法，速度不算慢。用一个容量为300的数组来做。不断将300秒以前的记录置零
-// 要getHits的时候就将整个数组从头到尾加和
-// 要注意的是！不仅每次有新的hit时要将300以前的记录置零，每次getHits时也要这么做！！
-public class HitCounter
-{
-    /** Initialize your data structure here. */
-    int[] latest300;
-    int beginCountSlot;
-    int prevTimeStamp;
+    private int[] hitTimes;
+    private int[] hitCounts;
     
     public HitCounter() {
-        this.latest300 = new int[300];
-        this.beginCountSlot = 0;
-        this.prevTimeStamp = 0;
+        hitTimes = new int[300];
+        hitCounts = new int[300];
     }
     
     /** Record a hit.
         @param timestamp - The current timestamp (in seconds granularity). */
-    public void hit(int timestamp)
-    {
-        int curHitSlot = updateHitsInTheLatest300Seconds(timestamp);
-        
-        // record this hit
-        latest300[curHitSlot] += 1;
+    // O(1) time
+    public void hit(int timestamp) {
+        int index = timestamp % 300;
+        if (hitTimes[index] == timestamp) { // 如果是同一秒内的连续多次hit
+            hitCounts[index] ++;
+        } else { // 如果上一次本index的记录是300秒的某个整数倍之前的时间
+            hitTimes[index] = timestamp;
+            hitCounts[index] = 1;
+        }
     }
     
     /** Return the number of hits in the past 5 minutes.
         @param timestamp - The current timestamp (in seconds granularity). */
-    public int getHits(int timestamp) 
-    {
-        updateHitsInTheLatest300Seconds(timestamp);
-        
-        int sum = 0;
-        for (int n : this.latest300)
-            sum += n;
-        return sum;
-    }
-    
-    private int updateHitsInTheLatest300Seconds(int timestamp)
-    {
-        int diffTimeStamp = timestamp - this.prevTimeStamp;
-        int curSlot = this.beginCountSlot + diffTimeStamp;
-        
-        if (curSlot == this.beginCountSlot) // namely diffTimeStamp == 0
-        {} // do nothing
-        else if (curSlot > beginCountSlot && curSlot <= 299)
-        {
-            for (int i = beginCountSlot+1; i <= curSlot; i++)
-                latest300[i] = 0;
+    // O(300) time
+    public int getHits(int timestamp) {
+        int hitsInTheLatest300 = 0;
+        for (int i = 0; i < 300; i++) {
+            if (hitTimes[i] != 0) {
+                if (timestamp - hitTimes[i] >= 300) {
+                    hitTimes[i] = 0;
+                    // hitCounts[i] = 0; // 这个处理可以没有。有了就显得干净点
+                } else {
+                    hitsInTheLatest300 += hitCounts[i];
+                }
+            }
         }
-        else if (curSlot > 299 && curSlot <= 599)
-        {
-            for (int i = beginCountSlot+1; i <= 299; i++)
-                latest300[i] = 0;
-            
-            curSlot -= 300;
-            for (int j = 0; j <= curSlot; j++)
-                latest300[j] = 0;
-        }
-        else // curSlot > 599
-        {
-            this.latest300 = new int[300];
-            curSlot = curSlot % 300;
-        }
-        
-        // update the slot at which the next counting for the next hit begins
-        this.beginCountSlot = curSlot;
-        
-        // update the time stamp of the latest hit
-        this.prevTimeStamp = timestamp;
-        
-        return curSlot;
+        return hitsInTheLatest300;
     }
 }
-
