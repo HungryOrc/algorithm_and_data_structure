@@ -32,6 +32,9 @@ Your HitCounter object will be instantiated and called as such:
 
 // 方法1：用2个数组，一个记录hit时间，一个记录各秒钟的hit次数。都是循环数组
 // Ref: https://discuss.leetcode.com/topic/48758/super-easy-design-o-1-hit-o-s-gethits-no-fancy-data-structure-is-needed
+import java.util.*; 
+import java.io.*;
+
 public class HitCounter {
 
     private int[] hitTimes;
@@ -71,6 +74,19 @@ public class HitCounter {
             }
         }
         return hitsInTheLatest300;
+    }
+    
+    // main
+    public static void main(String[] args) { 
+        
+        HitCounter obj = new HitCounter(); 
+        
+        obj.hit(1); 
+        obj.hit(2); 
+        obj.hit(3); 
+        obj.hit(300); 
+        System.out.println(obj.getHits(300)); // 4
+        System.out.println(obj.getHits(301)); // 3
     }
 }
 
