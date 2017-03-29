@@ -14,7 +14,11 @@ Ref: https://www.kancloud.cn/kancloud/data-structure-and-algorithm-notes/72924
 class Solution {
 
     public static long gcd(long a, long b) {
-        return (b == 0) ? a : gcd(b, a % b);
+        if (b == 0) {
+            return a;
+        } else {
+            return gcd(b, a % b); // 这样把 b 放前面，a % b 放后面，就实现了a与b的不断反复的辗转！！！
+        }
     }
 
 }
