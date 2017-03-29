@@ -13,7 +13,7 @@ c) For the input array [13, 7, 6, 12}, the next greater elements for each elemen
    13      -->    -1
     7      -->     3
     6      -->     3
-   12      -->    -1 */
+   12      -->    -1
    
    
 方法：用Stack解。很巧妙 ！！！
