@@ -28,7 +28,8 @@ Your HitCounter object will be instantiated and called as such:
     HitCounter obj = new HitCounter();
     obj.hit(timestamp);
     int param_2 = obj.getHits(timestamp); */
- 
+
+
 // 方法1：用2个数组，一个记录hit时间，一个记录各秒钟的hit次数。都是循环数组
 // Ref: https://discuss.leetcode.com/topic/48758/super-easy-design-o-1-hit-o-s-gethits-no-fancy-data-structure-is-needed
 public class HitCounter {
@@ -70,5 +71,63 @@ public class HitCounter {
             }
         }
         return hitsInTheLatest300;
+    }
+}
+
+
+// 方法2：用一个 Queue (LinkedList) 记录hit的时间，一个 HashMap 记录各秒上的hit次数
+// 这样做的空间复杂度为 O(最近300秒内有hit的秒数)，略小于双数组方法的 O(300)
+// 时间复杂度也小于双数组方法，详见下面代码中的注释
+// https://instant.1point3acres.com/thread/203793
+public class HitCounter {
+
+    // 按本题的follow up问题：如果一秒以内的累计hit次数可能非常大，则用long应可解决
+    private HashMap<Integer, Long> hitTimesAndCounts;
+    private Queue<Integer> hitTimes;
+    
+    public HitCounter() {
+        hitTimesAndCounts = new HashMap<>();
+        hitTimes = new LinkedList<>();
+    }
+    
+    /** Record a hit.
+        @param timestamp - The current timestamp (in seconds granularity). */
+    // O(最近300秒之外有hit的秒数) time
+    public void hit(int timestamp) {
+        if (hitTimesAndCounts.containsKey(timestamp)) { // 如果是同一秒内的连续多次hit
+            hitTimesAndCounts.put(timestamp, hitTimesAndCounts.get(timestamp) + 1);
+        } else {
+            hitTimesAndCounts.put(timestamp, 1L); // 这里要写 1L ！！！因为是 long ！！！
+            hitTimes.offer(timestamp);
+        }
+        
+        // 及时消除无用记录，节约空间。用来防止这种情况：无限的hit，就是不getHits
+        removeOutdatedRecords(timestamp); // O(最近300秒之外有hit的秒数) time
+    }
+    
+    /** Return the number of hits in the past 5 minutes.
+        @param timestamp - The current timestamp (in seconds granularity). */
+    // O(最近300秒之外有hit的秒数 + 最近300秒之内有hit的秒数) time
+    public int getHits(int timestamp) {
+        
+        removeOutdatedRecords(timestamp); // O(最近300秒之外有hit的秒数) time
+        
+        int hitsInTheLatest300 = 0;
+        for (int time : hitTimes) { // O(最近300秒之内有hit的秒数) time
+            hitsInTheLatest300 += hitTimesAndCounts.get(time);
+        }
+        return hitsInTheLatest300;
+    }
+    
+    // O(最近300秒之外有hit的秒数) time
+    private void removeOutdatedRecords(int timestamp) {
+        while (!hitTimes.isEmpty()) {
+            if (timestamp - hitTimes.peek() >= 300) {
+                int timeToBeRemoved = hitTimes.poll(); // remove from the queue
+                hitTimesAndCounts.remove(timeToBeRemoved); // remove from the map
+            } else { // < 300
+                return;
+            }
+        }
     }
 }
