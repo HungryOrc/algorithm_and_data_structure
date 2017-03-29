@@ -51,8 +51,7 @@ public class NextGreaterElement {
 		int index = 0;
 		managedNums.push(nums[index]);
 		indexes.push(index);
-		
-		index ++; // now index = 1
+
 		for (index = 1; index < nums.length; index++) {
 			
 			int nextNum = nums[index];
