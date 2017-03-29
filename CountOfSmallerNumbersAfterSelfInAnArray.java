@@ -11,31 +11,40 @@ Return the array [2, 1, 1, 0]. */
 // 很巧妙的方法！
 // 从尾部开始做 + ArrayList + 二分查找
 // Ref: https://discuss.leetcode.com/topic/31173/my-simple-ac-java-binary-search-code
-/* Traverse from the back to the beginning of the array, maintain an sorted array of numbers have been visited. 
-Use findIndex() to find the first element in the sorted array which is larger or equal to target number. 
+/* Traverse from the BACK to the beginning of the array, maintain an sorted ArrayList of numbers that had been visited. 
+Use findIndex() to find the first element in the sorted ArrayList which is larger or equal to target number. 
 For example, [5,2,3,6,1], when we reach 2, we have a sorted array[1,3,6], 
-findIndex() returns 1, which is the index where 2 should be inserted and is also the number smaller than 2. 
-Then we insert 2 into the sorted array to form [1,2,3,6]. */
+findIndex() returns 1, which is the index where 2 should be inserted and is ALSO the number smaller than 2. 
+Then we insert 2 into the sorted array to form [1,2,3,6]. 
+Then keep doing this till the start of the input int[] array */
 
 public class Solution {
     
     public List<Integer> countSmaller(int[] nums) {
-        Integer[] ans = new Integer[nums.length];
-        List<Integer> sorted = new ArrayList<Integer>();
-        for (int i = nums.length - 1; i >= 0; i--) {
-            int index = findIndex(sorted, nums[i]);
-            ans[i] = index;
-            sorted.add(index, nums[i]);
+        Integer[] result = new Integer[nums.length];
+        
+        List<Integer> sortedAL = new ArrayList<Integer>();
+        // 从后往前！！
+        for (int i = nums.length - 1; i >= 0; i--) { 
+            int index = findIndex(sortedAL, nums[i]);
+            result[i] = index;
+            sortedAL.add(index, nums[i]); // 插入
         }
-        return Arrays.asList(ans);
+        return Arrays.asList(result);
     }
     
     private int findIndex(List<Integer> sorted, int target) {
-        if (sorted.size() == 0) return 0;
+        if (sorted.size() == 0) 
+            return 0;
+        
         int start = 0;
         int end = sorted.size() - 1;
-        if (sorted.get(end) < target) return end + 1;
-        if (sorted.get(start) >= target) return 0;
+        
+        if (sorted.get(end) < target) 
+            return end + 1;
+        if (sorted.get(start) >= target) 
+            return 0;
+        
         while (start + 1 < end) {
             int mid = start + (end - start) / 2;
             if (sorted.get(mid) < target) {
@@ -44,7 +53,11 @@ public class Solution {
                 end = mid;
             }
         }
-        if (sorted.get(start) >= target) return start;
-        return end;
+        
+        if (sorted.get(start) >= target)
+            return start;
+        else
+            return end;
     }
+
 }
