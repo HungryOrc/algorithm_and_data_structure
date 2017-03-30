@@ -92,8 +92,8 @@ public class HitCounter {
 
 
 // 方法2：用一个 Queue (LinkedList) 记录hit的时间，一个 HashMap 记录各秒上的hit次数
-// 这样做的空间复杂度为 O(最近300秒内有hit的秒数)，略小于双数组方法的 O(300)
-// 时间复杂度也小于双数组方法，详见下面代码中的注释
+// 这样做的空间复杂度  大  于  双数组方法。因为  HashMap  需  要  的  额  外  空  间  是  很  大  的 ！！！
+// 时间复杂度小于双数组方法（经过实测检验的），详见下面代码中的注释
 // https://instant.1point3acres.com/thread/203793
 public class HitCounter {
 
