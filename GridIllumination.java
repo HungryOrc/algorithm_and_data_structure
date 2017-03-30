@@ -35,11 +35,12 @@ class Cell {
     
     // 特别注意 ！！！！！
     // ================================================================================================
-    // 要在 set 或者 map 里比较两个自定义的 class 的 objects 的话，必须在自定义的class里设置以下2个方法：
+    // 要在 set 或者 map 里比较两个自定义的 class 的 objects 的话，必须在自定义的class里 Override 以下2个方法：
     // public boolean equals(Object o)
     // public int hashCode()
     // ================================================================================================
     
+    @Override
     public boolean equals(Object o) { // 这里的输入变量必须是 Object ！！！不能直接写 Cell ！否则会出错
     	Cell cell = (Cell)o; // 这里再把输入的变量 显示转化为 Cell 类型！！！
     	
@@ -50,6 +51,7 @@ class Cell {
     }
 
     // hashCode 方法的返回值必须是 int ！！！不可以是 long 之类
+    @Override
     public int hashCode() { 
     	return (int)(this.x % 100000 * 31 + this.y % 100000);
     }
