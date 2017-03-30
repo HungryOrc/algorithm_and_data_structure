@@ -21,43 +21,55 @@ Then keep doing this till the start of the input int[] array */
 public class Solution {
     
     public List<Integer> countSmaller(int[] nums) {
-        Integer[] result = new Integer[nums.length];
         
+        Integer[] result = new Integer[nums.length];
         List<Integer> sortedAL = new ArrayList<Integer>();
-        // 从后往前！！
-        for (int i = nums.length - 1; i >= 0; i--) { 
-            int index = findIndex(sortedAL, nums[i]);
-            result[i] = index;
-            sortedAL.add(index, nums[i]); // 插入
+        
+        // 从后往前！！！一个关键
+        for (int i = nums.length - 1; i >= 0; i--) {
+            int curNum = nums[i];
+            
+            int numOfSmallerNumsAfterSelf = getThe1stNumThatIsBiggerOrEqualToTargetInAL(curNum, sortedAL);
+            
+            sortedAL.add(numOfSmallerNumsAfterSelf, curNum);
+            result[i] = numOfSmallerNumsAfterSelf;
         }
-        return Arrays.asList(result);
+        return Arrays.asList(result); // 注意这个直接从数组转到ArrayList的函数！
     }
     
-    private int findIndex(List<Integer> sorted, int target) {
-        if (sorted.size() == 0) 
+    // Binary Search
+    private int getThe1stNumThatIsBiggerOrEqualToTargetInAL(int target, List<Integer> sortedAL) {
+        if (sortedAL.size() == 0) {
             return 0;
-        
-        int start = 0;
-        int end = sorted.size() - 1;
-        
-        if (sorted.get(end) < target) 
-            return end + 1;
-        if (sorted.get(start) >= target) 
-            return 0;
-        
-        while (start + 1 < end) {
-            int mid = start + (end - start) / 2;
-            if (sorted.get(mid) < target) {
-                start = mid + 1;
-            } else {
-                end = mid;
-            }
         }
         
-        if (sorted.get(start) >= target)
-            return start;
-        else
-            return end;
+        int left = 0;     
+        int right = sortedAL.size() - 1;
+        
+        // 特别注意 ！！！
+        // 这里要特别处理一下后面的二分查找所无法解决的情况：就是整个查找区域里根本就没有我们要的案例
+        // 这一题我们要找第一个大于等于target的数，但也许整个sorted list里所有的数都小于target，
+        // 如果是这样的话，如果还按照下面的二分的方式走，会return整个list的最末尾一位的index，
+        // 但我们真正要的是插到list的最末尾一位的后面，而不是最末尾一位上，
+        // 所以不得已啊，只能写一下下面这个 special case
+        if (sortedAL.get(right) < target) {
+            return right + 1;
+        }
+        
+        while (left + 1 < right) {
+            int mid = left + (right - left) / 2;
+            int num = sortedAL.get(mid);
+            
+            if (num >= target) {
+                right = mid;
+            } else { // <
+                left = mid + 1;
+            }
+        }
+        if (sortedAL.get(left) >= target) {
+            return left;
+        } else {
+            return right;
+        }
     }
-
 }
