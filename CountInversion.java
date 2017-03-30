@@ -1,22 +1,32 @@
 /* Inversion Count for an array indicates – how far (or close) the array is from being sorted.
 If array is already sorted then inversion count is 0. If array is sorted in reverse order that inversion count is the maximum.
 Formally speaking, two elements a[i] and a[j] form an inversion if a[i] > a[j] and i < j.
-
 For example,
 The sequence 2, 4, 1, 3, 5 has three inversions (2, 1), (4, 1), (4, 3). */
 
 /* 思路：
 Ref: https://discuss.leetcode.com/topic/218/count-inversion
-
 1. 找到每一个数后面有几个数比它小
-这一步直接参考我的git里的 Count of Smaller Numbers after Self in an Array 这一题 ！！！
-更详细的思路说明和解释，看那一题的注释
-
+   这一步直接参考我的git里的 Count of Smaller Numbers after Self in an Array 这一题 ！！！
+   更详细的思路说明和解释，看那一题的注释
 2. 把这些个数都累加起来，就是我们要求的整个数组的 inversion 值 */
 
 public class Solution {
     
-    public int[] countSmaller(int[] nums) {
+    public int countInversion(int[] nums) {
+        
+        int[] numOfSmallerNumbersAfterSelf = countSmaller(nums);
+        
+        int inversions = 0;
+        for (int n : numOfSmallerNumbersAfterSelf) {
+            inversions += n;
+        }
+        return inversions;
+    }  
+    
+    // 从这里往下，就都是 Count of Smaller Numbers after Self in an Array 那一题的代码了 ！！！
+    
+    private int[] countSmaller(int[] nums) {
         
         Integer[] result = new Integer[nums.length];
         List<Integer> sortedAL = new ArrayList<Integer>();
@@ -25,10 +35,10 @@ public class Solution {
         for (int i = nums.length - 1; i >= 0; i--) {
             int curNum = nums[i];
             
-            int numOfSmallerNumsAfterSelf = getThe1stNumThatIsBiggerOrEqualToTargetInAL(curNum, sortedAL);
+            int numOfSmallerNumAfterCurNumber = getThe1stNumThatIsBiggerOrEqualToTargetInAL(curNum, sortedAL);
             
-            sortedAL.add(numOfSmallerNumsAfterSelf, curNum);
-            result[i] = numOfSmallerNumsAfterSelf;
+            sortedAL.add(numOfSmallerNumAfterCurNumber, curNum);
+            result[i] = numOfSmallerNumAfterCurNumber;
         }
         return result;
     }
