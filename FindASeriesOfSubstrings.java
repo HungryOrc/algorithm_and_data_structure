@@ -1,8 +1,16 @@
 /* 一个txt文件，里面有若干行，每行是一个String。这个文件用一个 ArrayList<String> 来表示。
 然后从 buffer 读进来一系列的字符段，每个字符段看成一个Substring，从buffer读进来的所有内容也用一个 ArrayList<String> 表示。
 要在文件的各行里找这些Substring。具体的要求是：
-*/
+比如buffer读进来的Substrings一共有3个，“aa”、“bbb”和“c”，则必须满足类似如下条件才算在文件里找到了所有这些Substring：
+文件里的某一个第 i 行（文件里的一行用ArrayList里的一个String来指代）含有 “aa”，并且 
+文件里的第 i + 1 行 含有 “bbb”，并且 
+文件里的第 i + 2 行 含有 “c” 
 
+我的思路：
+很朴素。从文件的第一行开始，逐行往下找。记录下文件里match第一个buffer String的行数，比如是行 k，
+然后 k+1 行与第二个buffer String比，k+2 行与第三个buffer String比…… 
+如果没比到buffer ArrayList的末尾就崩了，
+那就从文件的第 k+1 行重新开始，比第一个 buffer String，然后 k+2 行比第二个 buffer String…… */
 
 import java.io.*;
 import java.util.*;
