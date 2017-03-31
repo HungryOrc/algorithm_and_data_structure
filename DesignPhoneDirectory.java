@@ -83,3 +83,49 @@ public class PhoneDirectory {
         }
     }
 }
+
+
+// 方法2： 一个queue加一个set
+public class PhoneDirectory {
+
+    HashSet<Integer> usedNumbers;
+    Queue<Integer> unusedNumbers;
+    int max;
+    
+    public PhoneDirectory(int maxNumbers) {
+        
+        usedNumbers = new HashSet<>();
+        
+        unusedNumbers = new LinkedList<>();
+        for (int i = 0; i < maxNumbers; i++) {
+            unusedNumbers.offer(i);
+        }
+        
+        max = maxNumbers;
+    }
+    
+    public int get() {
+        if (unusedNumbers.size() == 0) {
+            return -1;
+        } else {
+            int firstNum = unusedNumbers.poll();
+            usedNumbers.add(firstNum);
+            
+            return firstNum;
+        }
+    }
+
+    public boolean check(int number) {
+        if (number < 0 || number > max) { // 别忘了检验输入的number的合法性 ！！
+            return false;
+        }
+        return (!usedNumbers.contains(number));
+    }
+    
+    public void release(int number) {
+        if (usedNumbers.contains(number)) { // 别忘了我们要release的数可能不存在 ！！！
+            usedNumbers.remove(number);
+            unusedNumbers.offer(number);
+        }
+    }
+}
