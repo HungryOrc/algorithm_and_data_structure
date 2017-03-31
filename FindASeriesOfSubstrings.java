@@ -47,7 +47,6 @@ class FindASeriesOfSubstrings {
   }
   
   private static boolean findSubstring(String s, String sub) {
-
     for (int i = 0; i < s.length() - sub.length() + 1; i++) {
       int j = 0;
       for (; j < sub.length(); j++) {
