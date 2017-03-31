@@ -32,6 +32,7 @@ public class PhoneDirectory {
 
     HashSet<Integer> usedNumbers;
     HashSet<Integer> unusedNumbers;
+    int max;
     
     /** Initialize your data structure here
         @param maxNumbers - The maximum numbers that can be stored in the phone directory. */
@@ -43,6 +44,8 @@ public class PhoneDirectory {
         for (int i = 0; i < maxNumbers; i++) {
             unusedNumbers.add(i);
         }
+        
+        max = maxNumbers;
     }
     
     /** Provide a number which is not assigned to anyone.
@@ -55,7 +58,7 @@ public class PhoneDirectory {
             // 下面三行，是在HashSet里的iterator，用它来取Set里的第一个value ！！！
             Iterator myIterator = unusedNumbers.iterator();
             Object firstObj = myIterator.next();
-            int firstNum = (int)first;
+            int firstNum = (int)firstObj;
             
             unusedNumbers.remove(firstNum);
             usedNumbers.add(firstNum);
@@ -66,12 +69,17 @@ public class PhoneDirectory {
     
     /** Check if a number is available or not. */
     public boolean check(int number) {
+        if (number < 0 || number > max) { // 别忘了检验输入的number的合法性 ！！
+            return false;
+        }
         return (unusedNumbers.contains(number));
     }
     
     /** Recycle or release a number. */
     public void release(int number) {
-        usedNumbers.remove(number);
-        unusedNumbers.add(number);
+        if (usedNumbers.contains(number)) { // 别忘了我们要release的数可能不存在 ！！！
+            usedNumbers.remove(number);
+            unusedNumbers.add(number);
+        }
     }
 }
