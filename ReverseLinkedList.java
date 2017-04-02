@@ -9,12 +9,9 @@
  
 public class Solution {
 
-    // Iteration。根本不用 ArrayList 之类的东西来暂存！直接 in place 搞就行了！！
-    public ListNode reverseList(ListNode head) {
-        
-        if (head == null)
-            return null;
-        if (head.next == null)
+    // 方法1：Iteration。根本不用 ArrayList 之类的东西来暂存！直接 in place 搞就行了！！
+    public ListNode reverseList(ListNode head) {        
+        if (head == null || head.next == null)
             return head;
         
         // 注意！！以下几步都是精华！！
@@ -29,16 +26,29 @@ public class Solution {
     }    
 
 
-    // Recursion。和上面的思路是一致的
+    // 方法2：Recursion without helper function
     public ListNode reverseList(ListNode head) {
-
-        if (head == null)
-            return null;
-        else if (head.next == null)
+        if (head == null || head.next == null)
+            return head;
+        
+        ListNode nextNode = head.next;
+        ListNode newHead = reverseList(nextNode);   
+     
+        nextNode.next = head;
+        head.next = null;
+     
+        return newHead;
+    }
+ 
+ 
+    // 方法3：Recursion with helper function。和上面的Iteration方法的思想是一致的
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null)
             return head;
         
         return reverse(head, null);
     }
+ 
     public ListNode reverse(ListNode curHead, ListNode prevNode) {
         if (curHead == null)
             return prevNode;
