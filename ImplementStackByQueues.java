@@ -12,7 +12,7 @@ You may simulate a queue by using a list or deque (double-ended queue),
 as long as you use only standard operations of a queue.
 You may assume that all operations are valid (for example, no pop or top operations will be called on an empty stack). */
 
-// 方法1：常驻一个queue，临时性一个queue
+// 方法1：常驻一个queue，临时性一个queue。每次都必须要来回倒
 class MyStack {
     Queue<Integer> fakeStack = new LinkedList<>();
     
@@ -43,9 +43,8 @@ class MyStack {
 }
 
 
-// 方法2：常驻2个queue
+// 方法2：常驻2个queue。每次都必须要来回倒
 class Stack {
-    
     Queue<Integer> queue1;
     Queue<Integer> queue2;
     
