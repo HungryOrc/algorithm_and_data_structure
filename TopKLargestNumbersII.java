@@ -16,7 +16,9 @@ s.topk()
 >> return [1000, 10, 3] */
 
 
-// 方法1：Min Heap + Iterator (of Heap) + Collection.reverseOrder()
+// 方法：Min Heap + Iterator (of Heap) + Collection.reverseOrder()
+// 注意：用 Max Heap 做看起来更方便，其实正好相反！因为每次要去掉最小的那个数的时候，很不方便！
+// 初始化PriorityQueue的时候，确实有个参数是capacity，但那个是initial capacity，不具有限制实际size的能力！！
 public class Solution {
     
     private int capacity;
@@ -44,6 +46,7 @@ public class Solution {
         while (myIter.hasNext()) {
             // 这样用 Iterator 做，就不会破坏 minHeap 的现有内容
             // 如果用 k 次 poll() 做，就会破坏
+            // 注意！！！Iteraor出来的元素的顺序，很可能是整个二叉树(Heap)从上到下，从左到右的顺序！！！
             int num = (int)myIter.next();  // 注意！！.next() 出来的是 Object ！！
             result.add(num);
         }
