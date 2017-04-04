@@ -5,7 +5,7 @@ However, you may not engage in multiple transactions at the same time (ie, you m
 
 public class Solution 
 {
-    // 我的朴素思路。但是速度很慢！回头看看答案里的快速解法！？？？
+    // 方法1：我的朴素思路：要涨之前买，要跌之前卖
     // 股票曲线是折线。获得每一个向上的折线段，将它们加在一起，就是答案。具体来说：
     // 如果没有买入，且如果下一天的股价高于今天的，则买入
     // 如果买入了，且如果下一天的股价低于今天的，则卖出
@@ -38,4 +38,16 @@ public class Solution
             
         return cumulativeProfit;
     }
+    
+    // 方法2：上一个方法的思想的延续和提高。能加快速度。即：只要是涨的段，就加上去
+    public int maxProfit(int[] prices) {
+        int maxProfit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1]) {
+                maxProfit += (prices[i] - prices[i - 1]);
+            }
+        }
+        return maxProfit;
+    }
+    
 }
