@@ -26,12 +26,11 @@ class Coordinate {
 
 public class Solution {
 
-    /* @param grid a boolean 2D matrix
-     * @return an integer */
     public int numIslands(boolean[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0) {
             return 0;
         }
+      
         int n = grid.length;
         int m = grid[0].length;
         int islands = 0;
@@ -46,6 +45,7 @@ public class Solution {
         }
         return islands;
     }
+  
     private void markAdjacentIslandCellsToFalse(boolean[][] grid, int x, int y) {
         int[] deltaX = {0, 0, 1, -1};
         int[] deltaY = {1, -1, 0, 0};
@@ -53,10 +53,13 @@ public class Solution {
         Queue<Coordinate> queue = new LinkedList<>();
         queue.offer(new Coordinate(x, y));
         grid[x][y] = false;
+      
         while (!queue.isEmpty()) {
             Coordinate coor = queue.poll();
+          
             for (int direction = 0; direction < 4; direction++) {
                 Coordinate adjacent = new Coordinate(coor.x + deltaX[direction], coor.y + deltaY[direction]);
+              
                 if (!inBound(adjacent, grid.length, grid[0].length)) {
                     continue;
                 }
@@ -67,6 +70,7 @@ public class Solution {
             }
         }
     }
+  
     private boolean inBound(Coordinate coor, int n, int m) {
         return (coor.x >= 0 && coor.x < n && coor.y >= 0 && coor.y < m);
     }
@@ -75,36 +79,39 @@ public class Solution {
 
 // 方法2: DFS
 public class Solution {
-    /* @param grid a boolean 2D matrix
-     * @return an integer */
     private int m, n;
-    public void dfs(boolean[][] grid, int i, int j) {
-        if (i < 0 || i >= m || j < 0 || j >= n) return;
+    
+    public int numIslands(boolean[][] grid) {
+        m = grid.length;
+        if (m == 0) return 0;
+        n = grid[0].length;
+        if (n == 0) return 0;
         
-        if (grid[i][j]) {
+        int result = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == false) { 
+                    continue;
+                } else { // grid[i][j] == true
+                    result ++;
+                    dfs(grid, i, j);
+                }
+            }
+        }
+        return result;
+    }
+    
+    public void dfs(boolean[][] grid, int i, int j) {
+        if (i < 0 || i >= m || j < 0 || j >= n) 
+            return;
+        
+        if (grid[i][j] == true) {
             grid[i][j] = false;
             dfs(grid, i - 1, j);
             dfs(grid, i + 1, j);
             dfs(grid, i, j - 1);
             dfs(grid, i, j + 1);
         }
-    }
-    public int numIslands(boolean[][] grid) {
-        // Write your code here
-        m = grid.length;
-        if (m == 0) return 0;
-        n = grid[0].length;
-        if (n == 0) return 0;
-        
-        int ans = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (!grid[i][j]) continue;
-                ans++;
-                dfs(grid, i, j);
-            }
-        }
-        return ans;
     }
 }
 
