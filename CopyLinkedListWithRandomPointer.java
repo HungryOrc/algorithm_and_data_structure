@@ -21,15 +21,18 @@ public class Solution {
         }
         
         HashMap<RandomListNode,RandomListNode> mappingFromOldToNewNodes = new HashMap<>();
+        
         RandomListNode curOldNode = head;
         RandomListNode curNewNode = new RandomListNode(curOldNode.label);
-        RandomListNode newHead = curNewNode;
         mappingFromOldToNewNodes.put(curOldNode, curNewNode);
+        
+        RandomListNode newHead = curNewNode;
         
         // 复制各个nodes，以及各个next关系
         while(curOldNode.next != null) {
             RandomListNode nextOldNode = curOldNode.next;
             RandomListNode nextNewNode = new RandomListNode(nextOldNode.label);
+            
             curNewNode.next = nextNewNode;
             mappingFromOldToNewNodes.put(nextOldNode, nextNewNode);
             
@@ -40,12 +43,14 @@ public class Solution {
         // 复制各个random关系
         curOldNode = head;
         while(curOldNode != null) {
+            curNewNode = mappingFromOldToNewNodes.get(curOldNode);
+            
             RandomListNode curOldRandom = curOldNode.random;
             RandomListNode curNewRandom = mappingFromOldToNewNodes.get(curOldRandom);
-            curNewNode = mappingFromOldToNewNodes.get(curOldNode);
+            
             curNewNode.random = curNewRandom;
             
-            curOldNode = curOldNode.next;
+            curOldNode = curOldNode.next; // 去到下一个old node。这个顺序是本while循环的纲
         }
         
         return newHead;
