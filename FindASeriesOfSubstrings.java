@@ -24,14 +24,14 @@ class FindASeriesOfSubstrings {
   }
   
   private static boolean findAllSubStrings(ArrayList<String> fileContent, int i,
-                					ArrayList<String> bufferStrings, int j) {
+                                           ArrayList<String> bufferStrings, int j) {
     
     if (j == bufferStrings.size() && i <= fileContent.size()) {
-      return true;
+      return true; // 找到了
     }
     
     if (j <= bufferStrings.size() && i == fileContent.size()) {
-      return false;
+      return false; // 没找到
     }
 
     if (j == 0) {
