@@ -8,23 +8,26 @@ Follow up: Could you do it in O(n) time and O(1) space?
 *     ListNode(int x) { val = x; }
 * } */
 
-// 这一题也蕴含了“O(n)时间，O(1)空间，反转一个单向LinkedList”的问题
 public class Solution {
     
     // Ref: https://discuss.leetcode.com/topic/18675/easy-understand-java-solution-o-1-space-cost/20
     // 快慢两个指针，都从head出发，快的一次走两步，慢的一次走一步
     // 注意：当fast走到末尾的null时，slow最终也到达“后一半”list的起始点
-    public boolean isPalindrome(ListNode head) {        
+    public boolean isPalindrome(ListNode head) {
+        if (head == null) {
+            return true;
+        }
+        
         ListNode fast = head;
         ListNode slow = head;
         
-        while (fast != null && fast.next != null) {
+        while (fast.next != null && fast.next.next != null) {
             fast = fast.next.next;
             slow = slow.next;
         }
-        // 如果整个list有奇数个，则slow还要再向后进一位，才是后一半list的起始点
-        if (fast != null)
-            slow = slow.next;
+        
+        // slow还要再向后进一位，才是后一半list的起始点
+        slow = slow.next;
             
         // 从slow开始，将整个后一半list颠倒过来
         // 最终slow是颠倒过来以后的后半list的起点，即最开始的整个list的最后一个node
