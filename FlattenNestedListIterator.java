@@ -33,6 +33,8 @@ the order of elements returned by next should be: [1,4,6].
  *     while (i.hasNext())
  *         list.add(i.next()); */
 
+
+// 方法1：我的朴素方法。一开始就把整个List of NestedInteger 全部彻底展开为 ArrayList of Integer
 import java.util.Iterator;
 
 public class NestedIterator implements Iterator<Integer> {
@@ -74,6 +76,54 @@ public class NestedIterator implements Iterator<Integer> {
         return (curPos < intValues.size() - 1);
     }
 
+    @Override
+    public void remove() {}
+}
+
+
+// 方法2：九章。用Stack做。不在一开始就全部彻底展开。很有逼格
+// Ref: http://www.jiuzhang.com/solutions/flatten-nested-list-iterator/
+import java.util.Iterator;
+
+public class NestedIterator implements Iterator<Integer> {
+
+    private Stack<NestedInteger> stack;
+    
+    private void pushListToStack(List<NestedInteger> nestedList) {
+        Stack<NestedInteger> temp = new Stack<>();
+        for (NestedInteger nested : nestedList) {
+            temp.push(nested);
+        }
+        
+        while (!temp.isEmpty()) {
+            stack.push(temp.pop());
+        }
+    }
+    
+    public NestedIterator(List<NestedInteger> nestedList) {
+        stack = new Stack<>();
+        pushListToStack(nestedList);
+    }
+
+    // @return {int} the next element in the iteration
+    @Override
+    public Integer next() {
+        if (!hasNext()) {
+            return null;
+        }
+        return stack.pop().getInteger();
+    }
+
+    // @return {boolean} true if the iteration has more element or false
+    @Override
+    public boolean hasNext() {
+        while (!stack.isEmpty() && !stack.peek().isInteger()) {
+            pushListToStack(stack.pop().getList());
+        }
+        
+        return !stack.isEmpty();
+    }
+    
     @Override
     public void remove() {}
 }
