@@ -106,7 +106,7 @@ public class LRUCache {
       		  Node node = new Node(key, value);
        	  	map.put(key, node);
           
-      	  	if (map.size() <= capicity) { // list 没满
+      	  	if (map.size() <= capacity) { // list 没满
       		    	addToHead(node); 
       		  } else { // list 满了
     	  		    map.remove(dummyTail.pre.key);
