@@ -55,11 +55,9 @@ public class LRUCache {
         map = new HashMap<>();
       
         dummyHead = new Node(0, 0);
-    	  dummyTail = new Node(0, 0);
-    	  dummyHead.next = dummyTail;
-        dummyHead.pre = null;
-    	  dummyTail.pre = dummyHead;
-    	  dummyTail.next = null;
+        dummyTail = new Node(0, 0);
+        dummyHead.next = dummyTail;
+        dummyTail.pre = dummyHead;
     }
     
     // delete a node in any place of the doubly-linked-list, in O(1) time
