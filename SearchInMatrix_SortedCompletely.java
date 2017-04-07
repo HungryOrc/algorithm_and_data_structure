@@ -17,8 +17,45 @@ Given target = 3, return true. */
 // Ref: http://www.jiuzhang.com/solutions/search-a-2d-matrix/
 // 九章
 
-// 方法1：Binary Search Twice
+// 方法1：Binary Search Once
 public class Solution {
+    
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+        
+        int row = matrix.length, column = matrix[0].length;
+        
+        int start = 0, end = row * column - 1;
+        
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            
+            int number = matrix[mid / column][mid % column]; // 关键！！！
+            
+            if (number == target) {
+                return true;
+            } else if (number < target) {
+                start = mid;
+            } else {
+                end = mid;
+            }
+        }
+        
+        if (matrix[start / column][start % column] == target) {
+            return true;
+        } else if (matrix[end / column][end % column] == target) {
+            return true;
+        }
+        return false;
+    }
+}
+
+
+// 方法2：Binary Search Twice
+public class Solution {
+    
     public boolean searchMatrix(int[][] matrix, int target) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return false;
@@ -63,41 +100,6 @@ public class Solution {
         if (matrix[row][start] == target) {
             return true;
         } else if (matrix[row][end] == target) {
-            return true;
-        }
-        return false;
-    }
-}
-
-
-// 方法2：Binary Search Once
-public class Solution {
-    public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-            return false;
-        }
-        
-        int row = matrix.length, column = matrix[0].length;
-        
-        int start = 0, end = row * column - 1;
-        
-        while (start + 1 < end) {
-            int mid = start + (end - start) / 2;
-            
-            int number = matrix[mid / column][mid % column]; // 关键！！
-            
-            if (number == target) {
-                return true;
-            } else if (number < target) {
-                start = mid;
-            } else {
-                end = mid;
-            }
-        }
-        
-        if (matrix[start / column][start % column] == target) {
-            return true;
-        } else if (matrix[end / column][end % column] == target) {
             return true;
         }
         return false;
