@@ -92,10 +92,8 @@ public class JosephusKilling_ByIterator {
 		}
 	}
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) {	
 		removeEveryThreeNodes_Circulation(new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8)));
 		// [1, 2, 4, 5, 6, 7, 8], [1, 2, 4, 5, 7, 8], [2, 4, 5, 7, 8], [2, 4, 7, 8], [4, 7, 8], [4, 7], [7], []
-		System.out.println();
 	}
 }
