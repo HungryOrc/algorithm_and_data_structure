@@ -8,85 +8,83 @@ Given A = [1, 4, 6, 8], target = 3 and k = 3, return [4, 1, 6].
 
 Challenge: O(logn + k) time complexity. */
 
-// 我的方法。哦也！
+// Time: O(log(n) + k)
 public class Solution {
-
-    public int[] kClosestNumbers(int[] A, int target, int k) {
-        
-        int[] result = new int[k];
-        if (A == null || A.length == 0 || k <= 0 || k > A.length) {
-            return result;
-        }
-        
-        int nearestIndex = getNearestIndex(A, target);
-        int higherIndex = nearestIndex + 1;
-        int lowerIndex = nearestIndex - 1;
-        
-        result[0] = A[nearestIndex];
-        int indexInResult = 0;
-
-        while (higherIndex < A.length && lowerIndex >= 0 && indexInResult < k - 1) {
-            
-            int diffOfHigherIndex = Math.abs(A[higherIndex] - target);
-            int diffOfLowerIndex = Math.abs(A[lowerIndex] - target);
-            indexInResult ++;
-            
-            if (diffOfHigherIndex > diffOfLowerIndex) {
-                result[indexInResult] = A[lowerIndex];
-                lowerIndex --;
-            } else if (diffOfHigherIndex < diffOfLowerIndex) {
-                result[indexInResult] = A[higherIndex];
-                higherIndex ++;
-            } else { // ==
-                // 差距相等时，向result里先放入小的元素。A[lowerIndex]必然比A[higherIndex]小
-                result[indexInResult] = A[lowerIndex];
-                lowerIndex --;
-            }
-        }
-        
-        // result填满了
-        if (indexInResult == k - 1) {
-            return result;
-        } 
-        // result没填满，其实是 higherIndex 或 lowerIndex 越界了
-        else {
-
-            if (lowerIndex < 0) {
-                for (int i = indexInResult + 1; i < k; i++) {
-                    result[i] = A[higherIndex];
-                    higherIndex ++;
-                }
-            } else if (higherIndex >= A.length) {
-                for (int i = indexInResult + 1; i < k; i++) {
-                    result[i] = A[lowerIndex];
-                    lowerIndex --;
-                }
-            }
-            
-            return result;
-        }
+  
+  public int[] kClosest(int[] array, int target, int k) {
+    if (array == null || array.length == 0) {
+      return array;
+    }
+    if (k == 0) {
+      return new int[0];  
     }
     
-    private int getNearestIndex(int[] A, int target) {
-        int left = 0, right = A.length - 1;
-        while (left + 1 < right) {
-            int mid = left + (right - left) / 2;
-            if (A[mid] > target) {
-                right = mid;
-            } else if (A[mid] < target) {
-                left = mid;
-            } else { // ==
-                return mid;
-            }
-        }
-        
-        if (Math.abs(A[left] - target) > Math.abs(A[right] - target)) {
-            return right;
-        } else if (Math.abs(A[left] - target) < Math.abs(A[right] - target)) {
-            return left;
-        } else { // ==
-            // 二者与target之差相等时，要取left即较小的那一个先填入之后的result数组里！
-            return left;
-        }
+    // step 1: 
+    // find the closest number
+    int left = 0, right = array.length - 1;
+    int mid = 0;
+    while (left + 1 < right) {
+      mid = left + (right - left) / 2;
+      if (array[mid] > target) {
+        right = mid;
+      } else if (array[mid] < target) {
+        left = mid;
+      } else { // ==
+        break; // we have found the closest: which is equals target
+      }
     }
+    
+    // if we didn't break within the while loop
+    if (left + 1 == right) {
+      if (Math.abs(target - array[left]) > Math.abs(target - array[right])) {
+         mid = right;
+      } else {
+        mid = left;
+      }
+    }
+    
+    // step 2: 
+    // expand from mid to k nearest elements
+    int[] result = new int[k];
+    result[0] = array[mid];
+    int foundNumbers = 1;
+    
+    left = mid - 1;
+    right = mid + 1;
+    
+    while (foundNumbers < k) {
+      if (left < 0 || right > array.length - 1) {
+        break;
+      } 
+      
+      if (Math.abs(target - array[left]) > Math.abs(target - array[right])) {
+        result[foundNumbers] = array[right];
+        right ++;
+      } else {
+        result[foundNumbers] = array[left];
+        left --;
+      }
+      
+      foundNumbers ++;
+    }
+    
+    if (foundNumbers < k) {
+      if (left >= 0) {
+        while (left >= 0 && foundNumbers < k) {
+          result[foundNumbers] = array[left];
+          left --;
+          foundNumbers ++;
+        }
+      } else { // right <= array.length - 1
+        while(right <= array.length - 1 && foundNumbers < k) {
+          result[foundNumbers] = array[right];
+          right ++;
+          foundNumbers ++;
+        }
+      }
+    }
+   
+    return result; 
+  }
+  
 }
