@@ -22,9 +22,10 @@ Given 2->2->2, insert a value 3. Return: 2->2->2->3(->2)
 public class Solution {
 
     public ListNode insert(ListNode node, int x) {
-        ListNode toBeInserted = new ListNode(x);
         
-        // 如果之前没有node
+        ListNode toBeInserted = new ListNode(x);
+
+        // 如果原本一个node也没有，那么新来的这个加进来以后，还必须自己loop到自己！！
         if (node == null) {
             toBeInserted.next = toBeInserted;
             return toBeInserted;
