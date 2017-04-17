@@ -77,34 +77,41 @@ public class QuickSort {
         quickSort(array, pivotIndex + 1, right);
     }
 
-    private int partition(int[] array, int left, int right) {
-        int pivotIndex = findPivotIndex(left, right);
+    private int partition(int[] array, int start, int end) {
+        int pivotIndex = findPivotIndex(start, end);
         int pivot = array[pivotIndex];
         
         // swap the pivot element to the rightmost position
-        swap(array, pivotIndex, right);
+        swap(array, pivotIndex, end);
         
-        int leftIndex = left;
-        int rightIndex = right - 1;
+        int left = start;
+        int right = end - 1;
         
-        while (leftIndex <= rightIndex) {
-            if (array[leftIndex] < pivot) {
-                leftIndex ++;
-            } else if (array[rightIndex] > pivot) {
-                rightIndex --;
+        while (left <= right) {
+            if (array[left] < pivot) {
+                left ++;
+            } else if (array[right] > pivot) {
+                right --;
             } else {
-                swap(array, leftIndex++, rightIndex--);
+                swap(array, left++, right--);
             }
         }
+        // 这个while loop结束时，一定是：rightIndex 在 leftIndex 的左边一位 ！！！
         
-        // swap back the pivot element to the position that it should be
-        // 特别注意 ！！！
-        // pivot 是和 left 换！！！
-        swap(array, leftIndex, right);
+        // 特别注意下面的处理方式 ！！！
+        // ------------------------------------------------------------------------------------------------
+        // 如果一开始pivot被移动到最右边，那么现在pivot要和leftIndex换，
+        // 因为此时leftIndex指向的数一定 >= pivot ！！！
+        // 如果一开始pivot被移动到最左边，那么现在pivot要和rightIndex换，
+        // 因为此时rightIndex指向的数一定 <= pivot ！！！
+        swap(array, left, end);
+        // 这么移动之后，pivot 一定就位于我们接下来要return 的index的位置上，
+        // 即这个位置的数一定 == pivot，而非含糊地 >= pivot 或 <= pivot ！！！
         
-        // 特别注意 ！！！
-        // 最后是 return left ！！！不是 return right ！！！
-        return leftIndex;
+        // 上面如果是 swap 了 right 和 start，这里就要 return right ！！！
+        // 上面如果是 swap 了 left 和 end，这里就要 return left ！！！
+        return left;
+        // ------------------------------------------------------------------------------------------------
     }
     
     // random in the range of [left, right], inclusive in both ends
