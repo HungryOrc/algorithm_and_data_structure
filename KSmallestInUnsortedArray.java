@@ -52,5 +52,69 @@ public class Solution {
     Arrays.sort(result);
     return result;
   }
+}
+
+
+// 方法2：Quick Select 方法。很赞的方法 ！！！速度也更快
+public class Solution {
   
+  public int[] kSmallest(int[] array, int k) {
+    if (array.length == 0 || k == 0) {
+      return new int[0];
+    }
+    
+    // shift the k smallest elements to the left side of the array,
+    // this is done recursively
+    quickSelect(array, 0, array.length - 1, k);
+    
+    // copy the first elements into a new array
+    int[] result = Arrays.copyOf(array, k);
+    Arrays.sort(result);
+    return result;
+  }  
+  
+  private void quickSelect(int[] array, int start, int end, int k) {
+    int curDivider = partition(array, start, end);
+    
+    // 整个算法的关键在下面这个if else语句 ！！！
+    if (curDivider > k - 1) {
+      quickSelect(array, start, curDivider - 1, k);
+    } else if (curDivider < k - 1) {
+      quickSelect(array, curDivider + 1, end, k);
+    } else { // ==
+      return;
+    }
+  }
+  
+  // 就是常规的 quick sort 式的 partition
+  private int partition(int[] array, int start, int end) {
+    int pivot = array[end];
+    int left = start;
+    int right = end - 1;
+    
+    while (left <= right) {
+      while (left <= right && array[left] < pivot) {
+        left ++;
+      }
+      while (left <= right && array[right] >= pivot) {
+        right --;
+      }
+      if (left <= right) {
+        swap(array, left, right);
+        left ++;
+        right --;
+      }
+    }
+    
+    // 别忘了这一步！这一步是把pivot放到正好分界的地方！没有的话，接下来进一步的partition会出错！
+    swap(array, left, end);
+    
+    return left;
+  }
+  
+  private void swap(int[] array, int i1, int i2) {
+    int temp = array[i1];
+    array[i1] = array[i2];
+    array[i2] = temp;
+  }
 }
