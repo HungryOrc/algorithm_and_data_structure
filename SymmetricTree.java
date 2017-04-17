@@ -35,7 +35,7 @@ public class Solution {
     {
         if (leftRoot == null && rightRoot == null)
             return true;
-        else if ((leftRoot == null && rightRoot != null) || (leftRoot != null && rightRoot == null))
+        else if (leftRoot == null || rightRoot == null)
             return false;
         else if (leftRoot.val != rightRoot.val)
             return false;
@@ -94,9 +94,5 @@ public class Solution {
             }        
             return true;
         }
-    }
-    
+    }   
 }
-
-
-   
