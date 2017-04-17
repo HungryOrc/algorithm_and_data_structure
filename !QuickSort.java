@@ -107,6 +107,13 @@ public class QuickSort {
         swap(array, left, end);
         // 这么移动之后，pivot 一定就位于我们接下来要return 的index的位置上，
         // 即这个位置的数一定 == pivot，而非含糊地 >= pivot 或 <= pivot ！！！
+        // 注意了 ！！！
+        // 之所以这里非要等于不可，不能有一丝的含糊，是因为再往后的 quick sort recursion里，
+        // 前半段的quick sort 将结束于 pivot index - 1，
+        // 后半段的quick sort 将开始于 pivot index + 1，
+        // 所以 pivot index 上必须必须是等于 pivot 值的 ！！！因为以后再也不会碰这个 index 上的数了 ！！！
+        // 至于 pivot index 之前或者之后的数，目前来说，完全可能含有n个等于pivot的数，这些都无所谓，
+        // 但是在pivot位置上必须就是pivot值！！！然后下一步才有继续的基础！！！
         
         // 上面如果是 swap 了 right 和 start，这里就要 return right ！！！
         // 上面如果是 swap 了 left 和 end，这里就要 return left ！！！
