@@ -65,7 +65,7 @@ public class Solution {
             return false;
         }
       
-        return (isBST(root.left, min, root.val) && isBST(root.right, root.val, max));  
+        return (isBST(node.left, min, node.val) && isBST(node.right, node.val, max));  
     }
   
   
