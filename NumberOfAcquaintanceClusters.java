@@ -31,9 +31,15 @@ public class AcquaintanceCluster {
             for (int j = i; j < n; j++) {
                 
                 if (matrix[i][j] != 0) {
-                    removeConnections_DFS(matrix, i, j);  
-                    
+			
+	            // 这个函数的作用是把所有和 [i][j] 属于同一cluster的 标为1 的cell都 改标为0
+	            // 它会把 第i行里的所有 等于1的 j列 的cell 都标为0，在此过程中，不断recurse：
+		    // 进一步查看这里面的每一个j所代表的行（行j）里的所有为1的列，都改为0；然后继续 recurse下去
+		    // 所以下面这句完成以后，就不必再在i行里寻找1了，一定没有了，所以可以break，到 i+1 行去
+                    removeConnections_DFS(matrix, i, j);
                     numOfClusters ++;
+			
+		    break;
                 }
             }
         }
