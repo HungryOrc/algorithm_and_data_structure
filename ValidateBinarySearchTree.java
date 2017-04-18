@@ -27,7 +27,49 @@ public class Solution {
     /* @param root: The root of binary tree.
      * @return: True if the binary tree is BST, or false */
     
-    // 方法1: Iteration。一个不含重复元素的BST，被in-order遍历的话，会形成一个单调上升的序列
+    // 方法1：我自己的 Divide and Conquor 方法
+    public boolean isBST(TreeNode root) {
+      return isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    // overload
+    private boolean isBST(TreeNode node, int min, int max) {
+      if (node == null) {
+        return true;
+      }
+
+      if (node.left != null && 
+        (node.left.key <= min || node.left.key >= node.key)) {
+        return false;
+      }
+      if (node.right != null && 
+        (node.right.key >= max || node.right.key <= node.key)) {
+        return false;
+      }
+
+      return (isBST(node.left, min, node.key) && 
+              isBST(node.right, node.key, max));
+    }
+  
+    
+    // 方法2：Laioffer 对于上面这个方法的优化
+    public boolean isValidBST(TreeNode root) {
+        return isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }  
+    
+    private boolean isBST(TreeNode node, int min, int max) {
+        if (node == null) {
+            return true;
+        }
+        if (node.val <= min || node.val >= max) {
+            return false;
+        }
+      
+        return (isBST(root.left, min, root.val) && isBST(root.right, root.val, max));  
+    }
+  
+  
+    // 方法3: Iteration。一个不含重复元素的BST，被in-order遍历的话，会形成一个单调上升的序列
     // 如此，我们就可用stack做一个中序遍历，把结果放到一个 array list 里，再验证是不是每个元素都比前一个大
     public boolean isValidBST(TreeNode root) {
         if (root == null) {
@@ -70,41 +112,7 @@ public class Solution {
     }
     
     
-    // 方法2: Recursion。延续上面的原则，BST被in-order traversal的话应该形成一个不断上升的序列
-    private int prevVal = Integer.MIN_VALUE;
-    private boolean isTheFirstNode = true;
-    
-    public boolean isValidBST(TreeNode root) {
-        if (root == null) {
-            return true;
-        }
-        
-        // 先左，
-        // 看左边是否非BST，如果左边非，则整个也非
-        // 然后在左子树里不断更新即不断增大 value of prev node 的值
-        if (root.left != null && !isValidBST(root.left)) {
-            return false;
-        }
-        
-        // 再中
-        if (!isTheFirstNode && root.val <= prevVal) {
-            return false;
-        }
-        prevVal = root.val;
-        isTheFirstNode = false;
-        
-        
-        // 最后右
-        if (root.right != null && !isValidBST(root.right)) {
-            return false;
-        }
-        
-        // 如果一路都没问题，则最后证明是true BST
-        return true;
-    }
-    
-    
-    // 方法3: Divide and Conquer
+    // 方法4: Divide and Conquer + Custom Result Class 来做
     // http://www.jiuzhang.com/solutions/validate-binary-search-tree/
     class ResultType {
         boolean is_bst;
@@ -146,6 +154,5 @@ public class Solution {
                                   Math.min(root.val, left.minValue));
         }
     }
-  
   
 }
