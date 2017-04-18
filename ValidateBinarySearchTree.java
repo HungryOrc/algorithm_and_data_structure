@@ -39,11 +39,11 @@ public class Solution {
       }
 
       if (node.left != null && 
-        (node.left.key <= min || node.left.key >= node.key)) {
+        (node.left.key <= min || node.left.key >= node.key)) { // 最严格的BST里不允许出现重复的值
         return false;
       }
       if (node.right != null && 
-        (node.right.key >= max || node.right.key <= node.key)) {
+        (node.right.key >= max || node.right.key <= node.key)) { // 最严格的BST里不允许出现重复的值
         return false;
       }
 
@@ -61,7 +61,7 @@ public class Solution {
         if (node == null) {
             return true;
         }
-        if (node.val <= min || node.val >= max) {
+        if (node.val <= min || node.val >= max) { // 最严格的BST里不允许出现重复的值
             return false;
         }
       
