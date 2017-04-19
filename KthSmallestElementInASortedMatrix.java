@@ -60,10 +60,16 @@ public class Solution {
       
     minValueCells.offer(new Cell(0, 0, matrix[0][0]));
     
+    // 别忘了需要一个visited矩阵！！因为一个cell要延伸到其右边和其下方的2个cells，那么不同的cell可能就会延伸到同一个cell
     boolean visited[][] = new boolean[rows][cols];
     visited[0][0] = true;
     
-    // offer into the min heap for additional k-1 times
+    // poll out from the min heap for k-1 times, including the initial cell at [0][0],
+    // so the one left at the top of the min heap will be our target: the kth smallest element,
+    // thus we can get it via peek()
+    // 注意，在此过程中，poll了k-1次，而offer的次数往往是（也可能不是）大于k-1次的！！！因为poll一个cell可能就
+    // 要接下来再offer与它相邻的2个或1个或0个cells
+    // 当然，还有一种可能是，整个矩阵都offer到heap里了，但poll还没有poll到k-1次，这个情况，下面的代码也是包含了的
     for (int count = 1; count <= k - 1; count++) {
       
       // get the Cell with the current minimum value
