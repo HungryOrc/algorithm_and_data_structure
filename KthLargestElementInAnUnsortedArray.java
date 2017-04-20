@@ -2,52 +2,60 @@
 Note that it is the kth largest element in the sorted order, not the kth distinct element.
 For example, Given [3,2,1,5,6,4] and k = 2, return 5.
 
-Note: You may assume k is always valid, 1 ≤ k ≤ array's length.
+Note: You may assume k is always valid, 1 ≤ k ≤ array's length. */
 
-很巧妙的方法：Solution based on "Quick Select"
-Ref: https://leetcode.com/problems/kth-largest-element-in-an-array/
-
-The basic idea is to use Quick Select algorithm to partition the array with pivot:
-Put numbers < pivot to pivot's left
-Put numbers > pivot to pivot's right
-
-Then
-if indexOfPivot == k, return A[k]
-else if indexOfPivot < k, keep checking left part to pivot
-else if indexOfPivot > k, keep checking right part to pivot
-
-Time complexity = O(n)
-Discard half each time: n+(n/2)+(n/4)..1 = n + (n-1) = O(2n-1) = O(n), because n/2+n/4+n/8+..1=n-1.   */
-
-public class Solution 
-{
+// Quick Select 方法
+public class Solution {
+    
     public int findKthLargest(int[] nums, int k) {
-    	if (nums == null || nums.length == 0) return Integer.MAX_VALUE;
-        return findKthLargest(nums, 0, nums.length - 1, nums.length - k);
-    }    
+        if (nums == null || nums.length == 0) {
+            return Integer.MIN_VALUE;
+        }
+        
+        return quickSelect(nums, 0, nums.length - 1, nums.length - k + 1);
+    }
     
-    public int findKthLargest(int[] nums, int start, int end, int k) {// quick select: kth smallest
-    	if (start > end) return Integer.MAX_VALUE;
-    	
-    	int pivot = nums[end];// Take A[end] as the pivot, 
-    	int left = start;
-    	for (int i = start; i < end; i++) {
-    		if (nums[i] <= pivot) // Put numbers < pivot to pivot's left
-    			swap(nums, left++, i);			
-    	}
-    	swap(nums, left, end);// Finally, swap A[end] with A[left]
-    	
-    	if (left == k)// Found kth smallest number
-    		return nums[left];
-    	else if (left < k)// Check right part
-    		return findKthLargest(nums, left + 1, end, k);
-    	else // Check left part
-    		return findKthLargest(nums, start, left - 1, k);
-    } 
+    // quick select 和 quick sort的区别在于，quick select只排序我们要的那一半，不管另一半
+    private int quickSelect(int[] nums, int start, int end, int k) {
+        
+        int chosenIndex = partition(nums, start, end);
+        
+        if (chosenIndex < k - 1) {
+            return quickSelect(nums, chosenIndex + 1, end, k);
+        } else if (chosenIndex > k - 1) {
+            return quickSelect(nums, start, chosenIndex - 1, k);
+        } else { // chosenIndex == k - 1
+            return nums[chosenIndex];
+        }
+    }
     
-    void swap(int[] A, int i, int j) {
-    	int tmp = A[i];
-    	A[i] = A[j];
-    	A[j] = tmp;				
+    // 和一般的 quick sort 的partition一样
+    private int partition(int[] nums, int start, int end) {
+        int left = start;
+        int right = end - 1;
+        int pivot  = nums[end];
+        
+        while (left <= right) {
+            while (left <= right && nums[left] < pivot) {
+                left ++;
+            }
+            while (left <= right && nums[right] >= pivot) {
+                right --;
+            }
+            if (left < right) {
+                swap(nums, left, right);
+                left ++;
+                right --;
+            }
+        }
+        
+        swap(nums, left, end);
+        return left;
+    }
+    
+    private void swap(int[] nums, int i1, int i2) {
+        int tmp = nums[i1];
+        nums[i1] = nums[i2];
+        nums[i2] = tmp;
     }
 }
