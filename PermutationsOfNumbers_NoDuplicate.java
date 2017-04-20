@@ -33,13 +33,13 @@ class Solution {
             return result;
         }
         
-        findPermutations(nums, new ArrayList<Integer>(), result);
+        boolean[] visited = new boolean[nums.length];
+        findPermutations(nums, new ArrayList<Integer>(), visited, result);
         return result;
     }
   
-    private void findPermutations(int[] nums,
-                                  ArrayList<Integer> curList,
-                                  ArrayList<List<Integer>> result) {                                      
+    private void findPermutations(int[] nums, ArrayList<Integer> curList, ArrayList<List<Integer>> result) {
+      
         if (curList.size() == nums.length) {
             // 注意！！一定要复制！！
             // 因为 curList 在其他分支里还会被反复利用！！不是到这里就使命终结了！！
@@ -49,18 +49,61 @@ class Solution {
               
         // 整个算法的精华在这里！每一次都是试图把整个数组里的每一个数都轮流放进去！！！
         // 只是一开始要用 ArrayList.contains 函数来判断是否有过这个数了！！！
-        for (int n : nums) {
+        for (int i = 0; i < nums.length; i++) {
             
-            if (!curList.contains(n)) { // ArrayList 也有 contains 函数！不光是 HashSet 有！
-                curList.add(n);
-                findPermutations(nums, curList, result);
-                curList.remove(curList.size() - 1); // 复原！
+            if (visited[i] == false) {
+                
+                curList.add(nums[i]);
+                visited[i] = true;
+              
+                findPermutations(nums, curList, visited, result);
+              
+                curList.remove(curList.size() - 1); // 复原
+                visited[i] = false; // 复原
             }
         }                       
     }
   
   
-    // 方法2：Non-Recursion 方法
+    // 方法2：Laioffer 的 swap DFS 方法
+    public class Solution {
+
+      public List<String> permutations(String set) {
+        List<String> result = new ArrayList<>();
+        if (set == null) {
+          return result;
+        }
+
+        char[] cArray = set.toCharArray();
+        dfsWithSwapping(cArray, 0, result);
+        return result;
+      }
+
+      private void dfsWithSwapping(char[] cArray, int curIndex, List<String> result) {
+        if (curIndex == cArray.length) {
+          result.add(new String(cArray));
+          return;
+        }
+
+        for (int i = curIndex; i < cArray.length; i++) {
+
+          swap(cArray, curIndex, i);
+
+          dfsWithSwapping(cArray, curIndex + 1, result);
+
+          swap(cArray, curIndex, i); // 复原
+        }
+      }
+
+      private void swap(char[] cArray, int i, int j) {
+        char c = cArray[i];
+        cArray[i] = cArray[j];
+        cArray[j] = c;
+      }
+    } 
+  
+  
+    // 方法3：Non-Recursion 方法
     // Ref: https://discuss.leetcode.com/topic/6377/my-ac-simple-iterative-java-python-solution
     /* To permute n numbers, we can add the n-th number into the resulting List<List<Integer>> composed by the 
      1st, 2nd, 3rd ... till the (n-1)th numbers, in every possible position.
@@ -113,7 +156,7 @@ class Solution {
     }
     
     
-    // 方法3：Non-Recursion 方法，九章版本
+    // 方法4：Non-Recursion 方法，九章版本
     // Ref: http://www.jiuzhang.com/solutions/permutations/
     public List<List<Integer>> permute(int[] nums) {
       
