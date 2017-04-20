@@ -12,19 +12,23 @@ public class Solution {
             return Integer.MIN_VALUE;
         }
         
-        return quickSelect(nums, 0, nums.length - 1, nums.length - k + 1);
+        // 注意！找 第k个最大，就是找 第length-k+1个最小 ！！
+        return quickSelect_PthMin(nums, 0, nums.length - 1, nums.length - k + 1);
     }
     
-    // quick select 和 quick sort的区别在于，quick select只排序我们要的那一半，不管另一半
-    private int quickSelect(int[] nums, int start, int end, int k) {
+    // quick select 和 quick sort 的区别在于，quick select只排序我们要的那一半，不管另一半
+    // 最后一个参数 p 的意思是，找第 p 小的数
+    private int quickSelect_PthMin(int[] nums, int start, int end, int p) {
         
+        // partition 这个函数，一方面会把小于pivot的数都放到左半边，另一方面会把pivot的index返回来
+        // 在后面的partition里，pivot的选取是选数组里的最右边的数
         int chosenIndex = partition(nums, start, end);
         
-        if (chosenIndex < k - 1) {
-            return quickSelect(nums, chosenIndex + 1, end, k);
-        } else if (chosenIndex > k - 1) {
-            return quickSelect(nums, start, chosenIndex - 1, k);
-        } else { // chosenIndex == k - 1
+        if (chosenIndex < p - 1) { // 注意！！第 p 小的数的 index 是 p - 1 ！！！
+            return quickSelect_PthMin(nums, chosenIndex + 1, end, p);
+        } else if (chosenIndex > p - 1) {
+            return quickSelect_PthMin(nums, start, chosenIndex - 1, p);
+        } else { // chosenIndex == p - 1
             return nums[chosenIndex];
         }
     }
@@ -32,7 +36,7 @@ public class Solution {
     // 和一般的 quick sort 的partition一样
     private int partition(int[] nums, int start, int end) {
         int left = start;
-        int right = end - 1;
+        int right = end - 1; // 别忘了 - 1 ！！因为 pivot取为最后一个数了！
         int pivot  = nums[end];
         
         while (left <= right) {
