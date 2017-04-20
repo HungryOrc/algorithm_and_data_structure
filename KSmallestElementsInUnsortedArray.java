@@ -77,11 +77,11 @@ public class Solution {
     int curDivider = partition(array, start, end);
     
     // 整个算法的关键在下面这个if else语句 ！！！
-    if (curDivider > k - 1) {
+    if (curDivider > k - 1) { // 特别注意 ！！！这里是 k - 1 ！！！因为 第k个数是 k-1
       quickSelect(array, start, curDivider - 1, k);
-    } else if (curDivider < k - 1) {
+    } else if (curDivider < k - 1) { // 特别注意 ！！！这里是 k - 1 ！！！因为 第k个数是 k-1
       quickSelect(array, curDivider + 1, end, k);
-    } else { // ==
+    } else { // curDivider == k - 1
       return;
     }
   }
