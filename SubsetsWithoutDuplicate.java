@@ -19,7 +19,8 @@ If S = [1,2,3], a solution is:
 class Solution {
      
     /* 方法1：DFS, 用 Recursive Searching Tree 来做
-    
+       核心思路：看下一个位置可以放谁
+       
                        []
                     /   |   \
                 [1]    [2]    [3]
@@ -32,6 +33,7 @@ class Solution {
      = O (答案的个数 * 得到每个答案所需的时间)
      = O (2^n * n)
      得到每个答案所需的时间是 O(n)，是因为可能要把n个数都add到一个答案里去 */
+  
     public ArrayList<ArrayList<Integer>> subsets(int[] nums) {
         
         ArrayList<ArrayList<Integer>> results = new ArrayList<>();
@@ -61,20 +63,11 @@ class Solution {
         
         for (int i = startIndex; i < nums.length; i++) {
             
-            subset.add(nums[i]);
-          
+            subset.add(nums[i]);          
             // 注意！！！这里是 i+1 ！！不是 curPos+1 ！！
             dfs(nums, i + 1, subset, results);
-    
             // 递归搜索的精华所在：在下一步操作之前，把之前的影响清空！！
             subset.remove(subset.size() - 1);
-            
-            /* 如果不想反复使用 subset，反复往它里面加减元素
-             则可以用下述做法：每次复制一个新的 subset 出来，再加元素。这样就不用再减元素了。也不用反复使用一个set
-             但这样做速度更慢，占用空间也更多
-                 ArrayList<Integer> addSet = new ArrayList<>(subset);
-                 addSet.add(nums[i]);
-                 dfs(nums, i + 1, addSet, results);   */
         }
         
         // 3. 递归的出口
@@ -82,31 +75,34 @@ class Solution {
     }
     
     
-    // 方法2：我的方法，用排列来穷举。不如上面的快
-    public ArrayList<ArrayList<Integer>> subsets(int[] nums) {
-        Arrays.sort(nums);
-        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-
-        pickSubsets(nums, 0, new ArrayList<Integer>(), result);
-        return result;
-    }
+    // 方法2：也是DFS。着眼于 2^n 种答案这样的思维角度，
+    // 对于n个元素中的每一个来说，它都有2种命运：被采纳，和不被采纳
+    // 下面的题目是一个String里的chars组成各种subset，和上面题目中用numbers组成各种subsets是一样的道理
   
-    private static void pickSubsets(int[] nums, int curPos,
-        ArrayList<Integer> curList, ArrayList<ArrayList<Integer>> result)
-    {
-        if (curPos == nums.length) // 意味着上一个循环已经搞到了length-1
-        {
-            result.add(curList);
-            return;
-        }
+    public List<String> subSets(String set) {
+      List<String> result = new ArrayList<>();
+      if (set == null) {
+        return result;
+      }
 
-        // situation 1: not adding the number at curPos to curList
-        pickSubsets(nums, curPos + 1,  curList, result);
+      StringBuilder sb = new StringBuilder();
+      getAllSubsets(set, 0, sb, result);
+      return result;
+    }
 
-        // situation 2: adding the number at curPos to curList
-        ArrayList<Integer> addCurPosNumberIntoCurList = new ArrayList<>(curList);
-        addCurPosNumberIntoCurList.add(nums[curPos]);
-        pickSubsets(nums, curPos + 1, addCurPosNumberIntoCurList, result);
+    private void getAllSubsets(String set, int curIndex, StringBuilder sb, List<String> result) {
+      if (curIndex == set.length()) {
+        result.add(sb.toString());
+        return;
+      }
+
+      char curChar = set.charAt(curIndex);
+
+      getAllSubsets(set, curIndex + 1, sb, result);
+
+      sb.append(curChar);
+      getAllSubsets(set, curIndex + 1, sb, result);
+      sb.deleteCharAt(sb.length() - 1);
     }
   
 }
