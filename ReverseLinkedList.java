@@ -27,14 +27,22 @@ public class Solution {
 
 
     // 方法2：Recursion without helper function
+    // 注意 ！！它的理解也许比 iteration方法 更难 ！
     public ListNode reverseList(ListNode head) {
         if (head == null || head.next == null)
             return head;
         
+        // 第一步：不管当前node，它以后的nodes会发生什么
         ListNode nextNode = head.next;
         ListNode newHead = reverseList(nextNode);   
      
+        // 第二步：经过处理后的后部，与当前的前部，应该发生哪些关系？一个也不要漏！
         nextNode.next = head;
+        /* 特别注意下面这句 ！！！
+        如果是第一个head node，这么做就完事儿了。它也就该next -> null 
+        但是对于原head以后的任何nodes，把它们的next设为null怎么行呢？！！窍门在于：
+        reverseList这个函数在上面是不断嵌套自己的，
+        在里面的一层，把某个node的next设为null以后；在紧邻着的外面的一层，就会再把它的next设为它之前的prev */
         head.next = null;
      
         return newHead;
