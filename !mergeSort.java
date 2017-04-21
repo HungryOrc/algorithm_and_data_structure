@@ -1,4 +1,6 @@
 // 经典模板
+// Time: O(n*logn)
+// Space: O(n)
 public class MergeSort {
   
   public int[] mergeSort(int[] array) {
