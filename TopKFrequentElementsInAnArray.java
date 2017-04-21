@@ -7,6 +7,49 @@ Note:
 
 public class Solution 
 {
+    // 方法1：速度较快。Laioffer的方法
+    // 用 hashmap 来装各个string的出现次数，然后关键在于：用 PriorityQueue (min heap) 来处理最高频的 k 个 Map Entry ！！！
+    public String[] topKFrequent(String[] composition, int k) {
+    
+        HashMap<String, Integer> wordCounts = new HashMap<>();
+        for (String s : composition) {
+          wordCounts.put(s, wordCounts.getOrDefault(s, 0) + 1);
+        }
+
+        PriorityQueue<Map.Entry<String, Integer>> minHeap = 
+          new PriorityQueue(k, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> entry1, Map.Entry<String, Integer> entry2) {
+              // in this case,
+              // we can directly reuse the compareTo method of Integer class !!!
+              return entry1.getValue().compareTo(entry2.getValue());
+            }
+          });
+
+        // put the map entries into the min heap
+        // if the number of map entries is < k, it's still ok, by the following code,
+        // the size of the min heap will be < k then
+        for (Map.Entry<String, Integer> entry : wordCounts.entrySet()) {
+          if (minHeap.size() < k) {
+            minHeap.offer(entry);
+          } else {
+            if (entry.getValue() > minHeap.peek().getValue()) {
+              minHeap.poll();
+              minHeap.offer(entry);
+            }
+          }
+        }
+
+        String[] result = new String[minHeap.size()];
+        // in the result array, we must place the values in descending order,
+        // so we fill in the array starting from the tail of the array
+        for (int i = minHeap.size() - 1; i >= 0; i--) {
+          result[i] = minHeap.poll().getKey(); // 注意这里要get key！即要的是String！不要getValue
+        }
+        return result;
+    }
+    
+    
     // 方法2：我的朴素方法，用ArrayList装MapEntry，然后再用 custom comparator 来 sort ArrayList，
     // 虽然思路很原始，数据结构也很直觉很简单，但速度还不错
     public List<Integer> topKFrequent(int[] nums, int k) 
