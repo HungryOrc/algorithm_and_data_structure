@@ -11,8 +11,45 @@ Examples:
 
 "aabccdc" → "bccdc" → "bdc" */
 
-
-
+// 方法1：Laioffer的方法。很巧妙。用数组的左半边模拟了一个栈 ！！！
+// 空间上 in place ！！！时间上 one pass ！！！不存在recursion
+public class Solution {
+  
+    public String deDup(String input) {
+        if (input == null || input.length() <= 1) {
+            return input;
+        }
+      
+        char[] cArray = input.toCharArray();
+      
+        // use the left side of the char array as a "stack",
+        // the index "end" in the array marks the top of the stack
+        // end = 0 means the 1st element in the arary, end = -1 means the stack is empty
+        int end = 0;
+        // loop starting from the 2nd element in the array (i=1)
+        for (int i = 1; i < cArray.length; i++) {
+            
+            // if the stack is empty (end == -1), or there is no duplicate chars,
+            // we push a new char into the stack
+            if (end == -1 || cArray[i] != cArray[end]) {
+                end ++;
+                cArray[end] = cArray[i];
+            }
+            // else if we find the 1st occurence of duplication, 
+            else {
+                // we must pop the top element of the stack, namely the 1st element that is duplicated, 
+                end --;
+                // and then ignore all the consecutive duplicated chars that follows
+                // 注意！下面这个也能处理 本来不相连但后来相连了的两段相同的char的情况 ！！！
+                while (i < cArray.length - 1 && cArray[i] == cArray[i + 1]) {
+                    i ++;
+                }
+            }
+        }
+      
+        return new String(cArray, 0, end + 1);
+    }
+}
 
 
 // 方法2：我的朴素方法，Recursion。空间上不是in place
