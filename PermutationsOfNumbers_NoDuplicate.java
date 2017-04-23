@@ -65,7 +65,17 @@ class Solution {
     }
   
   
-    // 方法2：Laioffer 的 swap DFS 方法
+    /* 方法2：Laioffer 的 swap DFS 方法
+     时间：O(n!)
+     空间：O(log n)
+     解释：swap方法的解题过程的示意图如下（由下图可得上面的时间和空间复杂度的解释）：
+     比如说要找1,2,3这三个数以功能组成多少个排列（答案是6种），那么swap方法的解题过程其实是：
+     
+         1         2         3
+        / \       / \       / \
+       2   3     1   3     1   2
+       
+      再往下还有一层，但前两层定了以后，第三层就已经定了。定前两层的时间消耗，可以看出，是 O(6)，与答案的个数是一个量级的 ！！！ */
     public class Solution {
 
       public List<String> permutations(String set) {
