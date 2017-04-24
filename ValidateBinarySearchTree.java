@@ -27,37 +27,18 @@ public class Solution {
     /* @param root: The root of binary tree.
      * @return: True if the binary tree is BST, or false */
     
-    // 方法1：我自己的 Divide and Conquor 方法
-    public boolean isBST(TreeNode root) {
-      return isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
-    }
-
-    // overload
-    private boolean isBST(TreeNode node, int min, int max) {
-      if (node == null) {
-        return true;
-      }
-
-      if (node.left != null && 
-        (node.left.key <= min || node.left.key >= node.key)) { // 最严格的BST里不允许出现重复的值
-        return false;
-      }
-      if (node.right != null && 
-        (node.right.key >= max || node.right.key <= node.key)) { // 最严格的BST里不允许出现重复的值
-        return false;
-      }
-
-      return (isBST(node.left, min, node.key) && 
-              isBST(node.right, node.key, max));
-    }
-  
-    
-    // 方法2：Laioffer 对于上面这个方法的优化
+    // 方法1：Divide and Conquor
+    // Time: O(n), n is the number of the TreeNodes in the tree. Because we need to walk through
+    // every node in the tree in the worst case
+    // Space: O(height of the tree), because the number of call stacks equals to the number of tree 
+    // height, and each call stack requires constant space
     public boolean isValidBST(TreeNode root) {
         return isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }  
     
     private boolean isBST(TreeNode node, int min, int max) {
+        // 只要是 recursion，都千万记住 base case 千万别忘了 ！！！
+        // 要是忘了就是 一发入魂 级别的 instant death ！！！
         if (node == null) {
             return true;
         }
@@ -65,11 +46,14 @@ public class Solution {
             return false;
         }
       
-        return (isBST(node.left, min, node.val) && isBST(node.right, node.val, max));  
+        return (isBST(node.left, min, node.val) && isBST(node.right, node.val, max));
+        // 特别注意 ！！！这么做比先得到 leftIsBST 和 rightIsBST，再把两个 boolean && 在一起  好  很  多 ！！！
+        // 这是因为，return(left && right)的写法，如果左半边==false，则右半边就不用做了 ！！！
+        // 而分别先把left和right搞出来的写法，是一点懒都没法偷的！全部都得先算出来再说！
     }
   
   
-    // 方法3: Iteration。一个不含重复元素的BST，被in-order遍历的话，会形成一个单调上升的序列
+    // 方法2: Iteration。一个不含重复元素的BST，被in-order遍历的话，会形成一个单调上升的序列
     // 如此，我们就可用stack做一个中序遍历，把结果放到一个 array list 里，再验证是不是每个元素都比前一个大
     public boolean isValidBST(TreeNode root) {
         if (root == null) {
@@ -112,7 +96,7 @@ public class Solution {
     }
     
     
-    // 方法4: Divide and Conquer + Custom Result Class 来做
+    // 方法3: Divide and Conquer + Custom Result Class 来做
     // http://www.jiuzhang.com/solutions/validate-binary-search-tree/
     class ResultType {
         boolean is_bst;
