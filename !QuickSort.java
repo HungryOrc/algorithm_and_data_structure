@@ -1,7 +1,16 @@
 // 经典模板
-// 时间：O(n*logn)
-// 空间：O(logn)。因为一共有logn层 call stack，每一个 call stack 都耗费constant空间，
-// 它们都没有创造额外的helper array之类的空间占用者
+
+/* 时间：平均情况下 O(n*logn), n is the length of the integer array. 
+   Because the Recursion Tree has log(n) levels, and each level we need O(n) time, 
+   since we need to go through each number in the array in each level.
+   
+   空间：平均情况下 O(logn)。因为一共有logn层 call stack，每一个 call stack 都耗费constant空间，
+   它们都没有创造额外的 helper arrays（像 merge sort 那样）之类的空间占用者，每一层的 call stack 只定义了常数个variables
+   
+   另外要注意，上面说的都是平均情况。quick sort 的performance是不稳定的，要看pivot的选取的运气
+   最坏的情况下，每次pivot都选到最大值或最小值，
+   这时的时间复杂度是 O(n^2)。空间复杂度是 O(n)，仍然等于 call stack 的层数 */
+
 public class QuickSort {
     
     public int[] quickSort(int[] array) {
