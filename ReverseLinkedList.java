@@ -10,6 +10,8 @@
 public class Solution {
 
     // 方法1：Iteration。根本不用 ArrayList 之类的东西来暂存！直接 in place 搞就行了！！
+    // Time: O(n), because we walk through each node
+    // Space: O(1), because we only introduce constant extra nodes to solve this problem
     public ListNode reverseList(ListNode head) {        
         if (head == null || head.next == null)
             return head;
@@ -28,6 +30,8 @@ public class Solution {
 
     // 方法2：Recursion without helper function
     // 注意 ！！它的理解也许比 iteration方法 更难 ！
+    // Time: O(n), because we walk through each node
+    // Space: O(n), because there are n layers of the call stack, and each call stack uses constant space
     public ListNode reverseList(ListNode head) {
         if (head == null || head.next == null)
             return head;
