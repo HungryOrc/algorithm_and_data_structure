@@ -1,6 +1,8 @@
 // 经典模板
 // Time: O(n*logn)
-// Space: O(n)
+// Space: O(n)，因为根据 Recursion Tree，每一层 call stack 都新建了 helper array，一共有 logn 层call stack，
+// 各个call stack所新建的 helper array的长度分别是 n/2, n/4, n/8... 2, 1
+// 它们加在一起是 n 的长度
 public class MergeSort {
   
   public int[] mergeSort(int[] array) {
