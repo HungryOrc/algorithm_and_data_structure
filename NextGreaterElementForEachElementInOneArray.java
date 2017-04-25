@@ -16,12 +16,12 @@ c) For the input array [13, 7, 6, 12}, the next greater elements for each elemen
    12      -->    -1
    
    
-方法：用Stack解。很巧妙 ！！！
+方法：用Stack解。这里要用2个Stack。很巧妙 ！！！
 Time Complexity: O(n)
 Ref: http://www.geeksforgeeks.org/next-greater-element/
 
 1) Push the first element to stack.
-2) Pick rest of the elements one by one and follow following steps in loop.
+2) Pick rest of the elements one by one and follow the following steps in loop.
   a) Mark the current element as next.
   b) If stack is not empty, then pop an element from stack and compare it with next.
   c) If next is greater than the popped element, then next is the next greater element for the popped element.
@@ -45,6 +45,7 @@ public class NextGreaterElement {
 	public static int[] getIndexesOfTheNextGreaterElements(int[] nums) {
 		int[] result = new int[nums.length];
 		
+		// 两个Stack！！！一个装数值，一个装这些数的index ！！！
 		Stack<Integer> managedNums = new Stack<>();
 		Stack<Integer> indexes = new Stack<>();
 		
