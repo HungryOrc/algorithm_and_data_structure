@@ -21,7 +21,7 @@ obj.pop();
 int param_3 = obj.top();
 int param_4 = obj.getMin(); */
 
-
+// 方法1：在每个数下面，垫一个之前的min值
 public class MinStack {
     int minValue;
     Stack<Integer> intStack;
@@ -55,3 +55,16 @@ public class MinStack {
 }
 
 
+// 方法2：与 方法1 同理的一个版本。用 2个Stack，
+// 一个 Stack 装数值，一个Stack装相应的每个数值到来之前的min值。这两个Stack同步的push和pop
+
+
+// 方法3：改进上面的方法2，优化装min值的那个Stack的空间效率
+// 很巧妙 ！！！不容易想到 ！！！Laioffer 的方法
+
+/* Stack1  ||   3        1       -7       -6       -8      -8
+   Stack2  || <3,1>    <1,2>    <-7,3>   <-8,5>
+Element in Stack2 = <minValue, size of Stack1 when this minValue is the min value of Stack1>
+然后要get 当前的min值的时候，就对Stack2，从栈顶往里逐个entry找，
+如果entry的value 是第一个小于等于当前的Stack1的size的值，
+则此entry的key 就是当前的Stack1 的min值 */
