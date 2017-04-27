@@ -57,6 +57,51 @@ public class MinStack {
 
 // 方法2：与 方法1 同理的一个版本。用 2个Stack，
 // 一个 Stack 装数值，一个Stack装相应的每个数值到来之前的min值。这两个Stack同步的push和pop
+public class Solution {
+  
+  Stack<Integer> values;
+  Stack<Integer> mins;
+  
+  public Solution() {
+    this.values = new Stack<>();
+    this.mins = new Stack<>();
+  }
+  
+  public int pop() {
+    if (values.isEmpty()) {
+      return -1;
+    }
+    
+    mins.pop();
+    return values.pop();
+  }
+  
+  public void push(int element) {
+    values.push(element);
+
+    if (mins.isEmpty() || element < mins.peek()) {
+      mins.push(element);
+    } else {
+      mins.push(mins.peek());
+    }
+  }
+  
+  public int top() {
+    if (values.isEmpty()) {
+      return -1;
+    }
+    
+    return values.peek();
+  }
+  
+  public int min() {
+    if (mins.isEmpty()) {
+      return -1;
+    }
+    
+    return mins.peek();
+  }  
+}
 
 
 // 方法3：改进上面的方法2，优化装min值的那个Stack的空间效率
