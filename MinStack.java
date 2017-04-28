@@ -105,11 +105,78 @@ public class Solution {
 
 
 // 方法3：改进上面的方法2，优化装min值的那个Stack的空间效率
-// 很巧妙 ！！！不容易想到 ！！！Laioffer 的方法
+/* 很巧妙 ！！！不容易想到 ！！！Laioffer 的方法
 
-/* Stack1  ||   3        1       -7       -6       -8      -8
-   Stack2  || <3,1>    <1,2>    <-7,3>   <-8,5>
-Element in Stack2 = <minValue, size of Stack1 when this minValue is the min value of Stack1>
-然后要get 当前的min值的时候，就对Stack2，从栈顶往里逐个entry找，
-如果entry的value 是第一个小于等于当前的Stack1的size的值，
-则此entry的key 就是当前的Stack1 的min值 */
+   Stack1  ||   3        1       2       -6       -8      -8     10   ...
+   Stack2  || <3,1>    <1,2>           <-6,4>   <-8,5>                ...
+   
+Element in Stack2 = <minValue,  从Stack1的size为多少开始,Stack1的min就是这个minValue了>
+要实现上面这个设计，关键在于 push的时候怎么做，pop的时候怎么做 */
+
+class minAndSize { // helper class
+  public int min, size;
+  
+  public minAndSize(int min, int size) {
+    this.min = min;
+    this.size = size;
+  }
+}
+
+public class Solution {
+  
+  Stack<Integer> values;
+  Stack<minAndSize> minsAndSizes;
+  
+  public Solution() {
+    this.values = new Stack<>();
+    this.minsAndSizes = new Stack<>();
+  }
+  
+  public int pop() {
+    if (values.isEmpty()) {
+      return -1;
+    }
+    
+    if (minsAndSizes.peek().size == values.size()) {
+      minsAndSizes.pop();
+    } else { // peek().size < values.size()
+      // do nothing
+    }
+    
+    return values.pop();
+  }
+  
+  public void push(int element) {
+    values.push(element);
+
+    // if the stack was empty before this push
+    if (minsAndSizes.isEmpty()) {
+      minsAndSizes.push(new minAndSize(element, 1));
+      return;
+    }
+    
+    minAndSize prevRecord = minsAndSizes.peek();
+    if (element < prevRecord.min) {
+      minsAndSizes.push(new minAndSize(element, values.size()));
+    } else {
+      // do nothing
+    }
+  }
+  
+  public int top() {
+    if (values.isEmpty()) {
+      return -1;
+    }
+    
+    return values.peek();
+  }
+  
+  public int min() {
+    if (minsAndSizes.isEmpty()) {
+      return -1;
+    }
+    
+    return minsAndSizes.peek().min;
+  }
+  
+}
