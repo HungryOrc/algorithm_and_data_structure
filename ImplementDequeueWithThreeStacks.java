@@ -12,11 +12,14 @@ dequeueHead                        dequeueTail
 这样，一头空了以后，对这一头的每一次的pop都一定是n的时间复杂度，太慢了。
 
 改进方式是，再加上第三个stack做buffer。每次一头空了以后，就从另一头把一半的元素挪过来。关键是要保持“两头”的相对顺序。如下图：
+
          leftStack      rightStack      bufferStack
        7 6 5 4 3 2 1 || empty       
    =>          3 2 1 || empty            4 5 6 7 ||
    =>          empty || 3 2 1            4 5 6 7 ||
-   =>        7 6 5 4 || 3 2 1                                         */
+   =>        7 6 5 4 || 3 2 1          
+   
+这样的话，就算一头空了以后，每次在这一头的pop，amortized time cost也还是 O(1) */
 
 import java.util.Stack;
 
