@@ -1,5 +1,5 @@
 /* Give a stream of stock prices, design a data structure to support the following operations:
-(1) StockSticker(int k):
+(1) StockTicker(int k): ---- Constructor of the class StockTicker
 Initialize the size of the ticker.
 (2) void addOrUpdate(String stock, double price):
 add or update the price of a stock to the data structure.
