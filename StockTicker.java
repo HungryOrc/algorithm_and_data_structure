@@ -22,6 +22,7 @@ public class StockTicker {
         treeSet = new TreeSet<> (new Comparator<Map.Entry<String, Double>>() {
             @Override
             public int compare(Map.Entry<String, Double> obj1, Map.Entry<String, Double> obj2) {
+                // 下面这句表明，在这个 TreeSet 里，是用 股票的价格从小到大的顺序 来排列所有的 entry 的 ！！！
                 int res = obj2.getValue().compareTo(obj1.getValue());
                 if (res == 0) { // 如果 price 相同，再比较 股票名称
                     return obj2.getKey().compareTo(obj1.getKey());
