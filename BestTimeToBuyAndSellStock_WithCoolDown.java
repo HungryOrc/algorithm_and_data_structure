@@ -23,15 +23,15 @@ transactions = [buy, sell, cooldown, buy, sell]
 
 /* 思路：这题明显应该用 DP 做。这题的关键在于，今天卖的话，后天才能再买
 
-状态划分：分成两种状态：
+States: 分成两种状态：
 在第i天结束时 有持仓，截至此时的 最大累计profit 记为：hold[i]
 在第i天结束时 无持仓，截至此时的 最大累计profit 记为：empty[i]
 
-递推方程：
+Transition Functions:
 hold[i] = Math.max(hold[i - 1], empty[i - 2] - prices[i])
 empty[i] = Math.max(empty[i - 1], hold[i - 1] + prices[i])
 
-最终返回：
+Return:
 empty[prices.length - 1]
 因为股票卖掉才能让手里的 本次profit 兑现，实现最大的 累计profit */
 
