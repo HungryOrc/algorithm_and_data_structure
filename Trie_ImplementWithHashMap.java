@@ -1,14 +1,16 @@
 /* 本 Trie（每个node里存的value是一个char）要实现的操作：
-(1) 插入 String、查找一个 String 是否在Trie里作为一个完整的word、查找一个 String 是否在Trie里作为一个prefix
-(2) 在每个 Trie Node 上存一个 int size，记录从 Trie root 开始到本node为止组成的这个prefix，后面一共有多少个word
+(1) 插入 String
+(2) 查找一个 String 是否在Trie里作为一个完整的word、查找一个 String 是否在Trie里作为一个prefix
+(3) 在每个 Trie Node 上存一个 int size，记录从 Trie root 开始到本node为止组成的这个prefix，后面一共有多少个word
     如果到本node为止，恰好形成一个完整的word，那么这个word也要算到这个 size 里去
+(4) 
 */
 
 // Trie Node class
 class Node {
     char value;
     HashMap<Character, Node> children;
-    boolean endOfWord;
+    boolean endOfWord; // 注意！end of word以后，后面还可能继续有别的word！例：Trie里同时存 car 和 card 的情况
     int size; // number of all descendants, including this node itself if it is an end of a word
     
     public Node(char c) {
@@ -33,9 +35,9 @@ public class Trie {
         insert(root, word, 0);
     }
     private void insert(Node node, String word, int index) {
-        //if (index == word.length()) {
-        //    return;
-        //}
+        if (index == word.length()) {
+            return;
+        }
         
         char c = word.charAt(index);
         Node child = node.children.get(c);
@@ -65,7 +67,7 @@ public class Trie {
             return false;
         } else {
             if (index == word.length() - 1) {
-                if (child.endOfWord == true) {
+                if (child.endOfWord == true) { // 这个child node也确实是之前加入过的一个word的结尾
                     return true;
                 } else {
                     return false;
@@ -93,4 +95,10 @@ public class Trie {
         }
     }
     
+    // Returns the number of subsequent words starting with the current prefix,
+    // if the current node is also an end of a word, then this word also counts
+    // ------------------------------------------------------------------------------
+    public int numOfSubsequentWords(Node node) {
+        return node.size;
+    }
 }
