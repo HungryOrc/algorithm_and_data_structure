@@ -29,7 +29,7 @@ get the keys in [2, 5] in ascending order, result is  [3, 4, 5]
 比如刚好 k2 - k1 的部分没有任何一个node，这个时候前面的logn会dominate。如果刚好k2 - k1的部分包含了所有的node，那么这部分会dominate。
 所以正确的复杂度是 logn + |k2 - k1|。
         
-空间：O(logn)，因为一共有这么多层的 call stack */
+空间：O(logn)，因为一共有O(logn)层的 call stack，每一层仅使用O(1)的额外空间 */
 
 public class Solution {
   
