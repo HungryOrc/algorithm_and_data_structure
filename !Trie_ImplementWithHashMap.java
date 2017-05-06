@@ -3,7 +3,7 @@
      如果到本node为止，恰好形成一个完整的word，那么这个word也要算到这个 size 里去
    > 插入一个 String
    > 查找一个 String 是否在Trie里作为一个完整的word
-   > 查找一个 Prefix String 是否存在于Trie里，如果true，则返回其最后一个node，如果false，则返回null
+   > 查找一个 Prefix String 是否存在于Trie里且返回其最后一个node，如果false，则返回null
    > 返回一个 Prefix String 在Trie里的所有 后继(Subsequent) Strings，用 List<String> 来表示
 */
 
@@ -81,10 +81,10 @@ public class Trie {
     // Returns the ending Node if the given Prefix String in the Trie,
     // return null if the prefix does not exist in this Trie
     // ------------------------------------------------------------------------------
-    public boolean findEndNodeOfPrefix(String prefix) {
+    public Node findEndNodeOfPrefix(String prefix) {
         return findEndNode(root, prefix, 0);
     }
-    private boolean findEndNode(Node node, String prefix, int index) {
+    private Node findEndNode(Node node, String prefix, int index) {
         char c = prefix.charAt(index);
         Node child = node.children.get(c);
         if (child == null) {
@@ -97,10 +97,38 @@ public class Trie {
         }
     }
     
-    // Returns the number of subsequent words starting with the current prefix,
-    // if the current node is also an end of a word, then this word also counts
+    // Returns all the subsequent words starting with this prefix, in a list of Strings,
+    // if the prefix is also regarded as a complete word in the Trie, 
+    // then this prefix should also be included in the result 
     // ------------------------------------------------------------------------------
-    public int numOfSubsequentWords(Node node) {
-        return node.size;
+    public List<String> getAllStringsWithPrefix(String prefix) {
+        List<String> result = new ArrayList<>();
+        
+        Node endNode = getEndNode(prefix);
+        if (endNode == null) {
+            return result;
+        }
+        
+        List<String> substrings = new ArrayList<>();
+        getAllSubstrings(endNode, new StringBuilder(), substrings);
+        
+        for(String sub : substrings) {
+            result.add(prefix + sub);
+        }
+        return result;
     }
+    private void getAllSubstrings(Node node, StringBuilder sb, List<String> substrings) {
+    	if (node.endOfWord == true) {
+    		// 注意 ！！！如果当前node是一个word的end，就要把这个word记录到substrings里面去，
+    		// 但是这并不意味着 DFS 到此结束了！相反，DFS 必须继续！！！因为后面可能还继续连着更长的词！！！
+    		substrings.add(sb.toString());
+    	}
+    	
+    	for (Node child : node.children.values()) {
+    		sb.append(child.value);
+    		getAllSubstrings(child, sb, substrings);
+    		sb.deleteCharAt(sb.length() - 1);
+    	}
+    }
+   
 }
