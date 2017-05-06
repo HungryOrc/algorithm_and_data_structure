@@ -1,9 +1,10 @@
 /* 本 Trie（每个node里存的value是一个char）要实现的操作：
-(1) 插入 String
-(2) 查找一个 String 是否在Trie里作为一个完整的word、查找一个 String 是否在Trie里作为一个prefix
-(3) 在每个 Trie Node 上存一个 int size，记录从 Trie root 开始到本node为止组成的这个prefix，后面一共有多少个word
-    如果到本node为止，恰好形成一个完整的word，那么这个word也要算到这个 size 里去
-(4) 
+   > 在每个 Trie Node 上存一个 int size，记录从 Trie root 开始到本node为止组成的这个prefix，后面一共有多少个word
+     如果到本node为止，恰好形成一个完整的word，那么这个word也要算到这个 size 里去
+   > 插入一个 String
+   > 查找一个 String 是否在Trie里作为一个完整的word
+   > 查找一个 Prefix String 是否存在于Trie里，如果true，则返回其最后一个node，如果false，则返回null
+   > 返回一个 Prefix String 在Trie里的所有 后继(Subsequent) Strings，用 List<String> 来表示
 */
 
 // Trie Node class
@@ -57,7 +58,7 @@ public class Trie {
     
     // Returns if the word is in the trie
     // ------------------------------------------------------------------------------
-    public boolean search(String word) {
+    public boolean searchWord(String word) {
         return search(root, word, 0);
     }
     private boolean search(Node node, String word, int index) {
@@ -77,21 +78,22 @@ public class Trie {
         }
     }
     
-    // Returns if there is any word in the trie that starts with the given prefix
+    // Returns the ending Node if the given Prefix String in the Trie,
+    // return null if the prefix does not exist in this Trie
     // ------------------------------------------------------------------------------
-    public boolean startsWith(String prefix) {
-        return startsWith(root, prefix, 0);
+    public boolean findEndNodeOfPrefix(String prefix) {
+        return findEndNode(root, prefix, 0);
     }
-    private boolean startsWith(Node node, String word, int index) {
-        char c = word.charAt(index);
+    private boolean findEndNode(Node node, String prefix, int index) {
+        char c = prefix.charAt(index);
         Node child = node.children.get(c);
         if (child == null) {
-            return false;
+            return null;
         } else {
-            if (index == word.length() - 1) {
-                return true;
+            if (index == prefix.length() - 1) {
+                return child;
             }
-            return startsWith(child, word, index + 1);
+            return findEndNode(child, prefix, index + 1);
         }
     }
     
