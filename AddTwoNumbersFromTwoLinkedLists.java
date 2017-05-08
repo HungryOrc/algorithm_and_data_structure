@@ -18,27 +18,25 @@ Output: 7 -> 8 -> 0 -> 7
  
 public class Solution 
 {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) 
-    {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         Stack<Integer> s1 = new Stack<>();
         Stack<Integer> s2 = new Stack<>();
         
-        while (l1 != null)
-        {
+        while (l1 != null) {
             s1.push(l1.val);
             l1 = l1.next;
         }
-        while (l2 != null)
-        {
+        while (l2 != null) {
             s2.push(l2.val);
             l2 = l2.next;
         }
         
         int carry = 0;
         ListNode curNode = new ListNode(0);
-        while (!s1.isEmpty() || !s2.isEmpty())
-        {
+     
+        while (!s1.isEmpty() || !s2.isEmpty()) {
             int curDigitSum = 0;
+         
             if (!s1.isEmpty() && !s2.isEmpty())
                 curDigitSum = s1.pop() + s2.pop() + carry;
             else if (s1.isEmpty())
@@ -49,15 +47,15 @@ public class Solution
             curNode.val = curDigitSum % 10;
             carry = curDigitSum / 10;
             
-            // 这一步特别重要！head一定要在这里就赋值为carry！不要等下一个循环了！
-            // 因为也许没有下一个循环了！比如5+5=10，就没有下一个循环了！这个情况下
-            // 必须就预先赋值head为1，否则一切都结束了
-            ListNode head = new ListNode(carry);
-            head.next = curNode;
-            curNode = head;
+            // 这一步特别重要！prev 一定要在这里就赋值为 carry！不要等下一个循环了！
+            // 因为也许没有下一个循环了！比如 5+5=10，就没有下一个循环了！这个情况下
+            // 必须就预先赋值 prev 为 1，否则一切都结束了
+            ListNode prev = new ListNode(carry);
+            prev.next = curNode;
+            curNode = prev;
         }
         
-        if (curNode.val == 1)
+        if (curNode.val == 1) // 此时的curNode就是上一步的曾经的prev，也是最终的整个合数的head
             return curNode;
         else // curNode.val == 0
             return curNode.next;
