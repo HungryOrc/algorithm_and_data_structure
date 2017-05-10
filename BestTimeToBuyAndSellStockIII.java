@@ -18,6 +18,7 @@ class Solution {
         int[] right = new int[prices.length];
 
         // DP from left to right;
+        // 在 i 以及 i的左边，进行一次交易，所能得到的最大利润
         left[0] = 0;
         int min = prices[0];
         for (int i = 1; i < prices.length; i++) {
@@ -25,7 +26,8 @@ class Solution {
             left[i] = Math.max(left[i - 1], prices[i] - min);
         }
 
-        //DP from right to left;
+        // DP from right to left;
+        // 在 i 以及 i的右边，进行一次交易，所能得到的最大利润
         right[prices.length - 1] = 0;
         int max = prices[prices.length - 1];
         for (int i = prices.length - 2; i >= 0; i--) {
