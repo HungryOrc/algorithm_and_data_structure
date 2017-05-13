@@ -8,7 +8,8 @@ The characters to be removed is given by another string, it is guranteed to be n
 Examples
 input = "abcd", t = "ab", delete all instances of 'a' and 'b', the result is "cd". */
 
-// 要求 in place
+// 要求 in place ！！！
+// 方法：两个指针一快一慢。也可理解为两个挡板，其实是一样的
 public class Solution {
   
   public String remove(String input, String t) {
@@ -19,8 +20,7 @@ public class Solution {
     }
     
     char[] cArray = input.toCharArray();
-    int index = 0; // 相当于两个指针一快一慢的做法
-    
+    int index = 0;    
     for (int i = 0; i < input.length(); i++) {
       if (!toBeRemoved.contains(input.charAt(i))) {
         cArray[index] = cArray[i];
