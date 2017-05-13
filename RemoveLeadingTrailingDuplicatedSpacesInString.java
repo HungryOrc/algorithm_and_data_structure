@@ -6,7 +6,7 @@ Examples:
 "  a" --> "a"
 "   I     love MTV! ! " --> "I love MTV!!" */
 
-// 我的朴素方法
+// 方法1：我的朴素方法
 public class Solution {
 
   public String removeSpaces(String input) {
@@ -21,10 +21,8 @@ public class Solution {
     }
     
     for (int i = 1; i < input.length(); i++) {
-      if (input.charAt(i) == ' ' && input.charAt(i - 1) != ' ') {
-        sb.append(input.charAt(i));
-      }
-      else if (input.charAt(i) != ' ') {
+      if (input.charAt(i) != ' ' ||
+          (input.charAt(i) == ' ' && input.charAt(i - 1) != ' ')) {
         sb.append(input.charAt(i));
       }
     }
@@ -34,6 +32,10 @@ public class Solution {
     } 
     
     return sb.toString();
-  }
-  
+  } 
 }
+
+
+// 方法2: 两个挡板，一快一慢。Laioffer 的方法
+
+
