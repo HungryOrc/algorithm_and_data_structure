@@ -4,7 +4,7 @@
 1 1 4 5
 2 3 1 1
 从[0, 0]开始，因为它上面的数字是2，所以第一步可以到达 [0, 2]，或者[2, 0]。然后这么一步一步走下去。
-
+这个矩阵的答案是 3步。分别是左上角的2，然后左下角的2，然后最下一行倒数第二个1，然后右下角。开始的左上角不算步数。后面一共三步。
 
 注意：
 (1) 每一步都要考察，出界了没有
@@ -20,8 +20,8 @@ class Cell {
 
 public class Solution {
   
-    public int findMinSteps(int[] matrix) {
-        if (matrix == null || matrix.length == 0 || matrix[0] == 0) {
+    public static int findMinSteps(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return -1;
         }
         
@@ -54,8 +54,8 @@ public class Solution {
                         cellQueue.offer(cellDown);
                     }
                 }
-                curStep ++;
             }
+            curStep ++;
         }  
       
         return -1;
