@@ -46,11 +46,11 @@ public class Solution {
                 int curHopDistance = matrix[curX][curY];
                 if (curHopDistance != 0) {
                     Cell cellRight = new Cell(curX, curY + curHopDistance);
-                    if (inBound(cellRight)) {
+                    if (inBound(cellRight, rows, cols)) {
                         cellQueue.offer(cellRight);
                     }
                     Cell cellDown = new Cell(curX + curHopDistance, curY);
-                    if (inBound(cellDown)) {
+                    if (inBound(cellDown, rows, cols)) {
                         cellQueue.offer(cellDown);
                     }
                 }
@@ -60,4 +60,9 @@ public class Solution {
       
         return -1;
     }
+    
+    private boolean inBound(Cell cell, int rows, int cols) {
+        return (cell.x >= 0 && cell.x < rows && cell.y >= 0 && cell.y < cols);
+    }
+    
 }
