@@ -2,16 +2,50 @@
 No adjacent characters should be identified in the final string.
 
 Examples:
+(1) "abbbaaccz" → "a aaccz" → "ccz" → "z" 
+    注意！
+    3个重复的b，全都删除了，没有一个b留下
+    一开始不相邻的1个a和后面的2个a，因为b的消除，连接在一起了，然后这3个a在下一步里都被删除了
+    2个连续在一起的c也都被删除了
+(2) "aabccdc" → "bccdc" → "bdc" */
 
-"abbbaaccz" → "aaaccz" → "ccz" → "z" 
-注意！
-3个重复的b，全都删除了，没有一个b留下
-一开始不相邻的1个a和后面的2个a，因为b的消除，连接在一起了，然后这3个a在下一步里都被删除了
-2个连续在一起的c也都被删除了
 
-"aabccdc" → "bccdc" → "bdc" */
+// 方法1：我自己的方法，用一个模拟的栈（用数组的左半段模拟一个栈的行为），再加上两个指针一快一慢。真正上场的时候用这个方法。
+// 这个方法是源于 Laioffer 的方法
+public class Solution {
+  public String deDup(String input) {
+    if (input == null || input.length() <= 1) {
+        return input;
+    }
+  
+    char[] cArray = input.toCharArray();
+    int slow = -1; // 当前的“栈”顶
+    int fast = 0; // 当前在char数组里访问到第几个char
+    
+    while (fast < cArray.length) {
+      // slow==-1 是当前stack空了的情况
+      if (slow == -1 || cArray[fast] != cArray[slow]) { 
+        slow ++;
+        cArray[slow] = cArray[fast];
+        fast ++;
+      }
+      // 当前栈不空，而且当前在char array里正在被访问的char 等于 “栈”顶的char
+      else { 
+        char duplicatedChar = cArray[slow];
+        slow --; // 把当前栈顶的char弹出去不要了。注意！只用弹一次！因为再往下的一个一定不同了
+        // 把数组里从现在位置开始往右的所有等于栈顶char的char都略过
+        while (fast < cArray.length && cArray[fast] == duplicatedChar) { 
+          fast ++;
+        }
+      }
+    }
+    // slow指向的是当前栈顶我们要保留的char，所以要再往右边一格，因为上限是exclusive的
+    return new String(cArray, 0, slow + 1); 
+  }
+}
 
-// 方法1：Laioffer的方法。很巧妙。用数组的左半边模拟了一个栈 ！！！
+
+// 方法2：Laioffer的方法。很巧妙。用数组的左半边模拟了一个栈 ！！！
 // 空间上 in place ！！！时间上 one pass ！！！不存在recursion
 public class Solution {
   
@@ -52,7 +86,7 @@ public class Solution {
 }
 
 
-// 方法2：我的朴素方法，Recursion。空间上不是in place
+// 方法3：我的朴素方法，Recursion。空间上不是in place
 public class Solution {
   
   public String deDup(String input) {
