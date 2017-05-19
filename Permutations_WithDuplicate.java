@@ -19,6 +19,57 @@ Can you do it without recursion? That would be great!!
 
 public class Solution {
     
+    /* 方法1：Laioffer 的 swap DFS 方法。最优先选用这个方法解题 ！！！
+     具体的说明，参考我的Git总结的 没有重复的permutation那一题：
+     https://github.com/HungryOrc/Algorithm/blob/master/Permutations_NoDuplicate.java    
+     
+     与数组里元素不重复的permutation的swap做法相比，解法上的区别在于：
+     在每一轮新的 swap loop 里，设置一个 HashSet，记录在本轮swap loop里被swap过的各个元素，
+     已经swap过的元素，就不再swap到同样的这个位置上。这是回头看很容易理解的。但一开始要想到就不容易    */
+    public List<String> permutations(String set) {
+      List<String> result = new ArrayList<>();
+      // corner cases
+      if (set == null) {
+        return result;
+      } else if (set.length() == 0) {
+        result.add("");
+        return result;
+      }
+
+      char[] cArray = set.toCharArray();
+      findAllPermuWithSwap(cArray, 0, result);
+
+      return result;
+    }
+
+    private void findAllPermuWithSwap(char[] cArray, int startIndex,
+      List<String> result) {
+      // base case
+      if (startIndex == cArray.length) {
+        result.add(new String(cArray));
+        return;
+      }
+
+      // 特别注意 ！！！ 这个 HashSet 是定义在这里的 ！！！ 为每一个 swap loop 定义一个 Set ！！！
+      HashSet<Character> swappedChars = new HashSet<>();
+      for (int i = startIndex; i < cArray.length; i++) {
+        if (!swappedChars.contains(cArray[i])) {
+          swap(cArray, startIndex, i);
+          findAllPermuWithSwap(cArray, startIndex + 1, result);
+          swap(cArray, startIndex, i);
+
+          swappedChars.add(cArray[i]); // 此时再把这个char加到Set里去 ！！
+        }
+      }
+    }
+
+    private void swap(char[] cArray, int i, int j) {
+      char tmp = cArray[i];
+      cArray[i] = cArray[j];
+      cArray[j] = tmp;
+    }
+
+
     // 方法2：九章式 DFS Recursion
     // 与数组里元素不重复的permutation相比，解法上多了两点：
     // 1. 记录每个元素的使用情况的数组 visited
