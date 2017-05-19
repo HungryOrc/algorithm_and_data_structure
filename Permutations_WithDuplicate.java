@@ -19,14 +19,13 @@ Can you do it without recursion? That would be great!!
 
 public class Solution {
     
-    // 方法1：九章式 DFS Recursion
+    // 方法2：九章式 DFS Recursion
     // 与数组里元素不重复的permutation相比，解法上多了两点：
     // 1. 记录每个元素的使用情况的数组 visited
     // 2. 在dfs的for循环里，要加上 i > 0 && nums[i] == nums[i - 1] && visited[i-1] == 0 
     //    这个判断语句，来避免重复的元素生成出重复的排列
     // Ref: http://www.jiuzhang.com/solutions/permutations-ii/
     public List<List<Integer>> permuteUnique(int[] nums) {
-    
         ArrayList<List<Integer>> results = new ArrayList<List<Integer>>();    
         if (nums == null) {
             return results;
@@ -35,7 +34,7 @@ public class Solution {
             return results;
         }
 
-        Arrays.sort(nums); // 别忘了！
+        Arrays.sort(nums); // 别忘了！这种解法要求数组必须是排好序的 ！！
 
         int[] visited = new int[nums.length]; 
      
@@ -61,15 +60,15 @@ public class Solution {
                 continue;
             }
            
+            // 下面开始正式干活了 ！
             list.add(nums[i]);
             visited[i] = 1;
             
             dfs(results, list, visited, nums);
             
-            list.remove(list.size() - 1);
-            visited[i] = 0;
+            list.remove(list.size() - 1); // 复原
+            visited[i] = 0; // 复原
         }
     }
-
   
 }
