@@ -17,61 +17,14 @@ For nums = [1,2,3], the permutations are:
 ] */
 
 class Solution {
-     
-    // 方法1：Recursion。DFS的套路
-    // Ref: http://www.jiuzhang.com/solutions/permutations/
-    public List<List<Integer>> permute(int[] nums) {
-        
-        ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
-        // nums 为空时，结果是空的 List of Lists
-        // nums 不为空但长度为0时，结果是长度为 1 的List of Lists，其内容为一个空List
-        if (nums == null) {
-            return result;
-        }
-        else if (nums.length == 0) {
-            result.add(new ArrayList<Integer>());
-            return result;
-        }
-        
-        boolean[] visited = new boolean[nums.length];
-        findPermutations(nums, new ArrayList<Integer>(), visited, result);
-        return result;
-    }
-  
-    private void findPermutations(int[] nums, ArrayList<Integer> curList, ArrayList<List<Integer>> result) {
-      
-        if (curList.size() == nums.length) {
-            // 注意！！一定要复制！！
-            // 因为 curList 在其他分支里还会被反复利用！！不是到这里就使命终结了！！
-            result.add(new ArrayList<Integer>(curList));
-            return;
-        }
-              
-        // 整个算法的精华在这里！每一次都是试图把整个数组里的每一个数都轮流放进去！！！
-        // 只是一开始要用 ArrayList.contains 函数来判断是否有过这个数了！！！
-        for (int i = 0; i < nums.length; i++) {
-            
-            if (visited[i] == false) {
-                
-                curList.add(nums[i]);
-                visited[i] = true;
-              
-                findPermutations(nums, curList, visited, result);
-              
-                curList.remove(curList.size() - 1); // 复原
-                visited[i] = false; // 复原
-            }
-        }                       
-    }
-  
-  
-    /* 方法2：Laioffer 的 swap DFS 方法
+    
+    /* 方法1：Laioffer 的 swap DFS 方法。最优先选用这个方法解题 ！！！
     
      Time: O(n * n!), n is the number of characters in the input String. Because we have n! kinds of permutations, 
      and to get each answer, we need O(n) time，
      每个答案所需的 n 的时间是消耗在：每个答案得到以后，要用n的时间来造new String来固化这个答案
-     至于得到每个答案的时间，其实是O(1)，因为通过swap方法，不需要每个答案都耗费n的时间，具体解释如下：
-     比如说要找1,2,3这三个数以功能组成多少个排列（答案是6种），那么swap方法的解题过程其实是：
+     至于得到每个答案的时间，其实是O(1)，因为通过 swap 方法，不需要每个答案都耗费 n 的时间，具体解释如下：
+     比如说要找 1, 2, 3 这三个数以功能组成多少个排列（答案是6种），那么swap方法的解题过程其实是：
      
          1         2         3
         / \       / \       / \
@@ -120,6 +73,52 @@ class Solution {
         cArray[j] = c;
       }
     } 
+  
+  
+    // 方法2：Recursion。DFS的套路
+    // Ref: http://www.jiuzhang.com/solutions/permutations/
+    public List<List<Integer>> permute(int[] nums) {
+        ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
+        // nums 为空时，结果是空的 List of Lists
+        // nums 不为空但长度为0时，结果是长度为 1 的List of Lists，其内容为一个空List
+        if (nums == null) {
+            return result;
+        }
+        else if (nums.length == 0) {
+            result.add(new ArrayList<Integer>());
+            return result;
+        }
+        
+        boolean[] visited = new boolean[nums.length];
+        findPermutations(nums, new ArrayList<Integer>(), visited, result);
+        return result;
+    }
+  
+    private void findPermutations(int[] nums, ArrayList<Integer> curList, ArrayList<List<Integer>> result) {
+      
+        if (curList.size() == nums.length) {
+            // 注意！！一定要复制！！
+            // 因为 curList 在其他分支里还会被反复利用！！不是到这里就使命终结了！！
+            result.add(new ArrayList<Integer>(curList));
+            return;
+        }
+              
+        // 整个算法的精华在这里！每一次都是试图把整个数组里的每一个数都轮流放进去！！！
+        // 只是一开始要用 ArrayList.contains 函数来判断是否有过这个数了！！！
+        for (int i = 0; i < nums.length; i++) {
+            
+            if (visited[i] == false) {
+                
+                curList.add(nums[i]);
+                visited[i] = true;
+              
+                findPermutations(nums, curList, visited, result);
+              
+                curList.remove(curList.size() - 1); // 复原
+                visited[i] = false; // 复原
+            }
+        }                       
+    }
   
   
     // 方法3：Non-Recursion 方法
