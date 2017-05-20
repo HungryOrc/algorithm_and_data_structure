@@ -32,7 +32,62 @@ For the following binary search tree, in-order traversal by using iterator is [1
  *    // ...
  * } */
 
-// 方法1：我的方法
+
+// 方法1：用一个 Stack 来处理。很巧妙 ！！！ 这个解法要记住 ！！！
+// 特别注意 ！！！ 关于 Iterator 的思维方式，即忌讳之处，参考我在本Git目录里的相应总结文章，命名可能为 !Iterator.java 
+public class TreeIterator {
+    private Stack<TreeNode> stack;
+    
+    public TreeIterator(TreeNode root) {
+        this.stack = new Stack<>();
+        TreeNode cur = root;
+        
+        // 这里只是把 root 的各级 直系left子孙 都预先放到stack里去 ！！！是 O(tree height) 的操作 ！！！
+        // 这个预处理的时间远低于 O(n)，是可以接受的
+        while (cur != null) {
+            stack.push(cur);
+            if (cur.left != null) {
+                cur = cur.left;
+            } else {
+                break;
+            }
+        }
+    }
+
+    public boolean  hasNext() {
+        return !stack.isEmpty();
+    }
+    
+    // 特别注意 ！！！ 这是一种非常巧妙的 DFS 的实现方式 ！！！
+    // 可以做到：
+    // * 不重复取node
+    // * 每次除了pop出来一个node以外，也许能再push几个node进stack里，也许1个node也push不了（被pop的node没有right的情况下）
+    // * 最后一定能遍历完所有的nodes
+    // * 只要还没遍历完，这个stack就一定不会空
+    public int next() {
+        TreeNode nodeAtStackTop = stack.pop(); // 这个是作为本次的答案的node
+        TreeNode cur = nodeAtStackTop;
+        
+        if (cur.right != null) {
+            cur = cur.right;
+            
+            while (cur != null) {
+                stack.push(cur);
+                if (cur.left != null) {
+                    cur = cur.left;
+                } else {
+                    break;
+                }
+            }
+        }
+        
+        return nodeAtStackTop.val;
+    }
+}
+
+
+// 方法2：我的土方法。先把所有nodes都放到一个 ArrayList 里面去。这样做其实非常不好 ！！！ 不可取 ！！！ 因为：
+// 此方法在开始iterate之前，使用了 O(n) 的空间，和 O(n) 的时间，来预处理所有的nodes，这是不可接受的 ！！！
 public class BSTIterator {
     
     public ArrayList<TreeNode> treeNodeAL;
@@ -75,37 +130,5 @@ public class BSTIterator {
     public TreeNode next() {
         this.curIndex ++;
         return this.treeNodeAL.get(curIndex);
-    }
-}
-
-
-// 方法2：九章的方法。没看懂？？？？？？？？？
-// Ref: http://www.jiuzhang.com/solutions/binary-search-tree-iterator/
-public class BSTIterator {
-    private Stack<TreeNode> stack = new Stack<>();
-    private TreeNode curt;
-    
-    // @param root: The root of binary tree.
-    public BSTIterator(TreeNode root) {
-        curt = root;
-    }
-
-    //@return: True if there has next node, or false
-    public boolean hasNext() {
-        return (curt != null || !stack.isEmpty());
-    }
-    
-    //@return: return next node
-    public TreeNode next() {
-        while (curt != null) {
-            stack.push(curt);
-            curt = curt.left;
-        }
-        
-        curt = stack.pop();
-        TreeNode node = curt;
-        curt = curt.right;
-        
-        return node;
     }
 }
