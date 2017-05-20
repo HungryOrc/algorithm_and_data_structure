@@ -5,7 +5,8 @@ s is not null or empty.
 l is not null.
 
 Examples:
-l = "abcbac", s = "ab", return [0, 3] since the substring with length 2 starting from index 0/3 are all anagrams of "ab" ("ab", "ba"). */
+l = "abcbac", s = "ab", return [0, 3] since 
+the substring with length 2 starting from index 0/3 are all anagrams of "ab" ("ab", "ba"). */
 
 // 我的方法：Sliding Window + 标记数组
 public class Solution {
