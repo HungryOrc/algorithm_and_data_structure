@@ -104,7 +104,7 @@ public class TreeIterator {
         this.stack = new Stack<>();
         TreeNode cur = root;
         
-        // 这里只是把所有的left nodes都预先放到stack里去 ！！！是 O(tree height) 的操作 ！！！
+        // 这里只是把 root 的各级 直系left子孙 都预先放到stack里去 ！！！是 O(tree height) 的操作 ！！！
         // 这个预处理的时间远低于 O(n)，是可以接受的
         while (cur != null) {
             stack.push(cur);
@@ -120,11 +120,16 @@ public class TreeIterator {
         return !stack.isEmpty();
     }
     
+    // 特别注意 ！！！ 这是一种非常巧妙的 DFS 的实现方式 ！！！
+    // 可以做到：
+    // * 不重复取node
+    // * 每次除了pop出来一个node以外，也许能再push几个node进stack里，也许1个node也push不了（被pop的node没有right的情况下）
+    // * 最后一定能遍历完所有的nodes
+    // * 只要还没遍历完，这个stack就一定不会空
     public int next() {
-        TreeNode nodeAtStackTop = stack.pop();
+        TreeNode nodeAtStackTop = stack.pop(); // 这个是作为本次的答案的node
         TreeNode cur = nodeAtStackTop;
         
-        // traverse right branch
         if (cur.right != null) {
             cur = cur.right;
             
