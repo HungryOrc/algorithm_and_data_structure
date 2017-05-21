@@ -34,14 +34,19 @@ the order of elements returned by next should be: [1,4,6].
  *         list.add(i.next()); */
 
 
-// 方法1：用Stack做。不在一开始就全部彻底展开。很高大上的方法。应该这么做才行
+// 方法1：用Stack做。不在一开始就全部彻底展开。非常巧妙的方法 ！！！ 要记住 ！！！
 // Ref: http://www.jiuzhang.com/solutions/flatten-nested-list-iterator/
 import java.util.Iterator;
 
 public class NestedIterator implements Iterator<Integer> {
-
+ 
     private Stack<NestedInteger> stack;
     
+    public NestedIterator(List<NestedInteger> nestedList) {
+        stack = new Stack<>();
+        pushListToStack(nestedList);
+    }
+    // 这个 helper method 使用了一个局部的 helper stack，把list里的 Nested Integers 来回倒腾了 2次
     private void pushListToStack(List<NestedInteger> nestedList) {
         Stack<NestedInteger> temp = new Stack<>();
         for (NestedInteger nested : nestedList) {
@@ -51,11 +56,6 @@ public class NestedIterator implements Iterator<Integer> {
         while (!temp.isEmpty()) {
             stack.push(temp.pop());
         }
-    }
-    
-    public NestedIterator(List<NestedInteger> nestedList) {
-        stack = new Stack<>();
-        pushListToStack(nestedList);
     }
 
     // @return {int} the next element in the iteration
@@ -67,11 +67,15 @@ public class NestedIterator implements Iterator<Integer> {
         return stack.pop().getInteger();
     }
 
+    // 这里的 hasNext()，实际上还对数据做了操作整理 ！！！
+    // 如果当前的栈顶的 NestedInteger，不是一个 Integer，而是一个 List of NestedIntegers，则我们要不断地展开它 ！！！
+    // 直到栈顶的 NestedInteger 是一个 Integer ！！！
     // @return {boolean} true if the iteration has more element or false
     @Override
     public boolean hasNext() {
+        // 注意 ！ 这里要用 while loop 而非 if 判断 ！
         while (!stack.isEmpty() && !stack.peek().isInteger()) {
-            pushListToStack(stack.pop().getList());
+            pushListToStack(stack.pop().getList()); // 注意 ！ 这里要 get List ！！！
         }
         
         return !stack.isEmpty();
