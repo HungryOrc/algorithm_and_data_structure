@@ -34,54 +34,7 @@ the order of elements returned by next should be: [1,4,6].
  *         list.add(i.next()); */
 
 
-// 方法1：我的朴素方法。一开始就把整个List of NestedInteger 全部彻底展开为 ArrayList of Integer
-import java.util.Iterator;
-
-public class NestedIterator implements Iterator<Integer> {
-
-    ArrayList<Integer> intValues;
-    int curPos;
-    
-    // Constructor of the Iterator
-    public NestedIterator(List<NestedInteger> nestedList) {
-        this.intValues = flattenTheListOfNestedIntegers(nestedList);
-        this.curPos = -1; // 执行了next以后才是第一个，即才是编号为0的元素
-    }
-    
-    private ArrayList<Integer> flattenTheListOfNestedIntegers(List<NestedInteger> nestedList) {
-        
-        ArrayList<Integer> result = new ArrayList<>();
-        Queue<NestedInteger> niQueue = new LinkedList<>();
-        
-        for (NestedInteger ni : nestedList) {
-            if (ni.isInteger()) {
-                result.add(ni.getInteger());
-            } else { // is a nested list
-                result.addAll(flattenTheListOfNestedIntegers(ni.getList()));
-            }
-        }
-        return result;
-    }
-
-    // @return {int} the next element in the iteration
-    @Override
-    public Integer next() {
-        this.curPos ++;
-        return intValues.get(curPos);
-    }
-
-    // @return {boolean} true if the iteration has more element or false
-    @Override
-    public boolean hasNext() {
-        return (curPos < intValues.size() - 1);
-    }
-
-    @Override
-    public void remove() {}
-}
-
-
-// 方法2：九章。用Stack做。不在一开始就全部彻底展开。很有逼格
+// 方法1：用Stack做。不在一开始就全部彻底展开。很高大上的方法。应该这么做才行
 // Ref: http://www.jiuzhang.com/solutions/flatten-nested-list-iterator/
 import java.util.Iterator;
 
@@ -124,6 +77,54 @@ public class NestedIterator implements Iterator<Integer> {
         return !stack.isEmpty();
     }
     
+    @Override
+    public void remove() {}
+}
+
+
+// 方法2：不好的方法：一开始就把整个List of NestedInteger 全部彻底展开为 ArrayList of Integer
+// 这个方法在开始之前，就用 O(n) 的时间和 O(n) 的空间把原数据处理了一遍，这样做非常不 professional 啦 ！！
+import java.util.Iterator;
+
+public class NestedIterator implements Iterator<Integer> {
+
+    ArrayList<Integer> intValues;
+    int curPos;
+    
+    // Constructor of the Iterator
+    public NestedIterator(List<NestedInteger> nestedList) {
+        this.intValues = flattenTheListOfNestedIntegers(nestedList);
+        this.curPos = -1; // 执行了next以后才是第一个，即才是编号为0的元素
+    }
+    
+    private ArrayList<Integer> flattenTheListOfNestedIntegers(List<NestedInteger> nestedList) {
+        
+        ArrayList<Integer> result = new ArrayList<>();
+        Queue<NestedInteger> niQueue = new LinkedList<>();
+        
+        for (NestedInteger ni : nestedList) {
+            if (ni.isInteger()) {
+                result.add(ni.getInteger());
+            } else { // is a nested list
+                result.addAll(flattenTheListOfNestedIntegers(ni.getList()));
+            }
+        }
+        return result;
+    }
+
+    // @return {int} the next element in the iteration
+    @Override
+    public Integer next() {
+        this.curPos ++;
+        return intValues.get(curPos);
+    }
+
+    // @return {boolean} true if the iteration has more element or false
+    @Override
+    public boolean hasNext() {
+        return (curPos < intValues.size() - 1);
+    }
+
     @Override
     public void remove() {}
 }
