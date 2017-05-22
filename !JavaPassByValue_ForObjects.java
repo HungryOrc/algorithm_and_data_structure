@@ -78,3 +78,19 @@ public class Solution {
     	System.out.println(two.val);
     } 
 }
+
+
+// ---------------------------------------------------------------------------------------------------------
+
+/* 既然 Java 里对于 object 的传递，都是其地址的值，而非其 Reference （C++ 就可以做到传 Reference），
+那么我们如果想做到：
+(1) 不仅形参的值的改变，能影响原输入变量的值；
+(2) 而且形参所指向的object改变的话，也能影响原输入变量所指向的 object ！！！
+    就像上面那个例子那样，形参 two 指向了新建的 Node three 以后，原来输入的 one 所指向的 Node 也要变成 three ！！！
+
+要做到这么牛逼的效果，有2种常用的方法。总的思路都是  在  外  面  再  包  一  层：
+
+(1) 做一个长度为1的数组，把要传入的参数装进去再传入。比如建一个 Node[] nodeArray = new Node[1]，然后把 one 装进去，
+    然后把 nodeArray 而非 one 作为参数传到 helper function 里去。
+
+(2) 自定义一个 Result Class，把要传入的参数作为一个 field 放到这个class里，再把这个class作为参数传到 helper function 里去  */
