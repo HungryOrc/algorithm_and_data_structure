@@ -17,7 +17,31 @@ public class Solution {
     }
     
     
-    // 方法2，Ref: https://leetcode.com/articles/power-of-three/
+    // 方法2：用 Iteration，思路与上面的recursion是一样的
+    public boolean isPowerOfTwo(int n) {
+        if (n < 1) {
+            return false;
+        }
+        for (int i = n; i > 1; i /= 2) {
+            if (i % 2 != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    
+    // 方法3：如果是要求 power of 2，那么正好用 2进制数的性质，2的幂次方一定是只有一个1，其它位数都是0。
+    // 那么我们可以用 x 与 x - 1 之间求AND来判断，因为，比如：
+    //     x = 0 0 1 0 0 0 0 0 
+    // x - 1 = 0 0 0 1 1 1 1 1
+    // 可见只要 x 是2的power，则上面两个数之间取AND一定得到 0 ！！！
+    public boolean isPowerOfTwo(int x) {
+        return (x & (x - 1) == 0) && (x != 0);
+    }
+    
+    
+    // 方法4，Ref: https://leetcode.com/articles/power-of-three/
     /* let n = 3^i, then we have:
      i = log_3(n) => i = log_10(n) / log_10(3)
      n is a power of 3 if and only if i is an integer. 
