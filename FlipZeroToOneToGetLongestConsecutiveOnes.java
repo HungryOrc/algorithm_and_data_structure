@@ -6,8 +6,8 @@
 
 public class Solution {
 
-    public int flipZeroToOne(int[] input, int k) {
-        if (input == null || input.length == 0 || k < 0) {
+    private static int flipZeroToOne(int[] input, int k) {
+        if (input == null || input.length == 0 || k < 0) { // k = 0 的情况是允许的
             return 0;
         }
     
@@ -16,21 +16,32 @@ public class Solution {
         int slow = 0, fast = 0;
         
         while (fast < input.length) {
-        
-            if (numOfZeroes <= k) {
+            // 用步进的方式比较容易写代码
+            if (numOfZeroes < k) {
                 if (input[fast] == 0) {
-                    numOfZeros ++;
+                    numOfZeroes ++;
                 }
                 fast ++;
             }
-            else { // numOfZeroes > k
-                if (input[slow] == 0) {
-                    numOfZeroes --;
-                }
-                slow ++;
+            else { // numOfZeroes == k
+            	if (input[fast] == 1) {
+            		fast ++;
+            	} else { // input[fast] == 0, the fast pointer cannot proceed anymore now
+	                if (input[slow] == 0) {
+	                    numOfZeroes --;
+	                }
+	                slow ++;
+            	}
             }
             maxLength = Math.max(maxLength, fast - slow);
         }
         return maxLength;
+    }
+    
+    public static void main(String[] args) {   	
+    	int[] input = new int[]{1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0};
+    	int k = 4;
+    	
+    	System.out.println(flipZeroToOne(input, k)); // 13
     }
 }
