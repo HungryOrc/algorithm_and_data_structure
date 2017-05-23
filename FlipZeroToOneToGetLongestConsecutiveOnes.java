@@ -6,8 +6,31 @@
 
 public class Solution {
 
-    public int flipZeroToOne(int[] input) {
+    public int flipZeroToOne(int[] input, int k) {
+        if (input == null || input.length == 0 || k < 0) {
+            return 0;
+        }
     
-    
+        int maxLength = 0;
+        int numOfZeroes = 0;
+        int slow = 0, fast = 0;
+        
+        while (fast < input.length) {
+        
+            if (numOfZeroes <= k) {
+                if (input[fast] == 0) {
+                    numOfZeros ++;
+                }
+                fast ++;
+            }
+            else { // numOfZeroes > k
+                if (input[slow] == 0) {
+                    numOfZeroes --;
+                }
+                slow ++;
+            }
+            maxLength = Math.max(maxLength, fast - slow);
+        }
+        return maxLength;
     }
 }
