@@ -32,27 +32,34 @@ Decimal: -2
 位运算符：>>> "zero fill right shift"
 Shift right zero fill operator. The left operands value is moved right by the number of bits specified by the right operand 
 and shifted values are filled up with zeros.	
-E.g.: A = 60, A >>>2 will give 15 which is 0000 1111
-*/
+E.g.: A = 60, A >>>2 will give 15 which is 0000 1111    */
 
 public class Solution {
-        
-    public String toHex(int num) {
-
-        char[] map = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
-    
-        if(num == 0) return "0";
-        
-        String result = "";
-        while(num != 0)
-        {
-            // ！注意！ & 15 即为取最右边的四位！巧妙！
-            result = map[(num & 15)] + result; 
-            // ！注意！>>> 运算符的说明见上文，是左边留 0 占位的意思！
-            num = (num >>> 4);
-        }
-        return result;
+  
+  // Assumption: number >= 0
+  public String hex(int number) {
+    if(number == 0) {
+      return "0x0"; // 要特殊处理 0 的情况！下面的代码无法处理！
     }
-        
-
+    
+    StringBuilder sb = new StringBuilder();
+    
+    while (number > 0) {
+      int remainder = number % 16;
+      char thisHexaDigit = ' ';
+      
+      if (remainder <= 9) {
+        thisHexaDigit = (char)('0' + remainder);
+      } else { // 9 < remainder <= 15
+        thisHexaDigit = (char)('A' + remainder - 10); // 别忘了 -10 ！！
+      }
+      sb.append(thisHexaDigit);
+      
+      number /= 16;
+    }
+    
+    // 注意 StringBuilder.reverse() 方法！！
+    return "0x" + sb.reverse().toString(); // 别忘了加 前缀 0x
+  }
+  
 }
