@@ -74,7 +74,7 @@ class Solution {
                                      int[] queensCols,
                                      int colIndex) {
     
-        int rowIndex = numOfSettledQueens;
+        int rowIndex = numOfSettledQueens; // 注意！这里是 index！所以不要再 +1 了！！
         
         for (int i = 0; i < numOfSettledQueens; i++) {
             int rowIndexOfFormerQueen = i;
