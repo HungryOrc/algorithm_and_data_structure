@@ -31,9 +31,20 @@ public class Solution {
    }
     
     
-    // 方法2：Iteration。Laioffer
+    // 方法2：Iteration。Laioffer。非常经典的做法 ！！！ 要记下来 ！！！
     public ListNode reverseInPairs(ListNode head) {
         ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode cur = dummy;
         
+        while (cur.next != null && cur.next.next != null) {
+            ListNode nodeAfterNext = cur.next.next;
+         
+            cur.next.next = cur.next.next.next;
+            nodeAfterNext.next = cur.next;
+            cur.next = next;
+            cur = cur.next.next;
+        }
+        return dummy.next;
     }   
 }
