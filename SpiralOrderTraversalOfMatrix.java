@@ -18,37 +18,37 @@ public class Solution {
   
   public List<Integer> spiral(int[][] matrix) {
     List<Integer> result = new ArrayList<>();
-    int n = matrix.length;
+    int diameter = matrix.length;
     
-    spiralTraversal(matrix, n, 0, 0, result);
+    spiralTraversal(matrix, diameter, 0, result);
     return result;
   }
   
-  private void spiralTraversal(int[][] matrix, int width,
-    int rowOffset, int colOffset, List<Integer> result) {
+  private void spiralTraversal(int[][] matrix, int diameter,
+    int offset, List<Integer> result) {
       
-      if (width == rowOffset * 2) {
+      if (diameter == offset * 2) {
         return;
       }
-      if (width == rowOffset * 2 + 1) {
-        result.add(matrix[rowOffset][colOffset]);
+      if (diameter == offset * 2 + 1) {
+        result.add(matrix[offset][offset]);
         return;
       }
       
-      for (int col = colOffset; col < width - 1 - colOffset; col++) {
-        result.add(matrix[rowOffset][col]);
+      for (int col = offset; col < diameter - 1 - offset; col++) {
+        result.add(matrix[offset][col]);
       }
-      for (int row = rowOffset; row < width - 1 - rowOffset; row++) {
-        result.add(matrix[row][width - 1 - colOffset]);
+      for (int row = offset; row < diameter - 1 - offset; row++) {
+        result.add(matrix[row][diameter - 1 - offset]);
       }
-      for (int col = width - 1 - colOffset; col > colOffset ; col--) {
-        result.add(matrix[width - 1 - rowOffset][col]);
+      for (int col = diameter - 1 - offset; col > offset; col--) {
+        result.add(matrix[diameter - 1 - offset][col]);
       }
-      for (int row = width - 1 - rowOffset; row > rowOffset; row--) {
-        result.add(matrix[row][colOffset]);
+      for (int row = diameter - 1 - offset; row > offset; row--) {
+        result.add(matrix[row][offset]);
       }
       
-      spiralTraversal(matrix, width, rowOffset + 1, colOffset + 1, result);
+      spiralTraversal(matrix, diameter, offset + 1, result);
     }
   
 }
