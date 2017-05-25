@@ -1,4 +1,4 @@
-/* Given a linked list, swap every two adjacent nodes and return its head.
+/* Given a linked list, every two adjacent nodes and return its head.
 For example,
 Given 1->2->3->4, you should return the list as 2->1->4->3.
 Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed. 
@@ -13,24 +13,27 @@ Your algorithm should use only constant space. You may not modify the values in 
  
 public class Solution {
     
-    // Recursion
-    public ListNode swapPairs(ListNode head) {
-        
-        if (head == null || head.next == null)
-            return head;
-            
-        ListNode originalNext = head.next;
-        
-        head.next = swapPairs(originalNext.next);
-        originalNext.next = head;
-        
-        return originalNext;
-    }
+    // 方法1：Recursion
+    public ListNode reverseInPairs(ListNode head) {
+    
+     if (head == null || head.next == null) {
+       return head;
+     }
+
+     ListNode originalNext = head.next;
+
+     ListNode newHeadAfterNext = reverseInPairs(head.next.next);
+
+     originalNext.next = head;
+     head.next = newHeadAfterNext;
+
+     return originalNext;
+   }
     
     
-    // Iteration
+    // 方法2：Iteration
     // 注意这里是一种以 “一对nodes” 为一个考量单位的 iteration，和以往的 iteration 不太一样。详见下面的注释
-    public ListNode swapPairs(ListNode head) {
+    public ListNode reverseInPairs(ListNode head) {
         
         if (head == null || head.next == null)
             return head;
