@@ -40,9 +40,10 @@ public class Solution {
         while (cur.next != null && cur.next.next != null) {
             ListNode nodeAfterNext = cur.next.next;
          
-            cur.next.next = cur.next.next.next;
+            cur.next.next = nodeAfterNext.next;
             nodeAfterNext.next = cur.next;
-            cur.next = next;
+            cur.next = nodeAfterNext;
+         
             cur = cur.next.next;
         }
         return dummy.next;
