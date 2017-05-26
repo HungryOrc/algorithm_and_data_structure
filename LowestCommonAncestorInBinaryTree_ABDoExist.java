@@ -59,9 +59,9 @@ public class Solution {
         // Conquer
         if (left != null && right != null) {
             return root;
-        } else if (left != null && right == null) {
+        } else if (left != null) { // && right == null
             return left;
-        } else if (right != null && left == null) {
+        } else if (right != null) { // && left == null
             return right;
         } else { // left == null && right == null
             return null;
