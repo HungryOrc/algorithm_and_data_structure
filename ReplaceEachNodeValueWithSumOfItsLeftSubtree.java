@@ -22,21 +22,19 @@
 import java.util.*;
 
 class TreeNode {
-	public int value;
-	public TreeNode left, right;
-	
-	public TreeNode(int val) {
-		value = val;
-	}
+    public int value;
+    public TreeNode left, right;
+    public TreeNode(int val) {
+	this.value = val;
+    }
 }
 
 public class Solution {
-
-	public void replaceValueWithSumOfLeftSubtree(TreeNode root) {
+	
+    public void replaceValueWithSumOfLeftSubtree(TreeNode root) {
         updateValueOfCurNode(root);
     }
 
-    // 关键在这个函数里 ！！！
     // 先replace左右子 ！！！ 再加和，以replace自己 ！！！
     private void replaceValueOfCurNode(TreeNode node) {
         if (node == null) {
@@ -46,10 +44,10 @@ public class Solution {
         replaceValueOfCurNode(node.left);
         replaceValueOfCurNode(node.right);
         
-        // 注意 ！！！必须有下面这个是否为null的判断 ！！！不然会出错
+        // 注意 ！！！必须有下面这个是否为null的判断 ！！！不然会出错：
         // cur node的值会被null left child 更新成 0 ！！！
         if (node.left != null) {
-        	node.value = sumSubtree(node.left);
+            node.value = sumSubtree(node.left);
         }
     }
 
@@ -61,49 +59,50 @@ public class Solution {
         return node.value + sumSubtree(node.left) + sumSubtree(node.right);
     }
     
-	
-	public static void main(String[] args) {
-		
-		TreeNode n1 = new TreeNode(1);
-		TreeNode n2 = new TreeNode(2);
-		TreeNode n3 = new TreeNode(3);
-		TreeNode n4 = new TreeNode(4);
-		TreeNode n5 = new TreeNode(5);
-		TreeNode n6 = new TreeNode(6);
-		TreeNode n7 = new TreeNode(7);
-		TreeNode n8 = new TreeNode(8);
-		TreeNode n9 = new TreeNode(9);
-		TreeNode n10 = new TreeNode(10);
-		TreeNode n11 = new TreeNode(11);
-		n1.left = n2;
-		n1.right = n3;
-		n2.left = n4;
-		n2.right = n5;
-		n3.left = n6;
-		n3.right = n7;
-		n4.left = n8;
-		n4.right = n9;
-		n5.left = n10;
-		n6.right = n11;
-		
-		Solution myS = new Solution();
-		myS.replaceValueWithSumOfLeftSubtree(n1);
-		
-		Queue<TreeNode> nodeQueue = new LinkedList<>();
-		nodeQueue.offer(n1);
-		while (!nodeQueue.isEmpty()) {
-			int curLayerSize = nodeQueue.size();
-			for (int i = 0; i < curLayerSize; i++) {
-				TreeNode curNode = nodeQueue.poll();
-				System.out.print(curNode.value + " ");
-				if (curNode.left != null) {
-					nodeQueue.offer(curNode.left);
-				}
-				if (curNode.right != null) {
-					nodeQueue.offer(curNode.right);
-				}
-			}
-			System.out.println();
+    // test
+    public static void main(String[] args) {
+	// construct the tree
+	TreeNode n1 = new TreeNode(1);
+	TreeNode n2 = new TreeNode(2);
+	TreeNode n3 = new TreeNode(3);
+	TreeNode n4 = new TreeNode(4);
+	TreeNode n5 = new TreeNode(5);
+	TreeNode n6 = new TreeNode(6);
+	TreeNode n7 = new TreeNode(7);
+	TreeNode n8 = new TreeNode(8);
+	TreeNode n9 = new TreeNode(9);
+	TreeNode n10 = new TreeNode(10);
+	TreeNode n11 = new TreeNode(11);
+	n1.left = n2;
+	n1.right = n3;
+	n2.left = n4;
+	n2.right = n5;
+	n3.left = n6;
+	n3.right = n7;
+	n4.left = n8;
+	n4.right = n9;
+	n5.left = n10;
+	n6.right = n11;
+
+	Solution myS = new Solution();
+	myS.replaceValueWithSumOfLeftSubtree(n1);
+
+	Queue<TreeNode> nodeQueue = new LinkedList<>();
+	nodeQueue.offer(n1);
+	    
+	while (!nodeQueue.isEmpty()) {
+	    int curLayerSize = nodeQueue.size();
+	    for (int i = 0; i < curLayerSize; i++) {
+	 	TreeNode curNode = nodeQueue.poll();
+		System.out.print(curNode.value + " ");
+		if (curNode.left != null) {
+		    nodeQueue.offer(curNode.left);
 		}
-	}
+		if (curNode.right != null) {
+		    nodeQueue.offer(curNode.right);
+		}
+	    }
+	    System.out.println();
+        }
+    }
 }
