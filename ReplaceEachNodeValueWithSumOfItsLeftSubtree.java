@@ -44,7 +44,8 @@ public class Solution {
         replaceValueOfCurNode(node.left);
         replaceValueOfCurNode(node.right);
         
-        // 注意 ！！！必须有下面这个是否为null的判断 ！！！不然会出错：
+        // 注意 ！！！用当前 node的左子树里的所有nodes之和 来 replace当前node的value 之前，
+	// 必须先判断：当前 node 的左child 是否为 null ！！！否则会出错：
         // cur node的值会被null left child 更新成 0 ！！！
         if (node.left != null) {
             node.value = sumSubtree(node.left);
@@ -55,7 +56,6 @@ public class Solution {
         if (node == null) {
             return 0;   
         }
-        
         return node.value + sumSubtree(node.left) + sumSubtree(node.right);
     }
     
