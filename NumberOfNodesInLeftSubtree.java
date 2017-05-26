@@ -10,7 +10,6 @@ public class Solution {
 
     public void findNumberOfNodesInLeftSubtree(TreeNode root) {
         countNodes(root);
-   
     }
 
     private int countNodes(TreeNode node) {
