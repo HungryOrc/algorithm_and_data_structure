@@ -68,3 +68,29 @@ public class Solution {
  所以我们不必考察这个数组里的任何元素之前是否被填充过，也不必把这个数组里的所有元素初始化为 0 或者 -1 之类的占位值，
  因为它的填充过程自然而然就不会出现要填的时候需要的组成部分还没有被赋值的情况 ！  */
     
+public class Solution {
+  
+  public int maxProduct(int n) {
+    if (n <= 1) {
+      return 0;
+    }
+    
+    int[] dp = new int[n + 1];
+    dp[1] = 0;
+    dp[2] = 1;
+    
+    // 考察总长为 i 的rope。先不要管题目给定的总长 n！ 我们要做的就是从 i=1 一直往上推导到 i=n ！！
+    for (int i = 3; i < n + 1; i++) { 
+      
+      // j: the length of the left half section in the rope whose total length = i
+      for (int j = 1; j <= i / 2; j++) {
+        
+        // 关键在这一句 ！！！
+        int maxForJ = Math.max(j, dp[j]) * Math.max((i - j), dp[i - j]);
+        dp[i] = Math.max(maxForJ, dp[i]);
+      }
+    }
+   
+    return dp[n]; 
+  } 
+}
