@@ -94,3 +94,35 @@ public class Solution {
     return dp[n]; 
   } 
 }
+
+
+/* 方法3：DP的一点优化。基于上面的DP方法2
+我们还是把长度为i的绳子分为左右两大段，但是左半段不再切分，而是不切一刀。只切分右半段。易知这么做是完备的 ！！！
+然后类似于方法2，我们把这个左右两大段划分到其中一个大段 >= i的一半最多再+1 就够了，不必再继续下去了，再继续就是重复 */
+
+public class Solution {
+  
+  public int maxProduct(int n) {
+    if (n <= 1) {
+      return 0;
+    }
+    
+    int[] dp = new int[n + 1];
+    dp[1] = 0;
+    dp[2] = 1;
+
+    for (int i = 3; i < n + 1; i++) { 
+
+      for (int j = 1; j <= i / 2; j++) {
+        
+        // 与上面的方法唯一的区别就在这一句里的 j ！！！
+        // 上面的方法是 Math.max(j, dp[j]) * Math.max((i - j), dp[i - j])
+        // 这里是 直接用 j 乘以后面的 max 就行： j * Math.max((i - j), dp[i - j])
+        int maxForJ = j * Math.max((i - j), dp[i - j]);
+        dp[i] = Math.max(maxForJ, dp[i]);
+      }
+    }
+   
+    return dp[n]; 
+  } 
+}
