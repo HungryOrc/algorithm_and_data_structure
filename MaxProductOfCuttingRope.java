@@ -41,6 +41,7 @@ public class Solution {
 
 /* 方法2：DP。把绳子看成左右两大部分。每一部分都会被切 0次 到 若干次。最后的product是这两部分的product的product
 这个思想是继承于上面的 recursion 思想的
+时间：O(n^2)
 
 1米长的rope：没法切，只能切0刀，即不切
     DP[1] = 0;
