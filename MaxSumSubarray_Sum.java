@@ -9,6 +9,8 @@ public class Solution {
 
     // 方法1：DP
     // dp数组里 dp[i] 的意思是，结尾在第i个元素的所有subarray里，sum最大的值
+    // Time: O(n)
+    // Space: O(n)
     public int largestSum(int[] nums) {
         if (nums == null || nums.length == 0) {
             return Integer.MIN_VALUE;
@@ -30,7 +32,33 @@ public class Solution {
         return maxSubarraySum;
     }
 
-    
+    // 上面的DP方法的优化：空间 O(n) -> O(1)
+    public int largestSum(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return Integer.MIN_VALUE;
+        }
+
+        int preMaxSum = nums[0];
+        int curMaxSum = Integer.MIN_VALUE;
+
+        int maxSum = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            if (preMaxSum >= 0) {
+                curMaxSum = preMaxSum + nums[i];
+            } else {
+                curMaxSum = nums[i];
+            }
+
+            maxSum = Math.max(curMaxSum, maxSum);
+
+            preMaxSum = curMaxSum;
+        }
+
+        return maxSum;
+    }
+  
+
     // 方法2：Prefix-Sum
     public int maxSubArray(int[] nums) {
         if (nums == null || nums.length == 0) {
