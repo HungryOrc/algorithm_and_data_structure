@@ -15,7 +15,7 @@ the corresponding binary search tree is:
 /* 思路：很巧妙 ！！！
 Ref: http://www.geeksforgeeks.org/construct-a-binary-search-tree-from-given-postorder/
 
-由于是 Postorder，所以给定数组（设为 int[] post）的最后一个元素即 post[post.length - 1] 就是整个树的root的value。
+由于是 Postorder，所以给定数组（设为 int[] post）的最后一个元素即 post[post.length - 1] 一定是整个树的root的value。
 然后，从最后一个元素开始，从后往前看，
 第一个能找到的比它大的元素，一定就是右子树的sub root；第一个能找到的比它小的元素，一定就是左子树的sub root。
 而且，由于postorder的数组是先左再右最后root这样排列的，所以从后往前找的时候，一定是
