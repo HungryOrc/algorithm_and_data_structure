@@ -20,6 +20,7 @@ Ref: http://www.geeksforgeeks.org/construct-a-binary-search-tree-from-given-post
 第一个能找到的比它大的元素，一定就是右子树的sub root；第一个能找到的比它小的元素，一定就是左子树的sub root。
 而且，由于postorder的数组是先左再右最后root这样排列的，所以从后往前找的时候，一定是
 先找到比root大的right sub root，再找到比root小的left sub root。这一点可以在题目里的示例数组里印证。
+在这种方法下，我们也必须先把root的右子树全部处理完毕，再处理root的左子树。
 5 是root，从5往前看，先看到的第一个比5大的是 8, 8就是5的右子树的sub root；第一个比5小的是3, 3就是5的左子树的sub root。
 
 从后往前找的时候，记住下一个node的value的下限 ！！！
