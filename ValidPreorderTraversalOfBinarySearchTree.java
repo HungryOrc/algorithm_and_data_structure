@@ -14,6 +14,7 @@ Ref: https://discuss.leetcode.com/topic/21217/java-o-n-and-o-1-extra-space
 
 Preorder，数组左边第一个元素一定是整个树的root。先把它push进stack里。
 然后从第二个元素开始，从左往右看各个元素，
+根据preorder的性质，从左往右看，一定是先经历左子树，再经历右子树。所以：
 如果比stack顶部的元素小，那么就push到stack里去，这意味着这些新到的元素，都是处于越来越深的左子方向上。
 如果比stack顶部的元素大，那么就要从stack里pop元素出来。这意味着新到的元素是stack里的元素的右子，而且
 还未必是栈顶元素的右子，有可能是栈顶元素的爸爸，或者栈顶元素的爷爷的右子...... 所以要不断地pop，直到栈顶元素大于新到的元素，或者栈pop空了，
