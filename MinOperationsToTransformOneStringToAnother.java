@@ -9,8 +9,9 @@ the edit distance between one and two is 2 (one insert “a” at front then rep
 
 /* 方法1：Recursion
 要通过4种操作，把string one 变成 string two。我们可以从string one 的第一个char开始，逐步往右走。
-每一步都试验所有的4种操作，最后要提交的是4种操作即4种分支里面最短的一种 */
+每一步都试验所有的4种操作，最后要提交的是4种操作即4种分支里面最短的一种
 
+时间：O(4^(2n))，4 是因为有4种操作即4个分支，2n 是因为 ？？？？？？？？？？？？？  */
 public class Solution {
   
   public int editDistance(String one, String two) {
