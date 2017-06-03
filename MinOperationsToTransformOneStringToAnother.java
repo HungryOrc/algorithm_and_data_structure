@@ -56,6 +56,8 @@ public class Solution {
 上面的这些包括了最左上角的那一格，即 dp[0][0] = 0.
 
 然后其他内部的格子，就需要依据边界条件以及 induction rules 来填充了。填充方向是每一行从左向右，然后逐行向下。
+此时可见，dp matrix里的每一个cell的值，取决于它的左上角，正上方，左方三个“前导”cells的值 ！
+
 induction rules 一共分为4种场景，类似于上面的recursion方法里的规则。
 场景1. 如果one.charAt(i-1)==two.charAt(j-1)，则可以采用do nothing，则：dp[i][j] = dp[i-1][j-1]
    如果不满足上面这个字符相等的条件，则不能采用do nothing的处理，这里就什么都不做
