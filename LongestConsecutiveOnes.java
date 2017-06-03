@@ -21,9 +21,7 @@ public class Solution {
     for (int i = 1; i < array.length; i++) {
       if (array[i] == 0) {
         dp[i] = 0;
-      } else if (array[i - 1] == 0) {
-        dp[i] = array[i];
-      } else {
+      } else { // array[i] == 1
         dp[i] = dp[i - 1] + 1;
       }
       
