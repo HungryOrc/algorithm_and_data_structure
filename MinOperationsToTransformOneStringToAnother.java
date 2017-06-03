@@ -45,3 +45,52 @@ public class Solution {
     return Math.min(Math.min(doNothing, replace), Math.min(delete, insert));
   } 
 }
+
+
+/* 方法2：DP
+建立一个二维的dp数组，dp[i][j] 的意思是 把word1的前i个字符 转化成 word2的前j个字符 所需的最少的操作次数。
+注意，这里i是前i个字符，所以i=0的时候，指word1里的第0个字符，即没有字符，而不是第1个字符，这样做是为了边界条件容易做。
+这样的话，我们很容易填充这个二维数组的边界：
+二维数组的第1行即i=0的那一行，dp[0][j] = j，因为从0个字符到j个字符，必然最小需要j次insert。
+二维数组的第1列即j=0的那一列，dp[i][0] = i，因为从0个字符到i个字符，必然最小需要i次insert。
+上面的这些包括了最左上角的那一格，即 dp[0][0] = 0.
+
+然后其他内部的格子，就需要依据边界条件以及 induction rules 来填充了。填充方向是每一行从左向右，然后逐行向下。
+induction rules 一共分为4种场景，类似于上面的recursion方法里的规则。
+场景1. 如果one.charAt(i-1)==two.charAt(j-1)，则可以采用do nothing，则：dp[i][j] = dp[i-1][j-1]
+   如果不满足上面这个字符相等的条件，则不能采用do nothing的处理，这里就什么都不做
+场景2. 采用 delete，把word1里的第i个char删去，则：dp[i][j] = 1 + dp[i-1][j]
+场景3. 采用insert，在word1的第i个char的右边添加一个与word2的第j个char相同的char，则：dp[i][j] = 1 + dp[i][j-1]
+场景4. 采用replace，把word1的第i个char替换成word2的第j个char，则：dp[i][j] = 1 + dp[i-1][j-1]
+每一步，都看这4个场景里，那一个发展下去的支路的总消耗最小，就采用哪个支路
+
+时间：O(m*n)   */
+
+public class Solution {
+  
+  public int editDistance(String one, String two) {
+    
+    int[][] distance = new int[one.length() + 1][two.length() + 1];
+    
+    for (int i = 0; i <= one.length(); i++) {
+      for (int j = 0; j <= two.length(); j++) {
+        
+        if (i == 0) {
+          distance[i][j] = j;
+        } else if (j == 0) {
+          distance[i][j] = i;
+        }
+        
+        else if (one.charAt(i - 1) == two.charAt(j - 1)) {
+          distance[i][j] = distance[i - 1][j - 1];
+        } else {
+          distance[i][j] = Math.min(Math.min(
+            distance[i - 1][j] + 1,
+            distance[i][j - 1] + 1),
+            distance[i - 1][j - 1] + 1);
+        }
+      }
+    }
+    return distance[one.length()][two.length()];
+  } 
+}
