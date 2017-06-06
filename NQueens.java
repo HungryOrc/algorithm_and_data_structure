@@ -23,7 +23,17 @@ There exist two distinct solutions to the 4-queens puzzle:
 Challenge 
 Can you do it without recursion? ——？？？？？？？ */
 
-// DFS
+/* DFS
+Time: O(n! * n)
+    首先想到是 O(n^n), since we walk through n layers, and in each layer there are n slots,
+    然后，剪枝（pruning）后是 O(n! * n)
+    n! 是：第一层有n种可能，第二层对于第一层的每个选择，接下来有n-1种可能......所以一共是 n * (n-1) * (n-2) * ...
+        其实，每一层缩减的速度要大大快于-1的速度，比如第一层确定以后，会直接导致第二层中不止一个，而是两到三个slot无法使用
+    n 是：然后，每一种可能性，需要消耗 O(n) 时间的 check valid
+Space: O(n)，因为有n层call stack，每一层是constant space
+    然后每个辅助的 ArrayList<Integer> 需要 O(n)
+    一共是 O(n) + O(n) = O(n) */
+
 public class Solution {
   
   public List<List<Integer>> nqueens(int n) { // we have n > 0
