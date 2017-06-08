@@ -30,7 +30,7 @@ public class Solution {
         for (int end = start; end < cArray.length; end ++) {
             if (isPalindrome(cArray, start, end)) {
               
-                permutation.add(s.subString(start, end + 1));
+                permutation.add(s.substring(start, end + 1));
                 
                 // 注意！下一次的分析的开始位置，是这一次的subString的结束位置+1，
                 dfs(s, cArray, end + 1, permutation, result);
