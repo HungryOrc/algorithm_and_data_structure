@@ -19,7 +19,7 @@ Can you do it without recursion? That would be great!!
 
 public class Solution {
     
-    /* 方法1：Laioffer 的 swap DFS 方法。最优先选用这个方法解题 ！！！
+    /* 方法1：Laioffer 的 swap DFS 方法。最优先选用这个方法解题 ！！！ 且不用先sort ！
      具体的说明，参考我的Git总结的 没有重复的permutation那一题：
      https://github.com/HungryOrc/Algorithm/blob/master/Permutations_NoDuplicate.java    
      
@@ -107,7 +107,7 @@ public class Solution {
              我们也认为是同一种方案，所以我们强制要求相同的数字，原来排在前面的，在结果
              当中也应该排在前面，这样就保证了唯一性。当前面的2还没有被使用的时候，就不应该让后面的2被使用 */
             if (visited[i] == 1 || // 如果本数已经被使用过，那么也跳过不管
-                (i > 0 && nums[i] == nums[i - 1] && visited[i-1] == 0)) {
+                (i > 0 && nums[i] == nums[i - 1] && visited[i - 1] == 0)) {
                 continue;
             }
            
