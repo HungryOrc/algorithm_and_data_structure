@@ -1,0 +1,31 @@
+// Given a random generator random5(), the return value of random5() is 0 - 4 with equal probability. 
+// Use random5() to implement random1000().
+
+// 思路：类似于 Generate Random 7 with Random 5 那一题。更详细的说明，可参考那一题。
+// 5^5 = 3125。去掉后面的125个。前面的3000个对1000取余数，返回这个余数，即可。
+
+public class Solution {
+
+  public int random1000() {
+    int rand = Integer.MAX_VALUE;
+    
+    do {
+      rand = generate3125(); // [0, 3124)
+    } while (rand >= 3000);
+    
+    return rand % 1000;
+  }
+  
+  // [0, 3124)
+  private int generate3125() {
+    int result = 0;
+    for (int i = 1; i <= 5; i++) {
+      result = result * 5 + generate5();
+    }
+    return result;
+  }
+  // [0, 4)
+  private int generate5() {
+    return (int)(Math.random() * 5);
+  }
+}
