@@ -27,6 +27,14 @@ if value的值大于 max heap顶部的值，即大于较小的一半里的最大
 最后求median的时候，如果2个heap的size相同，则取2个heap的顶部的值再除以2.0；
 如果较小的一半比较大的一半多一个数，则取较小的一半的顶部的值，即max heap的顶部的值。  */
 
+/* Follow up:
+如果data stream 里的数特别特别多，怎么办？
+只保留median附近的一定数量（足够大的数量，但又不是特别大到放不下）的数，比如：
+只保留较小的一半的数里面最大的10000个，以及最大的数里面最小的10000个。
+如果来了一个数，比较小的一半的最大的10000个都要小，则扔掉它不管；如果它的值介于这10000个数的范围内，则把它加入这个max heap，
+然后把这个max heap的最大的值poll出来，offer到较大的一半的最小的10000个里面去。
+如果来了一个数，需要放到较大的一半去，也按类似的方法处理    */
+
 public class Solution {
   private PriorityQueue<Integer> smallerHalf;
   private PriorityQueue<Integer> largerHalf;
