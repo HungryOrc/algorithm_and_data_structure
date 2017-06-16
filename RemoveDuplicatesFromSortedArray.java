@@ -8,52 +8,50 @@ It doesn't matter what you leave beyond the new length. */
 
 public class Solution {
 
-  // 记录位移量，每找到一个重复值，则位移量+1
-	public int removeDuplicates(int[] nums) {
-
-        if (nums == null)
-            return 0;
-        if (nums.length <= 1)
-            return nums.length;
-        
-        int shiftSlots = 0;
-        int i = 0;
-        
-        while (i < nums.length - shiftSlots)
-        {
-            nums[i] = nums[i + shiftSlots];
-            while (i + shiftSlots + 1 < nums.length)
-            {
-                if (nums[i] == nums[i + shiftSlots + 1])
-                    shiftSlots ++;
-                else
-                	break;
-            }
-            i++;
-        }
-        return nums.length - shiftSlots;
+  // 方法1: 快慢指针，同向而行。slow指针的左边不含它自身是最终要保留的部分
+  // 时间：O(n)，空间：In-place
+  public int[] dedup(int[] array) {
+    if (array == null || array.length == 0) {
+      return new int[0];
     }
     
-    
-    // 另一种思路：逐个查每个元素，遇到与前一个不同的，则计数+1，并在新的数组里填入这个不同的数
-    	public int removeDuplicates(int[] nums)
-	{
-        int n = nums.length;
-        
-        if (n <= 1)
-            return n;
-            
-        int index = 1;
-        for (int i = 1; i < n; i++)
-        {
-            if (nums[i] != nums[i-1])
-            {
-                nums[index] = nums[i];
-                index++;
-            }
-        }
-        return index;
+    int slow = 1, fast = 1;
+    while (fast < array.length) {
+      while (fast < array.length && array[fast] == array[slow - 1]) {
+        fast ++;
+      }
+      if (fast < array.length && array[fast] != array[slow - 1]) {
+        array[slow] = array[fast];
+        slow ++;
+        fast ++;
+      }
     }
-
     
+    return Arrays.copyOfRange(array, 0, slow); // index slow is excluded
+  }
+
+	
+  // 方法2: 快慢指针，同向而行。slow指针自己（含）及其左边是最终要保留的部分
+  // 时间：O(n)，空间：In-place
+  public int[] dedup(int[] array) {
+    if (array == null || array.length == 0) {
+      return new int[0];
+    }
+    
+    // 注意，以下有几处与上面方法的不同之处	  
+    int slow = 0, fast = 0;
+    while (fast < array.length) {
+      while (fast < array.length && array[fast] == array[slow]) {
+        fast ++;
+      }
+      if (fast < array.length && array[fast] != array[slow]) {
+        slow ++;
+        array[slow] = array[fast];
+        fast ++;
+      }
+    }
+    
+    return Arrays.copyOfRange(array, 0, slow + 1); // index slow is included
+  }
+	
 }
