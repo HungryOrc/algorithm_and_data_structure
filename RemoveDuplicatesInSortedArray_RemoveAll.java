@@ -7,7 +7,8 @@ Assumptions: The given array is not null
 Examples:
 {1, 2, 2, 3, 3, 3} → {1}
 {4, 4, 4, 4} → {}
-{1, 2, 2, 3, 3, 3, 1} → {1, 1}   */
+{1, 2, 2, 3, 3, 3, 1} → 不可能出现这样的输入！因为题目要求是 sorted array！
+如果想研究上面这类问题，去看 remove duplicated in UNSORTED array_REPEATEDLY 那一题 ！！  */
 
 // 快慢双指针。同向而行
 public class Solution {
