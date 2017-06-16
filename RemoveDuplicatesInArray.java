@@ -16,26 +16,12 @@ Challenge
 
 public class Solution {
 
-    // 方法1：空间 in-place，但时间方面较长，需要 O(n*logn)，而非 O(n)
-    public int deduplication(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        
-        Arrays.sort(nums); // 这种方法必须先把数组排序
-        
-        int index = 0;
-        // i 会比 index 前进得快
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] != nums[index]) {
-                index ++;
-                nums[index] = nums[i];
-            }
-        }
-        
-        return index + 1;
-    }
+    // 方法1：先把数组排序，用时间 O(n*logn)，然后再按照 Remove Duplicated in Sorted Array 那一题的方法来做
+    // 时间：O(n*logn)
+    // 空间：In-place的，即 O(1)
     
     
-    // 方法2：用 HashSet，时间 O(n)
+    // 方法2：用 HashSet 做
+    // 时间 O(n)，空间 O(n)
+
 }
