@@ -8,7 +8,7 @@ Examples:
 [1, 2, 3, ..., 95, 96, 97, 98, 99, 100], 95 percentile of all lengths is 95. */
 
 // 思路：类似于 bucket sort 的思想
-
+  
 public class Solution {
   
   public int percentile95(List<Integer> lengths) {
