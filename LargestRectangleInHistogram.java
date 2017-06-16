@@ -58,14 +58,14 @@ public class Solution {
                 
                 // 在 i - indexStack.peek() - 1 里，
                 // i是当前的[x+1]，
-                // indexStack.peek()是目前正在被处理的(之前存到Stack里的)高度>height[x+1] 的index
                 // -1表示了要把[x+1]本身所占的一位去掉，那么最右端就是[x]了
+                // indexStack.peek()是目前正在被处理的(之前存到Stack里的)高度>height[x+1] 的index
                 // 另一方面，
                 // 如果出现stack为空的情况，要么是程序最开始运行时，stack里一个元素也没有；
                 // 要么是 curHeight 小于当前stack里的所有元素，它将使得所有元素都被pop出来，
                 // 即，curHeight 是迄今为止最矮的柱，它促成的最大长方形的可能性之一是
                 // 从坐标0到坐标[i-1]即坐标[x]贯穿的长方形
-                int possibleWidth = indexStack.isEmpty() ? i : i - indexStack.peek() - 1;
+                int possibleWidth = indexStack.isEmpty() ? i : i - 1 - indexStack.peek();
                 maxArea = Math.max(maxArea, possibleHeight * possibleWidth);
             }
             
