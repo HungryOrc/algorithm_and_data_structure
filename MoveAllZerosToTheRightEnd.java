@@ -1,5 +1,5 @@
 /* Given an array of integers, move all the 0s to the right end of the array.
-The relative order of the elements in the original array does not need to be maintained.
+The relative order of the elements in the original array does NOT need to be maintained.
 Assumptions:
 The given array is not null.
 
@@ -10,6 +10,9 @@ Examples:
 
 // 用“隔板”的思想来做。一个隔板，它右边不含它自己，都是0
 // 也可以认为是2个指针，一头一尾，相向而行。理解的角度不同，其实原理和代码都是一样的
+// 采用这样相向而行的双指针，原数组里的元素的相对位置  会  改  变 ！！
+// Time: O(n)
+// Space: O(1)
 
 public class Solution {
 
