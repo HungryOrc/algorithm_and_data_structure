@@ -12,7 +12,7 @@ Examples:
 // 也可以认为是2个指针，一头一尾，相向而行。理解的角度不同，其实原理和代码都是一样的
 // 采用这样相向而行的双指针，原数组里的元素的相对位置  会  改  变 ！！
 // Time: O(n)
-// Space: O(1)
+// Space: O(1)，In-Place
 
 public class Solution {
 
