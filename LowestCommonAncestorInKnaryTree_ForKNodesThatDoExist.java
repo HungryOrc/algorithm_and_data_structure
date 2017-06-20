@@ -17,6 +17,9 @@ public class Solution {
             return root;
         }
     
+        // 注意 ！！！ 这个计数不是global的，而只是这一层的。这个计数不会往上一层再传递。
+        // 但在上一层的处理里，每一个不为null的child，自然会再次给上一层那里的计数+1，
+        // 所以，每一层的计数，它的肉体并不会升华，但它的精神会永远一代代被继承下去
         int numOfNodesFound = 0;
         TreeNode tmpOutcome = null;
         
