@@ -2,8 +2,8 @@
 
 public class Solution {
 
+    public TreeNode LCA_2Nodes_KBranchTree(TreeNode one, TreeNode two) {
 
-
-
-
+    
+    }
 }
