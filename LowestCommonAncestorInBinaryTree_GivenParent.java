@@ -16,36 +16,34 @@ LCA(6, 7) = 7
 * Definition of ParentTreeNode:
 * 
 * class ParentTreeNode {
+*     int val;
 *     public ParentTreeNode parent, left, right;
 * } */
 
-// 我的方法：从 A、B 两个node 往上找
+// 我的方法：从 A、B 两个node 往上找, use a HashSet of ParentTreeNodes
 public class Solution {
-    
-    /* @param root: The root of the tree
-     * @param A, B: Two node in the tree
-     * @return: The lowest common ancestor of A and B */
-    public ParentTreeNode lowestCommonAncestorII(ParentTreeNode root,
-                                                 ParentTreeNode A,
-                                                 ParentTreeNode B) {
-        if (root == null || A == null || B == null) {
-            return null;
-        }
-    
-        // 注意！要从 A 开始！！！不要从 A 的 parent 开始！！！不然会漏可能性
-        ParentTreeNode parentOfA = A;
-        HashSet<ParentTreeNode> parentASet = new HashSet<>();
-        parentASet.add(A);
-        
-        while (parentOfA != root) {
-            parentOfA = parentOfA.parent;
-            parentASet.add(parentOfA);
-        }
-        
-        ParentTreeNode parentOfB = B;
-        while (!parentASet.contains(parentOfB)) {
-            parentOfB = parentOfB.parent;
-        }
-        return parentOfB;
+
+  public ParentTreeNode lowestCommonAncestorII(ParentTreeNode one, ParentTreeNode two) {
+    if (one == null || two == null) {
+      return null;
     }
+    
+    HashSet<ParentTreeNode> parentsOfOne = new HashSet<>();
+    
+    ParentTreeNode node = one;
+    while (node != null) {
+      parentsOfOne.add(node);
+      node = node.parent;
+    }
+    
+    node = two;
+    while (node != null && !parentsOfOne.contains(node)) {
+      node = node.parent;
+    }
+    if (node == null) {
+      return null;
+    } else {
+      return node;
+    }
+  }
 }
