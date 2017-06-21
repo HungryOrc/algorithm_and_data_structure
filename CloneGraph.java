@@ -1,13 +1,8 @@
 /* Clone (Deep Copy) an undirected graph. Each node in the graph contains a label and a list of its neighbors.
-How we serialize an undirected graph:
-1. Nodes are labeled uniquely.
-2. We use # as a separator for each node, and , as a separator for node label and each neighbor of the node.
-As an example, consider the serialized graph:
-{0,1,2#1,2#2,2}.
-The graph has a total of three nodes, and therefore contains three parts as separated by #.
+
 First node is labeled as 0. Connect node 0 to both nodes 1 and 2.
 Second node is labeled as 1. Connect node 1 to node 2.
-Third node is labeled as 2. Connect node 2 to node 2 (itself), thus forming a self-cycle.
+Third node is labeled as 2. Connect node 2 to node 2 (itself), thus forming a self-cycle. 注意！这图里可能有loop！！
 Visually, the graph looks like the following:
    1
   / \
@@ -23,8 +18,41 @@ Visually, the graph looks like the following:
 *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
 * }; */
 
-// 以下的方法都来源于九章算法
-// Ref: http://www.jiuzhang.com/solutions/clone-graph/
+
+// 方法0：最简明有力的方法
+// Since there might be cycles in the original graph, we cannot just loop along the graph, namely the list
+// of nodes to copy the whole graph
+public class Solution {
+  
+  public List<GraphNode> copy(List<GraphNode> graph) {
+    List<GraphNode> graphCopy = new ArrayList<>();
+    HashMap<GraphNode, GraphNode> map = new HashMap<>();
+    
+    for (int i = 0; i < graph.size(); i++)
+      copy(graph.get(i), graphCopy, map);
+    return graphCopy;
+  }
+  
+  private GraphNode copy(GraphNode node, List<GraphNode> graphCopy,
+    HashMap<GraphNode, GraphNode> map) {
+    
+    GraphNode nodeCopy = map.get(node);
+    if (nodeCopy != null) {
+      return nodeCopy;
+    }
+    
+    nodeCopy = new GraphNode(node.key);
+    map.put(node, nodeCopy);
+    graphCopy.add(nodeCopy);
+    
+    for (GraphNode nei : node.neighbors) {
+      nodeCopy.neighbors.add(copy(nei, graphCopy, map)); //  精华在这一句 ！！！
+    }
+    
+    return nodeCopy;
+  }
+}
+
 
 // 方法1: 三步
 public class Solution {
