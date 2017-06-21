@@ -12,21 +12,23 @@
  
 public class Solution {
     
-    // Recursion。自己做的
-    public boolean isSameTree(TreeNode p, TreeNode q) {
+    // 方法1，Recursion。自己做的
+    public boolean isIdentical(TreeNode one, TreeNode two) {
+      if (one == null && two == null) {
+        return true;
+      } else if (one == null || two == null) {
+        return false;
+      }
 
-        if (p == null && q == null)
-            return true;
-        else if ((p == null && q != null) || (p != null) && (q == null))
-            return false;
-        else if (p.val != q.val)
-            return false;
-        else
-            return (isSameTree(p.left, q.left) && isSameTree(p.right, q.right));
+      if (one.key != two.key) {
+        return false;
+      }
+
+      return (isIdentical(one.left, two.left)) && (isIdentical(one.right, two.right));
     }
     
     
-    // Iteration DFS by 2 Stacks。自己做的
+    // 方法2，Iteration DFS by 2 Stacks。自己做的
     public boolean isSameTree(TreeNode p, TreeNode q) {
         
         Stack<TreeNode> nodeStack_P = new Stack<>();
