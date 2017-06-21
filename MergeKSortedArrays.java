@@ -26,10 +26,10 @@ But if we have reached the end of that array, then do NOTHING.
 时间复杂度：n*k * log(k)
 k是array的个数，n是array的大约平均长度。所以n*k是大约的总数据量。
 log(k)是把一个元素放到Priority Queue里所需的时间，
-也是从Priority Queue里poll了minimum element以后重新validate这个queue的时间。
-*/
+也是从Priority Queue里poll了minimum element以后重新validate这个queue的时间。   */
 
-// 注意！！最后的 implements Comparable<QueueNode>
+
+// 注意！！！ implements Comparable<QueueNode>
 class QueueNode implements Comparable<QueueNode> {
     public int array, index, value;
     
@@ -39,8 +39,9 @@ class QueueNode implements Comparable<QueueNode> {
         this.value = value;
     }
     
-    // 这里定义一个 compareTo(QueueNode) 函数，
+    // 这里 Override 一个 compareTo(QueueNode) 函数 ！！！
     // 而非 compare(QueueNode, QueueNode) 函数
+    @Override
     public int compareTo(QueueNode node) {
         if (this.value > node.value)
             return 1;
@@ -52,10 +53,7 @@ class QueueNode implements Comparable<QueueNode> {
 }
 
 public class Solution {
-    /**
-     * @param arrays k sorted integer arrays
-     * @return a sorted array
-     */
+
     public List<Integer> mergekSortedArrays(int[][] arrays) {
         PriorityQueue<QueueNode> pq = new PriorityQueue<QueueNode>();
         ArrayList<Integer> result = new ArrayList<>();
@@ -64,7 +62,7 @@ public class Solution {
         for (int i = 0; i < arrays.length; i++) {
             size += arrays[i].length;
             if (arrays[i].length > 0) {
-                pq.add(new QueueNode(i, 0, arrays[i][0]));
+                pq.add(new QueueNode(i, 0, arrays[i][0])); // 先把最初的k个装进pq里面去
             }
         }
         
