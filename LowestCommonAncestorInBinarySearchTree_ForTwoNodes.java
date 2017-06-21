@@ -19,11 +19,10 @@ Another example is LCA of nodes 2 and 4 is 2.
  *     TreeNode(int x) { val = x; }
  * } */
 
-// Recursion 方法
+// Recursion 方法. Time: O(height of tree)
 public class Solution {
 
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {        
         if (p.val <= root.val && q.val >= root.val || p.val >= root.val && q.val <= root.val)
             return root;
         else if (p.val >= root.val && q.val >= root.val)
