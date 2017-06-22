@@ -1,18 +1,19 @@
 /* Merge K sorted lists into one big sorted list in ascending order.
-Assumptions: ListOfLists is not null, and none of the lists is null. */
+Assumptions: ListOfLists is not null, and none of the lists is null.
+
+* class ListNode {
+*   public int value;
+*   public ListNode next;
+*
+*   public ListNode(int value) {
+*     this.value = value;
+*   }
+* } */
 
 
 // 思路：参考我总结的另一题：Merge K Sorted Arrays
 
-/* class ListNode {
- *   public int value;
- *   public ListNode next;
- *
- *   public ListNode(int value) {
- *     this.value = value;
- *   }
- * } */
-
+// helper class, this class is the kind of Nodes that will be offered into the PriorityQueue
 class PQNode implements Comparable<PQNode> {
   public int value;
   public int list;
@@ -42,6 +43,7 @@ public class Solution {
     
     PriorityQueue<PQNode> pq = new PriorityQueue<>();
     
+    // 先把每个list里的打头的ListNode转化成PQNode, 放到PriorityQueue里面去
     for (int i = 0; i < listOfLists.size(); i++) {
       ListNode headListNodeInListI = listOfLists.get(i);
       pq.offer(new PQNode(headListNodeInListI.value, i));
@@ -49,7 +51,7 @@ public class Solution {
       listOfLists.set(i, headListNodeInListI.next);
     }
     
-    // get the head ListNode of the final result list
+    // get the head ListNode for the final result list that we'll return for this program
     PQNode firstPQNode = pq.poll();
     ListNode headListNode = new ListNode(firstPQNode.value); // we'll eventually return this ListNode
     ListNode curListNode = headListNode;
