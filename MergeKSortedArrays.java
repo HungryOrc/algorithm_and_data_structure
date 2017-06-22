@@ -39,7 +39,7 @@ class QueueNode implements Comparable<QueueNode> {
         this.value = value;
     }
     
-    // 这里 Override 一个 compareTo(QueueNode) 函数 ！！！
+    // 这里必须 Override 一个 compareTo(QueueNode) 函数 ！！！ 这是 interface Comparable 所要求的
     // 而非 compare(QueueNode, QueueNode) 函数
     @Override
     public int compareTo(QueueNode node) {
@@ -58,9 +58,7 @@ public class Solution {
         PriorityQueue<QueueNode> pq = new PriorityQueue<QueueNode>();
         ArrayList<Integer> result = new ArrayList<>();
         
-        int size = 0;
-        for (int i = 0; i < arrays.length; i++) {
-            size += arrays[i].length;
+        for (int i = 0; i < arrays.length; i++) {dif
             if (arrays[i].length > 0) {
                 pq.add(new QueueNode(i, 0, arrays[i][0])); // 先把最初的k个装进pq里面去
             }
