@@ -74,3 +74,42 @@ DP matrix 里的每个数，是根据他的下方和左方的多个数，或者�
 时间：O(n^2 * n) = O(n^3)
      最后这个n，意思就是，每确定一个M[i][j]，最多需要O(n)对数来计算确定，最终取min得M[i][j]
 空间：O(n^2)   */
+
+public class Solution {
+  
+  public int minCost(int[] cuts, int length) {
+    // make an expanded array, storing the coordinates of all the endpoints of each possible cut
+    int[] endpoints = new int[cuts.length + 2];
+    int n = endpoints.length;
+    endpoints[0] = 0;
+    endpoints[n - 1] = length;
+    for (int i = 1; i < n - 1; i++) {
+      endpoints[i] = cuts[i - 1];
+    }
+    
+    // DP Matrix
+    int[][] M = new int[n][n];
+    
+    // 边界条件，this is when the size of the wood sections are 1
+    // 这里就是填入斜对角线的一串0
+    for (int i = 0; i < n - 1; i++) {
+      M[i][i + 1] = 0;
+    }
+    
+    // 填入右上方的其他cells的值
+    for (int startCol = 2; startCol < n; startCol++) {
+      for(int col = startCol, row = 0; col < n; col++, row ++) {
+        
+        M[row][col] = Integer.MAX_VALUE;
+        int cuttingCost = endpoints[col] - endpoints[row];
+        
+        for (int mid = row + 1; mid <= col - 1; mid++) {
+          int curCost = M[row][mid] + M[mid][col] + cuttingCost;
+          M[row][col] = Math.min(curCost, M[row][col]);
+        }
+      }
+    }
+    // 返回最右上角的值，它就是最终结果
+    return M[0][n - 1];
+  }
+}
