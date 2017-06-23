@@ -26,15 +26,34 @@ The shortest wood piece that cannot be cut any further:
 M[0][1] = 0, M[1][2] = 0, M[2][3] = 0... M[i-1][i] = 0
 
 Induction Rules:
+
 Size = 1: Adjacent indexes: [left = i, right = i + 1]
     M[0][1] = M[1][2] = M[2][3] = M[3][4] = 0
+    
 Size = 2: [left = i, right = i + 2]
     M[0][2] = M[0][1] + M[1][2] + (cutting cost of the wood from index 0 to index 2) 
         = M[0][1] + M[1][2] + (length from index 0 to index 2) 
         = M[0][1] + M[1][2] + (A[2] - A[0]) = 0 + 0 + (4 - 0) = 4
     M[1][3] = M[1][2] + M[2][3] + (A[3] - A[1]) = 0 + 0 + (7 - 2) = 5
     M[2][4] = M[2][3] + M[3][4] + (A[4] - A[2]) = 0 + 0 + (10 - 4) = 6
-
-
+    
+Size = 3: [left = i, right = i + 3]
+    M[0][3]
+        cutting cost of the wood from index 0 to index 3 = A[3] - A[0] = 7 - 0 = 7
+        Case 1: first cut between index 0 and index 3 is at index 1
+            M[0][3] = M[0][1] + M[1][3] + (A[3] - A[0]) = 0 + 5 + 7 = 12
+        Case 2: first cut between index 0 and index 3 is at index 2
+            M[0][3] = M[0][2] + M[2][3] + (A[3] - A[0]) = 4 + 0 + 7 = 11
+        So, M[0][3] = min(Case1, Case2) = 11
+    M[1][4]
+        cutting cost of the wood from index 1 to index 4 = A[4] - A[1] = 10 - 2 = 8
+        Case 1: first cut between index 1 and index 4 is at index 2
+            M[1][4] = M[1][2] + M[2][4] + (A[4] - A[1]) = 0 + 6 + 8 = 14
+        Case 2: first cut between index 1 and index 4 is at index 3
+            M[1][4] = M[1][3] + M[3][4] + (A[4] - A[1]) = 5 + 0 + 8 = 13
+        So, M[1][4] = min(Case1, Case2) = 13
+        
+Size = 4: [left = i, right = i + 4]
+    ...
 
 */
