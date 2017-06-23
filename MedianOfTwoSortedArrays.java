@@ -6,7 +6,7 @@ The two given array are guaranteed to be sorted
 
 Examples
 A = {1, 4, 6}, B = {2, 3}, median is 3
-A = {1, 4}, B = {2, 3}, median is 2.5 */
+A = {1, 4}, B = {2, 3}, median is 2.5
  
 思路 Ref: http://www.cnblogs.com/yuzhangcmu/p/4138184.html
 代码 Ref: http://www.jiuzhang.com/solutions/median-of-two-sorted-arrays/
