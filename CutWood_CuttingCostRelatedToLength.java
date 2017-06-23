@@ -16,3 +16,25 @@ L = 10, A = {2, 4, 7}, the minimum total cost is 10 + 4 + 6 = 20 (cut at 4 first
 然后第二刀切原先的4米处的话，这一刀的cost为8，因为10-2=8；
 第三道切原先的7米处，这一刀的cost为6，因为切完第二刀之后，7米处所在的那一截的长度为6
 那么总cost就是 10+8+6 = 24    */
+
+/* 思路：我们把题目给的数组做一个扩展，A = {2, 4, 7} --> {0, 2, 4, 7, 10}，即把开头和结尾的长度都包含进来了.
+DP数组M[i][j]表示 the min cost of cutting the wood between index i and index j in the input array A.
+So for this example, the sulution we are looking for is M[0][4].
+
+Base Case:
+The shortest wood piece that cannot be cut any further: 
+M[0][1] = 0, M[1][2] = 0, M[2][3] = 0... M[i-1][i] = 0
+
+Induction Rules:
+Size = 1: Adjacent indexes: [left = i, right = i + 1]
+    M[0][1] = M[1][2] = M[2][3] = M[3][4] = 0
+Size = 2: [left = i, right = i + 2]
+    M[0][2] = M[0][1] + M[1][2] + (cutting cost of the wood from index 0 to index 2) 
+        = M[0][1] + M[1][2] + (length from index 0 to index 2) 
+        = M[0][1] + M[1][2] + (A[2] - A[0]) = 0 + 0 + (4 - 0) = 4
+    M[1][3] = M[1][2] + M[2][3] + (A[3] - A[1]) = 0 + 0 + (7 - 2) = 5
+    M[2][4] = M[2][3] + M[3][4] + (A[4] - A[2]) = 0 + 0 + (10 - 4) = 6
+
+
+
+*/
