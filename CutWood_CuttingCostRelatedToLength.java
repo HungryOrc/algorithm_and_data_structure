@@ -64,6 +64,7 @@ N/A   0    4    x   x
 N/A  N/A   0    5   x
 N/A  N/A  N/A   0   6
 N/A  N/A  N/A  N/A  0
+N/A  N/A  N/A  N/A N/A
 
 所以可见：关键结论 ！！！
 DP matrix 里的每个数，是根据他的下方和左方的多个数，或者说多对数所决定的！！！ 
