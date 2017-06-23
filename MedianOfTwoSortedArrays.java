@@ -28,18 +28,15 @@ public class Solution {
   public double median(int[] A, int[] B) {
     int totalLen = A.length + B.length;
     
-    if (totalLen % 2 == 1) { // median k = totalLen / 2 + 1
+    if (totalLen % 2 == 1) { // median's index: k = totalLen / 2 + 1
       return findKthSmallest(A, 0, B, 0, totalLen / 2 + 1);
-    } else { // median k = (totalLen / 2 + totalLen / 2 + 1) / 2;
-      return (findKthSmallest(A, 0, B, 0, totalLen / 2) + 
-              findKthSmallest(A, 0, B, 0, totalLen / 2 + 1)) 
-              / 2.0;
+    } else { // median's index k = (totalLen / 2 + totalLen / 2 + 1) / 2;
+      return (findKthSmallest(A, 0, B, 0, totalLen / 2) + findKthSmallest(A, 0, B, 0, totalLen / 2 + 1)) / 2.0;
     }
   }
   
   // find the k-th smallest number of 2 ascending sorted arrays
-  // we remove k/2 smallest numbers, k/4 smallest numbers... 1 smallest number in each time,
-  // the parameter k here actually means the number of elements to be removed at this time
+  // we remove k/2 smallest numbers, k/4 smallest numbers... 1 smallest number in each time
   private int findKthSmallest(int[] A, int startIndexA, int[] B, int startIndexB, int k) {
     
     // if we have past the end of array A, then we totally count on array B
@@ -72,5 +69,4 @@ public class Solution {
       return findKthSmallest(A, startIndexA + k/2, B, startIndexB, k - k/2);
     }
   }
-  
 }
