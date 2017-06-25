@@ -15,7 +15,6 @@ The maximum leaft-to-leat path sum is 6 + 11 + 14 = 31.
 // Time: O(n), n is the number of nodes in the tree, because we need to walk through every node in the tree
 // Space: O(height of tree)，这是call stack的层数
 public class Solution {
-
   int maxPathSum;
   
   public int maxPathSum(TreeNode root) {
@@ -42,9 +41,11 @@ public class Solution {
     int maxSinglePathSum_Left = dfs(node.left);
     int maxSinglePathSum_Right = dfs(node.right);
     
+    // 更新的是“人字形”的双路径之和，和下面的返回值不同
     maxPathSum = Math.max(maxPathSum, 
-      node.key + maxSinglePathSum_Left + maxSinglePathSum_Right);
+      node.key + maxSinglePathSum_Left + maxSinglePathSum_Right);    
     
+    // 返回的是一条线的单路径之和，和上面的更新值不同
     return node.key + Math.max(maxSinglePathSum_Left, maxSinglePathSum_Right);
   } 
 }
