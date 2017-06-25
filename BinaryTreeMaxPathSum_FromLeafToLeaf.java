@@ -13,7 +13,6 @@ another example could be the node 11 itself.
 The maximum path sum in the above binary tree is 6 + 11 + (-1) + 2 = 18    */
 
 public class Solution {
-
   int maxPathSum;
   
   public int maxPathSum(TreeNode root) {
