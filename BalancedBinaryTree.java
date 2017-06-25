@@ -21,9 +21,18 @@ public class Solution {
      According to the leftHeight and rightHeight of the two children, 
      the parent node could check if the sub tree is balanced, and decides its return value.
     
-     In this bottom up approach, EACH node in the tree only need to be accessed ONCE ! ! ! ! !
-     Since any -1 in any level of the tree will result in ALL the ABOVE levels in that path to be -1 ! ! ! ! !
-     Thus the time complexity is O(N), much better than the Top Down Solution. */
+     时间复杂度：O(n logn)
+     Complexity of getHeight() when called on a tree/subtree with n nodes is O(n). (It visits every node once)
+     As we descend each level, Height() is called on subtrees with only n/2, n/4, n/8... nodes.
+     Lets take a complete binary tree,
+     When isBalanced() calls Height() on the root node -> n（因为本tree里一共有n个node）
+     When called from level 2 -> n/2 + n/2（因为每个subtree里都有n/2个node）
+     When called from level 3 -> n/4 + n/4 + n/4 + n/4（因为每个subtree里都有n/4个node）
+     ...
+     When called from last level -> again n (n/L * L times)
+     So total complexity = n * number of levels = O(nlogn)
+     这个nlogn其实是worst case，是balanced的情况, 因为不balance的话很快就能提前终止了 */
+ 
     public boolean isBalanced(TreeNode root) {
         return dfsHeight(root) != -1;
     }
