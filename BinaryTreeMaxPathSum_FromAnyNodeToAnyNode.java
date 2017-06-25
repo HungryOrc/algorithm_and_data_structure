@@ -33,9 +33,11 @@ public class Solution {
     int maxSinglePathSum_Left = Math.max(0, dfs(node.left));
     int maxSinglePathSum_Right = Math.max(0, dfs(node.right));
     
+    // 更新的是“人字形”的双路径之和，和下面的返回值不同
     maxPathSum = Math.max(maxPathSum,
       node.key + maxSinglePathSum_Left + maxSinglePathSum_Right);
     
+    // 返回的是一条线的单路径之和，和上面的更新值不同
     return node.key + Math.max(maxSinglePathSum_Left, maxSinglePathSum_Right);
   } 
 }
