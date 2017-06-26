@@ -18,7 +18,9 @@ Examples
 The maximum path sum is 11 + 14 = 25 */
 
 
-// 我自己的方法
+// 我自己的方法。Prefix Sum
+// 这一题，对于每一个由root到leaf的path来说，就是求这个path上的 Max Subarray Sum ！！！
+// 所以可以用 prefix sum from root to current node - min prefix sum from root till before current node 来做 ！！！
 public class Solution {
   int maxPathSum;
   
