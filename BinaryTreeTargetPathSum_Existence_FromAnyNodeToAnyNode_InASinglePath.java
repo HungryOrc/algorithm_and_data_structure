@@ -21,6 +21,9 @@ If target = 11, There exists a path only containing the node 11.  */
 
 
 /* 思路：Prefix Sum + HashSet
+时间: O(n)
+空间: O(n)
+
 HashSet储存在本条单路径（从root到某个leaf的一条不上下折返的路径）上，以前出现过的所有prefix sum。
 这个HashSet必须首先存一个0，因为没有任何node进来的时候，即在整颗树的root进来之前，就应该放一个0，这样就能处理从root开始的prefix Sum。
 
