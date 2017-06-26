@@ -1,4 +1,4 @@
-/* Convert a binary search tree to doubly linked list with in-order traversal.
+/* Convert a binary tree to doubly linked list with in-order traversal.
 
 Example: Given a binary search tree:
     4
@@ -8,25 +8,64 @@ Example: Given a binary search tree:
 1   3
 return 1<->2<->3<->4<->5
 
-/* Definition of TreeNode:
- * public class TreeNode {
- *     public int val;
- *     public TreeNode left, right;
- *     public TreeNode(int val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- 
- * Definition for Doubly-ListNode.
- * public class DoublyListNode {
- *     int val;
- *     DoublyListNode next, prev;
- *     DoublyListNode(int val) {
- *         this.val = val;
- *         this.next = this.prev = null;
- *     }
- * } */
+* Definition of TreeNode:
+* public class TreeNode {
+*     public int val;
+*     public TreeNode left, right;
+*     public TreeNode(int val) {
+*         this.val = val;
+*         this.left = this.right = null;
+*     }
+* }
+
+* Definition for Doubly-ListNode:
+* public class DoublyListNode {
+*     int val;
+*     DoublyListNode next, prev;
+*     DoublyListNode(int val) {
+*         this.val = val;
+*         this.next = this.prev = null;
+*     }
+* } */
+
+
+// 方法1：我改进的九章和Laioffer的一个方法，构思很巧妙，不太容易想到，用的 Recursion
+public class Solution {
+    /* @param root: The root of tree
+     * @return: the head of doubly list node */
+    
+    static DoublyListNode headOfTheWholeList = null;
+    static DoublyListNode prevListNode = null;
+    
+    public DoublyListNode bstToDoublyList(TreeNode root) {  
+        if (root == null) {
+            return null;
+        }
+        
+        DoublyListNode curListNode = new DoublyListNode(root.val);
+        
+        // convert the left subtree of the current TreeNode
+        bstToDoublyList(root.left);
+        
+        if (prevListNode == null) {
+            headOfTheWholeList = curListNode;
+        }
+        else {
+            curListNode.prev = prevListNode;
+            prevListNode.next = curListNode;
+        }
+        
+        prevListNode = curListNode;
+        
+        // convert the right subtree of the current TreeNode
+        bstToDoublyList(root.right);
+        
+        return headOfTheWholeList;
+    }
+}
+
+
+// 方法2：我自己的方法，上场可以考虑用这个方法，熟门熟路
 public class Solution {
     /* @param root: The root of tree
      * @return: the head of doubly list node */
