@@ -17,7 +17,7 @@ Examples
 If target = 17, There exists a path 11 + 6, the sum of the path is target.
 If target = 20, There exists a path 11 + 6 + 3, the sum of the path is target.
 If target = 10, There does not exist any paths sum of which is target.
-If target = 11, There exists a path only containing the node 11.  *、
+If target = 11, There exists a path only containing the node 11.  */
 
 
 /* 思路：Prefix Sum + HashSet
@@ -34,10 +34,6 @@ HashSet储存在本条单路径（从root到某个leaf的一条不上下折返�
 public class Solution {
 
   public boolean exist(TreeNode root, int target) {
-    if (root == null) {
-      return false;
-    }
-    
     HashSet<Integer> prevPrefixSums = new HashSet<>();
     prevPrefixSums.add(0);
     return lookFor(root, 0, prevPrefixSums, target);
@@ -58,11 +54,12 @@ public class Solution {
     boolean existedBefore = false;
     if (prevPrefixSums.contains(curPrefixSum)) {
       existedBefore = true;
+    } else {
+      prevPrefixSums.add(curPrefixSum);
     }
     
-    prevPrefixSums.add(curPrefixSum);
-    
-    boolean result = (lookFor(node.left, curPrefixSum, prevPrefixSums, target) || 
+    boolean result = (
+      lookFor(node.left, curPrefixSum, prevPrefixSums, target) || 
       lookFor(node.right, curPrefixSum, prevPrefixSums, target));
       
     if (existedBefore == false) {
