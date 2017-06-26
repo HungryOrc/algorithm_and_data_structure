@@ -34,8 +34,10 @@ public class Solution {
     /* @param root: The root of tree
      * @return: the head of doubly list node */
     
+    // 这个变量只会被赋值一次，之后就再也不会被碰了！
     static DoublyListNode headOfTheWholeList = null;
-    static DoublyListNode prevListNode = null;
+    // 这个变量会被不断往“next”的方向推移，但是它毕竟也是static变量，所以是整个class的所有instances全都共享的 ！！！
+    static DoublyListNode prevListNode = null; 
     
     public DoublyListNode bstToDoublyList(TreeNode root) {  
         if (root == null) {
@@ -47,10 +49,11 @@ public class Solution {
         // convert the left subtree of the current TreeNode
         bstToDoublyList(root.left);
         
-        if (prevListNode == null) {
+        if (prevListNode == null) { // 这个处理在整个程序的生命周期里只会出现一次！！！
             headOfTheWholeList = curListNode;
         }
-        else {
+        // 这个处理是对于每一个tree node都要进行一次的，就是把current list node 和 previous list node 双向互联起来
+        else { 
             curListNode.prev = prevListNode;
             prevListNode.next = curListNode;
         }
@@ -65,12 +68,11 @@ public class Solution {
 }
 
 
-// 方法2：我自己的方法，上场可以考虑用这个方法，熟门熟路
+// 方法2：我自己的方法，上场可以考虑用这个方法，熟门熟路。Iteration by a Stack。
 public class Solution {
     /* @param root: The root of tree
      * @return: the head of doubly list node */
 
-    // Iteration, by Stack
     public DoublyListNode bstToDoublyList(TreeNode root) {  
         if (root == null) {
             return null;
@@ -78,19 +80,20 @@ public class Solution {
         
         Stack<TreeNode> treeNodeStack = new Stack<>();
         treeNodeStack.push(root);
+        
         ArrayList<DoublyListNode> allNodes_InOrder = new ArrayList<>();
         DoublyListNode headDoublyNode = null;
         
         while (!treeNodeStack.isEmpty()) {
             TreeNode curTreeNode = treeNodeStack.pop();
             
-            // 当前node是leaf；
+            // 如果当前node是leaf；
             // 或者当前node的左右children都被放入stack了，即当前node之前已被处理过了。
             // 那么当前node就可以被放入list了
             if (curTreeNode.left == null && curTreeNode.right == null) {
                 DoublyListNode curDoublyNode = new DoublyListNode(curTreeNode.val);
                 
-                if (allNodes_InOrder.size() == 0) { // 当前是第一个node
+                if (allNodes_InOrder.size() == 0) { // 如果当前是第一个node。这一句在整个程序的生命周期里只会执行一次！
                     headDoublyNode = curDoublyNode;
                 } else {
                     // 取list里的前一个list node
@@ -111,6 +114,7 @@ public class Solution {
                 treeNodeStack.push(curTreeNode.left);
             }
             
+            // current tree node至此应该减除其左右枝叶了
             curTreeNode.left = null;
             curTreeNode.right = null;
         }
