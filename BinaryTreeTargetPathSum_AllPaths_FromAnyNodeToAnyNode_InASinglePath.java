@@ -1,7 +1,10 @@
 /* You are given a binary tree in which each node contains an integer value.
 Find the number of paths that sum to a given value.
+
 The path does not need to start or end at the root or a leaf, 
 but it must go downwards (traveling only from parent nodes to child nodes).
+就是说，起始点和终止点必须是在同一条单路径上，所谓单路径是指一条从root到leaf的路径上的任何一段，可以左右拐弯，不可上下折返！！！
+
 The tree has no more than 1,000 nodes and the values are in the range -1,000,000 to 1,000,000.
 
 Example:
