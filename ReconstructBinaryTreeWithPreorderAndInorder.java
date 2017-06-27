@@ -39,3 +39,46 @@ And we can get the corresponding binary tree:
  在inorder里找到当前root的index以后，这个index值可以直接用于切割inorder数组里要用于下一个recursion的左半部分和右半部分，
  但它不可以直接用来切割preorder数组里的两个部分！！！
  要切割preorder数组，必须综合使用 preorder在本次recursion里的start index，以及root在inorder里的index，这两个方面的信息 ！！！   */
+
+/* public class TreeNode {
+ *   public int key;
+ *   public TreeNode left;
+ *   public TreeNode right;
+ *   public TreeNode(int key) {
+ *     this.key = key;
+ *   }
+ * } */
+
+public class Solution {
+
+  public TreeNode reconstruct(int[] in, int[] pre) {
+    // <value, index in the in-order array>
+    HashMap<Integer, Integer> recordsInOrder = new HashMap<>();
+    for (int i = 0; i < in.length; i++) {
+      recordsInOrder.put(in[i], i);
+    }
+    
+    return recursiveConstruct(pre, 0, pre.length - 1, in, 0, in.length - 1, recordsInOrder);
+  }
+  
+  private TreeNode recursiveConstruct(int[] pre, int preStart, int preEnd,
+    int[] in, int inStart, int inEnd, HashMap<Integer, Integer> recordsInOrder) {
+  
+    if (preStart > preEnd || inStart > inEnd) {
+      return null;
+    }
+    
+    TreeNode curRoot = new TreeNode(pre[preStart]);
+    
+    int indexOfCurRootInTheInorderArray = recordsInOrder.get(curRoot.key);
+    int sizeOfLeftHalfInTheInorderArray = indexOfCurRootInTheInorderArray - inStart;
+
+    curRoot.left = recursiveConstruct(pre, preStart + 1, preStart + sizeOfLeftHalfInTheInorderArray,
+      in, inStart, indexOfCurRootInTheInorderArray - 1, recordsInOrder);
+    
+    curRoot.right = recursiveConstruct(pre, preStart + sizeOfLeftHalfInTheInorderArray + 1, preEnd,
+      in, indexOfCurRootInTheInorderArray + 1, inEnd, recordsInOrder);
+    
+    return curRoot;
+  }
+}
