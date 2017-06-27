@@ -25,7 +25,7 @@ And we can get the corresponding binary tree:
  要点：这类题的关键就在于，用postorder或者preorder的性质，先找到root（postorder里的最后一个或者preorder里的第一个node），
  有了root以后，就可以把整个问题一分为二。每一半返回一个subtree的root node。不断地使用recursion。最终合在一起就是整个答案 
  
- 举例：比如下面的 binary tree：
+ 举例：比如上面题目里给的那个 binary tree：
  
  
  */
