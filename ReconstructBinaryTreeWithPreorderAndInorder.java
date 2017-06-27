@@ -1,7 +1,7 @@
 /* Given the preorder and inorder traversal sequence of a binary tree, reconstruct the original tree.
 Assumptions:
 The given sequences are not null and they have the same length
-There are no duplicate keys in the binary tree
+There are NO duplicate keys in the binary tree
 
 Examples:
 preorder traversal = {5, 3, 1, 4, 8, 11}
@@ -23,4 +23,9 @@ And we can get the corresponding binary tree:
  
  /* 思路：
  要点：这类题的关键就在于，用postorder或者preorder的性质，先找到root（postorder里的最后一个或者preorder里的第一个node），
- 有了root以后，就可以把整个问题一分为二。每一半返回一个subtree的root node。合在一起就是整个答案   */
+ 有了root以后，就可以把整个问题一分为二。每一半返回一个subtree的root node。不断地使用recursion。最终合在一起就是整个答案 
+ 
+ 举例：比如下面的 binary tree：
+ 
+ 
+ */
