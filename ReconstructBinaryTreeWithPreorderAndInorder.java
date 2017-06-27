@@ -25,7 +25,17 @@ And we can get the corresponding binary tree:
  要点：这类题的关键就在于，用postorder或者preorder的性质，先找到root（postorder里的最后一个或者preorder里的第一个node），
  有了root以后，就可以把整个问题一分为二。每一半返回一个subtree的root node。不断地使用recursion。最终合在一起就是整个答案 
  
- 举例：比如上面题目里给的那个 binary tree：
+ 举例：比如上面题目里给的那个 binary tree，它的root是5，也是preorder的第一位：
+ preorder:  <5> 3 1 4 8 11
+ inorder:   1 3 4 <5> 8 11
+ 然后，在inorder里面找到5，那么在inorder里，5之前的，就是5的左子树所有的nodes；5之后的，就是5的右子树所有的nodes。
+ 然后，就要按照这个，把preorder里的数字也都分为对应的两部分：
+ preorder:  <5>    3 1 4    8 11
+ inorder:   1 3 4    <5>    8 11
+ 然后就对inorder里的左半部分和preorder里相应的部分进行关于左子树的recursion处理；
+ 对inorder里的右半部分和preorder里相应的部分进行关于右子树的recursion处理。这些处理和之前对于整个树的处理是同理的。
  
- 
- */
+ 这里要特别注意！！！
+ 在inorder里找到当前root的index以后，这个index值可以直接用于切割inorder数组里要用于下一个recursion的左半部分和右半部分，
+ 但它不可以直接用来切割preorder数组里的两个部分！！！
+ 要切割preorder数组，必须综合使用 preorder在本次recursion里的start index，以及root在inorder里的index，这两个方面的信息 ！！！   */
