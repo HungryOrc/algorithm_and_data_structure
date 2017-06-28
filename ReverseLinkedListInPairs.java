@@ -8,8 +8,7 @@ Your algorithm should use only constant space. You may not modify the values in 
  *     int val;
  *     ListNode next;
  *     ListNode(int x) { val = x; }
- * }
- */
+ * } */
  
 public class Solution {
     
