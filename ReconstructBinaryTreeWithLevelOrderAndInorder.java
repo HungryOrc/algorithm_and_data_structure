@@ -14,8 +14,14 @@ Than we can get the corresponding binary tree:
 1      4        11
 
 /* 思路：
- 要点：这类题的关键就在于，用postorder或者preorder的性质，先找到root（postorder里的最后一个或者preorder里的第一个node），
- 有了root以后，就可以把整个问题一分为二。每一半返回一个subtree的root node。不断地使用recursion。最终合在一起就是整个答案 
+ level order的第一个元素一定是当前树的root。但后面有没有left subtree root，有没有right subtree root，有的话分别在哪里，
+ 就没那么好找了。不像 reconstruct with postorder + inorder，或者 reconstruct with preorder + inorder 那么清晰易见。
+ 
+ 这一题里，只能在 level order数组里，从第二个开始（第一个是root），到数组结尾为止，一个一个看它们在 in order 数组里的index！！
+ （注意，本题要构建的，不是BST！只是一般的binary tree！所以元素之间不存在左小右大的关系！）
+ 如果本数在in order数组里的index比root在in order数组里的index小，就把本数放到一个list里去，作为将来构建当前root的左子树的元素；
+ 如果比root的index大，就把本数放到另一个list里去，作为将来构建当前root的右子树的元素。
+ （注意，由于 level order的性质，比root大和比如root小的数，会在level order数组里交替出现！！）
  
  举例：比如上面题目里给的那个 binary tree，它的root是5，也是postorder的最后一位：
  postorder: 1 4 3 11 8 <5>
@@ -25,12 +31,7 @@ Than we can get the corresponding binary tree:
  postorder: 1 4 3    11 8    <5>
  inorder:   1 3 4    <5>    8 11
  然后就对inorder里的左半部分和postorder里相应的部分进行关于左子树的recursion处理；
- 对inorder里的右半部分和postorder里相应的部分进行关于右子树的recursion处理。这些处理和之前对于整个树的处理是同理的。
- 
- 这里要特别注意！！！
- 在inorder里找到当前root的index以后，这个index值可以直接用于切割inorder数组里要用于下一个recursion的左半部分和右半部分，
- 但它不可以直接用来切割postorder数组里的两个部分！！！
- 要切割postorder数组，必须综合使用 postorder在本次recursion里的start index，以及root在inorder里的index，这两个方面的信息 ！！！   */
+ 对inorder里的右半部分和postorder里相应的部分进行关于右子树的recursion处理。这些处理和之前对于整个树的处理是同理的    */
 
 /* public class TreeNode {
  *   public int key;
