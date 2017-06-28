@@ -35,17 +35,20 @@ Than we can get the corresponding binary tree:
  这么加的话，在每个list里，每个数的前后相对关系，是保持了与level order数组里的相对关系相一致的 ！！！
  
  然后就对inorder里的左半部分和level order里相应的部分进行关于左子树的recursion处理；
- 对inorder里的右半部分和level order里相应的部分进行关于右子树的recursion处理。这些处理和之前对于整个树的处理是同理的    */
-
-/* public class TreeNode {
- *   public int key;
- *   public TreeNode left;
- *   public TreeNode right;
- *   public TreeNode(int key) {
- *     this.key = key;
- *   }
- * } */
+ 对inorder里的右半部分和level order里相应的部分进行关于右子树的recursion处理。这些处理和之前对于整个树的处理是同理的 
  
+ 时间：O(n^2)
+
+
+* public class TreeNode {
+*   public int key;
+*   public TreeNode left;
+*   public TreeNode right;
+*   public TreeNode(int key) {
+*     this.key = key;
+*   }
+* } */
+
  public class Solution {
 
   public TreeNode reconstruct(int[] in, int[] level) {
