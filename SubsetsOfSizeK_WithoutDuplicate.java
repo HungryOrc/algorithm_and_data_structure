@@ -5,7 +5,7 @@ For example, if input array is {2, 1, 3, 4}, and k = 2, then the output should b
 public class Solution {
      
     /* DFS, 用 Recursive Searching Tree 来做
-       核心思路：看下一个位置可以放谁
+       核心思路：看下一个位置可以放哪些数，而非某一个数是否出现在当前的subset里
        
                        []
                     /   |   \
@@ -31,7 +31,7 @@ public class Solution {
     private void dfs(int[] nums, int startIndex, 
                      ArrayList<Integer> subset, int k, ArrayList<ArrayList<Integer>> results) {
                         
-        if (subset.size() == k) { // 结束条件
+        if (subset.size() == k) { // 结束条件. 与无size k限制的题目相比，区别就只在这一句
             results.add(new ArrayList<Integer>(subset));
             return;
         }
