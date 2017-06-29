@@ -50,6 +50,5 @@ class Solution {
             dfs(nums, i + 1, subset, results);
             subset.remove(subset.size() - 1);
         }
-    }
-        
+    }       
 }
