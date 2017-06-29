@@ -25,9 +25,34 @@ return the root of the binary tree [4,5,2,#,#,3,1].
  *     TreeNode(int x) { val = x; }
  * } */
  
-public class Solution 
-{
-    /* 方法1：很巧妙的 iteration
+public class Solution {
+    
+    /* 方法1：很巧妙的 Recursion，要熟练掌握！上场可以优先用这个方法
+    
+        1                  4             1 (right child of 2)
+       / \                / \           / 
+      2   3      =>      5   2    即   2 —— 3 (left child of 2)
+     / \                    / \       / 
+    4   5                  3   1     4 —— 5                                     */
+   
+    public TreeNode reverse(TreeNode root) {
+        if (root == null || root.left == null) {
+          return root;
+        }
+
+        TreeNode newRoot = reverse(root.left);
+
+        // things to be done in the current level:
+        root.left.left = root.right;
+        root.left.right = root;
+        root.left = null;
+        root.right = null;
+
+        return newRoot;
+    }   
+    
+    
+    /* 方法2：很巧妙的 iteration。不容易想到
     
             (parent) null                            (parent) 1                            (parent) 2
                      / \                                     / \                                   / \
@@ -60,7 +85,7 @@ public class Solution
     }
     
 
-    // 方法2：我的思路：用一个Stack来做。速度很慢
+    // 方法3：我的思路：用一个Stack来做。速度很慢
     /* Every right child will become left child (in inverted order),
     every left child will become root of sub-tree (in inverted order).
     So we can record them into a Stack, and then retrieve them from the Stack.
