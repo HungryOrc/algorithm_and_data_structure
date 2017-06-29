@@ -24,55 +24,50 @@ class Solution {
      and to get each answer, we need O(n) time，
      每个答案所需的 n 的时间是消耗在：每个答案得到以后，要用n的时间来造new String来固化这个答案
      至于得到每个答案的时间，其实是O(1)，因为通过 swap 方法，不需要每个答案都耗费 n 的时间，具体解释如下：
-     比如说要找 1, 2, 3 这三个数以功能组成多少个排列（答案是6种），那么swap方法的解题过程其实是：
+     比如说要找 1, 2, 3 这三个数一共能组成多少个排列（答案是6种），那么swap方法的解题过程其实是：
      
          1         2         3
         / \       / \       / \
        2   3     1   3     1   2
        
-      再往下还有一层，但前两层定了以后，第三层就已经定了。定前两层的时间消耗，可以看出，是 O(6)，与答案的个数是一个量级的 ！！！ 
-      不过在数学上说，n*n! 和 n! 其实是一个量级的，所以这一题的答案也可写为 O(n!)
+     再往下还有一层，但前两层定了以后，第三层就已经定了。定前两层的时间消耗，可以看出，是 O(6)，与答案的个数是一个量级的 ！！！ 
+     不过在数学上说，n*n! 和 n! 其实是一个量级的，所以这一题的答案也可写为 O(n!)
       
-      Space: O(n). Because we need n call stacks, and each call stack requires constant space. */
-  
-    public class Solution {
+     Space: O(n). Because we need n call stacks, and each call stack requires constant space. */
 
-      public List<String> permutations(String set) {
-        List<String> result = new ArrayList<>();
-        if (set == null) {
-          return result;
-        }
-
-        char[] cArray = set.toCharArray();
-        dfsWithSwapping(cArray, 0, result);
+    public List<String> permutations(String set) {
+      List<String> result = new ArrayList<>();
+      if (set == null) {
         return result;
       }
 
-      private void dfsWithSwapping(char[] cArray, int curIndex, List<String> result) {
-        
-        if (curIndex == cArray.length) {
-          // 这一步，造新String，耗时是 O(n) ！！！
-          // 分析时间复杂度时，别忘了这种看似不起眼，其实能量很大的地方 ！！！
-          result.add(new String(cArray)); 
-          return;
-        }
+      char[] cArray = set.toCharArray();
+      dfsWithSwapping(cArray, 0, result);
+      return result;
+    }
 
-        for (int i = curIndex; i < cArray.length; i++) {
+    private void dfsWithSwapping(char[] cArray, int curIndex, List<String> result) {
 
-          swap(cArray, curIndex, i);
-
-          dfsWithSwapping(cArray, curIndex + 1, result);
-
-          swap(cArray, curIndex, i); // 复原
-        }
+      if (curIndex == cArray.length) {
+        // 这一步，造新String，耗时是 O(n) ！！！
+        // 分析时间复杂度时，别忘了这种看似不起眼，其实能量很大的地方 ！！！
+        result.add(new String(cArray)); 
+        return;
       }
 
-      private void swap(char[] cArray, int i, int j) {
-        char c = cArray[i];
-        cArray[i] = cArray[j];
-        cArray[j] = c;
+      for (int i = curIndex; i < cArray.length; i++) {
+
+        swap(cArray, curIndex, i);
+        dfsWithSwapping(cArray, curIndex + 1, result);
+        swap(cArray, curIndex, i); // 复原
       }
-    } 
+    }
+
+    private void swap(char[] cArray, int i, int j) {
+      char c = cArray[i];
+      cArray[i] = cArray[j];
+      cArray[j] = c;
+    }
   
   
     // 方法2：Recursion。DFS的套路
@@ -89,12 +84,13 @@ class Solution {
             return result;
         }
         
-        boolean[] visited = new boolean[nums.length];
+        boolean[] visited = new boolean[nums.length]; // 默认都是false
         findPermutations(nums, new ArrayList<Integer>(), visited, result);
         return result;
     }
   
-    private void findPermutations(int[] nums, ArrayList<Integer> curList, ArrayList<List<Integer>> result) {
+    private void findPermutations(int[] nums, ArrayList<Integer> curList, 
+                                  boolean[] visited, ArrayList<List<Integer>> result) {
       
         if (curList.size() == nums.length) {
             // 注意！！一定要复制！！
@@ -104,7 +100,6 @@ class Solution {
         }
               
         // 整个算法的精华在这里！每一次都是试图把整个数组里的每一个数都轮流放进去！！！
-        // 只是一开始要用 ArrayList.contains 函数来判断是否有过这个数了！！！
         for (int i = 0; i < nums.length; i++) {
             
             if (visited[i] == false) {
@@ -222,6 +217,5 @@ class Solution {
             permutations.add(permutation);
         }
         return permutations;
-    }
-  
+    } 
 }
