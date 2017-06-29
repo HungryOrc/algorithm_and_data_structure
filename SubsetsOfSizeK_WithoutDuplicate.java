@@ -14,7 +14,7 @@ public class Solution {
         [1,2] [1,3]  [2,3]           ---->   Cn_2
   
     时间复杂度 = Cn_1 + Cn_2 + Cn_3 + ... + Cn_k = 2^n ?????? or 2^k ????
-    空间复杂度 = O(n)   ??????       */
+    空间复杂度 = O(k) 么 ??????  因为有k层call stack？？？     */
   
     public ArrayList<ArrayList<Integer>> subsetsOfSizeK(int[] nums) {
         
@@ -30,8 +30,11 @@ public class Solution {
     
     private void dfs(int[] nums, int startIndex, 
                      ArrayList<Integer> subset, int k, ArrayList<ArrayList<Integer>> results) {
-                         
-        if (subset.size() == k) { // 结束条件
+                        
+        if (startIndex == nums.length) { // 结束条件 1，别忘了这种情况！！！
+            return;
+        }
+        if (subset.size() == k) { // 结束条件 2
             results.add(new ArrayList<Integer>(subset));
             return;
         }
