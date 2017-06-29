@@ -19,7 +19,7 @@ If S = [1,2,3], a solution is:
 class Solution {
      
     /* 方法1：DFS, 用 Recursive Searching Tree 来做
-       核心思路：看下一个位置可以放谁
+       核心思路：看下一个位置可以放哪些数，而非某一个数是否出现在当前的subset里
        
                        []
                     /   |   \
