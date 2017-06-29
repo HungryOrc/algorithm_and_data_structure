@@ -23,9 +23,10 @@ public class Solution {
      具体的说明，参考我的Git总结的 没有重复的permutation那一题：
      https://github.com/HungryOrc/Algorithm/blob/master/Permutations_NoDuplicate.java    
      
-     与数组里元素不重复的permutation的swap做法相比，解法上的区别在于：
+     与数组里元素不重复的permutation的swap做法相比，解法上的唯一区别在于：
      在每一轮新的 swap loop 里，设置一个 HashSet，记录在本轮swap loop里被swap过的各个元素，
-     已经swap过的元素，就不再swap到同样的这个位置上。这是回头看很容易理解的。但一开始要想到就不容易    */
+     已经swap过的元素，就不再swap到同样的这个位置上。这是回头看很容易理解的。但一开始要想到就不容易！！ */
+  
     public List<String> permutations(String set) {
       List<String> result = new ArrayList<>();
       // corner cases
@@ -38,12 +39,10 @@ public class Solution {
 
       char[] cArray = set.toCharArray();
       findAllPermuWithSwap(cArray, 0, result);
-
       return result;
     }
 
-    private void findAllPermuWithSwap(char[] cArray, int startIndex,
-      List<String> result) {
+    private void findAllPermuWithSwap(char[] cArray, int startIndex, List<String> result) {
       // base case
       if (startIndex == cArray.length) {
         result.add(new String(cArray));
@@ -71,10 +70,9 @@ public class Solution {
 
 
     // 方法2：九章式 DFS Recursion
-    // 与数组里元素不重复的permutation相比，解法上多了两点：
-    // 1. 记录每个元素的使用情况的数组 visited
-    // 2. 在dfs的for循环里，要加上 i > 0 && nums[i] == nums[i - 1] && visited[i-1] == 0 
-    //    这个判断语句，来避免重复的元素生成出重复的排列
+    // 与数组里元素不重复的permutation相比，解法上的唯一区别在于：
+    // 在dfs的for循环里，要加上 i > 0 && nums[i] == nums[i - 1] && visited[i-1] == 0 
+    // 这个判断语句，来避免重复的元素生成出重复的排列
     // Ref: http://www.jiuzhang.com/solutions/permutations-ii/
     public List<List<Integer>> permuteUnique(int[] nums) {
         ArrayList<List<Integer>> results = new ArrayList<List<Integer>>();    
@@ -88,13 +86,11 @@ public class Solution {
         Arrays.sort(nums); // 别忘了！这种解法要求数组必须是排好序的 ！！
 
         int[] visited = new int[nums.length]; 
-     
         dfs(results, new ArrayList<Integer>(), visited, nums);    
         return results;
     }
   
-    private void dfs(ArrayList<List<Integer>> results, ArrayList<Integer> list, int[] visited, int[] nums) {
-        
+    private void dfs(ArrayList<List<Integer>> results, ArrayList<Integer> list, int[] visited, int[] nums) {       
         if(list.size() == nums.length) {
             results.add(new ArrayList<Integer>(list)); // 别忘了new一个！
             return;
@@ -103,11 +99,12 @@ public class Solution {
         for(int i = 0; i < nums.length; i++) {
             
             /* 这个if语句是为了去除重复元素
-             比如，给出一个排好序的数组，[1,2,2]，那么第一个2和第二2如果在结果中互换位置，
+             比如，给出一个排好序的数组，[1, 2, 2, 5, 11]，那么第一个2和第二2如果在结果中互换位置，
              我们也认为是同一种方案，所以我们强制要求相同的数字，原来排在前面的，在结果
-             当中也应该排在前面，这样就保证了唯一性。当前面的2还没有被使用的时候，就不应该让后面的2被使用 */
+             当中也应该排在前面，这样就保证了唯一性
+             这里的关键就在于：当前面的2还没有被使用的时候，就不应该让后面的2被使用！！！ */
             if (visited[i] == 1 || // 如果本数已经被使用过，那么也跳过不管
-                (i > 0 && nums[i] == nums[i - 1] && visited[i - 1] == 0)) {
+                (i > 0 && nums[i] == nums[i - 1] && visited[i - 1] == 0)) { // 如果前一个数与本数相同且没有被使用过
                 continue;
             }
            
@@ -120,6 +117,5 @@ public class Solution {
             list.remove(list.size() - 1); // 复原
             visited[i] = 0; // 复原
         }
-    }
-  
+    } 
 }
