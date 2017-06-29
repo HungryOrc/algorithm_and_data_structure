@@ -9,16 +9,12 @@ public class Solution {
        
                        []
                     /   |   \
-                [1]    [2]    [3]
+                [1]    [2]    [3]    ---->   Cn_1
              /   \     /
-        [1,2] [1,3]  [2,3]
-         /
-    [1,2,3]
+        [1,2] [1,3]  [2,3]           ---->   Cn_2
   
-    时间复杂度：
-     = O (答案的个数 * 得到每个答案所需的时间)
-     = O (2^n * n)
-     得到每个答案所需的时间是 O(n)，是因为可能要把n个数都add到一个答案里去 */
+    时间复杂度 = Cn_1 + Cn_2 + Cn_3 + ... + Cn_k = 2^n ?????? or 2^k ????
+    空间复杂度 = O(n)   ??????       */
   
     public ArrayList<ArrayList<Integer>> subsetsOfSizeK(int[] nums) {
         
