@@ -31,10 +31,7 @@ public class Solution {
     private void dfs(int[] nums, int startIndex, 
                      ArrayList<Integer> subset, int k, ArrayList<ArrayList<Integer>> results) {
                         
-        if (startIndex == nums.length) { // 结束条件 1，别忘了这种情况！！！
-            return;
-        }
-        if (subset.size() == k) { // 结束条件 2
+        if (subset.size() == k) { // 结束条件
             results.add(new ArrayList<Integer>(subset));
             return;
         }
