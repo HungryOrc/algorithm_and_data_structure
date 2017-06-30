@@ -16,7 +16,7 @@ public class Solution {
         
         int count = 0;
         HashSet<Integer> records = new HashSet<>();
-        boolean foundHalfValue = false; // 特别注意这个flag！！它就是为了判断是否出现2个23，其和等于46这种情况！！出现一次或三次都不行！！
+        boolean foundHalfValue = false; // 特别注意这个flag！！它就是为了判断是否出现2个23，其和等于46这种情况！！
         
         for (int n : nums) {
             if (!records.contains(n)) {
