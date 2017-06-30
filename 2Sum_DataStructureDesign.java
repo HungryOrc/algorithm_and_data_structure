@@ -12,10 +12,12 @@ find(7) -> false    */
 // twoSum.add(number);
 // twoSum.find(value);
 
-// Ref: https://leetcode.com/problems/two-sum-iii-data-structure-design/
-/* I use HashMap to store times of number be added.
+
+/* 方法1: Use HashMap to store times of number be added.
 When find be called, we iterate the keys of HashMap, then find another number minus by value.
-Then combine the detections together. */
+Then combine the detections together.
+Ref: https://leetcode.com/problems/two-sum-iii-data-structure-design/
+*/
 public class TwoSum 
 {
     private HashMap<Integer, Integer> myMap = new HashMap<Integer, Integer>();
@@ -40,7 +42,7 @@ public class TwoSum
 }
 
 
-// 我自己的方法。用ArrayList存数。速度慢
+// 方法2：我自己的方法。用ArrayList存数。速度慢
 public class TwoSum 
 {
     ArrayList<Integer> nums;
