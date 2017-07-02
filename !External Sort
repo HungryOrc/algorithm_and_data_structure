@@ -2,3 +2,23 @@
 如果大于硬盘，则就得使用 Map Reduce 之类的技术了
 
 举例：一个电脑，单cpu，2G内存，其中1G可用，有2个100G的硬盘。如何用它sort 总量达 80G 的一些int？
+
+1. 我们虽然有1G可用，但是还要考虑call stack等因素，所以，保险起见，最保守的做法，只拿 0.2G 出来工作，其他 0.8G 不直接使用。
+
+2. 把要排序的 80G 分为 400个chunks，每个chunk大小为 0.2G
+
+3. 把这400个chunk，一一从disk写到memory里面去，然后在memory里面完成这0.2G的数据的排序，然后再一一写回到disk里去
+
+4. 400个chunk都自己内部排好以后，我们做一个 400-way merge，其中的每一way都是一个sorted chunk
+   这样的merge要用到 min heap
+
+5. 对于这400个chunk中的每一个chunk，我们都把它再细分为400个blocks
+   然后从每个chunk里，我们拿出最左边的一个block，写到内存里去。这样合在一起的大小又是 0.2G 了
+   我们就对这 400个blocks 进行 400-way merge，谁小移谁
+
+6. 每次merge出一个400-way里的最小数即找到当前的min，就写到disk里，这样不断地写下去，就是最终的结果
+
+7. 当一个block被用光以后，我们再在这个block所属的chunk里，找紧邻前一个block的下一个block
+   当一个chunk都被用光以后，就不用再merge它了。就成了 399-way 的 merge
+
+*/
