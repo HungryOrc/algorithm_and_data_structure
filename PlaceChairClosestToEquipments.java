@@ -19,6 +19,16 @@ Examples:
 we should put the chair at (1, 0), so that the sum of cost from the chair to the two equipment is 1 + 1 = 2, which is minimal.  */
 
 
+/* 思路：Dijkstra 算法，计算从一个固定起点到n个点分别的最短路径，耗时 O(n logn)
+那么，我们有2种做法：
+
+方法1，在矩阵里二维loop所有的点，算他们到矩阵内所有点的距离（自然也就包含那k个equipment点），
+矩阵里一共有 n^2 个点，对于每一个点，以它为起始点，对整个矩阵做 Dijkstra 算法，耗时 n^2 log(n^2)，
+所以最后总时间是 O(n^2 * n^2 * log(n^2)) = O(n^4 logn)
+
+方法2：从k个equipment点出发，计算它们到矩阵内所有点的距离，然后取最小的那个。这样耗时就小多了 ！！！
+时间：O(k * n^2 * log(n^2)) = O(k * n^2 logn)     */
+
 // Laioffer 的方法。但是并不是上述的用 Dijkstra 算法的方法。
 class Pair {
   int i, j;
