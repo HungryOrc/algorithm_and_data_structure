@@ -29,7 +29,8 @@ we should put the chair at (1, 0), so that the sum of cost from the chair to the
 方法2：从k个equipment点出发，计算它们到矩阵内所有点的距离，然后取最小的那个。这样耗时就小多了 ！！！
 时间：O(k * n^2 * log(n^2)) = O(k * n^2 logn)     */
 
-// Laioffer 的方法。但是并不是上述的用 Dijkstra 算法的方法。
+// Laioffer 的方法。但是并不是上述的用 Dijkstra 算法的方法，
+// 而只是用了粗暴的 BFS 方法来计算从一个E cell出发，到各个点的距离，即每向外环形走一步，则距离+1.
 class Pair {
   int i, j;
   public Pair(int i, int j) {
@@ -52,6 +53,9 @@ public class Solution {
     for (int i = 0; i < m; i++) {
       for (int j = 0; j < n; j++) {
         
+        // 只计算以E cell为起点，到其他所有cells的距离之和，
+        // 然后把这些距离，累加到empty cell（比如坐标为 i, j）上，即 cost[i][j] 上 ！！！
+        // 那么到了最后，cost[i][j] 就是从所有E cells到当前的 empy cell [i, j] 的距离之和 ！！！
         if (gym[i][j] == EQUIP) {
           // use BFS to calculate the shortest path cost from each of the equipments
           // to all the other reachable cells,
@@ -66,8 +70,9 @@ public class Solution {
       }
     }
     
-    // find the cell with smallest sum of shortest path costs to all the 'E' cells
     List<Integer> result = null;
+    
+    // find the cell with smallest sum of shortest path costs to all the 'E' cells
     for (int i = 0; i < m; i++) {
       for (int j = 0; j < n; j++) {
         
@@ -106,7 +111,7 @@ public class Solution {
         for (Pair nei : neis) {
           if (!visited[nei.i][nei.j]) {
             visited[nei.i][nei.j] = true;
-            cost[nei.i][nei.j] += pathCost;
+            cost[nei.i][nei.j] += pathCost; // 精华在这一步 ！！！
             queue.offer(nei);
           }
         }
