@@ -15,6 +15,17 @@ at position (1, 1) there is 2 units of water trapped,
 at position (1, 2) there is 1 unit of water trapped.   */
 
 
+/* 思路：用 min heap 做，heap里的元素是matrix上的nodes，heap的排序规则是nodes的heights从小到大排。
+先把matrix四周四个边上的nodes都放到heap里去，这些nodes每个node上的“水位”认为就是它们各自的 height。
+注意 ！！！ 边界上最低的node，就代表了整个matrix上所有的点的最低的水位 ！！！
+
+然后从heap里不断pop nodes出来，每次pop出来的都是当前height最小的node。
+然后拓展这个被pop出来的node的neighbors。
+注意 ！！！ 每个neighbor的水位的最低可能值，就是当前node的水位 ！！！ 
+
+这整个过程就是一个从四周到中心的   逐   步   推   高   的过程 ！！！   */
+
+
 // Laioffer 的方法
 
 // helper class
