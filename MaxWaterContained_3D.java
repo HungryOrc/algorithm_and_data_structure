@@ -26,7 +26,7 @@ at position (1, 2) there is 1 unit of water trapped.   */
 这整个过程就是一个从四周到中心的   逐   步   推   高   的过程 ！！！   */
 
 
-// Laioffer 的方法
+// Laioffer 的方法。看起来很长。其实核心只有水位变化的那一小段。其它的都很简单
 
 // helper class
 class Pair implements Comparable<Pair> {
