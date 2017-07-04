@@ -100,3 +100,14 @@ public class Solution {
 		}
 	}
 }
+
+
+/* 方法3：BFS。朴素的方法。既然是要考虑Node one和two是否同level，以及它们是否共爹，这两个问题，
+直观上看，都很适合逐层推进来做 ！！　就是 BFS ！！
+
+用Queue来装所有的nodes。从root开始。每次记录当前queue的size。每一批只pop出来同一层的nodes。
+对于每一个pop出来的node，首先看它的左右子是不是分别是Node one和two，或者two和one，只要是，则返回false，因为这意味着one和two共爹。
+然后，在tree里的同一层里，maintain一个计数器counter，在这一层结束的时候，看counter的大小，
+如果counter == 2，则意味着在这一层里，同时找到了one和two，且之前没有发现one和two共爹的情况，那么题意已被满足，直接返回true结束程序；
+如果counter == 1，则意味着这一层里只有one和two中的一个，这样已经违反了题意，可以直接返回false结束程序。
+如果counter == 0，则还要继续下一层的检查。   */
