@@ -31,7 +31,6 @@ class ResultType {
 public class Solution {
  
 	public boolean isCousin(TreeNode root, TreeNode one, TreeNode two) {
- 
 		TreeNode parent = new TreeNode(Integer.MIN_VALUE);
 		parent.right = root;
  
@@ -45,9 +44,9 @@ public class Solution {
 		}
 	}
  
-	private ResultType findNode(TreeNode root, TreeNode parent, int curLevel, TreeNode target) {
-			
-		if (root == null) {
+	private ResultType findNode(TreeNode root, TreeNode parent, int curLevel, TreeNode target) {	
+		
+		if (root == null) { // 这意味着在当前这条path上没有找到target node ！！
 			return new ResultType(null, Integer.MAX_VALUE);
 		}
 		 
@@ -59,7 +58,7 @@ public class Solution {
 		ResultType resultR = findNode(root.right, root, curLevel + 1, target);	
 		 
 		if (resultL.parent == null && resultR.parent == null) {
-			return resultL;
+			return resultL; // = new ResultType(null, Integer.MAX_VALUE);
 		} else if (resultL.parent == null) {
 			return resultR;
 		} else {
