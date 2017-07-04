@@ -7,10 +7,17 @@
 2. The 2 nodes do exist in the binary tree whose root is the given root.  */
 
 
-// 方法1：Laioffer很巧妙的方法！！！
+// 方法1：Laioffer很巧妙的方法！！！ 较难想到
 
+public class Solution {
 
+    boolean isCousin = false;
 
+    public boolean isCousin(TreeNode root, TreeNode one, TreeNode two) {
+    
+    }
+
+}
 
 
 // 方法2：我用了一个 custom class 来wrap每一个TreeNode的两种信息：parent和level
