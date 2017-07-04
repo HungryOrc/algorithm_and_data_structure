@@ -43,7 +43,6 @@ public class Solution {
 	// 因为这样的话，到了最后汇总答案的时候，L和R也不可能一致，那时的L和R二者必有一个是-1
 	return resultL > resultR ? resultL : resultR;
     }
-
 }
 
 
