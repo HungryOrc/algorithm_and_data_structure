@@ -9,6 +9,7 @@ I LZ Y
 I L ZY
 I L Z Y    */
 
+
 // 方法1：经典的 BFS 方法
 // 注意！！！ 这一题插入space会影响char的index，但是我们如果采用
 // curIndex仅和原string相绑定，而与插入后的string无关，就可以解决这个问题
@@ -16,8 +17,42 @@ I L Z Y    */
 //
 // Time: O(2^n), n is the length of the input string, 2^n is the amount of answers
 // Space: O(n). StringBuilder
-
-
+public class Solution {
+	 
+	public List<String> insertSpaces(String str) {
+		List<String> result = new ArrayList<>();
+ 
+		if (str == null || str.length() == 0) {
+			return result;
+		}
+		
+		bfs(str.toCharArray(), 0, new StringBuilder(), result);
+		return result;
+	}
+		 
+	private void bfs(char[] cArray, int curIndex, StringBuilder cur, List<String> result) {
+		int n = cArray.length;
+		
+		if (curIndex == n - 1) {
+			cur.append(cArray[n - 1]);
+			result.add(cur.toString());
+			cur.deleteCharAt(cur.length() - 1); // 特别容易漏了这个　！！！
+			return;
+		}
+		 
+		// Case 1: do not insert space in the current index
+		cur.append(cArray[curIndex]);
+		bfs(cArray, curIndex + 1, cur, result);
+		cur.deleteCharAt(cur.length() - 1);
+		 
+		// Case 2: insert a space in the current index
+		cur.append(cArray[curIndex]);
+		cur.append(' ');
+		bfs(cArray, curIndex + 1, cur, result);
+		cur.deleteCharAt(cur.length() - 1);
+		cur.deleteCharAt(cur.length() - 1);
+	}
+}
 
 
 // 方法2：我的搞笑方法。但速度也不低。每次二分地BFS 一个 boolean array，这个array里的每个元素对应一个interval，
