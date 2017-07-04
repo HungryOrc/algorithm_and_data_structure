@@ -11,10 +11,18 @@
 
 public class Solution {
 
-    boolean isCousin = false;
+    boolean isCousinOrNot = false;
 
     public boolean isCousin(TreeNode root, TreeNode one, TreeNode two) {
+	isCousin(root, one, two, 1);
+	return isCousinOrNot;
+    }
     
+    private int isCousin(TreeNode root, TreeNode one, TreeNode two, int curLevel) {
+    	if (root == null) {
+	    return -1;
+	}
+	
     }
 
 }
