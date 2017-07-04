@@ -8,19 +8,20 @@ Space: O(n), we used a dp array of length n.   */
  
 public class Solution {
 	
-	public int cut(int num) {
-		int[] dp = new int[num + 1];		
+    public int cut(int num) {
+	int[] dp = new int[num + 1]; // 从 0 到 n。  0在这里是没用的，关键是要有1到n，这样我们处理起来方便。	
  
-		// round down the double value to get an int
-    int sqrRoot = (int) Math.sqrt(num);
-        // set the dp value of all the square numbers to be 1
+	// round down the double value to get an int
+        int sqrRoot = (int) Math.sqrt(num);
+	    
+        // set the dp value of all the square numbers to be 1。这些位置上的值预设为1，能方便后面的处理 ！
         for (int i = 1; i <= sqrRoot; i++) { 
           dp[i * i] = 1;
         }
 
         for (int i = 2; i <= num; i++) {
             if (dp[i] == 0) { // 0 was the default value
-              dp[i] = i; // at least we can cut i into all 1’s
+                dp[i] = i; // at least we can cut i into all 1’s
             }			
 
             for (int j = 1; j <= i - 1; j++) {
