@@ -39,6 +39,9 @@ public class Solution {
   // we remove k/2 smallest numbers, k/4 smallest numbers... 1 smallest number in each time
   private int findKthSmallest(int[] A, int startIndexA, int[] B, int startIndexB, int k) {
     
+    // 这题一共有 4 种情况 ！！！
+   
+    // Case 1：两个数组里，有一个正好走完最后一位，不多不少
     // if we have past the end of array A, then we totally count on array B
     if (startIndexA == A.length) {
       return B[startIndexB + k - 1];
@@ -48,12 +51,14 @@ public class Solution {
       return A[startIndexA + k - 1];
     }
     
+    // Case 2：k 降低到1了，即再往下一个数就是我们要的数了
     // if we have already removed k-1 smallest numbers in these 2 arrays, 
     // namely the next smallest number will be our target
     if (k == 1) {
       return Math.min(A[startIndexA], B[startIndexB]);
     }
     
+    // Case 3：两个数组里，有任何一个的长度不到 k/2 了
     // 如果A里剩下的的元素不够k/2个，丢弃B里的前k/2个元素. 反之亦然
     if (startIndexA + k/2 - 1 >= A.length) {
       return findKthSmallest(A, startIndexA, B, startIndexB + k/2, k - k/2);
@@ -62,6 +67,7 @@ public class Solution {
       return findKthSmallest(A, startIndexA + k/2, B, startIndexB, k - k/2);
     }
     
+    // Case 4：两个数组的长度都大于等于 k/2
     // 如果 A[mid] <= B[mid], (mid = k/2 - 1），丢弃A的前k/2个元素。反之亦然
     if (A[startIndexA + k/2 - 1] >= B[startIndexB + k/2 - 1]) {
       return findKthSmallest(A, startIndexA, B, startIndexB + k/2, k - k/2);
