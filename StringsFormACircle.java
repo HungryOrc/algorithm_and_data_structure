@@ -21,6 +21,7 @@ There might be strings composed of only 1 char, for example "c".  */
 // 空间：O(n)
 //     hashmap要n空间，boolean array要n空间，call stack也是n层每层constant空间
 
+// 代码看起来长，其实思路很朴素，很简明
 public class Solution {
 	 
 	public boolean formCircle(String[] input) {
