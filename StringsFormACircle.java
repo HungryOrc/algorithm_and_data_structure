@@ -87,3 +87,69 @@ public class Solution {
 		return false;
 	}
 }
+
+
+// 方法2：Laioffer 的 Swap-Swap 方法。很赞！！
+
+public class Solution {
+	 
+	public boolean formCircle(String[] input) {
+		Arrays.sort(input);	
+		int n = input.length;
+		
+		// input里的每一个string，都尝试作为整个string chain的第一个string
+		for (int i = 0; i < n; i++) {
+			if (i > 0 && input[i - 1].equals(input[i])) {
+				continue;
+			}
+			
+			
+			swap(input, 0, i);
+			
+			if (formCircle(input, 0)) {
+				return true;
+			}
+			
+			swap(input, 0, i);
+		}
+		return false;
+	}
+	 
+	// 注意！Swap 做法不需要 boolean array 来监控 visited的情况 ！！！
+	private boolean formCircle(String[] array, int curIndex) {
+		
+		// 特别注意 ！！！ 
+		// 在这个方法里，cur index 到了 n - 1 的时候就要检查结束条件了 ！！！ 而非 到了 n 的时候再检查 ！！！
+		if (curIndex == array.length - 1) {
+				
+			// 别忘了检查整个string chain的最后一string的last char 和最开始第一个string的 first char 是否相等 ！！
+			if (array[0].charAt(0) == array[curIndex].charAt(array[curIndex].length() - 1)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+			 
+		String curString = array[curIndex];
+		char lastChar = curString.charAt(curString.length() - 1);
+
+		for (int i = curIndex + 1; i < array.length; i++) {
+
+			if (array[i].charAt(0) == lastChar) {
+				
+				swap(array, curIndex + 1, i);
+				if (formCircle(array, curIndex + 1)) {
+					return true;
+				}
+				swap(array, curIndex + 1, i); // recover
+			}
+		}
+		return false;
+	}
+
+	private void swap(String[] array, int i, int j) {
+		String tmp = array[i];
+		array[i] = array[j];
+		array[j] = tmp;
+	}
+}
