@@ -114,5 +114,124 @@ public class LRUCache {
     	  	  }
     	  }
     }
+}
+
+
+
+// 备注：Laioffer 的方法。大同小异。但是key和value的类型用了通用类型，node也作为了一个内部的static class来写。具体写法值得借鉴
+
+public class Solution<K, V> {
   
+  // each node contains the key, value pair,
+  // and it is also a doubly linked list node
+  // --------------------------------------------------------
+  static class Node<K, V> {
+    K key;
+    V value;
+    Node<K, V> next;
+    Node<K, V> prev;
+    
+    Node(K key, V value) {
+      this.key = key;
+      this.value = value;
+    }
+    
+    void update(K key, V value) {
+      this.key = key;
+      this.value = value;
+    }
+  }
+  
+  // fields of this LRU Cache class
+  // --------------------------------------------------------
+  private final int limit;
+  
+  // for the doubly linked list
+  private Node<K, V> head;
+  private Node<K, V> tail;
+  
+  private Map<K, Node<K, V>> map;
+  
+  // Constructor of LRU Cache
+  // --------------------------------------------------------
+  public Solution(int limit) {
+    this.limit = limit;
+    this.map = new HashMap<>();
+  }
+  
+  // methods of this LRU Cache class
+  // --------------------------------------------------------
+  public void set(K key, V value) {
+    Node<K, V> node = null;
+    
+    // case 1: if the key already exists in the cache, we need to update its value,
+    // and move it to the head of the doubly linked list
+    if (map.containsKey(key)) {
+      node = map.get(key);
+      node.value = value;
+      remove(node);
+    }
+    else if (map.size() < limit) {
+      
+      // case 2: if the key is not in the cache and we still have space,
+      // we can add a new node to the head of the list
+      node = new Node<K, V>(key, value);
+    }
+    else {
+      
+      // case 3: if the key is not in the cache, but we don't have space,
+      // we need to evict the tail and reuse the node at the tail,
+      // use it to maintain the new key-value pair, and put it to the head of the list
+      node = tail;
+      remove(node);
+      node.update(key, value);
+    }
+    append(node);
+  }
+  
+  public V get(K key) {
+    Node<K, V> node = map.get(key);
+    
+    if (node == null) {
+      return null;
+    }
+    
+    remove(node);
+    append(node);
+    return node.value;
+  }
+  
+  private Node<K, V> remove(Node<K, V> node) {
+    map.remove(node.key);
+    
+    if (node.prev != null) {
+      node.prev.next = node.next;
+    }
+    if (node.next != null) {
+      node.next.prev = node.prev;
+    }
+    if (node == head) {
+      head = head.next;
+    }
+    if (node == tail) {
+      tail = tail.prev;
+    }
+    
+    node.next = node.prev = null;
+    return node;
+  }
+  
+  private Node<K, V> append(Node<K, V> node) {
+    map.put(node.key, node);
+    
+    if (head == null) {
+      head = tail = node;
+    }
+    else {
+      node.next = head;
+      head.prev = node;
+      head = node;
+    }
+    return node;
+  }
 }
