@@ -64,6 +64,10 @@ public class Detector {
 
 		Node curNode = null;
 		
+		/* 特别注意！！！
+                按我们的做法，不可以直接在map里get这个char，然后看返回的node是不是null ！！！
+	        因为在我们的做法里，!containsKey(char) 和 containsKey(char)同时get(char)==null 分属于两种不同的情况 ！！！  */
+		
 		// case 1: char c had never shown up before
 		if (!records.containsKey(c)){
 			curNode = new Node(c);
