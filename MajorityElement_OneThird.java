@@ -7,12 +7,24 @@ The algorithm should run in linear time and in O(1) space. */
 // 方法1：对消的方法
 // 思路：https://gregable.com/2013/10/majority-vote-algorithm-find-majority.html
 // Time: O(n), Space: O(1)
+
+/* 思路：用别的数 “对消” 目前计数最 “冒尖” 的数 ！！！ 
+       从数组左端开始，找最先出现的2个不同的数作为candidates，其计数count初始都记为 1. 然后，从后面的数开始，
+       如果它等于candidates中的任何一个，就把那个candidate的count++，其他candidate的count不变；
+       如果它不等于当前的任何一个candidate，
+           如果当前有任何一个candidate的count是0，那么就将这个candidate改设为当前的数，它的count重新记为 1；
+           如果当前所有的candidates的counts都 > 0，则所有的counts都 -1   
+        
+       总之，可以这么理解：
+       每一次累加，都是对于当前candidate的增强，
+       而每一次削减，都是  3个不同的数  同时削减 ！！！ 最后的赢家 理  应  能 Survive 这种削减　！！！　*/
+
 public class Solution {
     
     public List<Integer> majorityElement(int[] nums) {
-        
     	if (nums == null || nums.length == 0)
     		return new ArrayList<Integer>();
+        
     	List<Integer> result = new ArrayList<Integer>();
     	int number1 = nums[0], number2 = nums[0], count1 = 0, count2 = 0, len = nums.length;
     	for (int i = 0; i < len; i++) {
