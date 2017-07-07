@@ -8,16 +8,34 @@ public class Solution {
     // Time: O(n), Space: O(1)
     public int majorityElement(int[] nums) {
 
-        int major = nums[0], count = 1;
-        for(int i = 1; i < nums.length; i++) {
-            if(count == 0) {
-                count = 1;
-                major = nums[i];
-            } else if (major == nums[i])
-                count++;
-            else count--;
+        int candidate = array[0];
+        int count = 1;
+
+        for (int i = 1; i < array.length; i++) {
+          if (array[i] != candidate) {
+            if (count == 0) {
+              candidate = array[i];
+              count = 1;
+            } else {
+              count --;
+            }
+          } else {
+            count ++;
+          }
         }
-        return major;
+
+        // 以下部分是用来检查，我们选出的candidate，到底它的出现次数是否大于等于 n/2
+        count = 0;
+        for (int num : array) {
+          if (num == candidate) {
+            count ++;
+          }
+        }
+        if (count >= array.length/2) {
+          return candidate;
+        } 
+
+        return Integer.MAX_VALUE; // 如果超过n/2的出现次数的众数不存在
     }
     
     
