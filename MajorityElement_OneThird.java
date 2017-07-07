@@ -2,13 +2,13 @@
 The algorithm should run in linear time and in O(1) space. */
 
 
-// 参考 Majority Element_One Half 那一题 ！！！
+// 参考 Majority Element_One Half 那一题
 
 // 方法1：对消的方法
 // 思路：https://gregable.com/2013/10/majority-vote-algorithm-find-majority.html
 // Time: O(n), Space: O(1)
 
-/* 思路：用别的数 “对消” 目前计数最 “冒尖” 的数 ！！！ 
+/* 思路：用别的数 “对消” 目前计数最 “冒尖” 的数 ！！！ 最后符合要求的数可能不止一个。
        从数组左端开始，找最先出现的2个不同的数作为candidates，其计数count初始都记为 1. 然后，从后面的数开始，
        如果它等于candidates中的任何一个，就把那个candidate的count++，其他candidate的count不变；
        如果它不等于当前的任何一个candidate，
@@ -26,24 +26,30 @@ public class Solution {
     		return new ArrayList<Integer>();
         
     	List<Integer> result = new ArrayList<Integer>();
-    	int number1 = nums[0], number2 = nums[0], count1 = 0, count2 = 0, len = nums.length;
-    	for (int i = 0; i < len; i++) {
-    		if (nums[i] == number1)
-    			count1++;
-    		else if (nums[i] == number2)
-    			count2++;
-    		else if (count1 == 0) {
-    			number1 = nums[i];
-    			count1 = 1;
-    		} else if (count2 == 0) {
-    			number2 = nums[i];
-    			count2 = 1;
-    		} else {
-    			count1--;
-    			count2--;
-    		}
+    	int number1 = nums[0], number2 = nums[0], count1 = 0, count2 = 0;
+       int len = nums.length;
+    	
+       for (int i = 0; i < len; i++) {
+              
+              if (nums[i] == number1)
+                     count1++;
+              else if (nums[i] == number2)
+                     count2++;
+              
+              else if (count1 == 0) {
+                     number1 = nums[i];
+                     count1 = 1;
+              } else if (count2 == 0) {
+                     number2 = nums[i];
+                     count2 = 1;
+                     
+              } else {
+                     count1--;
+                     count2--;
+              }
     	}
     	
+       // re-check
     	count1 = 0;
     	count2 = 0;
     	for (int i = 0; i < len; i++) {
