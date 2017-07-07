@@ -26,8 +26,12 @@ public class Solution {
     		return new ArrayList<Integer>();
         
     	List<Integer> result = new ArrayList<Integer>();
-    	int number1 = nums[0], number2 = nums[0], count1 = 0, count2 = 0;
        int len = nums.length;
+       
+       // 注意这里的trick ！！ 先把number1和2都设为 nums[0]，把count1和2都设为 0 而非 1 ！！
+       // 然后下面的for loop里，从 i=0 开始，而非从 i=1 开始 ！！
+       // 在 i=0 那里，只把 count1 +1，不要把 count2 也 +1 了
+    	int number1 = nums[0], number2 = nums[0], count1 = 0, count2 = 0;
     	
        for (int i = 0; i < len; i++) {
               
