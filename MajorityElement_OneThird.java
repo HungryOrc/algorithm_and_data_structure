@@ -1,8 +1,12 @@
 /* Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times. 
 The algorithm should run in linear time and in O(1) space. */
 
-// 思路：https://gregable.com/2013/10/majority-vote-algorithm-find-majority.html
 
+// 参考 Majority Element_One Half 那一题 ！！！
+
+// 方法1：对消的方法
+// 思路：https://gregable.com/2013/10/majority-vote-algorithm-find-majority.html
+// Time: O(n), Space: O(1)
 public class Solution {
     
     public List<Integer> majorityElement(int[] nums) {
@@ -43,3 +47,15 @@ public class Solution {
     	return result;
     }
 }
+
+
+// 方法2：排序数组然后二分查找。也很巧妙！！！
+// 先排序数组，然后考察数组里位于 1/3 和 2/3 的这两个位置的数。
+// 首先，看从左到右1/3位置处的那个数，设为a，然后在整个数组里，用二分查找，寻找第一个a和最后一个a的位置，
+// 如果她们相隔的距离 >= 数组长度/3，则a就是我们要找的数。
+// 如果a不满足，就找2/3位置处的那个数，设为b，重复上面的做法，看b是否满足。如果b也不满足，则要找的数不存在。
+// Time: O(n logn + logn)，后面那个 logn 是（四次）二分查找所需的时间
+
+
+// 方法3：HashMap
+// Time: O(n), Space: O(n)
