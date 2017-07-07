@@ -5,7 +5,6 @@ The algorithm should run in linear time and in O(1) space. */
 // 参考 Majority Element_One Half 那一题
 
 // 方法1：对消的方法
-// 思路：https://gregable.com/2013/10/majority-vote-algorithm-find-majority.html
 // Time: O(n), Space: O(1)
 
 /* 思路：用别的数 “对消” 目前计数最 “冒尖” 的数 ！！！ 最后符合要求的数可能不止一个。
