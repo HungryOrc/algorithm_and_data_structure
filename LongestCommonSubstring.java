@@ -19,7 +19,8 @@ S = "aaaaa", T = "bbb", return "".  */
 dp[i][j] = 0,                       if S[i] != T[j]
          = dp[i - 1][j - 1] + 1,    if S[i] == T[j]
 
-最后取整个dp矩阵里的最大值为答案 max length。注意！不是取 dp[n - 1][m - 1]！    */
+最后取整个dp矩阵里的最大值为答案 max length。注意！不是取 dp[n - 1][m - 1]！   
+时间：O(nm)   */
 
 public class Solution {
   
