@@ -64,17 +64,12 @@ class ResultType {
 public class Solution {
  
 	public boolean isCousin(TreeNode root, TreeNode one, TreeNode two) {
-		TreeNode parent = new TreeNode(Integer.MIN_VALUE);
-		parent.right = root;
+		TreeNode parent = null;
  
 		ResultType rt1 = findNode(root, parent, 1, one);
 		ResultType rt2 = findNode(root, parent, 1, two);
 	 
-		if (rt1.level == rt2.level && rt1.parent != rt2.parent) {
-			return true;
-		} else {
-			return false;
-		}
+		return (rt1.level == rt2.level && rt1.parent != rt2.parent);
 	}
  
 	private ResultType findNode(TreeNode root, TreeNode parent, int curLevel, TreeNode target) {	
