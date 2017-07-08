@@ -1,7 +1,7 @@
-/* Find the longest common substring of two given strings.
+/* Find the longest common substring of two given strings S and T.
 
 Assumptions:
-The two given strings are not null
+The two given strings are not null or empty.
 
 Examples:
 S = “abcde”, T = “cdf”, the longest common substring of S and T is “cd”.
