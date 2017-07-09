@@ -25,7 +25,9 @@ public class Solution {
     
     int[] longest = new int[array.length];
     longest[0] = 1;
+    
     for (int i = 1; i < array.length; i++) {
+      
       if (array[i] > array[i - 1]) {
         longest[i] = longest[i - 1] + 1;
         right = i;
@@ -36,10 +38,11 @@ public class Solution {
           finalLeft = left;
           finalRight = right;
         }
-      } else { // array[i] <= array[i - 1]
-        left = i;
-        right = i;
-        longest[i] = 1;
+      } 
+      else { // array[i] <= array[i - 1]
+        left = i; // reset
+        right = i; // reset
+        longest[i] = 1; // reset
       }
     }
     
