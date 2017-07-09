@@ -22,13 +22,14 @@ public class Solution {
     int maxLength = 1;
     
     int[] longest = new int[array.length];
-    longest[0] = 1;
+    longest[0] = 1; // 注意！这个别忘了！
+    
     for (int i = 1; i < array.length; i++) {
       if (array[i] > array[i - 1]) {
         longest[i] = longest[i - 1] + 1;
         maxLength = Math.max(maxLength, longest[i]);
       } else {
-        longest[i] = 1;
+        longest[i] = 1; // 注意！默认设为 1！而非 0！
       }
     }
     
