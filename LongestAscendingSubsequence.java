@@ -16,7 +16,9 @@ DP数组里的元素 dp[i] 的意思是，原数组里，结束点的index <= i 
 dp[0] = 1，然后，每个dp[i]的默认值都是1，
 然后，对于每一个 j 属于 [0, i-1]，如果 array[j] < array[i]，就更新 dp[i] = Math.max(dp[j] + 1, dp[i])，
 注意！这里不是 dp[i] = dp[j] + 1！
-最后，更新 maxLength = Math.max(dp[i], maxLength)。最终的 maxLength 就是答案。   */
+最后，更新 maxLength = Math.max(dp[i], maxLength)。最终的 maxLength 就是答案。  
+
+时间：O(n^2)   */
 
 public class Solution {
   
