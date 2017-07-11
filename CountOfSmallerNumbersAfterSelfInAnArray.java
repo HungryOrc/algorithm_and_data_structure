@@ -12,7 +12,7 @@ Return the array [2, 1, 1, 0]. */
 // 从尾部开始做 + ArrayList + 二分查找
 // Ref: https://discuss.leetcode.com/topic/31173/my-simple-ac-java-binary-search-code
 /* Traverse from the BACK to the beginning of the array, maintain an sorted ArrayList of numbers that had been visited. 
-Use findIndex() to find the first element in the sorted ArrayList which is larger or equal to target number. 
+Use findIndex() to find the index of the 1st element in the sorted ArrayList which is larger or equal to target number. 
 For example, [5,2,3,6,1], when we reach 2, we have a sorted array[1,3,6], 
 findIndex() returns 1, which is the index where 2 should be inserted and is ALSO the number smaller than 2. 
 Then we insert 2 into the sorted array to form [1,2,3,6]. 
@@ -31,13 +31,17 @@ public class Solution {
             
             int numOfSmallerNumsAfterSelf = getThe1stNumThatIsBiggerOrEqualToTargetInAL(curNum, sortedAL);
             
+            // 前一个参数是插入的位置，后一个参数是插入的值
             sortedAL.add(numOfSmallerNumsAfterSelf, curNum);
+            
             result[i] = numOfSmallerNumsAfterSelf;
         }
         return Arrays.asList(result); // 注意这个直接从数组转到ArrayList的函数！
     }
     
     // Binary Search
+    // returns the index of the 1st number in the sorted arraylist that 
+    // is bigger or equal to the target number
     private int getThe1stNumThatIsBiggerOrEqualToTargetInAL(int target, List<Integer> sortedAL) {
         if (sortedAL.size() == 0) {
             return 0;
