@@ -44,9 +44,9 @@ public class Solution {
         boolean[][] canSumTo = new boolean[n + 1][capacity + 1];
         canSumTo[0][0] = true;
         
-        // 这里的i是指第几个item ！！！ 而非int[] sizes 里的index ！！！
+        // 这里的i是指第几个item ！！ 而非int[] sizes 里的index ！！
         for (int i = 1; i <= n; i++) {
-            int curItemSize = sizes[i - 1];
+            int curItemSize = sizes[i - 1]; // 所以这里不能忘了 -1 ！
             
             for (int sum = 0; sum <= capacity; sum++) {
                 
@@ -59,6 +59,7 @@ public class Solution {
             }
         }
         
+        // dp矩阵填完了，现在看到底最大可能的 total size 是多大
         for (int sum = capacity; sum >= 1; sum--) {
             if (canSumTo[n][sum]) {
                 return sum;
