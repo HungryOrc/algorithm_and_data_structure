@@ -23,6 +23,15 @@ Return: dp[n - 1][capacity of the backpack]
 Time: O(n * capacity), 其中n是items的个数
 Space: O(n * capacity)。可以优化为 O(capacity)，因为dp矩阵里，其实每一次loop只用一行就够了   */
 
+
+
+两个特殊情况 ！！！
+
+一个是 max + 1 = -1，一个是 size - curSize < 0 ！！！
+
+
+
+
 public class Solution {
      
     public int backPack(int capacity, int[] sizes) {
