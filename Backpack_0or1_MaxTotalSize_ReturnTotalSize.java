@@ -24,7 +24,7 @@ Base Case 2: size和为0的情况，对于任何多个items，都是可以的！
 Induction Rule:
 dp[i][s] = dp[i - 1][s] || dp[i - 1][s - sizes[i]]
 其中 dp[i - 1][s] 的意思是：i之前的那些items已经可以组成总和正好为 s 的组合了，item i 不参与的话，自然也还是和为s的组合；
-dp[i - 1][s - sizes[i]] 的意思是：i之前的那些items组成了总和证号为 s - sizes[i] 的组合，那么 item i 参与进来后，自然正好就是和为s。
+dp[i - 1][s - sizes[i]] 的意思是：i之前的那些items组成了总和正好为 s - sizes[i] 的组合，那么 item i 参与进来后，自然正好就是和为s。
 
 Return:
 for (int sum = capacity; sum >= 1; sum--)，如果 dp[n - 1][sum] == true，则返回 sum
