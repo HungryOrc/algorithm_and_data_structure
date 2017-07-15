@@ -24,14 +24,6 @@ Time: O(n * capacity), 其中n是items的个数
 Space: O(n * capacity)。可以优化为 O(capacity)，因为dp矩阵里，其实每一次loop只用一行就够了   */
 
 
-
-两个特殊情况 ！！！
-
-一个是 max + 1 = -1，一个是 size - curSize < 0 ！！！
-
-
-
-
 public class Solution {
      
     public int backPack(int capacity, int[] sizes) {
@@ -40,12 +32,16 @@ public class Solution {
         int[][] canSumTo = new int[n][capacity + 1];
         
         // base case 1
+        for (int i = 0; i < n; i++) {
+            canSumTo[0][i] = Integer.MAX_VALUE;
+        }
         if (sizes[0] <= capacity) {
             canSumTo[0][sizes[0]] = 1;
         }
+        
         // base case 2
         for (int i = 0; i < n; i++) {
-            canSumTo[i][0] = 1;
+            canSumTo[i][0] = 0;
         }
         
         // 从第二个item（即i=1）开始
@@ -54,8 +50,9 @@ public class Solution {
             
             for (int sum = 1; sum <= capacity; sum++) {
                 
-                if (sum - curItemSize >= 0) { // 别忘了检查越界 ！！！
-                    canSumTo[i][sum] = canSumTo[i - 1][sum] + canSumTo[i - 1][sum - curItemSize];
+                if (sum - curItemSize >= 0 && // 别忘了检查越界 ！！！
+                    canSumTo[i - 1][sum - curItemSize] != Integer.MAX_VALUE) { // 如果等于正无限，就别再 +1 了 ！！！
+                    canSumTo[i][sum] = Math.min(canSumTo[i - 1][sum], canSumTo[i - 1][sum - curItemSize] + 1);
                 } else {
                     canSumTo[i][sum] = canSumTo[i - 1][sum]; // 这种情况下就不加后面那项了 ！！！
                 }
