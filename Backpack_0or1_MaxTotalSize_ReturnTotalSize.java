@@ -40,8 +40,9 @@ public class Solution {
         boolean[][] canSumTo = new boolean[n][capacity + 1];
         
         // base case 1
-        if (sizes[0] <= capacity)
+        if (sizes[0] <= capacity) {
             canSumTo[0][sizes[0]] = true;
+        }
         // base case 2
         for (int i = 0; i < n; i++) {
             canSumTo[i][0] = true;
