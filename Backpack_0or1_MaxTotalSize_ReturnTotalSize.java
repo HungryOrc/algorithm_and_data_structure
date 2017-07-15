@@ -56,7 +56,7 @@ public class Solution {
                 
                 if (canSumTo[i - 1][sum]) {
                     canSumTo[i][sum] = true;
-                } else if (sum - curItemSize >= 0 && sum - curItemSize <= capacity && // 别忘了检查越界 ！！！
+                } else if (sum - curItemSize >= 0 && // 别忘了检查越界 ！！！
                     canSumTo[i - 1][sum - curItemSize]) {
                     canSumTo[i][sum] = true;
                 }
