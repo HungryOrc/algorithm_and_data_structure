@@ -1,5 +1,6 @@
-/* 这一类题也叫 “Naive 0/1背包问题”，因为每个item最多取一次，所谓Naive的意思是item只有一个属性比如size或者weight。
-每个item有自己的size（或者weight）。背包有最大的容量（对于size或weight）。求最少用多少个items，可以正好填满这个背包。*/
+/* 这一类题也叫 “Naive 0/1背包问题”，因为每个item最多取一次，
+所谓Naive的意思是item只有一个属性比如size或者weight。
+背包有最大的容量（对于size或weight）。求最少用多少个items，可以正好填满这个背包。*/
 
 /* 思路：二维 DP
 int dp[i][s] 的意思是：使用数组里index为0到i的items中的任意几个（可以一个也不选，也可以从中任选几个），
