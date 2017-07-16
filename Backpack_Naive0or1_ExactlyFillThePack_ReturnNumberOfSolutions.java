@@ -1,4 +1,4 @@
-/* 这一类题也叫 “Naive背包问题”，或 “0/1背包问题”，因为每个item最多取一次，所谓Naive的意思是item只有一个属性比如size或者weight。
+/* 这一类题也叫 “Naive 0/1背包问题”，因为每个item最多取一次，所谓Naive的意思是item只有一个属性比如size或者weight。
 每个item有自己的size（或者weight）。背包有最大的容量（对于size或weight）。求一共有多少种不同的装载方法，来正好填满这个背包。*/
 
 /* 思路：二维 DP
