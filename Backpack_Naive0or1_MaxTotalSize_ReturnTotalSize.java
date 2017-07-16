@@ -1,5 +1,6 @@
-/* 这一类题也叫 “Naive 0/1背包问题”，因为每个item最多取一次，所谓Naive的意思是item只有一个属性比如size或者weight。
-每个item有自己的size（或者weight）。背包有最大的容量（对于size或weight）。求最大可能的总装载量（对于size或weight）。
+/* 这一类题也叫 “Naive 0/1背包问题”，因为每个item最多取一次，
+所谓Naive的意思是item只有一个属性比如size或者weight。
+背包有最大的容量（对于size或weight）。求最大可能的总装载量（对于size或weight）。
 
 题目出处：http://www.lintcode.com/en/problem/backpack/
 Given n items with size Ai, an integer m denotes the size of a backpack. How full you can fill this backpack?
