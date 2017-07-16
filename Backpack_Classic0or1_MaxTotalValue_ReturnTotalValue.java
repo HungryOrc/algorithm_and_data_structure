@@ -19,8 +19,14 @@ dp[i][s] = max(dp[i - 1][s], dp[i - 1][s - sizes[i]] + values[i])
 其中 dp[i - 1][s] 的意思是：i之前的那些items已经可以组成总和正好为 s 的组合了，item i 不参与的话，自然也还是和为s的组合；
 dp[i - 1][s - sizes[i]] 的意思是：i之前的那些items组成了总和正好为 s - sizes[i] 的组合，那么 item i 参与进来后，自然正好就是和为s。
 
-Return: dp[n - 1][capacity of the backpack]
-
+Return:
+注意，这里不是返回 dp[n - 1][capacity] ！！ 
+因为dp矩阵的第二维的意义是“正好”总size为某某值 ！！ 而获得总value最大时的总size未必是capacity ！！！
+    for (int sum = 1; sum <= capacity; sum++) {
+        maxTotalValue = Math.max(maxTotalValue, dp[n - 1][sum]);
+    }
+    return maxTotalValue;
+        
 Time: O(n * capacity), 其中n是items的个数
 Space: O(n * capacity)。可以优化为 O(capacity)，因为dp矩阵里，其实每一次loop只用一行就够了   */
 
@@ -52,7 +58,7 @@ public class Solution {
             for (int sum = 1; sum <= capacity; sum++) {
                 
                 if (sum - curItemSize >= 0 && // 别忘了检查越界 ！！！
-                    canSumTo[i - 1][sum - curItemSize] != Integer.MIN_VALUE) { // 如果等于正无限，就别再 +1 了 ！！！
+                    canSumTo[i - 1][sum - curItemSize] != Integer.MIN_VALUE) { // 如果等于无限小
                     canSumTo[i][sum] = Math.max(canSumTo[i - 1][sum], canSumTo[i - 1][sum - curItemSize] + values[i]);
                 } else {
                     canSumTo[i][sum] = canSumTo[i - 1][sum]; // 这种情况下就不加后面那项了 ！！！
@@ -60,6 +66,10 @@ public class Solution {
             }
         }
         
-        return dp[n - 1][capacity];
+        int maxTotalValue = 0;
+        for (int sum = 1; sum <= capacity; sum++) {
+            maxTotalValue = Math.max(maxTotalValue, dp[n - 1][sum]);
+        }
+        return maxTotalValue;
     }
 }
