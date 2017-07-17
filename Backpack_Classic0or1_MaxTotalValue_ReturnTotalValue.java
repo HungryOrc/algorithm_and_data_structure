@@ -10,7 +10,7 @@ int dp[i][s] 的意思是：使用数组里index为0到i的items中的任意几�
 Base Cases:
 Base Case 1: 对于数组里的第一个item，
     if(sizes[0] <= capacity)，canSumTo[0][sizes[0]] = values[0]
-    其他的 canSumTo[0][s != sizes[0]] 都 = 正无穷小，用这种方式来表示根本不可能完成
+    其他的 canSumTo[0][s != sizes[0]] 都 = 0，因为不可能实现这些size，所以自然所能带来的总value也都是 0
 Base Case 2: size和为0的情况，对于任何多个items，都是可以的！！ 即什么都不放 ！！ 所以都置为 0，即不放任何item，自然value和为 0
     for (int i = 0; i < n; i++)，canSumTo[i][0] = 0;
     
@@ -39,14 +39,11 @@ public class Solution {
         int[][] canSumTo = new int[n][capacity + 1];
         
         // base case 1
-        for (int i = 0; i < n; i++) {
-            canSumTo[0][i] = Integer.MIN_VALUE;
-        }
         if (sizes[0] <= capacity) {
             canSumTo[0][sizes[0]] = value[0];
         }
         
-        // base case 2
+        // base case 2 ---- 这个其实可以不写，因为默认都是 0. 写了只是更能解释清楚思路
         for (int i = 0; i < n; i++) {
             canSumTo[i][0] = 0;
         }
@@ -57,8 +54,7 @@ public class Solution {
             
             for (int sum = 1; sum <= capacity; sum++) {
                 
-                if (sum - curItemSize >= 0 && // 别忘了检查越界 ！！！
-                    canSumTo[i - 1][sum - curItemSize] != Integer.MIN_VALUE) { // 如果等于无限小
+                if (sum - curItemSize >= 0) { // 别忘了检查越界 ！！！
                     canSumTo[i][sum] = Math.max(canSumTo[i - 1][sum], canSumTo[i - 1][sum - curItemSize] + values[i]);
                 } else {
                     canSumTo[i][sum] = canSumTo[i - 1][sum]; // 这种情况下就不加后面那项了 ！！！
