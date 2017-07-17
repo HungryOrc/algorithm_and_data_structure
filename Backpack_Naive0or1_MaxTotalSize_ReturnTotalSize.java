@@ -18,9 +18,9 @@ boolean dp[i][s] 的意思是：使用数组里index为0到i的items中的任意
 所以 boolean dp[][] = new boolean[number of items][capacity of the backpack + 1]。
 
 Base Cases:
-Base Case 1: 对于数组里的第一个item，if(sizes[0] <= capacity)，canSumTo[0][sizes[0]] = true;
+Base Case 1: 对于数组里的第一个item，if(sizes[0] <= capacity)，dp[0][sizes[0]] = true;
 Base Case 2: size和为0的情况，对于任何多个items，都是可以的！！ 即什么都不放 ！！
-    for (int i = 0; i < n; i++)，canSumTo[i][0] = true;
+    for (int i = 0; i < n; i++)，dp[i][0] = true;
 
 Induction Rule:
 dp[i][s] = dp[i - 1][s] || dp[i - 1][s - sizes[i]]
@@ -38,15 +38,15 @@ public class Solution {
     public int backPack(int capacity, int[] sizes) {
         int n = sizes.length;
         
-        boolean[][] canSumTo = new boolean[n][capacity + 1];
+        boolean[][] dp = new boolean[n][capacity + 1];
         
         // base case 1
         if (sizes[0] <= capacity) {
-            canSumTo[0][sizes[0]] = true;
+            dp[0][sizes[0]] = true;
         }
         // base case 2
         for (int i = 0; i < n; i++) {
-            canSumTo[i][0] = true;
+            dp[i][0] = true;
         }
         
         // 从第二个item（即i=1）开始
@@ -55,17 +55,17 @@ public class Solution {
             
             for (int sum = 1; sum <= capacity; sum++) {
                 
-                if (canSumTo[i - 1][sum]) {
-                    canSumTo[i][sum] = true;
+                if (dp[i - 1][sum]) {
+                    dp[i][sum] = true;
                 } else if (sum - curItemSize >= 0 && // 别忘了检查越界 ！！！
-                    canSumTo[i - 1][sum - curItemSize]) {
-                    canSumTo[i][sum] = true;
+                    dp[i - 1][sum - curItemSize]) {
+                    dp[i][sum] = true;
                 }
             }
         }
         
         for (int sum = capacity; sum >= 1; sum--) {
-            if (canSumTo[n - 1][sum]) {
+            if (dp[n - 1][sum]) {
                 return sum;
             }
         }
