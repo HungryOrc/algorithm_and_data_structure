@@ -9,10 +9,10 @@ int dp[i][s] 的意思是：使用数组里index为0到i的items中的任意几�
 
 Base Cases:
 Base Case 1: 对于数组里的第一个item，
-    if(sizes[0] <= capacity)，canSumTo[0][sizes[0]] = 1
-    其他的 canSumTo[0][s != sizes[0]] 都 = 正无穷大，用这种方式来表示根本不可能完成
+    if(sizes[0] <= capacity)，dp[0][sizes[0]] = 1
+    其他的 dp[0][s != sizes[0]] 都 = 正无穷大，用这种方式来表示根本不可能完成
 Base Case 2: size和为0的情况，对于任何多个items，都是可以的！！ 即什么都不放 ！！ 所以都置为 0，即不放任何item
-    for (int i = 0; i < n; i++)，canSumTo[i][0] = 0;
+    for (int i = 0; i < n; i++)，dp[i][0] = 0;
     
 Induction Rule:
 dp[i][s] = min(dp[i - 1][s], dp[i - 1][s - sizes[i]] + 1)
@@ -30,19 +30,19 @@ public class Solution {
     public int backPack(int capacity, int[] sizes) {
         int n = sizes.length;
         
-        int[][] canSumTo = new int[n][capacity + 1];
+        int[][] dp = new int[n][capacity + 1];
         
         // base case 1
         for (int i = 0; i < n; i++) {
-            canSumTo[0][i] = Integer.MAX_VALUE;
+            dp[0][i] = Integer.MAX_VALUE;
         }
         if (sizes[0] <= capacity) {
-            canSumTo[0][sizes[0]] = 1;
+            dp[0][sizes[0]] = 1;
         }
         
         // base case 2
         for (int i = 0; i < n; i++) {
-            canSumTo[i][0] = 0;
+            dp[i][0] = 0;
         }
         
         // 从第二个item（即i=1）开始
@@ -52,10 +52,10 @@ public class Solution {
             for (int sum = 1; sum <= capacity; sum++) {
                 
                 if (sum - curItemSize >= 0 && // 别忘了检查越界 ！！！
-                    canSumTo[i - 1][sum - curItemSize] != Integer.MAX_VALUE) { // 如果等于正无限，就别再 +1 了 ！！！
-                    canSumTo[i][sum] = Math.min(canSumTo[i - 1][sum], canSumTo[i - 1][sum - curItemSize] + 1);
+                    dp[i - 1][sum - curItemSize] != Integer.MAX_VALUE) { // 如果等于正无限，就别再 +1 了 ！！！
+                    dp[i][sum] = Math.min(dp[i - 1][sum], dp[i - 1][sum - curItemSize] + 1);
                 } else {
-                    canSumTo[i][sum] = canSumTo[i - 1][sum]; // 这种情况下就不加后面那项了 ！！！
+                    dp[i][sum] = dp[i - 1][sum]; // 这种情况下就不加后面那项了 ！！！
                 }
             }
         }
