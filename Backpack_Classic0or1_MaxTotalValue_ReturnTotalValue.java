@@ -1,6 +1,6 @@
 /* 这一类题也叫 “Classic 0/1背包问题”，因为每个item最多取一次，
 所谓Classic的意思是每个item有不止一个属性，比如既有size又有value。
-背包有最大的容量（对于size或weight）。求最少用多少个items，可以正好填满这个背包。*/
+背包有最大的容量（对于size或weight）。求怎么填能获得最大的总value。背包不必被填满。 */
 
 /* 思路：二维 DP
 int dp[i][s] 的意思是：使用数组里index为0到i的items中的任意几个（可以一个也不选，也可以从中任选几个），
