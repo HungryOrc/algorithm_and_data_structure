@@ -29,6 +29,7 @@ for (int i = 0; i < n; i++) {
 }
         
 Induction Rule: 注意 ！！ 这一题的递推公式非常特别 ！！！
+这个做法相当于，每一次要添入一个新的item到组合里去的时候，把所有的存在的items全都试一遍 ！！！
 for (int sum = 1; sum <= capacity; sum++) {
     // 从第二个group（即i=1）开始
     for (int i = 1; i < n; i++) {
