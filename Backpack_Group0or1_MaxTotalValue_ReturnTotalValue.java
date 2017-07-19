@@ -16,14 +16,37 @@ Base Case 2: size和为0的情况，对于任何多个groups，都是可以的�
     for (int i = 0; i < n; i++)，dp[i][0] = 0;
     
 Induction Rule: 这一题的递推
-dp[i][s] = max(dp[i - 1][s], dp[i - 1][s - sizes[i]] + values[i])
-其中 dp[i - 1][s] 的意思是：i之前的那些items已经可以组成总和正好为 s 的组合了，item i 不参与的话，自然也还是和为s的组合；
-dp[i - 1][s - sizes[i]] 的意思是：i之前的那些items组成了总和正好为 s - sizes[i] 的组合，那么 item i 参与进来后，自然正好就是和为s。
+for (int i = 0; i < n; i++) {
+    List<Integer> curSizeList = sizes[i];
+    List<Integer> curValueList = values.get[i];
 
+    for (int j = 0; j < curSizeList.size(); j++) {
+        int curSize = curSizeList.get(j);
+        int curValue = curValueList.get(j);
+
+        dp[0][curSize] = curValue;
+    }
+}
+        
 Induction Rule: 注意 ！！ 这一题的递推公式非常特别 ！！！
+for (int sum = 1; sum <= capacity; sum++) {
+    // 从第二个group（即i=1）开始
+    for (int i = 1; i < n; i++) {
+        List<Integer> curSizeList = sizes[i];
+        List<Integer> curValueList = values.get[i];
 
+        for (int j = 0; j < curSizeList.size(); j++) {
+            int curSize = curSizeList.get(j);
+            int curValue = curValueList.get(j);
 
-
+            if (sum - curSize >= 0) {
+                dp[i][sum] = Math.max(dp[i - 1][sum], dp[i - 1][sum - curSize] + curValue);
+            } else {
+                dp[i][sum] = Math.max(dp[i][sum], dp[i - 1][sum]);
+            }
+        }
+    }
+}
 
 Time: O(n * m * capacity), 其中n是groups的个数，m是平均每个group里面的items的个数
 Space: O(n * capacity)。可以优化为 O(capacity)，因为dp矩阵里，其实每一次loop只用一行就够了   */
@@ -37,23 +60,39 @@ public class Solution {
         int[][] dp = new int[n][capacity + 1];
         
         // base case 1
-        for ()
+        for (int i = 0; i < n; i++) {
+            List<Integer> curSizeList = sizes[i];
+            List<Integer> curValueList = values.get[i];
+        
+            for (int j = 0; j < curSizeList.size(); j++) {
+                int curSize = curSizeList.get(j);
+                int curValue = curValueList.get(j);
+                
+                dp[0][curSize] = curValue;
+            }
+        }
         
         // base case 2 ---- 这个其实可以不写，因为默认都是 0. 写了只是更能解释清楚思路
         for (int i = 0; i < n; i++) {
             dp[i][0] = 0;
         }
         
-        // 从第二个item（即i=1）开始
-        for (int i = 1; i < n; i++) {
-            int curItemSize = sizes[i];
+        for (int sum = 1; sum <= capacity; sum++) {
             
-            for (int sum = 1; sum <= capacity; sum++) {
-                
-                if (sum - curItemSize >= 0) { // 别忘了检查越界 ！！！
-                    dp[i][sum] = Math.max(dp[i - 1][sum], dp[i - 1][sum - curItemSize] + values[i]);
-                } else {
-                    dp[i][sum] = dp[i - 1][sum]; // 这种情况下就不加后面那项了 ！！！
+            // 从第二个group（即i=1）开始
+            for (int i = 1; i < n; i++) {
+                List<Integer> curSizeList = sizes[i];
+                List<Integer> curValueList = values.get[i];
+
+                for (int j = 0; j < curSizeList.size(); j++) {
+                    int curSize = curSizeList.get(j);
+                    int curValue = curValueList.get(j);
+
+                    if (sum - curSize >= 0) {
+                        dp[i][sum] = Math.max(dp[i - 1][sum], dp[i - 1][sum - curSize] + curValue);
+                    } else {
+                        dp[i][sum] = Math.max(dp[i][sum], dp[i - 1][sum]);
+                    }
                 }
             }
         }
