@@ -32,38 +32,39 @@ Space: O(n * maxSize * maxWeight)。可以优化为 O(maxSize * maxWeight)，因
 
 public class Solution {
      
-    public int backPack(int capacity, int[] sizes, int[] values) {
+    public int backPack(int maxSize, int maxWeight, int[] sizes, int[] weights, int[] values) {
         int n = sizes.length;
         
-        int[][] dp = new int[n][capacity + 1];
+        int[][][] dp = new int[n][maxSize + 1][maxWeight + 1];
         
-        // base case 1
-        if (sizes[0] <= capacity) {
-            dp[0][sizes[0]] = value[0];
-        }
-        
-        // base case 2 ---- 这个其实可以不写，因为默认都是 0. 写了只是更能解释清楚思路
-        for (int i = 0; i < n; i++) {
-            dp[i][0] = 0;
+        // base case
+        if(sizes[0] <= maxSize && weights[0] <= maxWeight) {
+            dp[0][sizes[0]][weights[0]] = values[0];
         }
         
         // 从第二个item（即i=1）开始
         for (int i = 1; i < n; i++) {
-            int curItemSize = sizes[i];
+            int curSize = sizes[i];
+            int curWeight = weights[i];
             
-            for (int sum = 1; sum <= capacity; sum++) {
+            for (int sumS = 1; sumS <= maxSize; sumS ++) {
+                for (int sumW = 1; sumW <= maxWeight; sumW ++) {
                 
-                if (sum - curItemSize >= 0) { // 别忘了检查越界 ！！！
-                    dp[i][sum] = Math.max(dp[i - 1][sum], dp[i - 1][sum - curItemSize] + values[i]);
-                } else {
-                    dp[i][sum] = dp[i - 1][sum]; // 这种情况下就不加后面那项了 ！！！
+                    if (sumS - curSize >= 0 && sumW - curWeight >= 0) { // 别忘了检查越界 ！！！
+                        dp[i][sumS][sumW] = Math.max(dp[i - 1][sumS][sumW], 
+                                                     dp[i - 1][sumS - curSize][sumW - curWeight] + values[i]);
+                    } else {
+                        dp[i][sumS][sumW] = dp[i - 1][sumS][sumW]; // 这种情况下就不加后面那项了 ！！！
+                    }
                 }
             }
         }
         
         int maxTotalValue = 0;
-        for (int sum = 1; sum <= capacity; sum++) {
-            maxTotalValue = Math.max(maxTotalValue, dp[n - 1][sum]);
+        for (int sumS = 1; sumS <= maxSize; sumS ++) {
+            for (int sumW = 1; sumW <= maxWeight; sumW ++) {
+                maxTotalValue = Math.max(maxTotalValue, dp[n - 1][sumS][sumW]);
+            }
         }
         return maxTotalValue;
     }
