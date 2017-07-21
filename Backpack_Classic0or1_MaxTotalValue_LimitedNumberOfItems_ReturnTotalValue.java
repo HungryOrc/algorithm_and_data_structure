@@ -3,20 +3,18 @@
 求怎么填能获得最大的总value。背包不必被填满。 */
 
 /* 思路：三维 DP
-int dp[i][j][s] 的意思是：使用 index为0到i 的 items 中的 j 个（总共最多能选用 m 个items），
+int dp[i][j][s] 的意思是：使用 index为0到i 的 items 中的 正好j个items（总共最多能选用 m 个items），
 正好组成总 size = s 的前提下，最大可能的总 value 是多少。
 所以 int dp[][][] = new int[number of items][m + 1][capacity of the backpack + 1]。
 
 Base Cases: 对于只选取了1个item的情况（设一共有n个items）：
     for (int i = 0; i < n; i++) {
-        找到从index=0到i的所有items之中，最高value的那个，比如说是item j：
-        if (size[j] < capacity)
-            dp[i][1][sizes[j]] = values[j];
+        if (size[i] <= capacity)
+            dp[i][1][sizes[i]] = index为0到i的items里,size等于sizes[i]的items里,value最大的那个item的value;
     }
     
 Induction Rule:
-
-
+dp[i][j][sum] = Math.max(dp[i - 1][j][sum], dp[i - 1][j - 1][sum - curSize] + curValue);
 
 Return:
 注意，这里不是返回 dp[n - 1][m][capacity] ！！ 
@@ -32,38 +30,50 @@ Space: O(n * m * capacity)。可以优化为 O(m * capacity)   */
 
 public class Solution {
      
-    public int backPack(int capacity, int[] sizes, int[] values) {
+    public int backPack(int capacity, int m, int[] sizes, int[] values) {
         int n = sizes.length;
         
-        int[][] dp = new int[n][capacity + 1];
+        int[][][] dp = new int[n][m + 1][capacity + 1];
         
-        // base case 1
-        if (sizes[0] <= capacity) {
-            dp[0][sizes[0]] = value[0];
+        // base case：只取1个item的情况
+        // 只取index=0的item
+        if (sizes[0] <= capacity) { // 别忘了size不可超过capacity ！
+            dp[0][1][sizes[0]] = values[0];
         }
-        
-        // base case 2 ---- 这个其实可以不写，因为默认都是 0. 写了只是更能解释清楚思路
-        for (int i = 0; i < n; i++) {
-            dp[i][0] = 0;
+        // 在index=0到i的items里取一个item
+        for (int i = 1; i < n; i++) {
+            if (sizes[i] <= capacity) { // 别忘了size不可超过capacity ！
+                dp[i][1][sizes[i]] = Math.max(values[i], dp[i - 1][1][sizes[i]]);
+            }
         }
         
         // 从第二个item（即i=1）开始
         for (int i = 1; i < n; i++) {
-            int curItemSize = sizes[i];
+            int curSize = sizes[i];
+            int curValue = values[i];
             
-            for (int sum = 1; sum <= capacity; sum++) {
+            // 从取2个items开始
+            // 注意 ！ 别忘了，取几个items，不能超过现在能用的items有几个 ！！！
+            // 现在能用的items是index=0到i的items，即有 i+1 个items可用，那么j就必须 <= i+1 ！！！
+            for (int j = 2; j <= i + 1 && j <= m; j++) {
+            
+                for (int sum = 1; sum <= capacity; sum++) {
                 
-                if (sum - curItemSize >= 0) { // 别忘了检查越界 ！！！
-                    dp[i][sum] = Math.max(dp[i - 1][sum], dp[i - 1][sum - curItemSize] + values[i]);
-                } else {
-                    dp[i][sum] = dp[i - 1][sum]; // 这种情况下就不加后面那项了 ！！！
+                    if (sum - curItemSize >= 0) { // 别忘了检查越界 ！！！
+                        dp[i][j][sum] = Math.max(dp[i - 1][j][sum], 
+                                                 dp[i - 1][j - 1][sum - curSize] + curValue);
+                    } else {
+                        dp[i][j][sum] = dp[i - 1][j][sum]; // 这种情况下就不加后面那项了 ！！！
+                    }
                 }
             }
         }
         
         int maxTotalValue = 0;
         for (int sum = 1; sum <= capacity; sum++) {
-            maxTotalValue = Math.max(maxTotalValue, dp[n - 1][sum]);
+            for (int j = 1; j <= m; j ++) {
+                maxTotalValue = Math.max(maxTotalValue, dp[n - 1][j][sum]);
+            }
         }
         return maxTotalValue;
     }
