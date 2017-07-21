@@ -5,7 +5,6 @@ public class SingleNumber {
     // 方法：按位“异或”
     // Runtime: O(n), Space: no extra space
     // Reference: https://discuss.leetcode.com/topic/1916/my-o-n-solution-using-xor
-    // 
     
     /* 关于异或的几个常用式子：A ^ A = 0, A ^ B = B ^ A, A ^ A ^ B = A ^ B ^ A = B, (A^B) ^ C = A ^ (B^C)
     // 
@@ -39,14 +38,11 @@ public class SingleNumber {
     // A ^ C ^ C ^ B ^ A = B
     // A ^ C ^ D ^ C ^ B ^ D ^ A = ((A^C)^D) ^ C ^ B ^ D ^ A = D ^(A^C)^C^B ^ D ^ A = D ^ (A^C^C^B) ^ D ^ A = A^C^C^B ^ A = B
     */ 
-    public int findSingleNumber_ByBitwise (int[] givenNums)
-    {        
+    public int findSingleNumber_ByBitwise (int[] givenNums) {        
         int singleNumber = givenNums[0];
-        
-        for (int i = 1; i < givenNums.length; i ++)
+        for (int i = 1; i < givenNums.length; i ++) {
             singleNumber ^= givenNums[i];
-            
+        }
         return singleNumber;
-        
     }
 }
