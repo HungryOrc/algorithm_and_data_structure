@@ -59,7 +59,7 @@ public class Solution {
             
                 for (int sum = 1; sum <= capacity; sum++) {
                 
-                    if (sum - curItemSize >= 0) { // 别忘了检查越界 ！！！
+                    if (sum - curSize >= 0) { // 别忘了检查越界 ！！！
                         dp[i][j][sum] = Math.max(dp[i - 1][j][sum], 
                                                  dp[i - 1][j - 1][sum - curSize] + curValue);
                     } else {
