@@ -1,5 +1,13 @@
 // 这一题基于 Sort Three Colors 而来，更多的基本思路和解释请看那一题的注释
 
+
+// 方法0：用类似于 Counting Sort 的方法
+
+
+// 方法1：先用 Sort 3 Colors 的方法，把整个数组sort一遍，忽略其中的一种颜色。然后再sort这最后一种颜色
+
+
+// 方法2
 public class SortColors {
 
     // 四个颜色的标志数值分别为：1, 2, 3, 4。每一种颜色都可能存在0个或任意个
