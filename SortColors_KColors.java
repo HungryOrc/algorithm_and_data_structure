@@ -9,6 +9,10 @@ Challenge
 A rather straight forward solution is a two-pass algorithm using counting sort. That will cost O(k) extra memory. 
 Can you do it without using extra memory? */
 
+
+// 方法0：用类似于 Counting Sort 的方法
+
+
 // 方法1：朴素的 quick sort 方法。速度会稍微低一点
 class Solution {
     
