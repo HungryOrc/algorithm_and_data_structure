@@ -15,10 +15,64 @@ For k = 3, you should return: 3->2->1->4->5
 *     ListNode(int x) { val = x; }
 * } */
 
+
+// 方法1：Iteration + Recursion 很经典的思路！！ 记下来 ！！！
+/* 思路：
+1. 将每k个nodes作为一组，看成一个单独的链表，记录其 翻转前的 prev 和 next
+2. 找到k个nodes组成了一组后，将此链表翻转。然后记录它 翻转后的 head 和 tail
+    翻转前的 prev.next = 翻转后的 head;
+    翻转后的 tail.next = 翻转前的 next;
+3. 将 prev 和 cur 后移
+    下一组的 prev = 翻转后的 tail;
+    下一组的 cur = 翻转后的 tail.next; */
+
 public class Solution {
     
-    // 我自己的方法！
-    public ListNode reverseKGroup(ListNode head, int k) {
+    public Node reverseByGroupOfK(Node head, int k) {
+        if (k <= 1) {
+            return head;
+        }
+        
+        Node dummyHead = new Node(-1);
+        dummyHead.next = head;
+        Node pre = dummyHead;
+        Node cur = head;
+        
+        int counter = k;
+        while (cur != null) {
+        
+            if (counter == 1) {
+                Node head2 = pre.next;
+                Node tail2 = cur.next;
+            
+                pre.next = null;
+                cur.next = null;
+                
+                // reverse the group of nodes
+                Node newHead = reverseByGroupOfK(head2);
+                pre.next = newHead;
+                head2.next = tail2;
+                
+                pre = head2;
+                cur = tail2;
+                
+                // reset counter
+                counter = k;
+            } 
+            else {
+                counter --;    
+                cur = cur.next;
+            }
+        }
+        return dummyHead.next;
+    }
+}
+
+
+// 方法2：我的方法
+public class Solution {
+    
+    public ListNode reverseByGroupOfK(ListNode head, int k) {
         if (head == null) {
             return null;
         }
