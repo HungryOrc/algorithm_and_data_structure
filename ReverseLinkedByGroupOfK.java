@@ -16,7 +16,7 @@ For k = 3, you should return: 3->2->1->4->5
 * } */
 
 
-// 方法1：Iteration + Recursion 很经典的思路！！ 记下来 ！！！
+// 方法1：Iteration 很经典的思路！！ 记下来 ！！！
 /* 思路：
 1. 将每k个nodes作为一组，看成一个单独的链表，记录其 翻转前的 prev 和 next
 2. 找到k个nodes组成了一组后，将此链表翻转。然后记录它 翻转后的 head 和 tail
@@ -35,36 +35,46 @@ public class Solution {
         
         Node dummyHead = new Node(-1);
         dummyHead.next = head;
-        Node pre = dummyHead;
+        
+        Node preOfEachGroup = dummyHead;
         Node cur = head;
         
         int counter = k;
+        
         while (cur != null) {
         
-            if (counter == 1) {
-                Node head2 = pre.next;
-                Node tail2 = cur.next;
-            
-                pre.next = null;
-                cur.next = null;
+            if (counter > 1) {
+                counter --;    
+                cur = cur.next; // 注意！这里只动了cur，没有动 preOfEachGroup ！！
+            }
+            // cur == k个nodes的最后一个了
+            else { 
+                // 本组nodes在reverse之前的head，同时也将是本组nodes在reverse之后的tail ！！
+                Node HeadOfThisGroupBeforeReverse = preOfEachGroup.next;
+                Node HeadOfNextGroupBeforeReverse = cur.next;
                 
-                // reverse the group of nodes
-                Node newHead = reverseByGroupOfK(head2);
-                pre.next = newHead;
-                head2.next = tail2;
+                // 翻转本组的 k个nodes
+                Node HeadOfThisGroupAfterReverse = reverseLinkedList(HeadOfThisGroupBeforeReverse);
                 
-                pre = head2;
-                cur = tail2;
+                // 前面连上
+                preOfEachGroup.next = HeadOfThisGroupAfterReverse;
+                // 后面连上
+                // 本组nodes在reverse之前的head，同时也将是本组nodes在reverse之后的tail ！！
+                HeadOfThisGroupBeforeReverse.next = HeadOfNextGroupBeforeReverse;
+                
+                // 各参考点后移
+                preOfEachGroup = HeadOfThisGroupBeforeReverse;
+                cur = HeadOfNextGroupBeforeReverse;
                 
                 // reset counter
                 counter = k;
-            } 
-            else {
-                counter --;    
-                cur = cur.next;
             }
         }
         return dummyHead.next;
+    }
+    
+    private void reverseLinkedList(Node head) {
+        ...
     }
 }
 
