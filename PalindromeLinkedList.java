@@ -12,7 +12,8 @@ public class Solution {
     
     // Ref: https://discuss.leetcode.com/topic/18675/easy-understand-java-solution-o-1-space-cost/20
     // 快慢两个指针，都从head出发，快的一次走两步，慢的一次走一步
-    // 注意：当fast走到末尾的null时，slow最终也到达“后一半”list的起始点
+    // 当fast走到末尾的null时，slow最终也到达“后一半”list的起始点
+    // 然后将后半段list反转！最后看前半段和反转后的后半段是否逐个元素都相等！
     public boolean isPalindrome(ListNode head) {
         if (head == null) {
             return true;
