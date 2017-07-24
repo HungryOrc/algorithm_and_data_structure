@@ -6,13 +6,12 @@ The new list should be made by splicing together the nodes of the first two list
  *     int val;
  *     ListNode next;
  *     ListNode(int x) { val = x; }
- * }
- */
+ * } */
+
 public class Solution {
     
-    // Recursion
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2)
-    {
+    // 方法1：Recursion
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         if (l1 == null) {
             return l2;
         }
@@ -31,9 +30,8 @@ public class Solution {
         return head;
     }
     
-    // Iteration
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2)
-    {
+    // 方法2：Iteration
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode dummyHead = new ListNode(-1);
         ListNode curNode = dummyHead;
         
@@ -57,5 +55,4 @@ public class Solution {
         
         return dummyHead.next;
     }
-    
 }
