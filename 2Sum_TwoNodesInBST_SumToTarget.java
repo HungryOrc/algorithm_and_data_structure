@@ -16,34 +16,40 @@ nodeRight一开始要指向整棵树的最大的node，即我们从root开始不
 public class Solution {
 
     public boolean pairOFNodesExist() {
-        Stack<TreeNode> stackLToR = new Stack<>();
-        Stack<TreeNode> stackRToL = new Stack<>();
+        Stack<TreeNode> stackLToR = new Stack<>(); // stack storing the nodes from left to right
+        Stack<TreeNode> stackRToL = new Stack<>(); // stack storing the nodes from right to left
       
-        boolean done1 = false, done2 = false;
+        // 当前的左node或者右node是否暂时性地确认了。注意这个boolean是暂时性的，会在true与false中不断地切换
+        boolean doneL = false, doneR = false;
       
-        TreeNode nodeL = root, nodeR = root;
-        int val1 = 0, val2 = 0;
+        TreeNode nodeL = root, nodeR = root; // 左node 和 右node
+        int valL = 0, valR = 0;
         
         while (true) {
+            
             // 操作左边
-            while (done1 == false) {
+            while (doneL == false) {
+                // 如果还没到最左下角，则一直往左下方走下去
                 if (nodeL != null) {
                     stackLToR.push(nodeL);
                     nodeL = nodeL.left;
-                } else { 
+                // 如果已经走到了左下角了
+                } else {
+                    // 如果stack已经空了，表明能试过的node都试过了
                     if (stackLToR.isEmpty()) {
-                        done1 = true;
+                        doneL = true;
+                    // 如果stack还没空，就pop一个node出来，然后到它的右子，然后在下一个while loop里不断地走那个右子的左下方
                     } else {
                         nodeL = stackLToR.pop();
-                        val1 = nodeL.val;
+                        valL = nodeL.val;
                         nodeL = nodeL.right;
-                        done1 = true;
+                        doneL = true;
                     }
                 }
             }
             
             // 操作右边
-            while (done2 == false) {
+            while (doneR == false) {
                 if (nodeR != null) {
                     stackRToL.push(nodeR);
                     nodeR = nodeR.right;
@@ -52,7 +58,7 @@ public class Solution {
                         doneR = true;
                     } else {
                         nodeR = stackRToL.pop();
-                        val2 = nodeR.val;
+                        valR = nodeR.val;
                         nodeR = nodeR.left;
                         doneR = true;
                     }
