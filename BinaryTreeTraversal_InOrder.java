@@ -17,11 +17,10 @@ return [1,3,2].
  *     TreeNode(int x) { val = x; }
  * } */
 
-public class Solution 
-{ 
-    // 方法1: Non Recursion (Recommended)，我的独创方式
-    public List<Integer> inorderTraversal(TreeNode root) 
-    {
+public class Solution {
+   
+    // 方法1: Non Recursion，我的独创方法
+    public List<Integer> inorderTraversal(TreeNode root) {
         ArrayList<Integer> result = new ArrayList<>();
         Stack<TreeNode> nodeStack = new Stack<>();
         
@@ -29,16 +28,15 @@ public class Solution
             return result;
         
         nodeStack.push(root);
-        while (!nodeStack.isEmpty())
-        {
+        while (!nodeStack.isEmpty()) {
             TreeNode curNode = nodeStack.pop();
            
             // 要么，这个node是leaf
             // 要么，这个node的左右子都已被纳入stack了
-            if (curNode.left==null && curNode.right==null)
+            if (curNode.left==null && curNode.right==null) {
                 result.add(curNode.val);
-            else
-            {
+            } 
+            else {
                 // 先把右边的放进stack，即最后处理右子树
                 if (curNode.right != null)
                     nodeStack.push(curNode.right);
@@ -65,6 +63,7 @@ public class Solution
         inorder(root, result);
         return result;
     }
+   
     private void inorder(TreeNode root, ArrayList<Integer> result) {
         if (root == null) {
             return;
@@ -91,7 +90,7 @@ public class Solution
         result.addAll(leftVals);
         result.add(root.val);
         result.addAll(rightVals);
+       
         return result;
     }
- 
 }
