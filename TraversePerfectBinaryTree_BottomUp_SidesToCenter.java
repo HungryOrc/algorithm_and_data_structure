@@ -11,35 +11,41 @@
 时间：O(n) + O(n/2) + O(n/4) + ... = O(2n)   */
 
 
-// 思路：还没有彻底理解透彻 ？？？？？？
+// 思路非常巧妙 ！！！ 要用心体会 ！！！
 public class Solution {
     
     public void printPerfectBinaryTree(TreeNode root) {
         int totalHeight = getHeight(root);
         
         // curLevel > 1 即只做到从上往下的第二行，第一行即整棵树的root在最后单另做 
-        for (int curLevel = totalHeight; curLevel > 1; curLevel --) {
-            printCurLevel(root.left, root.right, curLevel, 2);
+        // 下面的for loop是精华 ！！！
+        for (int printLevel = totalHeight; printLevel > 1; printLevel --) {
+            printCurLevel(root.left, root.right, printLevel, 2);
         }
         
         System.out.print(root.val);
         System.out.println();
     }
     
-    private void printCurLevel(TreeNode nodeL, TreeNode nodeR, int curLevel, int startLevel) {
-        if (curLevel == startLevel) {
+    // 精华　！！！
+    // printLevel是规定好不变的，这个函数的目的在于，随着curLevel的增大，不断地开枝散叶，
+    // 以够着在printLevel上的需要凑成一对来print的那一对又一对nodes，比如上面例子中的 4和7, 5和6
+    private void printCurLevel(TreeNode nodeL, TreeNode nodeR, int printLevel, int curLevel) {
+        if (printLevel == curLevel) {
             System.out.print(nodeL.val + " " + nodeR.val);
             System.out.println();
             return;
-        } else if (curLevel < startLevel) {
+        } else if (printLevel < curLevel) {
             return;
         }
         
+        // 向下走且往两边走的方向
         if (nodeL.left != null && nodeR.right != null) {
-            printCurLevel(nodeL.left, nodeR.right, curLevel, startLevel + 1);
+            printCurLevel(nodeL.left, nodeR.right, printLevel, curLevel + 1);
         }
+        // 向下走且往中间走的方向
         if (nodeL.right != null && nodeR.left != null) {
-            printCurLevel(nodeL.right, nodeR.left, curLevel, startLevel + 1);
+            printCurLevel(nodeL.right, nodeR.left, printLevel, curLevel + 1);
         }
     }
     
