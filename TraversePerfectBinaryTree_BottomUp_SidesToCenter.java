@@ -17,6 +17,7 @@ public class Solution {
     public void printPerfectBinaryTree(TreeNode root) {
         int totalHeight = getHeight(root);
         
+        // curLevel > 1 即只做到从上往下的第二行，第一行即整棵树的root在最后单另做 
         for (int curLevel = totalHeight; curLevel > 1; curLevel --) {
             printCurLevel(root.left, root.right, curLevel, 2);
         }
