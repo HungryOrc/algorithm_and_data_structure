@@ -48,14 +48,14 @@ public class Solution {
     dp[0] = 0; 
     
     for (int i = 1; i < n; i++) {
-      if (palinMatrix[0][i]) {
+      // 如果0到i就是一个palindrome，则什么都不用做了
+      if (palinMatrix[0][i]) { 
         dp[i] = 0;
         continue;
       }
       
       dp[i] = i; // i is natually the max possible value for dp[i]
-      for (int j = 1; j <= i; j++) {
-        
+      for (int j = 1; j <= i; j++) {     
         if (palinMatrix[j][i]) {
           dp[i] = Math.min(dp[i], dp[j - 1] + 1);
         }
