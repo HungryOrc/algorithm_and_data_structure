@@ -23,25 +23,22 @@ import java.util.*;
 
 public class PathFinder {
 
-    public static void main(String[] args)
-            throws FileNotFoundException, IOException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         String filename = "E:\\My_Java\\AllPathsInGraph\\bin\\input.txt";
         if (args.length > 0) {
-        	filename = args[0];
+            filename = args[0];
         }
         
         List<String> answer = parseFile(filename);
         System.out.println(answer);
     }
     
-    static List<String> parseFile(String filename)
-    		throws FileNotFoundException, IOException {
-
+    static List<String> parseFile(String filename) throws FileNotFoundException, IOException {
         BufferedReader input = new BufferedReader(new FileReader(filename));
         List<String> allLines = new ArrayList<String>();
         String line;
         while ((line = input.readLine()) != null) {
-        	allLines.add(line);
+            allLines.add(line);
         }
         input.close();
 
@@ -49,65 +46,64 @@ public class PathFinder {
     }
     
     static List<String> parseLines(List<String> lines) {
-    	
-		List<String> result = new ArrayList<String>();
-		
-		if (lines.size() <= 1 || lines.get(0).length() != 3) {
-			return result;
-		}
-		
-		String startAndEnd = lines.get(0);
-		String startNode = startAndEnd.substring(0, 1);
-		String endNode = startAndEnd.substring(2,3);
-		
-		HashMap<String, HashSet<String>> directedEdges = new HashMap<>();
-		for (int i = 1; i < lines.size(); i++) {
-			String[] curEdges = lines.get(i).split(" ");
+	List<String> result = new ArrayList<String>();
+	if (lines == null || lines.size() <= 1 || lines.get(0).length() != 3) {
+	    return result;
+	}
 
-			String edgeStartNode = curEdges[0];
-			
-			HashSet<String> edges = new HashSet<>();
-			for (int j = 2; j < curEdges.length; j++) {
-				edges.add(curEdges[j]);	
-			}
-			directedEdges.put(edgeStartNode, edges);
-		}
-		
-		// dfs
-		HashSet<String> visitedNodes = new HashSet<>();
-		visitedNodes.add(startNode);
-		String path = startNode;
-		findAllPaths(startNode, endNode, path, visitedNodes, directedEdges, result);
+	String startAndEnd = lines.get(0);
+	String startNode = startAndEnd.substring(0, 1);
+	String endNode = startAndEnd.substring(2, 3);
 
+	HashMap<String, HashSet<String>> directedEdges = new HashMap<>();
+	
+	for (int i = 1; i < lines.size(); i++) {
+		String[] curEdges = lines.get(i).split(" ");
+
+		String edgeStartNode = curEdges[0];
+
+		HashSet<String> edges = new HashSet<>();
+		for (int j = 2; j < curEdges.length; j++) {
+		    edges.add(curEdges[j]);	
+		}
+		directedEdges.put(edgeStartNode, edges);
+	}
+
+	// dfs
+	HashSet<String> visitedNodes = new HashSet<>();
+	visitedNodes.add(startNode);
+	findAllPaths(startNode, endNode, new StringBuilder(), visitedNodes, directedEdges, result);
     	return result;
     }
 	
-	static void findAllPaths(String curNode, String endNode, 
-							 String path,
-							 HashSet<String> visitedNodes,
-							 HashMap<String, HashSet<String>> directedEdges,
-							 List<String> result) {
-		
-		if (curNode.equals(endNode)) {
-			result.add(new String(path));
-			return;
-		}
-		
-		HashSet<String> edges = directedEdges.get(curNode);
-		// 注意！！！有这样的可能性：有的node根本就没有从它出发的edge！！！
-		if (edges != null) {
-			for (String node : edges) {
-				if (!visitedNodes.contains(node)) {
-					
-					String newPath = path + node;					
-					visitedNodes.add(node);
-					
-					findAllPaths(node, endNode, newPath, visitedNodes, directedEdges, result);
-	
-					visitedNodes.remove(node);
-				}
-			}
-		}
+    // 关键都在这个函数里 ！！
+    // 前面都是预处理
+    static void findAllPaths(String curNode, String endNode, StringBuilder curPath,
+        HashSet<String> visitedNodes, HashMap<String, HashSet<String>> directedEdges,
+	List<String> result) {
+
+        if (curNode.equals(endNode)) { // String的相等要用equals来比，不可以用 ==
+	    result.add(curPath.toString());
+	    return;
 	}
+
+	HashSet<String> edges = directedEdges.get(curNode);
 	
+	// 别忘了 ！！！有这样的可能性：
+	// 有的node根本就没有从它出发的edge！！！
+	if (edges != null) {
+	    for (String node : edges) {
+	        if (!visitedNodes.contains(node)) {
+
+		    curPath.append(node);					
+		    visitedNodes.add(node);
+
+		    findAllPaths(node, endNode, curPath, visitedNodes, directedEdges, result);
+
+		    curPath.deleteCharAt(curPath.length() - 1);
+		    visitedNodes.remove(node);
+		}
+	    }
+	}
+    }
 }
