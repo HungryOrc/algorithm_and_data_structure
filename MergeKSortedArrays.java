@@ -58,9 +58,10 @@ public class Solution {
         PriorityQueue<QueueNode> pq = new PriorityQueue<QueueNode>();
         ArrayList<Integer> result = new ArrayList<>();
         
-        for (int i = 0; i < arrays.length; i++) {dif
+        // 先把最初的k个 装进 pq 里
+        for (int i = 0; i < arrays.length; i++) {
             if (arrays[i].length > 0) {
-                pq.add(new QueueNode(i, 0, arrays[i][0])); // 先把最初的k个装进pq里面去
+                pq.add(new QueueNode(i, 0, arrays[i][0])); 
             }
         }
         
