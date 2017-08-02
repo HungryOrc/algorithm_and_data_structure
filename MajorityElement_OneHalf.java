@@ -1,4 +1,5 @@
 /* Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
+注意，是大于，而非大于等于 1/2.
 You may assume that the array is non-empty and the majority element always exist in the array  */
 
 public class Solution {
@@ -16,7 +17,8 @@ public class Solution {
         
        总之，可以这么理解：
        每一次累加，都是对于当前candidate的增强，
-       而每一次削减，都是  2个不同的数  同时削减 ！！！ 最后的赢家 理  应  能 Survive 这种削减　！！！　*/
+       而每一次削减，都是  2个不同的数  同时削减 ！！！ 最后的赢家 理  应  能 Survive 这种削减　！！！　
+       而且这样的赢家最多只能有1个，因为是大于1/2   */
     
     public int majorityElement(int[] nums) {
 
