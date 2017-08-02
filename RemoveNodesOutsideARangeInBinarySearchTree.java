@@ -23,6 +23,8 @@ public class Solution {
             return null;
         }
         
+        // 诀窍 ！！！ 先落实好本node在整个变故发生以后的左右子 ！！！
+        // 并且在此就直接把它们连到root上去 ！！！
         root.left = removeNodesOutsideRange(root.left, lb, ub);
         root.right = removeNodesOutsideRange(root.right, lb, ub);
         
@@ -32,7 +34,7 @@ public class Solution {
         else if (root.key > ub) {
             return root.left;
         }
-        else {
+        else { // root.key在lb和ub之间
             return root;
         }
     }
