@@ -1,4 +1,5 @@
 /* Given an integer array of length L, find all numbers that occur more than 1/K * L times if any exist.
+注意，是大于，而非大于等于 1/k.
 
 Assumptions:
 The given array is not null or empty
@@ -33,11 +34,5 @@ A = {2, 1}, K = 2, return []   */
         
    总之，可以这么理解：
    每一次累加，都是对于当前candidate的增强，
-   而每一次削减，都是  k个不同的数  同时削减 ！！！ 最后的赢家 理  应  能 Survive 这种削减　！！！　*/
-
-
-
-
-
-
-
+   而每一次削减，都是  k个不同的数  同时削减 ！！！ 最后的赢家 理  应  能 Survive 这种削减　！！！　
+   而且这样的赢家最多只能有 k-1 个，因为是大于1/k   */
