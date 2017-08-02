@@ -43,9 +43,9 @@ public class Solution {
         // 都要用 else 连接起来 ！！！
          
         if (nums[i] == number1)
-          count1++;
+          count1 ++;
         else if (nums[i] == number2)   
-          count2++;
+          count2 ++;
               
         else if (count1 == 0) {
           number1 = nums[i];
@@ -55,19 +55,19 @@ public class Solution {
           count2 = 1;
                      
         } else {
-          count1--;
-          count2--;
+          count1 --;
+          count2 --;
         }
-    	}
+      }
     	
       // re-check
     	count1 = 0;
     	count2 = 0;
     	for (int i = 0; i < len; i++) {
     	  if (nums[i] == number1)
-    	    count1++;
+    	    count1 ++;
     	  else if (nums[i] == number2)
-    	    count2++;
+    	    count2 ++;
     	}
     	if (count1 > len / 3)
     	  result.add(number1);
