@@ -1,4 +1,5 @@
-/* Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times. 
+/* Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
+注意，是大于，而非大于等于 1/3.
 The algorithm should run in linear time and in O(1) space. */
 
 
@@ -16,55 +17,62 @@ The algorithm should run in linear time and in O(1) space. */
         
    总之，可以这么理解：
    每一次累加，都是对于当前candidate的增强，
-   而每一次削减，都是  3个不同的数  同时削减 ！！！ 最后的赢家 理  应  能 Survive 这种削减　！！！　*/
+   而每一次削减，都是  3个不同的数  同时削减 ！！！ 最后的赢家 理  应  能 Survive 这种削减　！！！　
+   而且这样的赢家最多只能有2个，因为是大于1/3   */
 
 public class Solution {
     
     public List<Integer> majorityElement(int[] nums) {
-    	if (nums == null || nums.length == 0)
+    	if (nums == null || nums.length == 0) {
     		return new ArrayList<Integer>();
-        
+      }
+      
     	List<Integer> result = new ArrayList<Integer>();
-       int len = nums.length;
+      int len = nums.length;
        
-       // 注意这里的trick ！！ 先把number1和2都设为 nums[0]，把count1和2都设为 0 而非 1 ！！
-       // 然后下面的for loop里，从 i=0 开始，而非从 i=1 开始 ！！
-       // 在 i=0 那里，只把 count1 +1，不要把 count2 也 +1 了
-    	int number1 = nums[0], number2 = nums[0], count1 = 0, count2 = 0;
+      // 注意这里的trick ！！ 先把number1和2都设为 nums[0]，把count1和2都设为 0 而非 1 ！！
+      // 然后下面的for loop里，从 i=0 开始，而非从 i=1 开始 ！！
+      // 在 i=0 那里，只把 count1 + 1，不要把 count2 也 + 1 了
+    	int number1 = nums[0], number2 = nums[0];
+      int count1 = 0, count2 = 0;
     	
-       for (int i = 0; i < len; i++) {
+      for (int i = 0; i < len; i++) {
+         
+        // 特别注意 ！！！
+        // 下面所有这些情况，都是  并  列  的 ！！！ 
+        // 都要用 else 连接起来 ！！！
+         
+        if (nums[i] == number1)
+          count1++;
+        else if (nums[i] == number2)   
+          count2++;
               
-              if (nums[i] == number1)
-                     count1++;
-              else if (nums[i] == number2)
-                     count2++;
-              
-              else if (count1 == 0) {
-                     number1 = nums[i];
-                     count1 = 1;
-              } else if (count2 == 0) {
-                     number2 = nums[i];
-                     count2 = 1;
+        else if (count1 == 0) {
+          number1 = nums[i];
+          count1 = 1;
+        } else if (count2 == 0) {
+          number2 = nums[i];
+          count2 = 1;
                      
-              } else {
-                     count1--;
-                     count2--;
-              }
+        } else {
+          count1--;
+          count2--;
+        }
     	}
     	
-       // re-check
+      // re-check
     	count1 = 0;
     	count2 = 0;
     	for (int i = 0; i < len; i++) {
-    		if (nums[i] == number1)
-    			count1++;
-    		else if (nums[i] == number2)
-    			count2++;
+    	  if (nums[i] == number1)
+    	    count1++;
+    	  else if (nums[i] == number2)
+    	    count2++;
     	}
     	if (count1 > len / 3)
-    		result.add(number1);
+    	  result.add(number1);
     	if (count2 > len / 3)
-    		result.add(number2);
+    	  result.add(number2);
     	return result;
     }
 }
