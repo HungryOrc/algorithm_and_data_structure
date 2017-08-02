@@ -22,13 +22,15 @@ A = {2, 1}, K = 2, return []   */
    用一个 Map 来存 <candidate_i, count_i> ！
    最后符合要求的数可能不止一个。
    
+   注意，因为是k个，而非两三个，所以它的具体处理方法和两三个的时候有区别 ！！！ 要用到 hashmap ！！！ 而且要看map的size ！！！
+   
    从数组左端的第一个数开始，一个一个看，设当前数为 cur，
-   如果 hashMap.containsKey(cur) 为 true，
+   Case 1. 如果 hashMap.containsKey(cur) 为 true，
        hashMap.put(cur, count_cur ++)    
-   如果 hashMap.containsKey(cur) 为 false，
-       如果当前 hashMap.size() < k - 1，
+   Case 2. 如果 hashMap.containsKey(cur) 为 false，
+       2.1 如果当前 hashMap.size() < k - 1，
            我们就把cur放进去，即 hashMap.put(cur, 1)
-       如果当前 hashMap.size() == k - 1，
+       2.2 如果当前 hashMap.size() == k - 1，即当前已经找满了 k-1 个candidates，
            我们就把 map 里的所有 entries 的 value 即 count 全都 -1，
            然后如果哪个count减去这个1后成为了0，就把整个entry删掉 ！
         
