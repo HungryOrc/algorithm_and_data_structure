@@ -20,30 +20,30 @@ Hint:
 // 以下的几个方法都很不错，受教了
 // Ref: https://discuss.leetcode.com/topic/17810/3-ways-implemented-in-java-binary-search-in-order-iterative-recursive
 
-public class Solution 
-{
-    // DFS Binary Search Recursion
-    public int kthSmallest(TreeNode root, int k) 
-    {
+public class Solution {
+    
+    // 方法1： DFS Binary Search Recursion
+    public int kthSmallest(TreeNode root, int k)  {
         int numOfNodesInLeftSubtree = countNodes(root.left);
         
-        if (numOfNodesInLeftSubtree >= k)
+        if (numOfNodesInLeftSubtree >= k) {
             return kthSmallest(root.left, k);
-        else if (numOfNodesInLeftSubtree < k-1)
-            // the last -1 represents the current node (root)
-            return kthSmallest(root.right, k - numOfNodesInLeftSubtree - 1);
-        else // numOfNodesInLeftSubtree == k-1
+        } else if (numOfNodesInLeftSubtree < k - 1) {  
+            return kthSmallest(root.right, k - numOfNodesInLeftSubtree - 1); // 最后这个减1表示当前的root node
+        } else { // numOfNodesInLeftSubtree == k - 1
             return root.val;
+        }
     }
-    private static int countNodes(TreeNode curNode)
-    {
-        if (curNode == null)
+    // 数nodes的个数
+    private static int countNodes(TreeNode curNode) {
+        if (curNode == null) {
             return 0;
+        }
         return 1 + countNodes(curNode.left) + countNodes(curNode.right);
     }
     
     
-    // DFS In-Order Recursion
+    // 方法2：DFS In-Order Recursion
     private static int remainingCount = 0;
     private static int value = 0;
     public int kthSmallest(TreeNode root, int k) 
@@ -70,7 +70,7 @@ public class Solution
     }
     
     
-      // DFS In-Order Iteration
+      // 方法3：DFS In-Order Iteration
       // 这个解法稍微绕一点
       public int kthSmallest(TreeNode root, int k) {
         Stack<TreeNode> st = new Stack<>();
