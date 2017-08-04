@@ -22,7 +22,7 @@ public class Solution {
     
     Arrays.sort(array); // 去重二部曲之一 ！！！
     
-    for (int i = 0; i < array.length - 1; i++) {
+    for (int i = 0; i < array.length - 2; i++) {
       
       // 去重二部曲之二 ！！！
       if (i > 0 && array[i] == array[i - 1]) {
@@ -34,6 +34,7 @@ public class Solution {
       HashSet<Integer> records = new HashSet<>();
       boolean foundHalfTarget = false;
       
+      // 从 i 之后的第一个数开始
       for (int j = i + 1; j < array.length; j++) {
         
         if (!records.contains(array[j])) {
