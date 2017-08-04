@@ -36,3 +36,40 @@ Case 3: 获得一等奖的是1个人，那么 C_3^1 = 3, dp[3 - 1] = dp[2] = 3�
     再次注意，一个团体里的成员们，互相之间是不排列的！即有了 A(BC)以后，就没有意义再列 A(CB)了，CB在这里是一个团体，它们内部不再排序！
 所以一共是 1 + 3 + 9 = 13 种获奖的排列方式。
 */
+
+// 这是非常有趣，非常巧妙的一题
+
+public class Solution {
+
+	public int allKindsOfAwardPermutations(int n) {
+		// range from 0 to n
+		int[] dp = new int[n + 1];
+
+		dp[0] = 1; // 没有人
+		dp[1] = 1; // 一共1个人
+		
+		// people: total number of people in this game
+		for (int people = 2; people <= n; people++) {
+			
+			// numOf1st: number of people that won the first prize (ranked No.1 together or alone)
+			for (int numOf1st = people; numOf1st >= 1; numOf1st--) {
+				
+				dp[people] += combination_P_Q(numOf1st, people) * dp[people - numOf1st];
+			}
+		}
+		
+		return dp[n];
+	}
+	
+	// 辅助函数，算组合：number of combinations to pick P items out of Q items
+	private int combination_P_Q(int p, int q) {
+		int result = 1;
+		for (int i = q - p + 1; i <= q; i++) {
+			result *= i;
+		}
+		for (int j = 2; j <= p; j++) {
+			result /= j;
+		}
+		return result;
+	}
+}
