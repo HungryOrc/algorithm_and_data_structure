@@ -6,7 +6,7 @@ Note: You may assume k is always valid, 1 ≤ k ≤ array's length. */
 
 
 // 方法1：Quick Select
-// 时间：O(n)
+// 时间：平均来说是 O(n)。最差可能是 O(n^2)，但可能性很低，因为那需要大多数的pivot都选成了最大或者最小
 public class Solution {
     
     public int findKthLargest(int[] nums, int k) {
