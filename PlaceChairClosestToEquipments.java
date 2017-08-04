@@ -32,11 +32,11 @@ we should put the chair at (1, 0), so that the sum of cost from the chair to the
 矩阵里一共有 n^2 个点，对于每一个点，以它为起始点，对整个矩阵做 Dijkstra 算法，耗时 n^2 log(n^2)，
 所以最后总时间是 O(n^2 * n^2 * log(n^2)) = O(n^4 logn)
 
-方法 2.2：从k个equipment点出发，计算它们到矩阵内所有点的距离，然后取最小的那个。这样耗时就小多了 ！！！
+方法 2.2：从k个equipment点出发，计算它们到矩阵内所有点的距离，然后取最小的那个。这样耗时就小多了 ！！ 因为一般来说k的量级小于n^2。
 时间：O(k * n^2 * log(n^2)) = O(k * n^2 logn)     */
 
-// Laioffer 的方法。但是并不是上述的用 Dijkstra 算法的方法，
-// 而只是用了粗暴的 BFS 方法来计算从一个E cell出发，到各个点的距离，即每向外环形走一步，则距离+1.
+// Laioffer 的方法。但这里的实现并没有使用 Dijkstra 算法，
+// 只是用了粗暴的 BFS 方法来计算从一个E cell出发，到各个点的距离，即每向外环形走一步，则距离+1.
 class Pair {
   int i, j;
   public Pair(int i, int j) {
