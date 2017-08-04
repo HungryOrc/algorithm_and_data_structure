@@ -19,14 +19,20 @@ Examples:
 we should put the chair at (1, 0), so that the sum of cost from the chair to the two equipment is 1 + 1 = 2, which is minimal.  */
 
 
-/* 思路：Dijkstra 算法，计算从一个固定起点到n个点分别的最短路径，耗时 O(n logn)
+/* 方法1：数学结论（据说可以用数学归纳法来证明）：
+一维直线上，有一些点，每个点有自己的x坐标，离所有点最近的点，是它们的x坐标的median处。
+二维矩阵上，有一些点，每个点有自己的x和y坐标，离所有点最近的点，它的x坐标是所有E的x坐标的median，它的y坐标是所有E的y坐标的median，
+那么这样得到的点，有可能自己也是一个E，还可能是一个障碍物。如果是障碍物，那就只能在这个障碍物的附近继续找了。  */
+
+
+/* 方法2：Dijkstra 算法，计算从一个固定起点到n个点分别的最短路径，耗时 O(n logn)
 那么，我们有2种做法：
 
-方法1，在矩阵里二维loop所有的点，算他们到矩阵内所有点的距离（自然也就包含那k个equipment点），
+方法 2.1，在矩阵里二维loop所有的点，算他们到矩阵内所有点的距离（自然也就包含那k个equipment点），
 矩阵里一共有 n^2 个点，对于每一个点，以它为起始点，对整个矩阵做 Dijkstra 算法，耗时 n^2 log(n^2)，
 所以最后总时间是 O(n^2 * n^2 * log(n^2)) = O(n^4 logn)
 
-方法2：从k个equipment点出发，计算它们到矩阵内所有点的距离，然后取最小的那个。这样耗时就小多了 ！！！
+方法 2.2：从k个equipment点出发，计算它们到矩阵内所有点的距离，然后取最小的那个。这样耗时就小多了 ！！！
 时间：O(k * n^2 * log(n^2)) = O(k * n^2 logn)     */
 
 // Laioffer 的方法。但是并不是上述的用 Dijkstra 算法的方法，
