@@ -1,4 +1,4 @@
-/* Given a n x m matrix where each of the rows and columns are sorted in ascending order, 
+/* Given a n * m matrix where each of the rows and columns are sorted in ascending order, 
 find the kth smallest element in the matrix.
 Note that it is the kth smallest element in the sorted order, not the kth distinct element.
 
@@ -11,26 +11,27 @@ matrix = [
 k = 8,
 return 13.
 
-Note: You may assume k is always valid, 1 ≤ k ≤ n^2.
+Note: You may assume k is always valid, 1 ≤ k ≤ n*m.
 
 注意：
 
 1. 并不一定沿着每一条对角线，从右上方到左下方越来越大。反例如下：
-1  2  3
-2  5  6
-2  7  9
+   1  2  3
+   2  5  6
+   2  7  9
 
 2. 并不一定靠右的对角线上的任何数都比靠左的对角线上的任何数要大。反例如下：
-1  3  5
-6  7  12
-11 14 14
-上面第一排最右边的5，就比第二排第一个的6要小。 */
+   1  3  5
+   6  7  12
+   11 14 14
+   上面第一排最右边的5，就比第二排第一个的6要小。 */
 
 
 // 方法1：用 Priority Queue + Custom Class 来做。
 // 注意！！！这里既不是 先进先出，也不是 后进先出！！！既不是 BFS，也不是 DFS ！！！而是 “谁最小谁先出” ！！！
 // 然后再把最小的cell周围的2个cell放到 priority queue 里面去 ！！！然后再看下一个最小是谁 ！！！
 // 这里 每个cell的坐标和value值都要封装到 cell class 里面去，作为一个整体塞到 priority queue 里 ！！！
+
 class Cell {
   int x, y;
   int value;
@@ -67,7 +68,7 @@ public class Solution {
     // poll out from the min heap for k-1 times, including the initial cell at [0][0],
     // so the one left at the top of the min heap will be our target: the kth smallest element,
     // thus we can get it via peek()
-    // 注意，在此过程中，poll了k-1次，而offer的次数往往是（也可能不是）大于k-1次的！！！因为poll一个cell可能就
+    // 注意，在此过程中，poll了 k - 1 次，而offer的次数很有可能是大于k-1次的！！！因为poll一个cell可能就
     // 要接下来再offer与它相邻的2个或1个或0个cells
     // 当然，还有一种可能是，整个矩阵都offer到heap里了，但poll还没有poll到k-1次，这个情况，下面的代码也是包含了的
     for (int count = 1; count <= k - 1; count++) {
@@ -79,17 +80,17 @@ public class Solution {
       int curY = curMinCell.y;
       int curValue = curMinCell.value;
       
-      if (curX < rows - 1 && visited[curX + 1][curY] == false) {
+      if (curX + 1 < rows && visited[curX + 1][curY] == false) {
         minValueCells.offer(new Cell(curX + 1, curY, matrix[curX + 1][curY]));
         visited[curX + 1][curY] = true;
       }
-      if (curY < cols - 1 && visited[curX][curY + 1] == false) {
+      if (curY + 1 < cols && visited[curX][curY + 1] == false) {
         minValueCells.offer(new Cell(curX, curY + 1, matrix[curX][curY + 1]));
         visited[curX][curY + 1] = true;
       }
     }
     
-    return minValueCells.peek().value;
+    return minValueCells.peek().value; // 前面一共poll了k-1次，到了这里再peek就是peek到第k个数了
   }  
 }
 
