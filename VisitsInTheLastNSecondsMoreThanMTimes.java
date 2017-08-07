@@ -19,10 +19,6 @@ public class Solution {
       String id = log.id;
       int time = log.time;
       
-      if(result.contains(id)) {
-        continue;
-      }
-      
       if(!map.containsKey(id)) {
         Queue<Integer> q = new LinkedList<>();
         q.add(time);
@@ -37,11 +33,13 @@ public class Solution {
         
         map.get(id).add(time); // 加是加在尾部
       }
-      
-      if(map.get(id).size() >= m) {
-        result.add(id);
-      }
     }
+    
+    for (Map.Entry entry : map.EntrySet()) {
+      if(entry.getValue().size() >= m) {
+        result.add(entry.getKey());
+      }
+    }    
     return result;
   }
 }
