@@ -11,7 +11,7 @@ class Log {
 
 public class Solution {
   
-  public static HashSet<String> getBots(List<Log> logs, int n, int m, int curTime){
+  public static HashSet<String> getBots(List<Log> logs, int n, int m){
     HashMap<String, Queue<Integer>> map = new HashMap<>();
     HashSet<String> result = new HashSet<>();
     
@@ -28,6 +28,7 @@ public class Solution {
         q.add(time);
         map.put(id, q);
       } else {
+        // 注意 ！！！
         // 每次来一个新的log，都要用这个最新log的最新time，来衡量所有之前已经放到map里的logs ！！！
         // 看这些logs里面有没有任何log是超时了的 ！！！ 发现一个犬决一个 ！！！
         while(!map.get(id).isEmpty() && time - map.get(id).peek() > n) { // 看是看头部
