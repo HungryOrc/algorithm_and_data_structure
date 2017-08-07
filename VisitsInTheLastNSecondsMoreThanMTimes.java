@@ -2,7 +2,7 @@
 
 class Log{
   String id;
-  int time;. From 1point 3acres bbs
+  int time;
   public Log(String id, int time){
     this.id = id;
     this.time = time;
