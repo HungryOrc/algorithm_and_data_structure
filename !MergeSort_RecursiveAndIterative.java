@@ -19,10 +19,14 @@ public class MergeSort {
     return array;
   }
   
+  
   // 核心的 merge sort 函数
+  // 一共有2种方式，一种是Recursive，一种是Iterative
   // ---------------------------------------------------------------------------------------
   
+  
   // 方式1：Recursive
+  
   private void mergeSort(int[] array, int[] helperArray, int start, int end) {
     if (start >= end) { // when there is only 1 element or 0 element
       return;
@@ -35,25 +39,24 @@ public class MergeSort {
     merge(array, helperArray, start, mid, end);
   }
   
+  
   // 方式2：Iterative
   // http://www.geeksforgeeks.org/iterative-merge-sort/
-  /* Iterative mergesort function to sort arr[0...n-1] */
+  // Iterative mergesort function to sort arr[0...n-1]
+  
   private void mergeSort(int arr[], int n) {
-     int curr_size;  // For current size of subarrays to be merged
-                     // curr_size varies from 1 to n/2
-     int left_start; // For picking starting index of left subarray
-                     // to be merged
+     int curr_size;  // 当前每一段要被merge的 sub array的大小：1,2,4,8......
+     int left_start; // For picking starting index of left subarray to be merged
 
      // Merge subarrays in bottom up manner.  First merge subarrays of
      // size 1 to create sorted subarrays of size 2, then merge subarrays
      // of size 2 to create sorted subarrays of size 4, and so on.
-     for (curr_size=1; curr_size<=n-1; curr_size = 2*curr_size)
-     {
+     for (curr_size = 1; curr_size <= n-1; curr_size = 2 * curr_size) {
+       
          // Pick starting point of different subarrays of current size
-         for (left_start=0; left_start<n-1; left_start += 2*curr_size)
-         {
-             // Find ending point of left subarray. mid+1 is starting 
-             // point of right
+         for (left_start = 0; left_start < n-1; left_start += 2 * curr_size) {
+           
+             // Find ending point of left subarray. mid+1 is starting point of right subarray
              int mid = left_start + curr_size - 1;
 
              int right_end = min(left_start + 2*curr_size - 1, n-1);
@@ -64,9 +67,9 @@ public class MergeSort {
      }
   }
   
-  
   // ---------------------------------------------------------------------------------------
-  
+ 
+   
   private void merge(int[] array, int[] helperArray, int start, int mid, int end) {
     if (start >= end) { // when there is only 1 element or 0 element
       return;
