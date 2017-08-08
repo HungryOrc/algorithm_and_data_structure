@@ -7,15 +7,20 @@
 
 public class MergeSort {
   
-  public int[] mergeSort(int[] array) {
+  public int[] mergeSortOfIntArray(int[] array) {
     if (array == null || array.length <= 1) {
       return array;
     }
     
+    // 方式1：采用 Recursive式 的 merge sort
     // allocate helper array to deal with the merging step
     // so the space complexity is O(n)
     int[] helperArray = new int[array.length];
     mergeSort(array, helperArray, 0, array.length - 1);
+    
+    // 方式2：采用 Iterative式 的 merge sort
+    // mergeSort(array, array.length);
+    
     return array;
   }
   
@@ -44,7 +49,8 @@ public class MergeSort {
   // http://www.geeksforgeeks.org/iterative-merge-sort/
   // Iterative mergesort function to sort arr[0...n-1]
   
-  private void mergeSort(int arr[], int n) {
+  private void mergeSort(int array[]) {
+     int n = array.length;
      int curr_size;  // 当前每一段要被merge的 sub array的大小：1,2,4,8......
      int left_start; // For picking starting index of left subarray to be merged
 
@@ -59,10 +65,11 @@ public class MergeSort {
              // Find ending point of left subarray. mid+1 is starting point of right subarray
              int mid = left_start + curr_size - 1;
 
-             int right_end = min(left_start + 2*curr_size - 1, n-1);
+             int right_end = Math.min(left_start + 2*curr_size - 1, n-1);
 
              // Merge Subarrays arr[left_start...mid] & arr[mid+1...right_end]
-             merge(arr, left_start, mid, right_end);
+             int[] helperArray = new int[array.length];
+             merge(arr, helperArray, left_start, mid, right_end);
          }
      }
   }
