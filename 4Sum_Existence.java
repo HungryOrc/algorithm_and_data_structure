@@ -1,4 +1,8 @@
-/* Determine if there exists a set of four elements in a given array that sum to the given target number.
+/* 条件：
+给的元素可能有重复。可以是任何整数或小数。
+每个元素最多用一次。
+
+Determine if there exists a set of four elements in a given array that sum to the given target number.
 Assumptions: The given array is not null and has length of at least 4
 
 Examples:
