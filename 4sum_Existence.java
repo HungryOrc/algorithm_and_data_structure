@@ -24,7 +24,7 @@ class Pair {
 
 public class Solution {
   
-  public boolean exist(int[] array, int target) {
+  public boolean fourSum(int[] array, int target) {
     
     // <sum of pair, entity of pair>
     HashMap<Integer, Pair> pairs = new HashMap<>();
