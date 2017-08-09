@@ -75,7 +75,7 @@ public class Solution {
 	    	continue;
 	    }
 	    
-     	    // 而且，以前出现过至少一个pair能和当前pair的总和加在一起等于target
+     	    // 如果以前出现过（一个或几个）pair能和当前pair的总和加在一起等于target
 	    if (pairsIndexesAndSums.containsKey(target - curSum)) { 
 
 	      HashSet<List<Integer>> complementPairs = pairsIndexesAndSums.get(target - curSum);
@@ -83,6 +83,7 @@ public class Solution {
 	      for (List<Integer> pair : complementPairs) {
 	         
 	    	// 左边的pair的靠右的index，必须小于 右边的pair的靠左的index
+		// 如果一路满足到这里，那就算是完成了一个 合格的4数组合
 	        if (pair.get(1) < l) { 
 	          List<Integer> groupOf4 = new ArrayList<Integer>();   
 	          groupOf4.add(array[pair.get(0)]);
@@ -94,24 +95,23 @@ public class Solution {
 	      }
 	    }
         
-        List<Integer> curIndexes = new ArrayList<>();
-        curIndexes.add(l);
-        curIndexes.add(r);
+            List<Integer> curIndexes = new ArrayList<>();
+            curIndexes.add(l);
+            curIndexes.add(r);
         
-        // 把当前pair的index加到hashmap里去
-        if (!pairsIndexesAndSums.containsKey(curSum)) {
-          HashSet<List<Integer>> set = new HashSet<>();
-    	  set.add(curIndexes);
-    	  pairsIndexesAndSums.put(curSum, set);
-        } else {
-    	  pairsIndexesAndSums.get(curSum).add(curIndexes);
-        }
+            // 把当前pair的index加到hashmap里去
+            if (!pairsIndexesAndSums.containsKey(curSum)) {
+              HashSet<List<Integer>> set = new HashSet<>();
+              set.add(curIndexes);
+    	      pairsIndexesAndSums.put(curSum, set);
+            } else {
+    	      pairsIndexesAndSums.get(curSum).add(curIndexes);
+            }
       
-        // 把当前pair的value加到hashset里去
-        pairsComponents.add(curValues);
-      }
-    }
-	
-    return result;
+            // 把当前pair的value加到hashset里去
+            pairsComponents.add(curValues);
+          }
+        }
+        return result;
   }
 }
