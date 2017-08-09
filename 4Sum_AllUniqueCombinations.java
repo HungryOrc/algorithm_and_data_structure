@@ -41,6 +41,76 @@ HashSet<List<Integer>> pairsComponents = new HashSet<>();
 对于遇到的每一个pair，如果它的值以前没有出现过（用hashset判断），之前又存在一些pairs与它的和加在一起等于target（用hashmap判断），
 那我们把这些pairs都拿出来一个一个看，只要符合这个pair的右index < 当前pair的左index，则凑成一个答案。把这两个pairs加到最终答案里去。
 
-然后，把当前pair的index加到hashmap里去，这里面还涉及map里是否已经有当前pair的sum的key了，不赘述。
+最后，如果当前pair的values以前出现过了（用hashset判断），就是说当前pair是一个重复的pair，那么就什么都不做。
+如果当前pair的values以前没有出现过，那就做两件事：
+把当前pair的index加到hashmap里去，这里面还涉及map里是否已经有当前pair的sum的key了，不赘述。
+把当前pair的value加到hashset里去。   */
 
-*/
+public class Solution {
+
+  public List<List<Integer>> fourSum(int[] array, int target) {
+	Arrays.sort(array);  
+	  
+	List<List<Integer>> result = new ArrayList<>();
+	  
+    // <pair中2个数的和，和等于前面的key的所有pairs的indexes>
+	HashMap<Integer, HashSet<List<Integer>>> pairsIndexesAndSums = new HashMap<>();
+	
+	// 所有出现过的pairs的左右元素的值，左右元素都相等的pairs会被去重，因为这里是一个set
+	HashSet<List<Integer>> pairsComponents = new HashSet<>();
+	
+	for (int r = 1; r < array.length; r++) {
+	  for (int l = 0; l < r; l++) {
+		  
+	    int curSum = array[l] + array[r];
+	    
+	    List<Integer> curValues = new ArrayList<>();
+	    curValues.add(array[l]);
+	    curValues.add(array[r]);
+	    
+	    // 如果当前pair的值以前没有出现过，即当前pair不是一个重复的pair
+	    if (!pairsComponents.contains(curValues) && 
+	        // 而且，以前出现过至少一个pair能和当前pair的总和加在一起等于target
+	    	pairsIndexesAndSums.containsKey(target - curSum)) { 
+	    	
+	      HashSet<List<Integer>> complementPairs = pairsIndexesAndSums.get(target - curSum);
+	       
+	      for (List<Integer> pair : complementPairs) {
+	         
+	    	// 左边的pair的靠右的index，必须小于 右边的pair的靠左的index
+	        if (pair.get(1) < l) { 
+	          List<Integer> groupOf4 = new ArrayList<Integer>();   
+	          groupOf4.add(array[pair.get(0)]);
+	          groupOf4.add(array[pair.get(1)]);
+	          groupOf4.add(array[l]);
+	          groupOf4.add(array[r]);
+	          result.add(groupOf4);
+	        }
+	      }
+	    }
+	    
+	    // 如果当前pair的值以前没有出现过，即当前pair不是一个重复的pair
+        if (!pairsComponents.contains(curValues)) {
+        
+          List<Integer> curIndexes = new ArrayList<>();
+          curIndexes.add(l);
+          curIndexes.add(r);
+            
+          // 把当前pair的index加到hashmap里去
+	      if (!pairsIndexesAndSums.containsKey(curSum)) {
+	        HashSet<List<Integer>> set = new HashSet<>();
+	    	set.add(curIndexes);
+	    	pairsIndexesAndSums.put(curSum, set);
+	      } else {
+	    	pairsIndexesAndSums.get(curSum).add(curIndexes);
+	      }
+	      
+	      // 把当前pair的value加到hashset里去
+	      pairsComponents.add(curValues);
+        }
+      }
+    }
+	
+    return result;
+  }
+}
