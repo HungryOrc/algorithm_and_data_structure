@@ -17,8 +17,30 @@ int[] input = new int[]{1, 2, 3, 2, 14, 5, 7, 11, 28, 0, 100, 0, -10};
 -10 1 3 14       */
 
 
-/* 思路：首先，基本的思路参考 4 Sum Existence 那一题，那是一种用2个Pair的做法。
+/* 思路：首先，基本的思路参考 4 Sum Existence 那一题，那是一种用2个Pair，再加一个HashMap的做法。
 
+就这一题来说，我们需要给出所有可能的组合，且不能重复，这个要求比仅仅判断true/false要高很多。
+然后，给的数组里的数字可能是有重复的，所以要去重。一个直观感受是，数组排序以后，会很有利于去重。所以我们要把数组先排序。
 
+接着，我们还是采用 2 pairs 的思想。不过要做点改进。
+我们需要把 HashMap 从简单的记录 <sum, pair> 改进到记录 <sum, 所有的和为sum的pairs>，这样才能最终得到所有的组合。
+比如 1和3的sum为4, 2和2的sum也为4，那么1和3这个pair，以及2和2这个pair，都要记录在 key即sum=4 的entry的value里面。
+这里偷个懒，不再定义class Pair，就直接用一个长度为2的List来代替，第一个元素就是left，第二个元素就是right。所以总的来说就是：
+// <pair中2个数的和，和等于前面的key的所有pairs的indexes>
+HashMap<Integer, HashSet<List<Integer>>> pairsIndexesAndSums = new HashMap<>();
+
+然后，因为数组里的数字有重复，所以我们光保证 左pair的右index < 右pair的左index 是不够的！
+比如 左pair是 5和5，右pair紧接着左pair，没有重叠，也是5和5，就是说这个数组里至少有4个5，这样就造成重复了，而这样的重复用index是检测不出来的。
+所以我们还要再搞一个hashset，来存放迄今为止所有遇到过的 pair的值，所谓的值是说它的左右元素的值，而非左右indexes。
+注意！HashSet里面可以直接放 List，HashSet对List的equals和hashcode的判断都是ok的！所以再定义一个：
+// 所有出现过的pairs的左右元素的值，左右元素都相等的pairs会被去重，因为这里是一个set
+HashSet<List<Integer>> pairsComponents = new HashSet<>();
+
+至此，我们就可以开始我们的双层 for loop 了。
+
+对于遇到的每一个pair，如果它的值以前没有出现过（用hashset判断），之前又存在一些pairs与它的和加在一起等于target（用hashmap判断），
+那我们把这些pairs都拿出来一个一个看，只要符合这个pair的右index < 当前pair的左index，则凑成一个答案。把这两个pairs加到最终答案里去。
+
+然后，把当前pair的index加到hashmap里去，这里面还涉及map里是否已经有当前pair的sum的key了，不赘述。
 
 */
