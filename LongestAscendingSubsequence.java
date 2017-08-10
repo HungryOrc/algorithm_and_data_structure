@@ -39,9 +39,9 @@ public class Solution {
       for (int j = i - 1; j >= 0; j--) {
         if (array[j] < array[i]) {
           dp[i] = Math.max(dp[i], dp[j] + 1);
-          maxLength = Math.max(dp[i], maxLength);
         }
       }
+      maxLength = Math.max(dp[i], maxLength);
     }
     
     return maxLength;
