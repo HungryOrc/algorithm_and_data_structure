@@ -21,8 +21,14 @@ Your ZigzagIterator object will be instantiated and called as such:
     while (i.hasNext()) 
         v[f()] = i.next(); */
 
-// ？？？？？
-// 以下我的方法的拓展性并不好！看一下答案里更好的方法！
+
+
+
+
+
+
+
+// 方法2：我的土方法。拓展性不好
 public class ZigzagIterator {
 
     List<Integer> l1;
@@ -62,4 +68,3 @@ public class ZigzagIterator {
             return false;
     }
 }
-
