@@ -16,6 +16,8 @@ public class JumpIterator {
         this.k = k;
     }
     
+    // hasNext() 这里不仅判断了后面还有没有数，而且还做了往下走一步的动作 ！！！
+    // Java自己的库里面一般也是在 hasNext() 里面做尽量多的是，next() 只是把已经存好的结果拿出来
     public boolean hasNext() {
         if (nextValue != null) { // 重要 ！！！
             return true;
@@ -33,6 +35,7 @@ public class JumpIterator {
         return true;
     }
     
+    // next() 这里只是取出之前存好的数 nextValue，并没有往下走
     public Integer next() {
         if (this.hasNext()) {
             Integer result = nextValue;
