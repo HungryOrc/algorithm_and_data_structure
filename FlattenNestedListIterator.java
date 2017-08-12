@@ -8,27 +8,25 @@ the order of elements returned by next should be: [1,1,2,1,1].
 Given the list [1,[4,[6]]], By calling next repeatedly until hasNext returns false, 
 the order of elements returned by next should be: [1,4,6].
 
- * // This is the interface that allows for creating nested lists.
- * // You should not implement it, or speculate about its implementation:
+ The following is the interface that allows for creating nested lists.
+ You should not implement it, or speculate about its implementation:
  
  * public interface NestedInteger {
  *
- *     // @return true if this NestedInteger holds a single integer,
- *     // rather than a nested list.
+ *     // @return true if this NestedInteger holds a single integer, rather than a nested list.
  *     public boolean isInteger();
  *
- *     // @return the single integer that this NestedInteger holds,
- *     // if it holds a single integer
+ *     // @return the single integer that this NestedInteger holds, if it holds a single integer
  *     // Return null if this NestedInteger holds a nested list
  *     public Integer getInteger();
  *
- *     // @return the nested list that this NestedInteger holds,
- *     // if it holds a nested list
+ *     // @return the nested list that this NestedInteger holds, if it holds a nested list
  *     // Return null if this NestedInteger holds a single integer
  *     public List<NestedInteger> getList();
  * }
  
- * Your NestedIterator object will be instantiated and called as such:
+Your NestedIterator object will be instantiated and called as such:
+ 
  *     NestedIterator i = new NestedIterator(nestedList);
  *     while (i.hasNext())
  *         list.add(i.next()); */
@@ -46,7 +44,9 @@ public class NestedIterator implements Iterator<Integer> {
         stack = new Stack<>();
         pushListToStack(nestedList);
     }
+ 
     // 这个 helper method 使用了一个局部的 helper stack，把list里的 Nested Integers 来回倒腾了 2次
+    // 注意 ！ 这里如果用一个 queue 是不行的 ！ 用 两个stack 是比较好的思路 
     private void pushListToStack(List<NestedInteger> nestedList) {
         Stack<NestedInteger> temp = new Stack<>();
         for (NestedInteger nested : nestedList) {
@@ -58,10 +58,9 @@ public class NestedIterator implements Iterator<Integer> {
         }
     }
 
-    // @return {int} the next element in the iteration
     @Override
     public Integer next() {
-        if (!hasNext()) {
+        if (!this.hasNext()) {
             return null;
         }
         return stack.pop().getInteger();
@@ -69,8 +68,7 @@ public class NestedIterator implements Iterator<Integer> {
 
     // 这里的 hasNext()，实际上还对数据做了操作整理 ！！！
     // 如果当前的栈顶的 NestedInteger，不是一个 Integer，而是一个 List of NestedIntegers，则我们要不断地展开它 ！！！
-    // 直到栈顶的 NestedInteger 是一个 Integer ！！！
-    // @return {boolean} true if the iteration has more element or false
+    // 直到栈顶的 NestedInteger 是一个 Integer 为止 ！！！
     @Override
     public boolean hasNext() {
         // 注意 ！ 这里要用 while loop 而非 if 判断 ！
