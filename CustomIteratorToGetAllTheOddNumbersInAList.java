@@ -52,25 +52,25 @@ public class OddIterator {
     List<Integer> list;
     Iterator<Integer> iter;
     // 因为将会使用list自带的iterator，所以不再设置 int curIndex ！！！
-    // 不过专门设了一个 cur value，如下。具体作用看后面代码
-    Integer curValue;
+    // 不过专门设了一个 next value，如下。具体作用看后面代码
+    Integer nextValue;
 
     // constructor
     public OddIterator(List<Integer> input) {
         list = input;
         iter = input.Iterator();
-        curValue = null; // 这个不写也是默认null，写是为了更清楚
+        nextValue = null; // 这个不写也是默认null，写是为了更清楚
     }
     
     public boolean hasNext() {
-        if (curValue != null) { // 重要 ！！！
+        if (nextValue != null) { // 重要 ！！！
             return true;
         }
         
         while (iter.hasNext()) {
-            Integer nextValue = iter.next();
-            if (nextValue % 2 == 1) {
-                curValue = nextValue;
+            Integer tmp = iter.next();
+            if (tmp % 2 == 1) {
+                nextValue = tmp;
                 return true;
             }
         }
@@ -79,8 +79,8 @@ public class OddIterator {
     
     public Integer next() {
         if (this.hasNext()) {
-            Integer result = curValue;
-            curValue = null; // 别忘了这个 ！！！
+            Integer result = nextValue;
+            nextValue = null; // 别忘了这个 ！！！
             return result;
         }
         return null;
