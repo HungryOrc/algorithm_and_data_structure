@@ -27,17 +27,17 @@ Your ZigzagIterator object will be instantiated and called as such:
 public class ZigZagIterator {
     List<Iterator<Integer>> listOfIters;
     int curIterIndex;
-    Integer curValue;
+    Integer nextValue;
     
     // constructor
     public ZigZagIterator(List<Iterator<Integer>> listOfIters) {
         this.listOfIters = listOfIters;
         this.curIterIndex = 0;
-        this.curValue = null;
+        this.nextValue = null;
     }
     
     public boolean hasNext() {
-        if (curValue != null) { // 诀窍 ！！！ 别忘了 ！！！
+        if (nextValue != null) { // 诀窍 ！！！ 别忘了 ！！！
             return true;
         }
 
@@ -54,7 +54,7 @@ public class ZigZagIterator {
             if (!curIter.hasNext()) {
                 numOfNotEmptyIters --;
             } else {
-                curValue = curIter.next();
+                nextValue = curIter.next();
                 return true;
             }
         }
@@ -63,8 +63,8 @@ public class ZigZagIterator {
     
     public Integer next() {
         if (this.hasNext()) {
-            Integer result = curValue;
-            curValue = null; // 别忘了这个 ！！！
+            Integer result = nextValue;
+            nextValue = null; // 别忘了这个 ！！！
             return result;
         }
         return null;
