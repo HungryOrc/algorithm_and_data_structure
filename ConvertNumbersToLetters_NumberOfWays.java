@@ -28,7 +28,7 @@ public class Solution {
 		
 		int n = chars.length;
 		int[] dp = new int[n];
-		dp[0] = 1;
+		dp[0] = 1; // 第一个数字（一位的合规数字）自然只有一种被字母表示的方法
 		
 		for (int i = 1; i < n; i++) {
 			// Case 1: 如果当前的最后一位即index=i处的数字被一个字母代表
