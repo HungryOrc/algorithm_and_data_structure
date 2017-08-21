@@ -45,19 +45,22 @@ class Solution {
     
     // 方法2: 逐步替换
     // Time: O(n), Space: O(1)
-    public int fibonacci(int n) {
-        if (n <= 1) {
+    public static int fibonacci(int n) {
+        if (n == 0) {
             return 0;
-        } else if (n == 2) {
+        } else if (n <= 2) {
             return 1;
         }
-        
-        int x1 = 0, x2 = 1, x3 = 1;
+      
+        int prev = 1;
+        int prevprev = 1;
+        int cur = 2;
         for (int i = 3; i <= n; i++) {
-            x3 = x1 + x2;
-            x1= x2;
-            x2 = x3;
+            cur = prev + prevprev;
+            prevprev = prev;
+            prev = cur;
         }
-        return x3;
+        
+        return cur;
     }
 }
