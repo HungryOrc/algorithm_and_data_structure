@@ -12,6 +12,7 @@ Given m = 2, n = 36 return 8 */
 public class Solution {
     
     // DP。非常巧妙 ！！！
+    // m eggs, n floors
     public int dropEggs2(int m, int n) {
         
         // dp[i][j] 的意思是 用i个eggs，测试j层楼梯，最坏的情况下，最少需要摔多少次egg
