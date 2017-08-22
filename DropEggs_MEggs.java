@@ -1,4 +1,6 @@
-/* There is a building of n floors. If an egg drops from the k th floor or above, it will break. 
+/* 理解这题可以首先看看 DropEggs_双蛋 以及 三蛋 那两题。
+
+There is a building of n floors. If an egg drops from the k th floor or above, it will break. 
 If it's dropped from any floor below, it will not break.
 You're given m eggs, Find k while minimize the number of drops for the worst case. 
 Return the number of drops in the worst case.
