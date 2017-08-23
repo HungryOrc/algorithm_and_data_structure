@@ -58,3 +58,15 @@
 8-14层楼，扔4次
 15-25层楼，扔5次
 ......                                                                     */
+
+public class Solution {
+
+    // n 是楼层数
+    public int droppEggs_3Eggs(int n) {
+        if (n <= 0) {
+            return 0;
+        } else if (n == 1) {
+            return 1;
+        }
+    }
+}
