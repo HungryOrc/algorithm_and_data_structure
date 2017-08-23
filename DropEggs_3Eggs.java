@@ -68,5 +68,34 @@ public class Solution {
         } else if (n == 1) {
             return 1;
         }
+        
+        // 先预备好只有2个蛋的时候，检测n层楼需要多少次drop。这些数据是计算3个蛋的情况的基础
+        // 这个list将会是：0, 1, 3, 6, 10, 15, 21... 即能处理多少层楼房
+        // 对应的index是： 0, 1, 2, 3, 4,  5,  6 ... 即多少个drops（两个蛋）
+        List<Integer> dropsForNFloors_2Eggs = new ArrayList<Integer>();
+        dropsForNFloors_2Eggs.add(0); // 0 drops for floor 0
+          
+        int floors = 1;
+        int drops = 1;
+        // 当list里某一项的数字>=n的时候，我们可以确定，2个egg都已经达到了n层楼，
+        // 那么以此为基础，一定足以发现3个egg要多少个drop才能达到n层楼了
+        while (floors < n) { 
+            dropsForNFloors_2Eggs.add(floors);
+            drops ++;
+            floors += drops;
+        }
+        
+        
+        for (drops = 1; i <= dropsForNFloors_2Eggs.size() - 1; drops++) {
+            // 3个蛋能cover几层楼？是在2个蛋的基础上+1
+            floors += dropsForNFloors_2Eggs.get(drops) + 1;
+            
+            if (floors >= n) {
+                return drops;
+            }
+        }
+        
+        // actually we will never reach here
+        return -1;
     }
 }
