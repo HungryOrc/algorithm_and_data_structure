@@ -62,7 +62,7 @@
 public class Solution {
 
     // n 是楼层数
-    public int droppEggs_3Eggs(int n) {
+    public static int droppEggs_3Eggs(int n) {
         if (n <= 0) {
             return 0;
         } else if (n == 1) {
@@ -75,8 +75,8 @@ public class Solution {
         List<Integer> dropsForNFloors_2Eggs = new ArrayList<Integer>();
         dropsForNFloors_2Eggs.add(0); // 0 drops for floor 0
           
-        int floors = 1;
-        int drops = 1;
+        int floors = 1; // 2个蛋扔1次能确定1层楼
+        int drops = 1; // 2个蛋从扔1次开始
         // 当list里某一项的数字>=n的时候，我们可以确定，2个egg都已经达到了n层楼，
         // 那么以此为基础，一定足以发现3个egg要多少个drop才能达到n层楼了
         while (floors < n) { 
@@ -85,13 +85,20 @@ public class Solution {
             floors += drops;
         }
         
+        for (int num : dropsForNFloors_2Eggs) {
+        	System.out.println(num);
+        }
+        System.out.println();
         
-        for (drops = 1; i <= dropsForNFloors_2Eggs.size() - 1; drops++) {
+        floors = 1; // 3个蛋扔1次能确定1层楼
+        
+        // 从2个蛋扔1次开始，即从3个蛋扔2次开始 ！！！
+        for (int dropsOf2Eggs = 1; dropsOf2Eggs <= dropsForNFloors_2Eggs.size() - 1; dropsOf2Eggs++) {
             // 3个蛋能cover几层楼？是在2个蛋的基础上+1
-            floors += dropsForNFloors_2Eggs.get(drops) + 1;
+            floors += dropsForNFloors_2Eggs.get(dropsOf2Eggs) + 1;
             
             if (floors >= n) {
-                return drops;
+                return dropsOf2Eggs + 1;
             }
         }
         
