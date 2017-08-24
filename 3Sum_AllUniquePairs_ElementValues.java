@@ -32,7 +32,7 @@ public class Solution {
       int curTarget = target - array[i];
       
       HashSet<Integer> records = new HashSet<>();
-      boolean foundHalfTarget = false;
+      boolean foundHalfTwice = false;
       
       // 从 i 之后的第一个数开始
       for (int j = i + 1; j < array.length; j++) {
@@ -50,14 +50,14 @@ public class Solution {
         }
         else {
           // 注意！这里不要用 num == target / 2 ！ 否则会出现 7 / 2 = 3 这样的错误情况
-          if (array[j] * 2 == curTarget && foundHalfTarget == false) {
+          if (array[j] * 2 == curTarget && foundHalfTwice == false) {
             List<Integer> triplet = new ArrayList<>();
             triplet.add(array[j]);
             triplet.add(array[j]);
             triplet.add(array[i]);
             result.add(triplet);
             
-            foundHalfTarget = true;
+            foundHalfTwice = true;
           }
         }
       }
