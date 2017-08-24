@@ -13,11 +13,11 @@ public class Solution {
       
         for (int len : wordLengths) {
             
-            if (totalLenOfWords + len <= k) {
+            if (totalLenOfWords + len <= k) { // 注意 ！ 这时候还没有加上 len ！！！
                 queueOfLens.offer(len);
                 totalLenOfWords += len;
             }
-            else { // totalLenOfWords + len > k
+            else { // totalLenOfWords + len > k   // 注意 ！ 这时候还没有加上 len ！！！
                 maxNumOfWords = Math.max(maxNumOfWords, queueOfLens.size());
                 
                 while (totalLenOfWords + len > k) {
