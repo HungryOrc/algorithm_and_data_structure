@@ -32,8 +32,6 @@ return 10. */
 
 public class Solution {
     
-    /* @param height: An array of integers
-     * @return: The area of largest rectangle in the histogram */
     public int largestRectangleArea(int[] height) {
         if (height == null || height.length == 0) {
             return 0;
@@ -47,8 +45,9 @@ public class Solution {
         // 第一步：取每一个可能作为最大长方形的右端的坐标
         // 下面的系数 i，标定的就是上文所述的 [x+1] 坐标
         for (int i = 1; i <= height.length; i++) {
+            
             // i == height.length 意味着 [x] == height.length - 1，即我们已经考察到了数组heights的最右边的一个
-            // -1 的作用是保证到最后一列的右边时（已经出界了），一定小于所有的非负整数
+            // -1 的作用是保证到最后一列的右边时（已经出界了），一定小于前面所有的heights，因为那些heights都是正数
             int curHeight = (i == height.length) ? -1 : height[i];
             
             // 第二步：对于上面的最右端坐标，取每一个可能的最左端坐标
@@ -56,7 +55,7 @@ public class Solution {
             while (!indexStack.isEmpty() && height[indexStack.peek()] > curHeight) {
                 int possibleHeight = height[indexStack.pop()];
                 
-                // 在 i - indexStack.peek() - 1 里，
+                // 在 i - 1 - indexStack.peek() 里，
                 // i是当前的[x+1]，
                 // -1表示了要把[x+1]本身所占的一位去掉，那么最右端就是[x]了
                 // indexStack.peek()是目前正在被处理的(之前存到Stack里的)高度>height[x+1] 的index
