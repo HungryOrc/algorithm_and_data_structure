@@ -50,16 +50,14 @@ public class Solution {
     	if (input == null || input.length() == 0) {
     		return "N/A";
     	}
-    	if (input.length() % 2 == 1) {
+    	if (input.length() % 2 == 1) { // 长度为奇数的话，是不可能分解成两个相同的string的
     		return "N/A";
     	}
     	
     	int n = input.length();
-    	char firstChar = input.charAt(0);
-    	char lastChar = input.charAt(n - 1);
-    	
+
     	StringBuilder curWord = new StringBuilder();
-    	curWord.append(firstChar);
+    	curWord.append(input.charAt(0));
     	
     	HashSet<Integer> usedIndexes = new HashSet<>();
     	usedIndexes.add(0);
@@ -84,14 +82,16 @@ public class Solution {
     	
     	if (curWord.length() == input.length() / 2) {
     		if (checkSameStrings(input, usedIndexes, curWord.toString())) {
-				result.add(curWord.toString());
-			}
-    		return;
+		    result.add(curWord.toString());
+		}
+    		return; // 不管中不中，这里都得结束了
     	}
     	
     	int n = input.length();
     	int curLen = curWord.length();
-    	
+    	// 减枝的一个技巧 ！
+	// 如果要找n/2个chars，而current stringBuilder里已经有了m个，那么就还要找 n/2 - m 个，
+	// 那么下一个char就不能顶到input string 的结尾处去找了，得预留出 n/2 - m 的空间 ！
     	for (int i = curIndex + 1; i <= n / 2 + curLen; i++) {
     		
     		curWord.append(input.charAt(i));
@@ -99,8 +99,8 @@ public class Solution {
     		
     		findTwinStrings(input, i, curWord, usedIndexes, result);
     		
-    		curWord.deleteCharAt(curWord.length() - 1);
-    		usedIndexes.remove(i);
+    		curWord.deleteCharAt(curWord.length() - 1); // 复原
+    		usedIndexes.remove(i); // 复原
     	}
     }
     
