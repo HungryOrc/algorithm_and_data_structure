@@ -23,31 +23,95 @@ String named "input": the Shuffled string.
 
 Output:
 If the input String is actually a valid Shuffled String of 2 Twin Strings,
-Output one of the two identical strings that make up the input string.
-
-If the no such pair of identical strings exist, print "Twins don't exist". (quotes only for clarity).
+return one of the two identical strings that make up the input string.
+If the no such pair of identical strings exist, return "N/A".
 
 Assumptions:
 1. All the strings will contains only UPPERCASE letters.
-2. 
+2. The length of the input string is not long, so the running time won't be very long.
 
-In case, no twins exist output “Twins don’t exist” (quotes only for clarity).
+Examples:
+ABACBDECDE => ABCDE
+HAAHAAAA => HAAA
+FFFFFF => FFF
+HOWHOW => HOW
+DBEACBCADE => N/A   */
 
 
+// 思路：DFS。没有太多特别之处。就是在选择chars组成string的过程中，用一个hashset记录一下哪些index被选上了，这样的话
+// 最后就能很方便地知道没有被选上的chars是哪些，就利于比较被选出来的那些chars组成的string和剩下的chars组成的string是否相等，
+// 如果相等，就是我们要求的答案。
+// 只要找到一个答案，其他的就都不用再找了。所以我们用一个 object List<String> 来储存答案，虽然我们只要一个 String 而已
+// 如果到了最后都没有答案，即上述的 List<String> 为空，则返回 "N/A" 
 
+public class Solution {
 
+    public static String twinStringShuffle(String input) {
+    	if (input == null || input.length() == 0) {
+    		return "N/A";
+    	}
+    	if (input.length() % 2 == 1) {
+    		return "N/A";
+    	}
+    	
+    	int n = input.length();
+    	char firstChar = input.charAt(0);
+    	char lastChar = input.charAt(n - 1);
+    	
+    	StringBuilder curWord = new StringBuilder();
+    	curWord.append(firstChar);
+    	
+    	HashSet<Integer> usedIndexes = new HashSet<>();
+    	usedIndexes.add(0);
+    	
+    	List<String> result = new ArrayList<>();
+    	
+    	findTwinStrings(input, 0, curWord, usedIndexes, result);
+    	
+    	if (result.size() > 0) {
+    		return result.get(0);
+    	} else {
+    		return "N/A";
+    	}
+    }
 
-Constraints
-1 <= T <= 10
-
-2 <= N <= 106
-
-Example
-Input:
-2
-ABACBDECDE
-DBEACBCADE
-
-Output:
-ABCDE
-Twins don't exist
+    private static void findTwinStrings(String input, int curIndex,
+    	StringBuilder curWord, HashSet<Integer> usedIndexes, List<String> result) {
+    	
+    	if (result.size() > 0) {
+    		return;
+    	}
+    	
+    	if (curWord.length() == input.length() / 2) {
+    		if (checkSameStrings(input, usedIndexes, curWord.toString())) {
+				result.add(curWord.toString());
+			}
+    		return;
+    	}
+    	
+    	int n = input.length();
+    	int curLen = curWord.length();
+    	
+    	for (int i = curIndex + 1; i <= n / 2 + curLen; i++) {
+    		
+    		curWord.append(input.charAt(i));
+    		usedIndexes.add(i);
+    		
+    		findTwinStrings(input, i, curWord, usedIndexes, result);
+    		
+    		curWord.deleteCharAt(curWord.length() - 1);
+    		usedIndexes.remove(i);
+    	}
+    }
+    
+    private static boolean checkSameStrings(String input, HashSet<Integer> usedIndexes, String target) {
+    	StringBuilder sb = new StringBuilder();
+    	for (int i = 0; i < input.length(); i++) {
+    		if (!usedIndexes.contains(i)) {
+    			sb.append(input.charAt(i));
+    		}
+    	}
+    	String leftOverSubsequence = sb.toString();
+    	return leftOverSubsequence.equals(target);
+    }
+}
