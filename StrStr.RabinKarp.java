@@ -11,8 +11,6 @@ If target does not exist in source, just return -1. */
 
 class Solution {
 
-    // Rabin-Karp Algorithm
-    
     // 10^6, this can be 10^7, 10^8 or whatever
     // 以10的n次方作为base进行mod的话，可以完美地满足：先加减乘除再mod == 先mod再加减乘除
     public int BASE = 1000000; 
