@@ -10,14 +10,7 @@ If target does not exist in source, just return -1. */
 // http://www.jiuzhang.com/video/rabin-karp
 
 class Solution {
-    /**
-     * Returns a index to the first occurrence of target in source,
-     * or -1  if target is not part of source.
-     * @param source string to be scanned.
-     * @param target string containing the sequence of characters to match.
-     */
-     
-    
+
     // Rabin-Karp Algorithm
     
     // 10^6, this can be 10^7, 10^8 or whatever
@@ -25,8 +18,7 @@ class Solution {
     public int BASE = 1000000; 
     public int HASH_MAGIC_NUMBER = 31; // 惯例如此
     
-    public int strStr2(String source, String target) 
-    {
+    public int strStr2(String source, String target) {
         if (source == null || target == null) {
             return -1;
         }
