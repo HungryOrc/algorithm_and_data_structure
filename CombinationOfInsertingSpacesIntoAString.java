@@ -39,7 +39,19 @@ public class Solution {
 			cur.deleteCharAt(cur.length() - 1); // 特别容易漏了这个　！！！
 			return;
 		}
-		 
+		
+		
+		the following can be simplified:```````````````````````````````````
+		add A
+	        add space
+		do helper once
+		delete the end char of sb
+		
+		do helper for another time
+		delete the end char of sb again
+		
+		
+		
 		// Case 1: do not insert space in the current index
 		cur.append(cArray[curIndex]);
 		bfs(cArray, curIndex + 1, cur, result);
@@ -51,6 +63,8 @@ public class Solution {
 		bfs(cArray, curIndex + 1, cur, result);
 		cur.deleteCharAt(cur.length() - 1);
 		cur.deleteCharAt(cur.length() - 1);
+		
+		```````````````````````````````````````````````````````````````````````
 	}
 }
 
