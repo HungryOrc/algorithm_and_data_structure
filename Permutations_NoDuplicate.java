@@ -49,8 +49,7 @@ class Solution {
     private void dfsWithSwapping(char[] cArray, int curIndex, List<String> result) {
 
       if (curIndex == cArray.length) {
-        // 这一步，造新String，耗时是 O(n) ！！！
-        // 分析时间复杂度时，别忘了这种看似不起眼，其实能量很大的地方 ！！！
+        // 造新 String 耗时 O(n)
         result.add(new String(cArray)); 
         return;
       }
