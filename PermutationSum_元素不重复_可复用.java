@@ -40,8 +40,8 @@ we know that this is the only combination in this case, so we return 1.  */
 
 public class Solution 
 {
-    // 方法1: Recursion
-    // 思想：每当要加入一个新的数的时候，都是把数组 nums 里的每一个数都拿出来试一下，每一个数都有平等的再在这一位出场的权力
+    // 方法1: Swap + Recursion 看起来巧妙其实不巧妙！太慢了！无法通过网评
+    // 每当要加入一个新的数的时候，都是把数组 nums 里的每一个数都拿出来试一下，每一个数都有平等的在这一位出场的权力
     public int combinationSum4(int[] nums, int target) 
     {
         // 数组里全是正数，所以target不可能一开始就是0
