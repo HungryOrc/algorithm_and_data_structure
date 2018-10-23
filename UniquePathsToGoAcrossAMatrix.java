@@ -3,7 +3,7 @@ The robot can only move either down or right for 1 slot in each step.
 The robot is trying to reach the bottom-right corner of the grid.
 How many possible unique paths are there?   */
 
-// 方法：DP，我自己的做法
+// DP，我自己的做法
 public class Solution {
   
   public int uniquePaths(int m, int n) {
