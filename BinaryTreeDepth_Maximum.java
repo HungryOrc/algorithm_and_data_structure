@@ -20,27 +20,7 @@ public class MaxDepthOfBinaryTree {
         
         return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
     }
-    
-    
-    // 方法2: Recursion - Traversal
-    public int depth;
-    public int maxDepth(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        findDepth(root, 1);
-        return depth;
-    }
-    private void findDepth(TreeNode curNode, int curDepth) {
-        if (curNode == null) {
-            return;
-        }
-        if (curDepth > depth) {
-            depth = curDepth;
-        }
-        findDepth(curNode.left, curDepth + 1);
-        findDepth(curNode.right, curDepth + 1);
-    }
+ 
  
  
     // 方法3：Depth First Search (DFS)。使用了2个Stack，一个存Node，一个存正对应于当前Node的Depth
