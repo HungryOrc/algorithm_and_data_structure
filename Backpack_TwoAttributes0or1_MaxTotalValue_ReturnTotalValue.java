@@ -9,11 +9,9 @@ int dp[i][s][w] 的意思是：的意思是：使用数组里index为0到i的ite
 所以 int dp[][][] = new int[number of items][max size of backpack + 1][max weight of backpack + 1]。
 
 Base Cases:
-Base Case 1: 对于数组里的第一个item，
-    if(sizes[0] <= maxSize && weights[0] <= maxWeight)，dp[0][sizes[0]][weights[0]] = values[0]
-    其他的 dp[0][s != sizes[0]][w != weights[0]] 都 = 0，因为不可能实现这些size或者weight，所以自然所能带来的总value也都是 0
-Base Case 2: size和为0的情况，对于任何多个items，都是可以的！！ 即什么都不放 ！！ 所以都置为 0，即不放任何item，自然value和为 0
-    for all i and all j，dp[i][j][0] = 0;
+对于数组里的第一个item，
+if(sizes[0] <= maxSize && weights[0] <= maxWeight)，dp[0][sizes[0]][weights[0]] = values[0]
+其他的 dp[0][s != sizes[0]][w != weights[0]] 都 = 0，因为不可能实现这些size或者weight，所以自然所能带来的总value也都是 0
     
 Induction Rule:
 dp[i][s][w] = max(dp[i - 1][s][w], dp[i - 1][s - sizes[i]][w - weights[i]] + values[i])
@@ -50,11 +48,11 @@ public class Solution {
             for (int sumS = 1; sumS <= maxSize; sumS ++) {
                 for (int sumW = 1; sumW <= maxWeight; sumW ++) {
                 
-                    if (sumS - curSize >= 0 && sumW - curWeight >= 0) { // 别忘了检查越界 ！！！
+                    if (sumS - curSize >= 0 && sumW - curWeight >= 0) { // 别忘了检查越界！
                         dp[i][sumS][sumW] = Math.max(dp[i - 1][sumS][sumW], 
                                                      dp[i - 1][sumS - curSize][sumW - curWeight] + values[i]);
                     } else {
-                        dp[i][sumS][sumW] = dp[i - 1][sumS][sumW]; // 这种情况下就不加后面那项了 ！！！
+                        dp[i][sumS][sumW] = dp[i - 1][sumS][sumW]; // 这种情况下就不加后面那项了！
                     }
                 }
             }
