@@ -9,11 +9,8 @@ int dp[i][s] 的意思是：使用 index为0到i的 group 中的任意几个（�
 所以 int dp[][] = new int[number of groups][capacity of the backpack + 1]。
 
 Base Cases:
-Base Case 1: 对于第一个group，对于它里面的每个item，最多只有一个item可以被选用，最多只能被选用一次，所以：
-    
-    其他的 dp[0][s != sizes[i]] 都 = 0，因为不可能实现这些size，所以自然所能带来的总value也都是 0
-Base Case 2: size和为0的情况，对于任何多个groups，都是可以的！！ 即什么都不放 ！！ 所以都置为 0，即不选任何group，自然value和为 0
-    for (int i = 0; i < n; i++)，dp[i][0] = 0;
+对于第一个group，对于它里面的每个item，最多只有一个item可以被选用，最多只能被选用一次，所以：
+其他的 dp[0][s != sizes[i]] 都 = 0，因为不可能实现这些size，所以自然所能带来的总value也都是 0
     
 Induction Rule: 这一题的递推
 for (int i = 0; i < n; i++) {
@@ -71,11 +68,6 @@ public class Solution {
                 
                 dp[0][curSize] = curValue;
             }
-        }
-        
-        // base case 2 ---- 这个其实可以不写，因为默认都是 0. 写了只是更能解释清楚思路
-        for (int i = 0; i < n; i++) {
-            dp[i][0] = 0;
         }
         
         for (int sum = 1; sum <= capacity; sum++) {
