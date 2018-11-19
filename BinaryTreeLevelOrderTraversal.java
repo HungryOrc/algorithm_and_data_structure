@@ -58,10 +58,7 @@ public class Solution {
     // Ref: https://discuss.leetcode.com/topic/47255/java-1ms-dfs-recursive-solution-and-2ms-bfs-iterative-solution
     // 不是“先从上到下，再从左到右的”一行一行填，而是“先从左到右，再从上到下”的一列一列填！！！
     // 每一行即每一level的ArrayList都是从最左边开始先开个头，然后逐步向右填满
-    // 在过程中每个ArrayList都是不完整的！！而最后大家都变得完整
-    // 很巧妙！
     public List<List<Integer>> levelOrder(TreeNode root) {
-        
         ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
         if (root == null)
             return result;
@@ -69,12 +66,12 @@ public class Solution {
         levelOrderByDFS(root, 0, result);
         return result;
     }
-    private void levelOrderByDFS(TreeNode curNode, int curLevel, ArrayList<List<Integer>> result)
-    {
+    
+    private void levelOrderByDFS(TreeNode curNode, int curLevel, ArrayList<List<Integer>> result) {
         if (curNode == null)
             return;
         
-        // 最精妙在下面的这一句了！！！result 是 List of Lists，所以result的当前size就是当前我们搞到第几个level了
+        // 关键在这一句！result 是 List of Lists，所以result的当前size就是当前我们搞到第几个level了
         if (curLevel >= result.size()) {
             ArrayList<Integer> valuesInCurLevel = new ArrayList<>();
             valuesInCurLevel.add(curNode.val);
@@ -86,5 +83,4 @@ public class Solution {
         levelOrderByDFS(curNode.left, curLevel + 1, result);
         levelOrderByDFS(curNode.right, curLevel + 1, result);
     }
-    
 }
