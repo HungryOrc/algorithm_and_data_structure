@@ -4,24 +4,6 @@ Given the prices [1, 3, 6, 5, 8], cost = 1, the max profit is 5. To see this,
 you can buy at 1 and sell at 8 to get a profit of 7, minus the transaction cost 2, and the final result is 5. */
 
 
-/* 思路：这题明显应该用 DP 做。这题的关键在于，买和卖都有手续费，而且可能不同
-
-States (2 kinds):
-(1) If we are holding the stock at the end of day i, 
-    the max possible profit at the end of day i is recorded as: hold[i]
-(2) If we are holding nothing at the end of day i,
-    the max possible profit at the end of day i is recorded as: empty[i]
-
-Transition Functions:
-hold[i] = Math.max(hold[i - 1], empty[i - 1] - prices[i] - buyCost)
-empty[i] = Math.max(empty[i - 1], hold[i - 1] + prices[i] - sellCost)
-
-Return:
-empty[prices.length - 1]
-因为股票卖掉才能让手里的 本次profit 兑现，实现最大的 累计profit */
-
-
-// 我的方法。符合直觉。很便于理解，所以显得稍长
 // 由于状态 i 仅仅与状态 i-1 有关，所以不必整一个长度n的数组出来存状态 ！！
 // 只要 O(1) 的空间复杂度即可 ！！时间复杂度是 O(n)
 public class Solution {
