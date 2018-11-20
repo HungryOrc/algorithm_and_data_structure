@@ -46,32 +46,6 @@ public class Solution {
     }
     
    
-    // 方法2: Recursion - Divide and Conquer
-    // Ref: https://discuss.leetcode.com/topic/23047/clean-java-solution-accepted-without-any-helper-recursive-function
-    public List<String> binaryTreePaths(TreeNode root) {
-        List<String> paths = new LinkedList<>();
-        if(root == null) 
-            return paths;
-       
-        // if the current node is a leaf, this means we have reached the end of a path
-        if(root.left == null && root.right == null) {
-            paths.add(root.val + "");
-            return paths;
-        }
-       
-        // if the current node is not a leaf, then go on
-        List<String> leftPaths = binaryTreePaths(root.left);
-        List<String> rightPaths = binaryTreePaths(root.right);
-        for (String path : leftPaths) {
-            paths.add(root.val + "->" + path);
-        }
-        for (String path : rightPaths) {
-            paths.add(root.val + "->" + path);
-        }
-        return paths;
-    }
-    
-    
     // 方法3: DFS
     // 2个Stack，一个装Nodes，一个装Strings！！
     // Ref: https://discuss.leetcode.com/topic/33781/my-java-solution-in-dfs-bfs-recursion
