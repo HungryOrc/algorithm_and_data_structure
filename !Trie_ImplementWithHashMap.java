@@ -1,39 +1,4 @@
-public class Trie {
-    Node root;
 
-    // Constructor of Trie
-    // ------------------------------------------------------------------------------
-    public Trie() {
-        root = new Node(' ');
-    }
-    
-    // Inserts a word into the trie
-    // ------------------------------------------------------------------------------
-    public void insert(String word) {
-        root.size ++;
-        insert(root, word, 0);
-    }
-    private void insert(Node node, String word, int index) {
-        if (index == word.length()) {
-            return;
-        }
-        
-        char c = word.charAt(index);
-        Node child = node.children.get(c);
-        
-        if (child == null) {
-            child = new Node(c);
-            node.children.put(c, child);
-        }
-        
-        child.size ++;
-        if (index == word.length() - 1) {
-            child.endOfWord = true;
-        } else {
-            insert(child, word, index + 1);
-        }
-    }
-    
     // Delete a word in the trie
     // ------------------------------------------------------------------------------
     // 注意！
