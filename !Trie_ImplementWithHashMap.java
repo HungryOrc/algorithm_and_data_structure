@@ -1,34 +1,3 @@
-
-    // Delete a word in the trie
-    // ------------------------------------------------------------------------------
-    // 注意！
-    // 如果被删除的word的最后一个char的后面再也没有任何children了，那么这个最后的node也可以remove掉，也可以不remove
-    // 如果被删除的word的最后一个char存在于trie中，但它这个node并不是任何word的ending，那么算是要删除的word不存在
-   
-   
-    
-    // Returns if the word is in the trie
-    // ------------------------------------------------------------------------------
-    public boolean searchWord(String word) {
-        return search(root, word, 0);
-    }
-    private boolean search(Node node, String word, int index) {
-        char c = word.charAt(index);
-        Node child = node.children.get(c);
-        if (child == null) {
-            return false;
-        } else {
-            if (index == word.length() - 1) {
-                if (child.endOfWord == true) { // 这个child node也确实是之前加入过的一个word的结尾
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            return search(child, word, index + 1);
-        }
-    }
-    
     // Returns the ending Node if the given Prefix String in the Trie,
     // return null if the prefix does not exist in this Trie
     // ------------------------------------------------------------------------------
