@@ -5,48 +5,6 @@ Both num1 and num2 contains only digits 0-9.
 Both num1 and num2 does not contain any leading zero.
 You must not use any built-in BigInteger library or convert the inputs to integer directly. */
 
-
-// C++版本
-char* AddAsciiIntegers( const char* X, const char* Y)
-{
-    int lengthX = strlen(X);
-    int lengthY = strlen(Y);
-    int expandedLength = max(lengthX, lengthY) + 1;
-    
-    char *expandedX = new char[expandedLength];
-    char *expandedY = new char[expandedLength];
-    char *sumArray = new char[expandedLength];
-    
-    for (int i = 0; i < expandedLength - lengthX; i++) {
-        expandedX[i] = '0';
-    }
-    for (int i = expandedLength - lengthX; i < expandedLength; i++) {
-        expandedX[i] = X[i - expandedLength + lengthX];
-    }
-    
-    for (int i = 0; i < expandedLength - lengthY; i++) {
-        expandedY[i] = '0';
-    }
-    for (int i = expandedLength - lengthY; i < expandedLength; i++) {
-        expandedY[i] = Y[i - expandedLength + lengthY];
-    }
-    
-    int carry = 0;
-    for (int i = expandedLength - 1; i >= 0; i--) {
-        
-        // 注意 ！！！C++ 里从 char 到 int，减 '0' 即可 ！！！
-        int sum = (expandedY[i] - '0') + (expandedX[i] - '0') + carry;
-        
-        // 注意 ！！！C++ 里从 int 到 char，加 '0' 即可 ！！！
-        sumArray[i] = sum % 10 + '0';
-        
-        carry = sum / 10;
-    }
-    return sumArray;
-}
-
-
-// Java版本
 public class Solution {
     
     public String addStrings(String num1, String num2) {
