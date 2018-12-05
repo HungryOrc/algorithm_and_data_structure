@@ -34,11 +34,12 @@ Space: O(n * capacity)。可以优化为 O(capacity)，因为dp矩阵里，其�
 
 
 public class Solution {
-
     public int backPackIII(int[] sizes, int[] values, int capacity) {
         if (values == null || values.length == 0 || sizes == null || sizes.length == 0 || capacity <= 0) {
             return 0;        
         }
+	    
+	    // 这里还应该考虑两个数组长度不同的情况！！！！！
         
         int n = sizes.length;
         int[][] dp = new int[n][capacity + 1];
