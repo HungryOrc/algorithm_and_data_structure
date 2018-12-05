@@ -106,3 +106,6 @@ public int backpack3(int m, int[] A, int[] V) {
 
 Time: O(nm)
 Space: O(m), dp array
+
+-------
+这题必须从左往右填，不能从右往左填
