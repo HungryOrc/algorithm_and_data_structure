@@ -79,3 +79,11 @@ public class Solution {
         return maxTotalValue;
     }
 }
+
+
+改进方法：
+
+dp[i][j] = Max(dp[i-1][j], dp[i][j-A[i]] + V[i])
+    
+一行以内自己填就行，不用k个来loop，一行以内右边的基于左边的来填
+然后对于总的矩阵来说，从上到下，从左到右填
