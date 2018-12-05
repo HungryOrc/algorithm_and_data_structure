@@ -72,3 +72,12 @@ public class Solution {
         return 0; // actually we will never reach here
     }
 }
+
+
+另外一个方法：
+
+int[][]
+dp[i][j] means by using i items, the maximum size we can get with the j size constrains.
+dp[i][j] = Max(dp[i-1][j], dp[i-1][j-A[i]] + A[i])
+
+我自己写写看！
