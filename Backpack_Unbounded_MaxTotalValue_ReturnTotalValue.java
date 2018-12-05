@@ -87,3 +87,22 @@ dp[i][j] = Max(dp[i-1][j], dp[i][j-A[i]] + V[i])
     
 一行以内自己填就行，不用k个来loop，一行以内右边的基于左边的来填
 然后对于总的矩阵来说，从上到下，从左到右填
+
+上面那个地推公式的空间可以进一步优化：
+用滚动数组，上一行的信息留存在dp[j]的前一次occurence里面了！！！
+dp[j] = Max(dp[j], dp[j - A[i]] + V[i])
+    
+public int backpack3(int m, int[] A, int[] V) {
+    int[] dp = new int[m + 1];
+    int n = A.length;
+    
+    for (int i = 0; i < n; i++) {
+        for (int j = A[i]; j <= m; j++) {
+            dp[j] = Math.max(dp[j], dp[j - A[i]] + V[i]);
+        }
+    }
+    return dp[m];
+}
+
+Time: O(nm)
+Space: O(m), dp array
