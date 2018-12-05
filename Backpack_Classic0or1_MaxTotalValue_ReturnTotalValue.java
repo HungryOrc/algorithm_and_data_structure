@@ -53,11 +53,10 @@ public class Solution {
             int curItemSize = sizes[i];
             
             for (int sum = 1; sum <= capacity; sum++) {
+                dp[i][sum] = dp[i - 1][sum];
                 
-                if (sum - curItemSize >= 0) { // 别忘了检查越界 ！！！
-                    dp[i][sum] = Math.max(dp[i - 1][sum], dp[i - 1][sum - curItemSize] + values[i]);
-                } else {
-                    dp[i][sum] = dp[i - 1][sum]; // 这种情况下就不加后面那项了 ！！！
+                if (sum - curItemSize >= 0) {
+                    dp[i][sum] = Math.max(dp[i][sum], dp[i - 1][sum - curItemSize] + values[i]);
                 }
             }
         }
