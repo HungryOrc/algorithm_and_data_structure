@@ -16,17 +16,13 @@ Base Case 2: size和为0的情况，对于任何多个items，都是可以的！
     for (int i = 0; i < n; i++)，dp[i][0] = 0;
     
 Induction Rule:
-dp[i][s] = max(dp[i - 1][s], dp[i - 1][s - sizes[i]] + values[i], dp[i][s - sizes[i]] + values[i])
+dp[i][s] = max(dp[i - 1][s], dp[i][s - sizes[i]] + values[i])
 其中 dp[i - 1][s] 的意思是：i之前的那些items已经可以组成总和正好为 s 的组合了，item i 不参与的话，自然也还是和为s的组合；
-dp[i - 1][s - sizes[i]] 的意思是：i之前的那些items组成了总和正好为 s - sizes[i] 的组合，那么 item i 参与进来后，自然正好就是和为s。
-dp[i][s - sizes[i]] 的意思是：已经用过了i，即由index从0到i的items组成了总和正好为 s - sizes[i] 的组合，
-已经实现了在上述前提下的总value的最大化，那么 item i 参与进来后，自然正好就是和为s，新的总value就是之前的总value + values[i]。
-
-但是，其实 dp[i][s - sizes[i]] 必然是永远大于等于 dp[i - 1][s - sizes[i]] 的，所以在
-dp[i - 1][s] 和 dp[i][s - sizes[i]] + values[i] 这二者之间求max其实就行了。
+dp[i][s - sizes[i]] 的意思是：已经用过了 0次或若干次的 item i，组成了总和为 s - sizes[i] 的组合，
+那么 item i (再一次)参与进来后，自然正好就是和为s，新的总value就是之前的总value + values[i]。
 
 Return:
-注意，这里不是返回 dp[n - 1][capacity] ！！ 
+注意，这里不是返回 dp[n - 1][capacity]
 因为dp矩阵的第二维的意义是“正好”总size为某某值 ！！ 而获得总value最大时的总size未必是capacity ！！！
     for (int sum = 1; sum <= capacity; sum++) {
         maxTotalValue = Math.max(maxTotalValue, dp[n - 1][sum]);
