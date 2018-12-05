@@ -39,7 +39,8 @@ public class Solution {
             return 0;        
         }
 	    
-	    // 这里还应该考虑两个数组长度不同的情况！！！！！
+	    // 这里还应该考虑两个数组长度不同的情况！！！！！写了代码以后留一句注释在这里！！！
+        
         
         int n = sizes.length;
         int[][] dp = new int[n][capacity + 1];
