@@ -78,6 +78,6 @@ public class Solution {
 
 int[][]
 dp[i][j] means by using i items, the maximum size we can get with the j size constrains.
-dp[i][j] = Max(dp[i-1][j], dp[i-1][j-A[i]] + A[i])
+dp[i][j] = Max(dp[i-1][j], dp[i-1][j-A[i]] + A[i])， the second part has a prerequisit: j >= A[i]
 
 我自己写写看！
