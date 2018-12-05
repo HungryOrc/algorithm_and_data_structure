@@ -35,7 +35,7 @@ public class Solution {
      
     public int backPack(int capacity, int[] sizes, int[] values) {
         
-        // 这里还应该考虑两个数组长度不同的情况！！！！！
+        // 这里还应该考虑两个数组长度不同的情况！！！！！写了代码以后留一句注释在这里！！！
         
         
         
