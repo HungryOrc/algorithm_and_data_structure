@@ -2,7 +2,7 @@
 背包有最大的容量（对于size）。然后这一题的特殊之处在于，限制了最多只能选取 m 个items。
 求怎么填能获得最大的总value。背包不必被填满。 */
 
-/* 思路：三维 DP
+思路：三维 DP
 int dp[i][j][s] 的意思是：使用 index为0到i 的 items 中的 正好j个items（总共最多能选用 m 个items），
 正好组成总 size = s 的前提下，最大可能的总 value 是多少。
 所以 int dp[][][] = new int[number of items][m + 1][capacity of the backpack + 1]。
@@ -25,7 +25,7 @@ Return:
     return maxTotalValue;
         
 Time: O(n * m * capacity), 其中n是items的个数，m是最多可以有几个items
-Space: O(n * m * capacity)。可以优化为 O(m * capacity)   */
+Space: O(n * m * capacity)。可以优化为 O(m * capacity)
 
 
 public class Solution {
