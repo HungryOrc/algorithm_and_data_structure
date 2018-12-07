@@ -2,7 +2,7 @@
 每个item有2个属性，size和value。
 背包的size capacity有上限。求怎么填能获得最大的总value。背包不必被填满。 */
 
-/* 思路：二维 DP
+思路：二维 DP
 int dp[i][s] 的意思是：使用 index为0到i的 group 中的任意几个（可以一个也不选，也可以从中任选几个），
 每个被选中的group里任选一个item，
 正好组成总 size = s 的前提下，最大可能的总 value 是多少。
