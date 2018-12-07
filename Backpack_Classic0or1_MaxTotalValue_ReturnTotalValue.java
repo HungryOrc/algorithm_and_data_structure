@@ -2,7 +2,7 @@
 所谓Classic的意思是每个item有不止一个属性，比如既有size又有value。
 背包有最大的容量（对于size或weight）。求怎么填能获得最大的总value。背包不必被填满。 */
 
-/* 思路：二维 DP
+思路：二维 DP
 int dp[i][s] 的意思是：使用数组里index为0到i的items中的任意几个（可以一个也不选，也可以从中任选几个），
 正好组成总 size = s 的前提下，最大可能的总 value 是多少。
 所以 int dp[][] = new int[number of items][capacity of the backpack + 1]。
@@ -28,7 +28,7 @@ Return:
     return maxTotalValue;
         
 Time: O(n * capacity), 其中n是items的个数
-Space: O(n * capacity)。可以优化为 O(capacity)，因为dp矩阵里，其实每一次loop只用一行就够了   */
+Space: O(n * capacity)。可以优化为 O(capacity)，因为dp矩阵里，其实每一次loop只用一行就够了
 
 
 public class Solution {
