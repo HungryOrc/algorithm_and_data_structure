@@ -20,13 +20,11 @@ for (int j = 0; j <= size / sizes[i]; j++) {
 }
 
 方法2：
-if (curValue > sum) {
-    dp[i][sum] = dp[i - 1][sum];
-} else {
+
     // 这里分两种情况，
     // 加号左边 dp[i - 1][sum] 表示，sum里面将没有array[i]的任何参与，
     // 加号右边 dp[i][sum - curValue] 表示，sum里面将存在array[i]的一次或者多次参与，
-    // 特别注意 ！！！ 
+ 
     // dp[i][sum - curValue] 是包含了 dp[i - 1][sum - curValue] 的 ！！！ 所以下面的式子不要再加 dp[i - 1][sum - curValue] ！！！
     // 因为：
     // dp[i - 1][sum - curValue] 表示 array[i] 已经被使用0次，然后将会被使用且仅使用一次 ！！！
@@ -57,7 +55,7 @@ public class Solution {
             dp[0][sizes[0] * i] = 1;
         }
         
-        // base case 2，这个很重要！别忘了！这里都是 1 ！！ 不是 0 ！！
+        // base case 2
         for (int i = 0; i < n; i++) {
             dp[i][0] = 1;
         }
