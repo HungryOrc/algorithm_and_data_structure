@@ -1,4 +1,10 @@
-/* Laioffer 总结
+/* 
+目前看到的最全的背包九讲：
+https://www.kancloud.cn/kancloud/pack/70124
+这可远不是九道背包题！而是九大topic！
+
+
+Laioffer 总结
 
 Given a set of n items, each item has a weight of w[i], i = 1, 2... n. The Backpack has a weight capacity of W.
 What's the max total weight you can put into the Backpack?
