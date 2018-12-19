@@ -30,18 +30,12 @@ public class MaxDepthOfBinaryTree {
  
     // 改写！默写！
  
-    // 方法 2：Breadth First Search (BFS)。使用了1个Queue，放"当前Depth"层所含有的所有Nodes
-    // 每次取出一个第m层的Node，就把它的子Node(s)(在第m+1层)放到Queue尾去。注意Queue是后进后出
-    // 取出的Node就再也不存入了。处理完一层即一个Depth再处理下一层
-    // 速度：很快
-    // Reference: https://discuss.leetcode.com/topic/33826/two-java-iterative-solution-dfs-and-bfs/2
+    // 方法 2：Breadth First Search (BFS)
     public int maxDepth_ByBFS(TreeNode root)
     {
         if(root == null)
             return 0;
         
-        // 注意 Java 里的 Queue 只是一个 Interface，不能被直接实例化！
-        // 只能借助于一些implements Queue 的数据类型来进行实例化，包括 LinkedList：
         Queue<TreeNode> nodeQueue = new LinkedList<>();
         nodeQueue.offer(root);
         
