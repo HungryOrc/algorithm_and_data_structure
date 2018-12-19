@@ -15,7 +15,6 @@ L = 2 -> 3 -> null, insert 1, return 1 -> 2 -> 3 -> null */
  * } */
 
 public class Solution {
-
   public ListNode insert(ListNode head, int value) {
     
     ListNode dummyHead = new ListNode(-1);
@@ -34,5 +33,4 @@ public class Solution {
     
     return dummyHead.next;
   }
-
 }
