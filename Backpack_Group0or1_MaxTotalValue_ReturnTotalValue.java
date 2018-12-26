@@ -32,7 +32,8 @@ public class Solution {
                     if (sum - curSize >= 0) {
                         dp[i][sum] = Math.max(dp[i - 1][sum], dp[i - 1][sum - curSize] + curValue);
                     } else {
-                        dp[i][sum] = Math.max(dp[i][sum], dp[i - 1][sum]);
+                        dp[i][sum] = Math.max(dp[i][sum], dp[i - 1][sum]); // must have max here! since we visit this sum for j times
+!!!!!!!!
                     }
                 }
             }
