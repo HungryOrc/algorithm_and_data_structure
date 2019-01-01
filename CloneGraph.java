@@ -22,6 +22,10 @@ Visually, the graph looks like the following:
 // 方法0：最简明有力的方法
 // Since there might be cycles in the original graph, we cannot just loop along the graph, namely the list
 // of nodes to copy the whole graph
+
+我自己默写下这方法，如果速度够快，后面那些都不用记录了！！
+
+
 public class Solution {
   
   public List<GraphNode> copy(List<GraphNode> graph) {
@@ -46,7 +50,7 @@ public class Solution {
     graphCopy.add(nodeCopy);
     
     for (GraphNode nei : node.neighbors) {
-      nodeCopy.neighbors.add(copy(nei, graphCopy, map)); //  精华在这一句 ！！！
+      nodeCopy.neighbors.add(copy(nei, graphCopy, map));
     }
     
     return nodeCopy;
