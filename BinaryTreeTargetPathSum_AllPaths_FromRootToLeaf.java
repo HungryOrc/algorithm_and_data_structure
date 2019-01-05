@@ -28,7 +28,7 @@ public class Solution {
      * @param target an integer
      * @return all valid paths */
     
-    // 方法1: Recursion - Traversal，速度挺快的
+    // Recursion，速度挺快的
     public List<List<Integer>> binaryTreePathSum(TreeNode root, int target) {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) {
@@ -68,53 +68,4 @@ public class Solution {
             curPath.remove(curPath.size() - 1);
         }
     }
-    
-    
-    // 方法2: Iteration，用了3个Stack。速度挺慢的
-    public List<List<Integer>> binaryTreePathSum(TreeNode root, int target) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-        
-        Stack<TreeNode> nodeStack = new Stack<>();
-        Stack<Integer> sumStack = new Stack<>();
-        Stack<ArrayList<Integer>> pathStack = new Stack<>();
-        
-        nodeStack.push(root);
-        sumStack.push(root.val);
-         
-        ArrayList<Integer> newList = new ArrayList<>();
-        newList.add(root.val);
-        pathStack.push(newList);
-        
-        while (!nodeStack.isEmpty()) {
-            TreeNode curNode = nodeStack.pop();
-            int curSum = sumStack.pop();
-            ArrayList<Integer> curList = pathStack.pop();
-            
-            if (curSum == target && curNode.left == null && curNode.right == null) {
-                result.add(curList);
-            }
-            
-            if (curNode.left != null) {
-                nodeStack.push(curNode.left);
-                sumStack.push(curSum + curNode.left.val);
-                 
-                ArrayList<Integer> newLeftList = new ArrayList<>(curList);
-                newLeftList.add(curNode.left.val);
-                pathStack.push(newLeftList);
-            }
-            if (curNode.right != null) {
-                nodeStack.push(curNode.right);
-                sumStack.push(curSum + curNode.right.val);
-                 
-                ArrayList<Integer> newRightList = new ArrayList<>(curList);
-                newRightList.add(curNode.right.val);
-                pathStack.push(newRightList);
-            }
-        }
-        return result;
-    }
-    
-}
+  
