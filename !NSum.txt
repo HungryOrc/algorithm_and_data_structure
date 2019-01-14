@@ -1,4 +1,0 @@
-NSum问题，Runtime 最低为 O(m^(N−1))。m为数组长度
-
-从另一个角度理解：The maximum possible size of a solution set for NSum problem is O(N^2). 
-So to explore all these possible solutions would take at least O(m^(N−1)) runtime.
