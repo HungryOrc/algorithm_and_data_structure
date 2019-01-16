@@ -34,37 +34,7 @@ public class Solution {
     if (root == null) {
       return true;
     }
-    
-    Queue<TreeNode> nodeQueue = new LinkedList<>();
-    nodeQueue.offer(root);
-    
-    boolean childrenEnded = false;
-    
-    while (!nodeQueue.isEmpty()) {
-      TreeNode curNode = nodeQueue.poll();
-      
-      if (childrenEnded && 
-          (curNode.left != null || curNode.right != null)) {
-        return false;
-      }
-      
-      if (curNode.left == null || curNode.right == null) {
-        childrenEnded = true;
-      }
-      
-      if (curNode.left == null && curNode.right != null) {
-        return false;
-      }
-      
-      if (curNode.left != null) {
-        nodeQueue.offer(curNode.left);
-      }
-      if (curNode.right != null) {
-        nodeQueue.offer(curNode.right);
-      }
-    }
-    
-    return true;
-  }
-  
+ if any node has right, but left child is null, then return false
+ 
+ if any node has less than 2 children, then if any node after him in the queue has any child, then return false
 }
