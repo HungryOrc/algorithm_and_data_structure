@@ -23,8 +23,6 @@ Visually, the graph looks like the following:
 // Since there might be cycles in the original graph, we cannot just loop along the graph, namely the list
 // of nodes to copy the whole graph
 
-我自己默写下这方法，如果速度够快，后面那些都不用记录了！！
-
 
 public class Solution {
   
