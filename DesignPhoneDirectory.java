@@ -27,65 +27,10 @@ directory.check(2);
  * boolean param_2 = obj.check(number);
  * obj.release(number); */
 
-// 方法1：用2个HashSet。速度没有 queue + HashSet 快
-public class PhoneDirectory {
-
-    HashSet<Integer> usedNumbers;
-    HashSet<Integer> unusedNumbers;
-    int max;
-    
-    /** Initialize your data structure here
-        @param maxNumbers - The maximum numbers that can be stored in the phone directory. */
-    public PhoneDirectory(int maxNumbers) {
-        
-        usedNumbers = new HashSet<>();
-        
-        unusedNumbers = new HashSet<>();
-        for (int i = 0; i < maxNumbers; i++) {
-            unusedNumbers.add(i);
-        }
-        
-        max = maxNumbers;
-    }
-    
-    /** Provide a number which is not assigned to anyone.
-        @return - Return an available number. Return -1 if none is available. */
-    public int get() {
-        if (unusedNumbers.size() == 0) {
-            return -1;
-        } else {
-            // 注意 ！！！
-            // 下面三行，是在HashSet里的iterator，用它来取Set里的第一个value ！！！
-            Iterator myIterator = unusedNumbers.iterator();
-            Object firstObj = myIterator.next();
-            int firstNum = (int)firstObj;
-            
-            unusedNumbers.remove(firstNum);
-            usedNumbers.add(firstNum);
-            
-            return firstNum;
-        }
-    }
-    
-    /** Check if a number is available or not. */
-    public boolean check(int number) {
-        if (number < 0 || number > max) { // 别忘了检验输入的number的合法性 ！！
-            return false;
-        }
-        return (unusedNumbers.contains(number));
-    }
-    
-    /** Recycle or release a number. */
-    public void release(int number) {
-        if (usedNumbers.contains(number)) { // 别忘了我们要release的数可能不存在 ！！！
-            usedNumbers.remove(number);
-            unusedNumbers.add(number);
-        }
-    }
-}
 
 
-// 方法2： 一个queue加一个set
+
+// 一个queue加一个set
 public class PhoneDirectory {
 
     HashSet<Integer> usedNumbers;
