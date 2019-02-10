@@ -14,8 +14,6 @@ public class Solution {
     
     // 最普通的方法
     public List<String> generatePossibleNextMoves(String s) {
-        
-        //！注意！从 String 转到 charArray ---- String.toCharArray()
         char[] charArray = s.toCharArray();
         List<String> output = new ArrayList<String>();
         
@@ -23,34 +21,14 @@ public class Solution {
         {
             if (charArray[i] == '+' && charArray[i+1] == '+')
             {
-                // 这里一定要新做一个 charArray，不能用 tempCharArray = oldCharArray，那样还是同一个Reference
+                // 这里一定要新做一个 charArray
                 char[] tempCharArray = s.toCharArray();
                 tempCharArray[i] = '-';
                 tempCharArray[i+1] = '-';
-                
-                // ！注意！从 charArray 转到 String ---- new String(charArray)，不能少了new关键字！
+         
                 output.add(new String(tempCharArray));
             }
         }
         return output;
     }
-    
-    
-    // 用 ArrayList.indexOf(Object) 的方法：
-    // Reference: https://discuss.leetcode.com/topic/27232/4-lines-in-java
-    /* 附：The java.util.ArrayList.indexOf(Object) method 
-     returns the index of the first occurrence of the specified element in this list, 
-     or -1 if this list does not contain the element.
-    */
-    // 但是运行速度似乎与上面那个最普通的方法差不多
-    public List<String> generatePossibleNextMoves_ByIndexOf(String s) {
-        List list = new ArrayList();
-      
-        for (int i=-1; (i = s.indexOf("++", i+1)) >= 0; )
-            list.add(s.substring(0, i) + "--" + s.substring(i+2));
-      
-        return list;
-    }
-    
-    
 }
