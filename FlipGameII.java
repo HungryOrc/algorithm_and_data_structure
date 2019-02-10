@@ -7,46 +7,32 @@ For example, given s = "++++", return true. The starting player can guarantee a 
 
 Follow up: Derive your algorithm's runtime complexity. */
 
-public class Solution 
-{
-    /* We can basically try every possible move for the first player (Let's call him 1P from now on), 
-    and recursively check if the second player 2P has any chance to win. 
-    If 2P is guaranteed to lose, then we know the current move 1P takes must be the winning move.
-    
-    另一方面：For the time complexity, here is what I thought, let's say the length of the input string s is n, 
-    there are at most n - 1 ways to replace "++" to "--" (imagine s is all "+++..."), 
-    once we replace one "++", there are at most (n - 2) - 1 ways to do the replacement, 
-    it's a little bit like solving the N-Queens problem, the time complexity is (n - 1) x (n - 3) x (n - 5) x ..., 
-    so it's O(n!!), double factorial. */
-    public boolean canWin(String s) 
-    {
-        if (s == null || s.length() < 2)
-            return false;
-        
-        for (int i = 0; i < s.length() - 1; i++) 
-        {
-            if (s.startsWith("++", i)) 
-            {
-                String sub = s.substring(0, i) + "--" + s.substring(i + 2);
-                // 假设双方棋手都是充分明智的
-                // 如果所有的substring中，有任何一个能导致对方不可能赢，则我方必赢
-                // 如果所有的substring中，对方都有赢的可能性，则我方必输。此即最后for以外的return false的情况
-                if (!canWin(sub))
-                    return true;
-            }
-        }
+
+n square time complexity
+since there are n*n kinds of sub strings for a length n string，
+and we will memORIZE EACH OF THEM
+
+public boolean canWin(String s) {
+    if (s == null || s.length() < 2) {
         return false;
     }
-    
-    
-    // Dynamic Programming 的解法（高阶。不需要面试掌握。还没看。将来有空看？？？）
-    // Ref: https://discuss.leetcode.com/topic/27282/theory-matters-from-backtracking-128ms-to-dp-0ms/2
-    
-    /* I'll show the time complexity can be reduced to O(N^2) using Dynamic Programming, 
-    but the improved method requires some non-trivial understanding of the game theory, 
-    and therefore is not expected in a real interview.
-    
-    ... */
+    HashMap<String, Boolean> winMap = new HashMap<String, Boolean>();
+    return helper(s, winMap);
+}
 
-    
+public boolean helper(String s, HashMap<String, Boolean> winMap) {
+    if (winMap.containsKey(s)) {
+        return winMap.get(s);
+    }
+    for (int i = 0; i < s.length() - 1; i++) {
+        if (s.startsWith("++", i)) {
+            String t = s.substring(0, i) + "--" + s.substring(i+2);
+            if (!helper(t, winMap)) {
+                winMap.put(s, true);
+                return true;
+            }
+        }
+    }
+    winMap.put(s, false);
+    return false;
 }
