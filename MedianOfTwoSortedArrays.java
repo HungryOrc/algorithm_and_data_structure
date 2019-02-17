@@ -7,9 +7,6 @@ The two given array are guaranteed to be sorted
 Examples
 A = {1, 4, 6}, B = {2, 3}, median is 3
 A = {1, 4}, B = {2, 3}, median is 2.5
- 
-思路 Ref: http://www.cnblogs.com/yuzhangcmu/p/4138184.html
-代码 Ref: http://www.jiuzhang.com/solutions/median-of-two-sorted-arrays/
 
 方法：
 用 find Kth Smallest Number 的思想。k 就是median所在的序号。
@@ -35,25 +32,19 @@ public class Solution {
     }
   }
   
-  // find the k-th smallest number of 2 ascending sorted arrays
-  // we remove k/2 smallest numbers, k/4 smallest numbers... 1 smallest number in each time
   private int findKthSmallest(int[] A, int startIndexA, int[] B, int startIndexB, int k) {
-    
-    // 这题一共有 4 种情况 ！！！
+    // 一共有 4 种情况
    
     // Case 1：两个数组里，有一个正好走完最后一位，不多不少
     // if we have past the end of array A, then we totally count on array B
     if (startIndexA == A.length) {
       return B[startIndexB + k - 1];
     }
-    // if we have past the end of array B, then we totally count on array A
     if (startIndexB == B.length) {
       return A[startIndexA + k - 1];
     }
     
     // Case 2：k 降低到1了，即再往下一个数就是我们要的数了
-    // if we have already removed k-1 smallest numbers in these 2 arrays, 
-    // namely the next smallest number will be our target
     if (k == 1) {
       return Math.min(A[startIndexA], B[startIndexB]);
     }
