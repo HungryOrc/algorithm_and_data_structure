@@ -69,8 +69,8 @@ For k+1, pick it with a probability of k/(k+1), and randomly replace a number in
 For k+i, pick it with a probability of k/(k+i), and randomly replace a number in the reservoir.
 Repeat until k+i reaches n
 
-Proof:
-For k+i, the probability that it is selected and will replace a number in the reservoir is k/(k+i)
+Proof: gui na fa
+For k+i, the probability that it is selected （and then will replace a number in the reservoir） is k/(k+i)
 For a number in the reservoir before (let's say X), the probability that it keeps staying in the reservoir is
 P(X was in the reservoir last time) × P(X is not replaced by k+i)
 = P(X was in the reservoir last time) × (1 - P(k+i is selected and replaces X))
