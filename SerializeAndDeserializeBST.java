@@ -8,11 +8,11 @@ The encoded string should be as compact as possible.
 Note: Do not use class member/global/static variables to store states. Your serialize and deserialize algorithms should be stateless. */
 
 
-// 方法1，九章解法
-// 效果描述：http://www.lintcode.com/en/help/binary-tree-representation/
-// 答案代码：http://www.jiuzhang.com/solutions/binary-tree-serialization/
-class Solution {
+Time: O(n)
+Space: serialize: O(logn) deserialize:O(n)
 
+// 方法1，九章
+class Solution {
     // Serialize
     public String serialize(TreeNode root) {
         if (root == null) {
