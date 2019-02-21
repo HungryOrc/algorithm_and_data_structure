@@ -1,4 +1,4 @@
-/* Interleave 的意思是 “交错”，即 a里取0到n个char，然后b里取0到m个char，然后照此反复。
+/* Interleave 的意思是 “交错”
 
 Given three strings A, B and C. Determine if C can be created by merging A and B in a way that maintains 
 the relative order of the characters in A and B.
