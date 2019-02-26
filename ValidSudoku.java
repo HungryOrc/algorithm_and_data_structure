@@ -9,7 +9,7 @@ A valid Sudoku board (partially filled) is not necessarily solvable. Only the fi
 
 public class Solution {
     
-    // 很巧妙的处理方式。虽然解题方法是朴素的
+    // 思路朴素，处理方式很巧妙
     // Ref: https://discuss.leetcode.com/topic/9748/shared-my-concise-java-code
     public boolean isValidSudoku(char[][] board)
     {
