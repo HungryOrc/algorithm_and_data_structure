@@ -10,9 +10,11 @@ MovingAverage obj = new MovingAverage(size);
 double param_1 = obj.next(val);   */
 
 
-xun huan shu zu
+Solution: 循环数组
 
-// Runtime: O(1)，明显比上面的方法快很多
+Time: O(1)
+
+    
 public class MovingAverage {
 
     int[] numbers;
