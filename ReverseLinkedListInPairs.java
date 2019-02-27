@@ -30,7 +30,7 @@ public class Solution {
    }
     
     
-    // 方法2：Iteration。Laioffer。非常经典的做法 ！！！ 要记下来 ！！！
+    // 方法2：Iteration
     public ListNode reverseInPairs(ListNode head) {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
