@@ -61,12 +61,10 @@ public class Solution {
      set.size()==0 corresponds to the situation when there are even number of any character in the string, and
      set.size()==1 corresponsds to the fact that there are even number of any character except one.
     */
-    public boolean canPermutePalindrome(String s) {
-        
+    public boolean canPermutePalindrome(String s) {        
         char[] charArray = s.toCharArray();
-        
-        // ！注意！HashSet 尖括号里都要用 Wrapper Class！！
-        HashSet<Character> charCounts_HashSet = new HashSet<Character>();
+
+        Set<Character> charCounts_HashSet = new HashSet<>();
         
         for (char curChar : charArray)
         {
@@ -83,5 +81,4 @@ public class Solution {
         else
             return false;
     }
-    
 }
