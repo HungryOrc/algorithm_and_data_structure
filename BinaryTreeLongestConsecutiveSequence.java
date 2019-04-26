@@ -29,9 +29,6 @@ Longest consecutive sequence path is 2-3,not3-2-1, so return 2.
 *     TreeNode(int x) { val = x; }
 * } */
 
-// 以下3个方法都出自：
-// Ref: http://www.jiuzhang.com/solutions/binary-tree-longest-consecutive-sequence/
-
 public class Solution {
     /* @param root the root of binary tree
      * @return the length of the longest consecutive sequence path */
@@ -75,25 +72,31 @@ public class Solution {
     }
     
    
-    // 方法2: Another Traverse + Divide Conquer 
+    // 方法2: Another Recursion 
+class Solution {
     public int longestConsecutive(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        return dfs(root, root.val, 0);
+        return dfs(root, root.val, 1);
     }
 
     private int dfs(TreeNode node, int parentVal, int prevLen) {
+        if (node == null) {
+            return 1;
+        }
+        
         int curLen = 1;
         if (parentVal + 1 == node.val) {
 	         curLen = prevLen + 1;
         }
 
-        int leftLen = dfs(root.left, root.val, curLen);
-        int rightLen = dfs(root.right, root.val, curLen);
+        int leftLen = dfs(node.left, node.val, curLen);
+        int rightLen = dfs(node.right, node.val, curLen);
        
         return Math.max(curLen, Math.max(leftLen, rightLen));
     }
+}
    
 
     // 方法3: Divide Conquer + 自定义结果类
