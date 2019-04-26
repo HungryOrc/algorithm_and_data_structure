@@ -77,20 +77,22 @@ public class Solution {
    
     // 方法2: Another Traverse + Divide Conquer 
     public int longestConsecutive(TreeNode root) {
-        return helper(root, null, 0);
-    }
-
-    private int helper(TreeNode root, TreeNode parent, int lengthWithoutRoot) {
         if (root == null) {
             return 0;
         }
+        return dfs(root, root.val, 0);
+    }
 
-        int length = (parent != null && parent.val + 1 == root.val)
-            ? lengthWithoutRoot + 1
-            : 1;
-        int left = helper(root.left, root, length);
-        int right = helper(root.right, root, length);
-        return Math.max(length, Math.max(left, right));
+    private int dfs(TreeNode node, int parentVal, int prevLen) {
+        int curLen = 1;
+        if (parentVal + 1 == node.val) {
+	         curLen = prevLen + 1;
+        }
+
+        int leftLen = dfs(root.left, root.val, curLen);
+        int rightLen = dfs(root.right, root.val, curLen);
+       
+        return Math.max(curLen, Math.max(leftLen, rightLen));
     }
    
 
