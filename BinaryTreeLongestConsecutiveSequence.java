@@ -72,7 +72,7 @@ public class Solution {
     }
     
    
-    // 方法2: Another Recursion 
+    // 方法2: Another Recursion，速度 前5%
 class Solution {
     public int longestConsecutive(TreeNode root) {
         if (root == null) {
@@ -83,7 +83,7 @@ class Solution {
 
     private int dfs(TreeNode node, int parentVal, int prevLen) {
         if (node == null) {
-            return 1;
+            return prevLen;
         }
         
         int curLen = 1;
