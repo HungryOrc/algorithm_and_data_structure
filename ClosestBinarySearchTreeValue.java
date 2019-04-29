@@ -36,26 +36,9 @@ public class Solution {
         }
         return result;
     }
+
     
-    
-    // recursion 精粹版。这个不是我想出来的！值得反复研读！
-    // 有很多妙处在里面！！
-    public int closestValue (TreeNode root, double target)
-    {
-       int rootValue = root.val;
-       if (rootValue == target)
-          return rootValue;
-       
-       TreeNode nextNode = target < rootValue ? root.left : root.right;
-       
-       if (nextNode == null
-          return rootValue;
-       int nextValue = closestValue (nextNode, target); // 不带rootValue到下一层去比，直接弄出下一层以下的min然后再回来和rootValue比（下一句）
-       return Math.abs(rootValue - target) < Math.abs(nextValue - target) ? rootValue : nextValue;
-    }
-    
-    
-    // recursion 冗长版。这个是我想出来的
+    // 我的recursion。要默写！！！
     public int closestValue(TreeNode root, double target) {
         
         int result = root.val;
@@ -89,6 +72,27 @@ public class Solution {
             }
         }
     }
+    
+    
+    // 方法3
+    // recursion 精粹版。这个不是我想出来的！值得反复研读！
+    // 有很多妙处在里面！！
+    public int closestValue (TreeNode root, double target)
+    {
+       int rootValue = root.val;
+       if (rootValue == target)
+          return rootValue;
+       
+       TreeNode nextNode = target < rootValue ? root.left : root.right;
+       
+       if (nextNode == null
+          return rootValue;
+       int nextValue = closestValue (nextNode, target); // 不带rootValue到下一层去比，直接弄出下一层以下的min然后再回来和rootValue比（下一句）
+       return Math.abs(rootValue - target) < Math.abs(nextValue - target) ? rootValue : nextValue;
+    }
+    
+    
+
     
     
 }
