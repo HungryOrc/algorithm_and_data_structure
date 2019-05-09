@@ -39,3 +39,30 @@ public class Solution {
  if any node has less than 2 children, then if any node after him in the queue has any child, then return false
          for example in the above graph, the first tree, after 8, there are 1 and 4 in the queue, it is fine, as long as 1 and 4 dont have any children
 }
+
+        
+方法2：用 Recursion 来做
+```java
+class Result {
+    int height;
+    boolean isPerfect;
+    boolean isComplete;
+    public Result(int h, boolean p, boolean c) {
+        height = h;
+        isPerfect = p;
+        isComplete = c;
+    }
+}
+
+public class Solution {
+    public boolean isComplete(TreeNode root) {
+        if (root == null) {
+            return new Result(0, true, true);
+        }
+            
+        Result left = isComplete(root.left);
+        Result right = isComplete(root.right);
+            
+        
+    }
+}
