@@ -72,11 +72,13 @@ public class Solution {
             
         int height = Math.max(left.height, right.height) + 1;
         
-        boolean isPerfect = (left.isPerfect) && (right.isPerfect) && (left.height == right.height);
+        boolean isPerfect = 
+            (left.isPerfect) && (right.isPerfect) && (left.height == right.height);
         
         // 别忘了下面的第一个括号里的情况！很容易忽视掉！
-        boolean isComplete = (left.isComplete && right.isPerfect && right.height + 1 = left.height) ||
-                             (left.isPerfect && right.isComplete && left.height = right.height);
+        boolean isComplete = 
+            (left.isComplete && right.isPerfect && right.height + 1 = left.height) ||
+            (left.isPerfect && right.isComplete && left.height = right.height);
         
         return new Result(height, isPerfect, isComplete);
     }
