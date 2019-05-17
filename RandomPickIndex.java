@@ -48,3 +48,5 @@ public class Solution {
         return chosenIndex;
     }
 }
+
+注意！每次pick都要耗时O(n) ！
