@@ -42,13 +42,16 @@ public class Solution {
       for (int j = 0; j <= bLen; j++) {
         
         // 2 possible ways of matching the first i+j characters in c
+        // 如果a里的第i个char 和 c里的第i+j个char 相同
         if (i > 0 && c.charAt(i + j - 1) == a.charAt(i - 1)) {
-          if (mergable[i - 1][j] == true) {
+          if (mergable[i - 1][j]) {
             mergable[i][j] = true;
+            continue;
           }
         }
+        // 如果b里的第j个char 和 c里的第i+j个char 相同
         if (j > 0 && c.charAt(i + j - 1) == b.charAt(j - 1)) {
-          if (mergable[i][j - 1] == true) {
+          if (mergable[i][j - 1]) {
             mergable[i][j] = true;
           }
         }
