@@ -7,6 +7,12 @@ Gieve s = lintcode,
 dict = ["de", "ding", "co", "code", "lint"].
 A solution is: ["lint code", "lint co de"]. */
 
+follow up：
+只要一个，怎么做？
+每个词只能用一次，怎么办？
+写了给john老师
+
+
 // 方法1：朴素的DPS方法。较慢
 public class Solution {
 
