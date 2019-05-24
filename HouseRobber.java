@@ -48,3 +48,8 @@ public class Solution {
         return curMax;
     }
 }
+
+另法：先写下面这个，再写上面那个更高级的空间的
+dp[0] = nums[0];
+dp[1] = Math.max(nums[0], nums[1]);
+dp[2]...
