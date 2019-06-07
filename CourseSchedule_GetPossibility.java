@@ -8,6 +8,9 @@ Return true
 Given n = 2, prerequisites = [[1,0],[0,1]]
 Return false */
 
+
+速度 前10%
+
 public class Solution {
     
     /* @param numCourses a total of n courses
