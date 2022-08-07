@@ -150,13 +150,12 @@ public class Solution {
 ```
 
 
-### Method 2: Bottom-Up Merge Sort
+### Method 2: Bottom-Up Merge Sort (in-place!)
 * Time: `O(n * logn)`
   * `n` is the number of nodes in the linked list.
 * Space: `O(1)`
 
-#### C++
+Explanation of this algorithm: https://leetcode.com/problems/sort-list/solution/, at "Approach 2: Bottom Up Merge Sort"
 
-```cpp
-aaa
-```
+I don't fully understand this algorithm yet.
+
