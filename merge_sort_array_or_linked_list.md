@@ -6,7 +6,7 @@ Explanation of Merge Sort: https://www.geeksforgeeks.org/merge-sort/
 ## Merge Sort a Linked List
 LeetCode link: https://leetcode.com/problems/sort-list/
 
-### Top-Down Merge Sort
+### Method 1: Top-Down Merge Sort
 * Time: `O(n * logn)`
   * `n` is the number of nodes in the linked list.
 * Space: `O(logn)`
@@ -147,4 +147,16 @@ public class Solution {
         }
     }
 }
+```
+
+
+### Method 2: Bottom-Up Merge Sort
+* Time: `O(n * logn)`
+  * `n` is the number of nodes in the linked list.
+* Space: `O(1)`
+
+#### C++
+
+```cpp
+aaa
 ```
