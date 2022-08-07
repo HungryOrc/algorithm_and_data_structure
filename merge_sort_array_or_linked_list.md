@@ -7,9 +7,11 @@ Explanation of Merge Sort: https://www.geeksforgeeks.org/merge-sort/
 LeetCode link: https://leetcode.com/problems/sort-list/
 
 ### Cpp
-Time: O(n * logn), n is the number of nodes in the linked list.
+* Time: O(n * logn)
+  * n is the number of nodes in the linked list.
 
-Space: O(n * logn).
+* Space: O(n * logn)
+  * Because it needs logn layers to run this algorithm, and each layer uses space of n.
 
 ```cpp
 /**
@@ -24,7 +26,7 @@ Space: O(n * logn).
  */
 
 class Solution {
-public:
+  public:
     ListNode* sortList(ListNode* head) {
         if (head == nullptr || head->next == nullptr) {
             return head;
@@ -35,6 +37,30 @@ public:
         ListNode* right_head = sortList(middle);
         
         return merge(left_head, right_head);
+    }
+    
+    ListNode* merge(ListNode* left_head, ListNode* right_head) {
+        ListNode dummy_head;
+        ListNode* ptr = &dummy_head;
+        
+        while (left_head != nullptr && right_head != nullptr) {
+            if (left_head->val > right_head->val) {
+                ptr->next = right_head;
+                right_head = right_head->next;
+            } else {
+                ptr->next = left_head;
+                left_head = left_head->next;
+            }
+            ptr = ptr->next;
+        }
+        
+        if (left_head == nullptr) {
+            ptr->next = right_head;
+        } else {
+            ptr->next = left_head;
+        }
+        
+        return dummy_head.next;
     }
     
     ListNode* getMiddleNode(ListNode* head) {
@@ -65,30 +91,6 @@ public:
         // Or it will Stack Overflow (due to infinite loop)!
         pre_middle->next = nullptr;
         return middle;
-    }
-    
-    ListNode* merge(ListNode* left_head, ListNode* right_head) {
-        ListNode dummy_head;
-        ListNode* ptr = &dummy_head;
-        
-        while (left_head != nullptr && right_head != nullptr) {
-            if (left_head->val > right_head->val) {
-                ptr->next = right_head;
-                right_head = right_head->next;
-            } else {
-                ptr->next = left_head;
-                left_head = left_head->next;
-            }
-            ptr = ptr->next;
-        }
-        
-        if (left_head == nullptr) {
-            ptr->next = right_head;
-        } else {
-            ptr->next = left_head;
-        }
-        
-        return dummy_head.next;
     }
 };
 ```
