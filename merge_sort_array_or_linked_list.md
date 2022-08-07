@@ -6,13 +6,13 @@ Explanation of Merge Sort: https://www.geeksforgeeks.org/merge-sort/
 ## Merge Sort a Linked List
 LeetCode link: https://leetcode.com/problems/sort-list/
 
-### Cpp
+### Top-Down Merge Sort
 * Time: `O(n * logn)`
   * `n` is the number of nodes in the linked list.
 * Space: `O(logn)`
   * Because it needs `logn` layers to run this algorithm.
 
-
+#### C++
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -95,7 +95,7 @@ class Solution {
 };
 ```
 
-### Java
+#### Java
 ```java
 public class Solution {
     public ListNode mergeSort(ListNode head) {
