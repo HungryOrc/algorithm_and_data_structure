@@ -9,9 +9,9 @@ LeetCode link: https://leetcode.com/problems/sort-list/
 ### Cpp
 * Time: O(n * logn)
   * n is the number of nodes in the linked list.
-
 * Space: O(n * logn)
   * Because it needs logn layers to run this algorithm, and each layer uses space of n.
+
 
 ```cpp
 /**
