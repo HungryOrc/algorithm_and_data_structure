@@ -1,18 +1,16 @@
-# Merge Sort an Array or a Linked List
+# Merge Sort a Linked List
+LeetCode link: https://leetcode.com/problems/sort-list/
 
 ## Overview of Merge Sort
 Explanation of Merge Sort: https://www.geeksforgeeks.org/merge-sort/
 
-## Merge Sort a Linked List
-LeetCode link: https://leetcode.com/problems/sort-list/
-
-### Method 1: Top-Down Merge Sort
+## Method 1: Top-Down Merge Sort
 * Time: `O(n * logn)`
   * `n` is the number of nodes in the linked list.
 * Space: `O(logn)`
   * Because it needs `logn` layers to run this algorithm.
 
-#### C++
+### C++
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -95,7 +93,7 @@ class Solution {
 };
 ```
 
-#### Java
+### Java
 ```java
 public class Solution {
     public ListNode mergeSort(ListNode head) {
@@ -150,7 +148,7 @@ public class Solution {
 ```
 
 
-### Method 2: Bottom-Up Merge Sort (in-place!)
+## Method 2: Bottom-Up Merge Sort (in-place!)
 * Time: `O(n * logn)`
   * `n` is the number of nodes in the linked list.
 * Space: `O(1)`
