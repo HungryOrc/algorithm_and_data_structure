@@ -9,8 +9,8 @@ LeetCode link: https://leetcode.com/problems/sort-list/
 ### Cpp
 * Time: `O(n * logn)`
   * `n` is the number of nodes in the linked list.
-* Space: `O(n * logn)`
-  * Because it needs `logn` layers to run this algorithm, and each layer uses space of `n`.
+* Space: `O(logn)`
+  * Because it needs `logn` layers to run this algorithm.
 
 
 ```cpp
@@ -93,4 +93,58 @@ class Solution {
         return middle;
     }
 };
+```
+
+### Java
+```java
+public class Solution {
+    public ListNode mergeSort(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+      
+        // Step 1, get leftEnd and rightHead
+        ListNode leftEnd = getLeftEnd(head);
+        ListNode rightHead = leftEnd.next;
+        leftEnd.next = null;
+        
+        // Step 2, sort the two halves respectively
+        ListNode leftHead = mergeSort(head);
+        rightHead = mergeSort(rightHead);
+      
+        // Step 3, merge two sorted lists
+        // 最开始的sort也是在这里发生的，即对于2个长度为1的list的 sort & merge
+        return mergeTwoSortedLists(leftHead, rightHead);
+    }
+  
+    private ListNode getLeftEnd(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+      
+        ListNode slow = head, fast = head.next;
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+  
+    private ListNode mergeTwoSortedLists(ListNode h1, ListNode h2) {
+        if (h1 == null) {
+            return h2;
+        }
+        if (h2 == null) {
+            return h1;
+        }
+      
+        if (h1.value <= h2.value) {
+            h1.next = mergeTwoSortedLists(h1.next, h2);
+            return h1;
+        } else {
+            h2.next = mergeTwoSortedLists(h1, h2.next);
+            return h2;
+        }
+    }
+}
 ```
