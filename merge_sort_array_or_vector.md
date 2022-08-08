@@ -1,5 +1,5 @@
 # Merge Sort an Array or a Vector
-LeetCode link: [https://leetcode.com/problems/sort-list/](https://leetcode.com/problems/sort-an-array/submissions/)
+LeetCode link: https://leetcode.com/problems/sort-an-array/
 
 ## Overview of Merge Sort
 Explanation of Merge Sort: https://www.geeksforgeeks.org/merge-sort/
