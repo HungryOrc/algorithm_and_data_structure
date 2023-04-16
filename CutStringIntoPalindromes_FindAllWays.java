@@ -32,7 +32,7 @@ public class Solution {
               
                 permutation.add(s.substring(start, end + 1));
                 
-                // 注意！下一次的分析的开始位置，是这一次的subString的结束位置+1，
+                // 注意！下一次 DFS 的开始位置，是这一次的subString的结束位置+1
                 dfs(s, cArray, end + 1, permutation, result);
                 
                 permutation.remove(permutation.size() - 1);
@@ -45,6 +45,8 @@ public class Solution {
             if (cArray[i] != cArray[j]) {
                 return false;
             }
+            ++i;
+            --j;
         }
         return true;
     }
